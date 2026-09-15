@@ -2,7 +2,7 @@
 
 ## Encontro 1
 
-**Data:** 15/09/2026
+**Data:** 14/09/2026
 
 ### Atividades realizadas
 
