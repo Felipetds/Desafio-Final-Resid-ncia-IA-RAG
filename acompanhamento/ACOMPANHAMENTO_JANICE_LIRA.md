@@ -1,6 +1,6 @@
 # Acompanhamento — Janice Lira
 
-## Encontro 1 — 15/09/2026
+## Encontro 1 — 14/09/2026
 
 ### Minha contribuição
 
