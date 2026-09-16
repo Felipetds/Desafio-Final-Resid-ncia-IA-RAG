@@ -1,0 +1,260 @@
+# Arquitetura do Sistema
+
+## 1. Cenário escolhido
+
+**Cenário 1 — Contratações Públicas do Estado do Rio de Janeiro**
+
+A equipe escolheu o cenário de contratações públicas por trabalhar com dados públicos provenientes de fontes oficiais e por permitir a integração de bases de naturezas diferentes. Além disso, o cenário apresenta consultas que exigem combinar busca semântica, filtros estruturados, documentos normativos e informações agregadas, sendo adequado para o desenvolvimento de um sistema baseado em Adaptive RAG.
+
+---
+
+## 2. Bases de conhecimento
+
+O sistema utilizará quatro bases de naturezas diferentes, conforme definido para o cenário:
+
+| Base | Conteúdo | Fonte principal | Tratamento esperado |
+|---|---|---|---|
+| **Normativa** | Lei nº 14.133/2021, decretos estaduais e editais de licitação | Planalto e arquivos de contratação do PNCP | Recuperação textual considerando estrutura e vigência dos documentos |
+| **Estruturada** | Contratos e contratações públicas do RJ em período fechado | API de consulta do PNCP | Registros completos e filtros por metadados |
+| **Conversacional** | Atas de registro de preços e comunicações sintéticas de compras | PNCP e base sintética | Recuperação textual com tratamento de dados pessoais |
+| **Agregada** | Plano de Contratações Anual e valores homologados por item | PNCP | Consultas numéricas considerando o recorte utilizado |
+
+O roteamento não será realizado apenas pelas palavras presentes na consulta. O sistema deverá identificar **qual tipo de evidência é necessário para responder à pergunta** e selecionar uma ou mais bases.
+
+Como a API do PNCP não oferece busca textual por objeto, a coleta será realizada a partir de recortes determinísticos definidos para o corpus. A busca textual e semântica sobre os objetos das contratações será realizada localmente após a ingestão e a indexação.
+
+---
+
+## 3. Pipeline planejado
+
+A arquitetura será organizada como um pipeline de Retrieval-Augmented Generation (RAG) adaptativo.
+
+O fluxo principal será:
+
+    Usuário
+      |
+      v
+    query_analysis
+      |
+      v
+    roteamento
+      |
+      +-------------------------------+
+      |                               |
+      v                               v
+    retrieval_denso             retrieval_bm25
+      |                               |
+      +---------------+---------------+
+                      |
+                      v
+                  fusao_rrf
+                      |
+                      v
+                    rerank
+                      |
+                      v
+                   geracao
+                      |
+                      v
+                  validacao
+                      |
+                      v
+                  feedback
+                      |
+                      v
+               Resposta ao usuário
+
+Os nomes utilizados no diagrama correspondem aos valores que serão utilizados no campo `stage` dos logs do pipeline.
+
+---
+
+## 4. Estágios da arquitetura
+
+### `query_analysis`
+
+Interpreta a pergunta antes da recuperação. Essa etapa deverá identificar o objetivo da consulta e extrair filtros quando existirem, como UF, período, modalidade, órgão, município, valores e número de controle PNCP.
+
+### `roteamento`
+
+Define qual ou quais bases contêm as evidências necessárias para responder à consulta. O roteador poderá selecionar uma única base ou múltiplas bases para perguntas do tipo cross-source.
+
+### `retrieval_denso`
+
+Realiza a recuperação semântica por embeddings. Será especialmente útil para consultas em que o usuário descreve o objeto da contratação sem utilizar exatamente os mesmos termos presentes nos documentos.
+
+### `retrieval_bm25`
+
+Realiza a recuperação lexical. Será utilizada principalmente para termos que exigem correspondência exata, como CNPJ, número de contrato, número de controle PNCP e outros identificadores.
+
+### `fusao_rrf`
+
+Combina os resultados da recuperação densa e da recuperação BM25 utilizando Reciprocal Rank Fusion (RRF).
+
+### `rerank`
+
+Reordena os documentos recuperados utilizando cross-encoder. O modelo de reranqueamento será incorporado quando o endpoint correspondente for disponibilizado no Sprint 2.
+
+### `geracao`
+
+Utiliza as evidências selecionadas para produzir a resposta. A geração deverá manter a rastreabilidade das fontes utilizadas e respeitar as regras de sensibilidade do cenário.
+
+### `validacao`
+
+Verifica a estrutura da resposta e aplica as regras de guardrails antes de apresentar o resultado ao usuário.
+
+### `feedback`
+
+Registra a avaliação do usuário e as informações necessárias para o histórico persistente do sistema.
+
+---
+
+## 5. Recuperação e Adaptive RAG
+
+O sistema utilizará Adaptive RAG para decidir onde buscar antes de iniciar a recuperação. Uma consulta poderá utilizar uma ou várias bases dependendo do tipo de evidência necessária.
+
+A recuperação combinará:
+
+1. busca densa por embeddings;
+2. busca lexical com BM25;
+3. filtros por metadados;
+4. fusão dos rankings com RRF;
+5. reranqueamento com cross-encoder.
+
+Filtros estruturados poderão ser aplicados sobre informações como UF, período, modalidade, órgão, município, situação da contratação e faixa de valores.
+
+Essa combinação permite tratar consultas de naturezas diferentes. Por exemplo, uma busca por CNPJ pode depender principalmente do BM25, enquanto uma consulta como "aquisição de equipamentos hospitalares" pode depender da busca semântica. Consultas envolvendo valores, datas ou modalidades também poderão exigir filtros estruturados.
+
+---
+
+## 6. Ingestão, metadados e sensibilidade
+
+O tratamento dos documentos será adaptado à natureza de cada base. Registros estruturados poderão ser tratados como unidades semânticas completas, enquanto documentos normativos poderão ser divididos de acordo com sua estrutura, preservando informações necessárias para identificação e vigência.
+
+Todo chunk deverá possuir, no mínimo, os seguintes metadados:
+
+- `source_file`;
+- `doc_type`;
+- `chunk_id`;
+- `sensitivity`;
+- `base_id`.
+
+Outros metadados poderão ser acrescentados de acordo com a base, como órgão, modalidade, valor, município, ano, data de publicação, número de controle PNCP e campo de vigência.
+
+A sensibilidade deverá ser classificada durante a ingestão.
+
+No cenário de contratações públicas:
+
+- **Responder:** valores de contratos, objeto contratado, nome de empresa fornecedora e CNPJ de pessoa jurídica;
+- **Mascarar:** CPF de pessoa física, telefone pessoal e e-mail pessoal presentes nos documentos;
+- **Recusar:** dados bancários, credenciais e solicitações que exijam juízo sobre fraude ou legalidade de uma contratação específica.
+
+---
+
+## 7. Observabilidade
+
+Todo módulo deverá registrar sua execução em logs estruturados no formato JSONL:
+
+`logs/pipeline-AAAA-MM-DD.jsonl`
+
+Cada registro deverá conter, no mínimo:
+
+- `ts`;
+- `run_id`;
+- `query_id`;
+- `stage`;
+- `status`;
+- `latencia_ms`;
+- `input`;
+- `output`;
+- `tokens`;
+- `modelo`;
+- `extra`.
+
+O mesmo `run_id` deverá acompanhar todas as etapas pertencentes à mesma pergunta, permitindo identificar em qual ponto do pipeline ocorreu uma eventual falha.
+
+Os nomes fixos de `stage` serão:
+
+- `query_analysis`;
+- `roteamento`;
+- `retrieval_denso`;
+- `retrieval_bm25`;
+- `fusao_rrf`;
+- `rerank`;
+- `geracao`;
+- `validacao`;
+- `feedback`.
+
+Nas etapas que utilizarem o LLM, os dados de uso deverão registrar `prompt_tokens`, `completion_tokens` e o total de tokens.
+
+---
+
+## 8. Cache e persistência
+
+Como o endpoint de modelos é compartilhado pela turma, os embeddings deverão ser armazenados em cache desde o início do projeto.
+
+Os índices serão persistidos em disco e recarregados nas execuções seguintes, evitando a reindexação completa do corpus. Quando aplicável, serão utilizados mecanismos equivalentes a `save_local` e `load_local`.
+
+A geração de embeddings deverá ser realizada em lotes pequenos. A configuração inicial seguirá a recomendação de lote de 50 elementos e pausa de 10 segundos entre os lotes, podendo ser ajustada de forma controlada conforme os testes.
+
+---
+
+## 9. Testabilidade
+
+Cada módulo deverá possuir testes em `tests/`, executáveis com `pytest`.
+
+Serão consideradas três camadas:
+
+| Camada | Objetivo | Dependência de LLM |
+|---|---|---|
+| **Unitário** | Testar funções determinísticas, serialização, normalização de filtros e cálculo do RRF | Não |
+| **Contrato** | Validar metadados obrigatórios, schemas e regras da resposta estruturada | Não |
+| **Integração** | Executar o pipeline de ponta a ponta com perguntas conhecidas | Sim |
+
+Os testes que dependem do endpoint do LLM serão marcados separadamente, permitindo que os testes unitários e de contrato sejam executados offline.
+
+---
+
+## 10. Organização dos módulos
+
+A arquitetura seguirá a estrutura de módulos prevista para o projeto:
+
+| Módulo | Responsabilidade |
+|---|---|
+| `src/fetch_corpus.py` | Coleta, atualização, versionamento e inventário do corpus |
+| `src/ingest.py` | Extração, chunking e metadados |
+| `src/index.py` | Embeddings e índices por base |
+| `src/router.py` | Query Analyzer e Adaptive RAG |
+| `src/retrieve.py` | Recuperação densa, BM25, filtros, RRF e rerank |
+| `src/generate.py` | Síntese da resposta e guardrails |
+| `src/schema.py` | Modelos Pydantic e resposta estruturada |
+| `src/obs.py` | Logging estruturado e contabilização de tokens |
+
+---
+
+## 11. Divisão de responsabilidades
+
+A equipe adotará responsáveis por módulo. A responsabilidade indica o integrante que acompanhará principalmente a implementação e integração daquele componente, sem impedir a colaboração dos demais membros.
+
+| Área/Módulo | Responsável |
+|---|---|
+| Coordenação da equipe | **A definir pela equipe** |
+| Coleta e versionamento — `fetch_corpus.py` | **A definir pela equipe** |
+| Ingestão — `ingest.py` | **A definir pela equipe** |
+| Indexação — `index.py` | **A definir pela equipe** |
+| Roteamento — `router.py` | **A definir pela equipe** |
+| Recuperação — `retrieve.py` | **A definir pela equipe** |
+| Geração e guardrails — `generate.py` | **A definir pela equipe** |
+| Schemas — `schema.py` | **A definir pela equipe** |
+| Observabilidade — `obs.py` | **A definir pela equipe** |
+| Testes e avaliação | **A definir pela equipe** |
+| Interface e documentação | **A definir pela equipe** |
+
+> **Pendência da versão inicial:** a equipe deverá definir o coordenador e associar os integrantes aos módulos antes da consolidação desta seção, mantendo a divisão explícita de responsabilidades exigida pelo desafio.
+
+---
+
+## 12. Fluxo resumido
+
+**Usuário → `query_analysis` → `roteamento` → `retrieval_denso` + `retrieval_bm25` → `fusao_rrf` → `rerank` → `geracao` → `validacao` → `feedback` → Resposta**
+
+Esta arquitetura representa o planejamento inicial do sistema e poderá ser refinada ao longo das próximas sprints conforme o corpus for consolidado, os módulos forem implementados e os testes evidenciarem necessidades de ajuste.
