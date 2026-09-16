@@ -170,3 +170,22 @@ Esses dados deverão ser tratados conforme as regras de sensibilidade e guardrai
 - **Tamanho:** 146.112 bytes
 - **Texto extraído:** confirmado
 - **Tratamento necessário:** verificar e mascarar dados pessoais, como identificadores funcionais e contatos, antes de disponibilizar trechos nas respostas do RAG.
+
+## Base conversacional — Comunicações sintéticas
+
+### Identificação
+
+- **Natureza:** Conteúdo inteiramente fictício, criado para testes de RAG
+- **Fonte:** Simulação produzida pela equipe com apoio de IA; não é documento do PNCP
+- **Assunto:** Troca de mensagens sobre entrega de material de escritório
+- **Processo fictício:** SIM-RJ-001
+- **Quantidade de mensagens:** 3
+- **Formato:** TXT
+- **Arquivo bruto:** `data/raw/v1/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt`
+
+### Uso e limitações
+
+O arquivo permite testar perguntas sobre prazos de entrega e informações
+distribuídas entre mensagens. Seu conteúdo não deve ser citado como
+evidência de uma contratação pública real. As respostas do RAG devem
+identificá-lo explicitamente como simulação.
