@@ -52,3 +52,27 @@ Os registros coletados incluem informações como:
 ### Observação
 
 Este inventário documenta o recorte oficial utilizado para a base estruturada do projeto.
+
+    
+## Base normativa — Lei 14.133/2021
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Normativa
+- **Documento:** Lei nº 14.133, de 1º de abril de 2021
+- **Título:** Lei de Licitações e Contratos Administrativos
+- **Fonte:** Presidência da República — Planalto
+- **Formato coletado:** HTML
+- **Arquivo bruto:** `data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html`
+
+### Verificação
+
+- **Status HTTP na coleta:** 200
+- **Tamanho do arquivo:** 649.705 bytes
+- **Texto extraído:** 289.010 caracteres
+- **Identificação do documento:** confirmada
+
+### Observação
+
+O documento foi coletado diretamente da fonte oficial do Governo Federal e armazenado na área de dados brutos do projeto. A página preserva as referências e indicações de alterações e regulamentações disponibilizadas na fonte oficial.
