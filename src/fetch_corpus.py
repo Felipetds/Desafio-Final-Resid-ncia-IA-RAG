@@ -79,11 +79,69 @@ def coletar_paginas_pncp(parametros: dict) -> list:
 
     return registros
 
+def executar_fetch(manifesto: dict, raiz: Path) -> None:
+    """Coleta a base estruturada sem substituir arquivos existentes."""
+    import json
+    import os
+    import tempfile
+
+    base = next(
+        (
+            item for item in manifesto["bases"]
+            if item.get("base_id") == "estruturada_pncp_rj"
+        ),
+        None,
+    )
+    if base is None:
+        raise ValueError("Base estruturada não encontrada no manifesto.")
+
+    destino = raiz / base["arquivo_local"]
+
+    # Esta verificação acontece ANTES de qualquer consulta à API.
+    verificar_destino_livre(destino)
+
+    filtros = base["selecao_deterministica"]
+    parametros = {
+        "dataInicial": filtros["dataInicial"],
+        "dataFinal": filtros["dataFinal"],
+        "codigoModalidadeContratacao": filtros["codigoModalidadeContratacao"],
+        "uf": filtros["uf"],
+        "tamanhoPagina": 50,
+    }
+
+    registros = coletar_paginas_pncp(parametros)
+    if not registros:
+        raise RuntimeError("A consulta não retornou registros; nada foi salvo.")
+
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    temporario = None
+
+    try:
+        # Grava primeiro em arquivo temporário. Só publica ao terminar.
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            suffix=".json.tmp",
+            dir=destino.parent,
+            delete=False,
+        ) as arquivo:
+            temporario = Path(arquivo.name)
+            json.dump(registros, arquivo, ensure_ascii=False, indent=2)
+
+        # Falha se outro processo tiver criado o destino nesse intervalo.
+        os.link(temporario, destino)
+        print(f"Coleta concluída: {len(registros)} registros")
+        print(f"Arquivo salvo: {destino}")
+    finally:
+        if temporario is not None:
+            temporario.unlink(missing_ok=True)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Ferramenta de coleta do corpus")
     parser.add_argument(
         "comando",
-        choices=["inventory"],
+        choices=["inventory", "fetch"],
         help="Operação a executar",
     )
     parser.add_argument(
@@ -93,7 +151,13 @@ def main() -> None:
     )
     argumentos = parser.parse_args()
 
-    manifesto = carregar_manifesto(Path(argumentos.manifest))
+    caminho_manifesto = Path(argumentos.manifest).resolve()
+    manifesto = carregar_manifesto(caminho_manifesto)
+
+    if argumentos.comando == "fetch":
+        executar_fetch(manifesto, caminho_manifesto.parent)
+        return
+
     print("Cenário:", manifesto.get("scenario_id"))
     print("Versão:", manifesto.get("version"))
     print("Bases cadastradas:")
