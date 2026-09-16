@@ -27,35 +27,57 @@ def verificar_destino_livre(destino: Path) -> None:
 
 
 def consultar_pagina_pncp(parametros: dict) -> dict:
-    """Consulta uma página do PNCP e informa falhas de forma clara."""
+    """Consulta uma página, repetindo apenas falhas temporárias."""
+    import time
     import requests
 
     url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+    max_tentativas = 3
 
-    try:
-        resposta = requests.get(
-            url,
-            params=parametros,
-            timeout=(15, 60),
-        )
-        resposta.raise_for_status()
-        resultado = resposta.json()
-    except requests.RequestException as erro:
-        raise RuntimeError(
-            f"Falha na consulta ao PNCP; nenhum arquivo foi alterado: {erro}"
-        ) from erro
-    except ValueError as erro:
-        raise RuntimeError(
-            "O PNCP retornou uma resposta que não é um JSON válido."
-        ) from erro
+    for tentativa in range(1, max_tentativas + 1):
+        try:
+            resposta = requests.get(
+                url,
+                params=parametros,
+                timeout=(15, 60),
+            )
+            resposta.raise_for_status()
+            resultado = resposta.json()
+        except requests.RequestException as erro:
+            status = getattr(getattr(erro, "response", None), "status_code", None)
+            temporario = (
+                isinstance(erro, (requests.Timeout, requests.ConnectionError))
+                or status in (429, 500, 502, 503, 504)
+            )
 
-    if not isinstance(resultado, dict) or not isinstance(
-        resultado.get("data"), list
-    ):
-        raise RuntimeError("Resposta inesperada do PNCP: campo 'data' ausente.")
+            if not temporario or tentativa == max_tentativas:
+                raise RuntimeError(
+                    f"Falha na consulta ao PNCP após {tentativa} tentativa(s); "
+                    f"nenhum arquivo foi alterado: {erro}"
+                ) from erro
 
-    return resultado
+            espera = 2 ** (tentativa - 1)
+            print(
+                f"Falha temporária na página {parametros.get('pagina')}. "
+                f"Nova tentativa em {espera} segundo(s) "
+                f"({tentativa}/{max_tentativas}).",
+                flush=True,
+            )
+            time.sleep(espera)
+            continue
+        except ValueError as erro:
+            raise RuntimeError(
+                "O PNCP retornou uma resposta que não é um JSON válido."
+            ) from erro
 
+        if not isinstance(resultado, dict) or not isinstance(
+            resultado.get("data"), list
+        ):
+            raise RuntimeError(
+                "Resposta inesperada do PNCP: campo 'data' ausente."
+            )
+
+        return resultado
 
 def coletar_paginas_pncp(parametros: dict) -> list:
     """Reúne os registros de todas as páginas de uma consulta ao PNCP."""
