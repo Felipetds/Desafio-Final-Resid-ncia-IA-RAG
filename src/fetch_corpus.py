@@ -17,6 +17,14 @@ def carregar_manifesto(caminho: Path) -> dict:
     return dados
 
 
+
+def verificar_destino_livre(destino: Path) -> None:
+    """Impede que uma coleta substitua dados brutos já existentes."""
+    if destino.exists():
+        raise FileExistsError(
+            f"Arquivo já existe e não será sobrescrito: {destino}"
+        )
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Ferramenta de coleta do corpus")
     parser.add_argument(
