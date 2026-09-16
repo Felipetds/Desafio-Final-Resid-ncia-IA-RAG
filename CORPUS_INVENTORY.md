@@ -76,3 +76,97 @@ Este inventário documenta o recorte oficial utilizado para a base estruturada d
 ### Observação
 
 O documento foi coletado diretamente da fonte oficial do Governo Federal e armazenado na área de dados brutos do projeto. A página preserva as referências e indicações de alterações e regulamentações disponibilizadas na fonte oficial.
+
+    
+## Base conversacional — Ata de Registro de Preços
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Conversacional
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **Órgão:** Fundação Oswaldo Cruz — INCQS/FIOCRUZ
+- **CNPJ do órgão:** 33.781.055/0020-06
+- **Ano da contratação:** 2026
+- **Sequencial da contratação:** 227
+- **Ata:** nº 00001
+- **Objeto:** Aquisição de materiais da marca AGILENT
+- **Formato:** PDF
+- **Páginas:** 8
+- **Caracteres extraídos:** 23.597
+- **Arquivo bruto:** `data/raw/v1/conversacional/atas/fiocruz/2026/ata_00001.pdf`
+
+### Conteúdo disponível
+
+A ata contém informações sobre:
+
+- processo administrativo;
+- pregão eletrônico;
+- objeto da contratação;
+- itens e especificações;
+- fornecedor;
+- CNPJ da empresa;
+- quantidades;
+- valores unitários;
+- condições de garantia ou validade.
+
+### Sensibilidade
+
+O documento contém dados de contato de pessoas físicas vinculadas ao fornecedor, como nome, e-mail e telefone.
+
+Esses dados deverão ser tratados conforme as regras de sensibilidade e guardrails do projeto, evitando sua exposição desnecessária nas respostas do RAG.
+
+### Verificação
+
+- **Status HTTP:** 200
+- **Tipo identificado:** PDF
+- **Tamanho:** 117.978 bytes
+- **Texto extraído:** confirmado
+
+
+## Base conversacional — Ata INCA nº 00137/2026
+
+### Identificação
+
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **Órgão:** Ministério da Saúde — Instituto Nacional de Câncer (INCA)
+- **CNPJ do órgão no PNCP:** 00.394.544/0001-85
+- **Ano e sequencial da contratação:** 2026 / 359
+- **Objeto:** Aquisição de rodízios para camas elétricas Stryker
+- **Fornecedor identificado no documento:** AGIMED COMERCIO DE EQUIPAMENTOS LTDA
+- **Formato:** PDF
+- **Páginas:** 10
+- **Caracteres extraídos:** 32.996
+- **Arquivo bruto:** `data/raw/v1/conversacional/atas/ministerio_saude/2026/ata_00137.pdf`
+
+### Verificação e sensibilidade
+
+- **Status HTTP na coleta:** 200
+- **Tipo identificado pelo conteúdo:** PDF
+- **Texto extraído:** confirmado
+- **Tratamento necessário:** verificar e mascarar dados pessoais de contato antes de disponibilizar trechos nas respostas do RAG.
+
+
+## Base conversacional — Ata EBSERH nº 00191/2026
+
+### Identificação
+
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **Órgão:** Empresa Brasileira de Serviços Hospitalares (EBSERH)
+- **Unidade:** Complexo Hospitalar da Universidade Federal do Rio de Janeiro (CH-UFRJ)
+- **CNPJ do órgão no registro PNCP:** 15.126.437/0003-05
+- **Ano e sequencial da contratação:** 2026 / 676
+- **Número de controle PNCP:** `15126437000305-1-000676/2026-000001`
+- **Objeto:** Aquisição de produtos para saúde — peças para mamógrafos (chassis)
+- **Formato:** PDF
+- **Páginas:** 12
+- **Caracteres extraídos:** 49.243
+- **Arquivo bruto:** `data/raw/v1/conversacional/atas/ebserh/2026/ata_00191.pdf`
+
+### Verificação e sensibilidade
+
+- **Status HTTP na coleta:** 200
+- **Tipo identificado pelo conteúdo:** PDF
+- **Tamanho:** 146.112 bytes
+- **Texto extraído:** confirmado
+- **Tratamento necessário:** verificar e mascarar dados pessoais, como identificadores funcionais e contatos, antes de disponibilizar trechos nas respostas do RAG.
