@@ -28,3 +28,29 @@ Planejamento de Atividades: Liderando a organização inicial, estruturei e dist
 * Elaborar o PERSONAS.md.
 * Criar o corpus_manifest.yaml.
 * Definir a divisão de responsabilidades da equipe.
+
+### Encontro 2 - 16/09/2026 
+
+### Minha Contribuição
+
+Coleta e Curadoria de Dados: Estou realizando a busca, seleção e extração dos dados brutos e documentos referentes ao Cenário 1 — Contratações Públicas do Estado do Rio de Janeiro.
+
+Gestão do Repositório e Equipe: Mantendo a organização da equipe e a estrutura do repositório (derivado do fork do professor) atualizadas conforme a evolução das entregas.
+
+Planejamento da Base: Mapeando a estrutura das fontes para facilitar a posterior indexação e criação do manifesto do corpus.
+
+### Uso de IA
+
+Utilizei assistente de IA para apoiar na organização das diretrizes de coleta e na triagem das estruturas de dados. Todo o conteúdo foi validado, revisado e aplicado diretamente por mim.
+
+### Resumo da Equipe
+
+A equipe avançou para a fase de execução, concentrando esforços na coleta e estruturação dos dados do Cenário 1 e no planejamento da documentação técnica.
+
+### Próximos Passos
+
+Finalizar a coleta e higienização dos dados do Cenário 1.
+
+Criar o arquivo corpus_manifest.yaml para registrar as fontes coletadas.
+
+Iniciar o rascunho dos documentos ARQUITETURA.md e PERSONAS.md.
