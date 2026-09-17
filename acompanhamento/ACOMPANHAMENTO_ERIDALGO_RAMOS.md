@@ -57,3 +57,23 @@ Finalizar e otimizar os scripts de ingestão de dados e criação de embeddings.
 Refinar a interface no Streamlit integrando com o pipeline de busca indexado.
 
 Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingestão, indexação e avaliação.
+
+
+---
+
+### Encontro — 17/09/2026
+
+**Minhas Atividades:**
+
+* **Ordem 2 Concluída (`src/ingest.py`):** 
+  * Implementei o script de processamento e fatiamento de documentos (*chunking*).
+  * Apliquei os metadados obrigatórios do contrato do projeto (`source_file`, `doc_type`, `sensitivity: publico`, `chunk_id`, `base_id`).
+  * Configurei o fluxo com suporte a *fixtures* (dados de teste estruturados) para garantir resiliência frente à instabilidade temporária do portal PNCP do RJ.
+
+* **Ordem 3 Concluída (`src/index.py`):** 
+  * Integrei a API de embeddings do modelo da residência via Ollama.
+  * Implementei o processamento em lotes (*batching*) com limite de 50 chunks e controle de requisições (*rate limit* de 10 segundos).
+  * Construí e persisti com sucesso os índices híbridos: **FAISS** (busca densa por similaridade vetorial) e **BM25** (busca esparsa por palavras-chave).
+
+* **Versionamento:** 
+  * Códigos-fonte devidamente versionados e enviados ao repositório remoto (`commit: 11af8b7`).
