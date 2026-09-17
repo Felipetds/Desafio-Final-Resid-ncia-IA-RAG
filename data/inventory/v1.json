@@ -1,0 +1,6142 @@
+
+Grande desafio RAG
+Grande desafio RAG_
+
+[ ]
+import requests
+
+url = "https://pncp.gov.br/api/pncp/v1/modalidades?statusAtivo=true"
+
+resposta = requests.get(url, timeout=30)
+
+print("Status:", resposta.status_code)
+
+dados = resposta.json()
+
+
+Status: 200
+ID: 1 | Nome: Leilão - Eletrônico
+ID: 2 | Nome: Diálogo Competitivo
+ID: 3 | Nome: Concurso
+ID: 4 | Nome: Concorrência - Eletrônica
+ID: 5 | Nome: Concorrência - Presencial
+ID: 6 | Nome: Pregão - Eletrônico
+ID: 7 | Nome: Pregão - Presencial
+ID: 8 | Nome: Dispensa
+ID: 9 | Nome: Inexigibilidade
+ID: 10 | Nome: Manifestação de Interesse
+ID: 11 | Nome: Pré-qualificação
+ID: 12 | Nome: Credenciamento
+ID: 13 | Nome: Leilão - Presencial
+ID: 14 | Nome: Inaplicabilidade da Licitação
+ID: 15 | Nome: Chamada pública
+ID: 16 | Nome: Concorrência – Eletrônica Internacional 
+ID: 17 | Nome: Concorrência – Presencial Internacional 
+ID: 18 | Nome: Pregão – Eletrônico Internacional 
+ID: 19 | Nome: Pregão – Presencial Internacional 
+
+[ ]
+import requests
+
+url = "https://pncp.gov.br/api/pncp/v1/contratacoes"
+
+params = {
+    "dataInicial": "2026-03-01",
+    "dataFinal": "2026-03-31",
+    "modalidadeId": 6,
+    "uf": "RJ",
+    "pagina": 1,
+    "tamanhoPagina": 10
+}
+
+resposta = requests.get(url, params=params, timeout=60)
+
+print("URL consultada:")
+print(resposta.url)
+
+print("\nStatus:", resposta.status_code)
+
+print("\nResposta:")
+print(resposta.text[:5000])
+URL consultada:
+https://pncp.gov.br/api/pncp/v1/contratacoes?dataInicial=2026-03-01&dataFinal=2026-03-31&modalidadeId=6&uf=RJ&pagina=1&tamanhoPagina=10
+
+Status: 404
+
+Resposta:
+{"timestamp":"2026-09-16T17:41:18.465+00:00","status":404,"error":"Not Found","message":"No message available","path":"/pncp-api/v1/contratacoes"}
+
+[ ]
+import requests
+
+url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+
+params = {
+    "dataInicial": "2026-03-01",
+    "dataFinal": "2026-03-31",
+    "codigoModalidadeContratacao": 6,
+    "uf": "RJ",
+    "pagina": 1,
+    "tamanhoPagina": 10
+}
+
+resposta = requests.get(url, params=params, timeout=60)
+
+print("URL consultada:")
+print(resposta.url)
+
+print("\nStatus:", resposta.status_code)
+
+print("\nResposta:")
+print(resposta.text[:10000])
+URL consultada:
+https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao?dataInicial=2026-03-01&dataFinal=2026-03-31&codigoModalidadeContratacao=6&uf=RJ&pagina=1&tamanhoPagina=10
+
+Status: 422
+
+Resposta:
+{"path":"/pncp-consulta/v1/contratacoes/publicacao","message":"Data Inicial inválida, deve estar no formato yyyyMMdd.","error":"422 UNPROCESSABLE_ENTITY","timestamp":"2026-09-16T14:54:16.472-03:00","status":"422"}
+
+[ ]
+import requests
+
+url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+
+params = {
+    "dataInicial": "20260301",
+    "dataFinal": "20260331",
+    "codigoModalidadeContratacao": 6,
+    "uf": "RJ",
+    "pagina": 1,
+    "tamanhoPagina": 10
+}
+
+resposta = requests.get(url, params=params, timeout=60)
+
+print("URL consultada:")
+print(resposta.url)
+
+print("\nStatus:", resposta.status_code)
+
+print("\nResposta:")
+print(resposta.text[:10000])
+URL consultada:
+https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao?dataInicial=20260301&dataFinal=20260331&codigoModalidadeContratacao=6&uf=RJ&pagina=1&tamanhoPagina=10
+
+Status: 200
+
+Resposta:
+{"data":[{"srp":false,"orgaoEntidade":{"cnpj":"23274194000119","esferaId":"F","razaoSocial":"FURNAS-CENTRAIS ELETRICAS S.A.","poderId":"E"},"anoCompra":2026,"sequencialCompra":15,"dataInclusao":"2026-03-02T07:00:59","dataPublicacaoPncp":"2026-03-02T07:00:59","dataAtualizacao":"2026-03-02T07:00:59","numeroCompra":"90018","unidadeOrgao":{"ufNome":"Rio de Janeiro","codigoUnidade":"910847","nomeUnidade":"ELETROBRAS TERMONUCLEAR S/A","ufSigla":"RJ","municipioNome":"Rio de Janeiro","codigoIbge":"3304557"},"amparoLegal":{"descricao":"pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns","nome":"Lei 14.133/2021, Art. 28, I","codigo":1},"dataAberturaProposta":"2026-03-02T08:00:00","dataEncerramentoProposta":"2026-03-17T09:30:00","informacaoComplementar":"O Edital deverá ser baixado do site www.gov.br/compras.    No caso de discrepância entre a descrição do material no Portal Comprasnet e a descrição do material no Edital, prevalecerá a descrição do material do edital. Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=91084705900182026","processo":"DAB.A/PE-018/2026","objetoCompra":"Fornecimento de ROTOR DE BOMBA","linkSistemaOrigem":"https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=acompanhamento-compra&compra=91084705900182026","justificativaPresencial":null,"unidadeSubRogada":null,"orgaoSubRogado":null,"valorTotalHomologado":44999.00,"linkProcessoEletronico":null,"emendaParlamentar":null,"numeroControlePNCP":"23274194000119-1-000015/2026","modalidadeId":6,"modoDisputaId":1,"dataAtualizacaoGlobal":"2026-03-23T07:48:41","valorTotalEstimado":79200.00,"modalidadeNome":"Pregão - Eletrônico","modoDisputaNome":"Aberto","tipoInstrumentoConvocatorioCodigo":1,"tipoInstrumentoConvocatorioNome":"Edital","fontesOrcamentarias":[],"situacaoCompraId":1,"situacaoCompraNome":"Divulgada no PNCP","usuarioNome":"Compras.gov.br"},{"srp":true,"orgaoEntidade":{"cnpj":"33781055000135","esferaId":"F","razaoSocial":"FUNDACAO OSWALDO CRUZ","poderId":"E"},"anoCompra":2026,"sequencialCompra":227,"dataInclusao":"2026-03-02T07:01:18","dataPublicacaoPncp":"2026-03-02T07:01:18","dataAtualizacao":"2026-03-02T07:01:18","numeroCompra":"90005","unidadeOrgao":{"ufNome":"Rio de Janeiro","codigoUnidade":"254448","nomeUnidade":"INSTITUTO NAC. DE CONTROLE E QUALID. EM SAUDE","ufSigla":"RJ","municipioNome":"Rio de Janeiro","codigoIbge":"3304557"},"amparoLegal":{"descricao":"pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns","nome":"Lei 14.133/2021, Art. 28, I","codigo":1},"dataAberturaProposta":"2026-03-02T08:00:00","dataEncerramentoProposta":"2026-03-13T09:00:00","informacaoComplementar":"Seguir as especificações e orientações contidas no Termo de Referência, Anexo I do Edital. Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=25444805900052026","processo":"25385000415202501","objetoCompra":"Aquisição de materiais da marca AGILENT.","linkSistemaOrigem":"https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=acompanhamento-compra&compra=25444805900052026","justificativaPresencial":null,"unidadeSubRogada":null,"orgaoSubRogado":null,"valorTotalHomologado":133721.00,"linkProcessoEletronico":null,"emendaParlamentar":null,"numeroControlePNCP":"33781055000135-1-000227/2026","modalidadeId":6,"modoDisputaId":1,"dataAtualizacaoGlobal":"2026-03-16T15:57:41","valorTotalEstimado":320265.67,"modalidadeNome":"Pregão - Eletrônico","modoDisputaNome":"Aberto","tipoInstrumentoConvocatorioCodigo":1,"tipoInstrumentoConvocatorioNome":"Edital","fontesOrcamentarias":[],"situacaoCompraId":1,"situacaoCompraNome":"Divulgada no PNCP","usuarioNome":"Compras.gov.br"},{"srp":false,"orgaoEntidade":{"cnpj":"23274194000119","esferaId":"F","razaoSocial":"FURNAS-CENTRAIS ELETRICAS S.A.","poderId":"E"},"anoCompra":2026,"sequencialCompra":16,"dataInclusao":"2026-03-02T07:01:24","dataPublicacaoPncp":"2026-03-02T07:01:24","dataAtualizacao":"2026-03-02T07:01:24","numeroCompra":"90021","unidadeOrgao":{"ufNome":"Rio de Janeiro","codigoUnidade":"910847","nomeUnidade":"ELETROBRAS TERMONUCLEAR S/A","ufSigla":"RJ","municipioNome":"Rio de Janeiro","codigoIbge":"3304557"},"amparoLegal":{"descricao":"pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns","nome":"Lei 14.133/2021, Art. 28, I","codigo":1},"dataAberturaProposta":"2026-03-02T09:00:00","dataEncerramentoProposta":"2026-03-12T09:30:00","informacaoComplementar":" Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=91084705900212026","processo":"DAB.A/PE-021/2026","objetoCompra":"Fornecimento de Tubos, Conectores e Buchas","linkSistemaOrigem":"https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=acompanhamento-compra&compra=91084705900212026","justificativaPresencial":null,"unidadeSubRogada":null,"orgaoSubRogado":null,"valorTotalHomologado":103593.60,"linkProcessoEletronico":null,"emendaParlamentar":null,"numeroControlePNCP":"23274194000119-1-000016/2026","modalidadeId":6,"modoDisputaId":1,"dataAtualizacaoGlobal":"2026-03-31T08:23:47","valorTotalEstimado":106062.00,"modalidadeNome":"Pregão - Eletrônico","modoDisputaNome":"Aberto","tipoInstrumentoConvocatorioCodigo":1,"tipoInstrumentoConvocatorioNome":"Edital","fontesOrcamentarias":[],"situacaoCompraId":1,"situacaoCompraNome":"Divulgada no PNCP","usuarioNome":"Compras.gov.br"},{"srp":false,"orgaoEntidade":{"cnpj":"27772078000180","esferaId":"M","razaoSocial":"MARICA CAMARA MUNICIPAL","poderId":"L"},"anoCompra":2026,"sequencialCompra":2,"dataInclusao":"2026-03-02T07:01:59","dataPublicacaoPncp":"2026-03-02T07:01:59","dataAtualizacao":"2026-03-18T07:20:21","numeroCompra":"90001","unidadeOrgao":{"ufNome":"Rio de Janeiro","codigoUnidade":"930368","nomeUnidade":"CAMARA MUNICIPAL DE MARICA - RJ","ufSigla":"RJ","municipioNome":"Maricá","codigoIbge":"3302700"},"amparoLegal":{"descricao":"pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns","nome":"Lei 14.133/2021, Art. 28, I","codigo":1},"dataAberturaProposta":"2026-03-18T09:00:00","dataEncerramentoProposta":"2026-04-01T11:00:00","informacaoComplementar":" Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=93036805900012026","processo":"072/2025","objetoCompra":"Contratação de empresa especializada no fornecimento em Software de como Serviço (SaaS), hospedado em nuvem, com disponibilidade mínima mensal de 99,5% (excluídas janelas de manutenção previamente acordadas), escalabilidade, redundância e trilhas de auditoria.","linkSistemaOrigem":"https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=acompanhamento-compra&compra=93036805900012026","justificativaPresencial":null,"unidadeSubRogada":null,"orgaoSubRogado":null,"valorTotalHomologado":274200.00,"linkProcessoEletronico":null,"emendaParlamentar":null,"numeroControlePNCP":"27772078000180-1-000002/2026","modalidadeId":6,"modoDisputaId":1,"dataAtualizacaoGlobal":"2026-04-16T14:16:16","valorTotalEstimado":383700.00,"modalidadeNome":"Pregão - Eletrônico","modoDisputaNome":"Aberto","tipoInstrumentoConvocatorioCodigo":1,"tipoInstrumentoConvocatorioNome":"Edital","fontesOrcamentarias":[],"situacaoCompraId":1,"situacaoCompraNome":"Divulgada no PNCP","usuarioNome":"Compras.gov.br"},{"srp":false,"orgaoEntidade":{"cnpj":"33781055000135","esferaId":"F","razaoSocial":"FUNDACAO OSWALDO CRUZ","poderId":"E"},"anoCompra":2026,"sequencialCompra":228,"dataInclusao":"2026-03-02T07:03:54","dataPublicacaoPncp":"2026-03-02T07:03:54","dataAtualizacao":"2026-03-04T07:37:40","numeroCompra":"90016","unidadeOrgao":{"ufNome":"Rio de Janeiro","codigoUnidade":"254446","nomeUnidade":"INSTITUTO DE TECNOLOGIA EM FARMACOS","ufSigla":"RJ","municipioNome":"Rio de Janeiro","codigoIbge":"3304557"},"amparoLegal":{"descricao":"pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns","nome":"Lei 14.133/2021, Art. 28, I","codigo":1},"dataAberturaProposta":"2026-03-04T08:30:00","dataEncerramentoProposta":"2026-04-07T09:30:00","informacaoComplementar":" Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=25444605900162026","processo":"25387.000480/2025","objetoCompra":"Aquisição de Insumo farmacêutico Ativo - Isoniazida","linkSistemaOrigem":"https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=acompanhamento-compra&compra=25444605900162026","justificativaPresencial":null,"unidadeSubRogada":null,"orgaoSubRogado":null,"valorTotalHomologado":null,"linkProcessoEletronico":null,"emendaParlamentar":null,"numeroControlePNCP":"33781055000135-1-000228/2026","modalidadeId":6,"modoDisputaId":3,"dataAtualizacaoGlobal":"2026-04-13T17:46:33","valorTotalEstimado":0.00,"modalidadeNome":"Pregão - Eletrônico","modoDisputaNome":"Aberto-Fechado","tipoInstrumentoConvocatorioCodigo":1,"tipoInstrumentoConvocatorioNome":"Edital","fontesOrcamentarias":[],"situacaoCompraId":1,"situacaoCompraNome":"Divulgada no PNCP","usuarioNome":"Compras.gov.br"},{"srp":true,"orgaoEntidade":{"cnpj":"00394452000103","esferaId":"F","razaoSocial":"COMANDO DO EXERCITO","poderId":"E"},"anoCompra":2025,"sequencialCompra":25300,"dataInclusao":"2026-03-02T07:04:00","dataPublicacaoPncp":"2026-03-02T07:04:00","dataAtualizacao":"2026-03-02T07:04:00","numeroCompra":"90001","unidadeOrgao":{"ufNome":"Rio de Janeiro","codigoUnidade":"160290","nomeUnidad
+
+[ ]
+import requests
+
+url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+
+params = {
+    "dataInicial": "20260301",
+    "dataFinal": "20260331",
+    "codigoModalidadeContratacao": 6,
+    "uf": "RJ",
+    "pagina": 1,
+    "tamanhoPagina": 10
+}
+
+resposta = requests.get(url, params=params, timeout=60)
+
+print("Status:", resposta.status_code)
+
+dados = resposta.json()
+
+print("\nQuantidade retornada nesta página:", len(dados["data"]))
+print("Total de registros:", dados["totalRegistros"])
+print("Total de páginas:", dados["totalPaginas"])
+print("Página atual:", dados["numeroPagina"])
+print("Páginas restantes:", dados["paginasRestantes"])
+Status: 200
+
+Quantidade retornada nesta página: 10
+Total de registros: 1358
+Total de páginas: 136
+Página atual: 1
+Páginas restantes: 135
+
+[ ]
+
+Status: 200
+
+Quantidade retornada nesta página: 8
+Total de registros: 1358
+Total de páginas: 136
+Página atual: 136
+Páginas restantes: 0
+
+[ ]
+import requests
+import time
+
+url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+
+todos_registros = []
+
+for pagina in range(1, 3):
+    params = {
+        "dataInicial": "20260301",
+        "dataFinal": "20260331",
+        "codigoModalidadeContratacao": 6,
+        "uf": "RJ",
+        "pagina": pagina,
+        "tamanhoPagina": 10
+    }
+
+    resposta = requests.get(url, params=params, timeout=60)
+
+    print(f"Página {pagina} - Status: {resposta.status_code}")
+
+    dados = resposta.json()
+
+    registros = dados["data"]
+    todos_registros.extend(registros)
+
+    print(f"Registros recebidos: {len(registros)}")
+
+    time.sleep(2)
+
+print("\nTotal coletado no teste:", len(todos_registros))
+
+
+[ ]
+import requests
+import time
+
+url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+
+params = {
+    "dataInicial": "20260301",
+    "dataFinal": "20260331",
+    "codigoModalidadeContratacao": 6,
+    "uf": "RJ",
+    "pagina": 1,
+    "tamanhoPagina": 10
+}
+
+for tentativa in range(1, 4):
+
+    print(f"Tentativa {tentativa}...")
+
+    resposta = requests.get(url, params=params, timeout=60)
+
+    print("Status:", resposta.status_code)
+
+    if resposta.status_code == 200:
+        dados = resposta.json()
+
+        print("Registros recebidos:", len(dados["data"]))
+        print("Total de registros:", dados["totalRegistros"])
+        print("Total de páginas:", dados["totalPaginas"])
+
+        break
+
+    else:
+        print("Resposta da API:")
+        print(resposta.text[:500])
+        print("Aguardando 5 segundos...\n")
+        time.sleep(5)
+Tentativa 1...
+Status: 200
+Registros recebidos: 10
+Total de registros: 1358
+Total de páginas: 136
+
+[ ]
+import requests
+import time
+
+url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+
+todos_registros = []
+
+for pagina in range(1, 3):
+
+    print(f"\nConsultando página {pagina}...")
+
+    for tentativa in range(1, 4):
+
+        resposta = requests.get(
+            url,
+            params={
+                "dataInicial": "20260301",
+                "dataFinal": "20260331",
+                "codigoModalidadeContratacao": 6,
+                "uf": "RJ",
+                "pagina": pagina,
+                "tamanhoPagina": 10
+            },
+            timeout=60
+        )
+
+        print(f"Tentativa {tentativa} - Status: {resposta.status_code}")
+
+        if resposta.status_code == 200:
+            dados = resposta.json()
+            registros = dados["data"]
+
+            todos_registros.extend(registros)
+
+            print("Registros recebidos:", len(registros))
+            break
+
+        else:
+            print("Falha temporária. Aguardando 5 segundos...")
+            time.sleep(5)
+
+    time.sleep(2)
+
+print("\n==============================")
+print("TOTAL DO TESTE:", len(todos_registros))
+print("==============================")
+
+Consultando página 1...
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+
+Consultando página 2...
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+
+==============================
+TOTAL DO TESTE: 20
+==============================
+
+[ ]
+import requests
+import time
+import json
+from pathlib import Path
+
+url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+
+todos_registros = []
+
+total_paginas = 136
+
+for pagina in range(1, total_paginas + 1):
+
+    print(f"\nPágina {pagina} de {total_paginas}")
+
+    sucesso = False
+
+    for tentativa in range(1, 4):
+
+        try:
+            resposta = requests.get(
+                url,
+                params={
+                    "dataInicial": "20260301",
+                    "dataFinal": "20260331",
+                    "codigoModalidadeContratacao": 6,
+                    "uf": "RJ",
+                    "pagina": pagina,
+                    "tamanhoPagina": 10
+                },
+                timeout=60
+            )
+
+            print(f"Tentativa {tentativa} - Status: {resposta.status_code}")
+
+            if resposta.status_code == 200:
+
+                dados = resposta.json()
+
+                registros = dados["data"]
+
+                todos_registros.extend(registros)
+
+                print(f"Registros recebidos: {len(registros)}")
+                print(f"Total acumulado: {len(todos_registros)}")
+
+                sucesso = True
+                break
+
+            else:
+                print("Falha temporária. Aguardando 5 segundos...")
+                time.sleep(5)
+
+        except Exception as erro:
+            print("Erro:", erro)
+            print("Aguardando 5 segundos...")
+            time.sleep(5)
+
+    if not sucesso:
+        print(f"ERRO: não foi possível coletar a página {pagina}.")
+        break
+
+    time.sleep(2)
+
+print("\n================================")
+print("COLETA FINALIZADA")
+print("================================")
+print("Total de registros coletados:", len(todos_registros))
+
+Página 1 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 10
+
+Página 2 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 20
+
+Página 3 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 30
+
+Página 4 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 40
+
+Página 5 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 50
+
+Página 6 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 60
+
+Página 7 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 70
+
+Página 8 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 80
+
+Página 9 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 90
+
+Página 10 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 100
+
+Página 11 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 110
+
+Página 12 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 120
+
+Página 13 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 130
+
+Página 14 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 140
+
+Página 15 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 150
+
+Página 16 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 160
+
+Página 17 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 170
+
+Página 18 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 180
+
+Página 19 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 190
+
+Página 20 de 136
+Tentativa 1 - Status: 400
+Falha temporária. Aguardando 5 segundos...
+Tentativa 2 - Status: 200
+Registros recebidos: 10
+Total acumulado: 200
+
+Página 21 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 210
+
+Página 22 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 220
+
+Página 23 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 230
+
+Página 24 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 240
+
+Página 25 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 250
+
+Página 26 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 260
+
+Página 27 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 270
+
+Página 28 de 136
+Tentativa 1 - Status: 500
+Falha temporária. Aguardando 5 segundos...
+Tentativa 2 - Status: 500
+Falha temporária. Aguardando 5 segundos...
+Erro: HTTPSConnectionPool(host='pncp.gov.br', port=443): Read timed out. (read timeout=60)
+Aguardando 5 segundos...
+ERRO: não foi possível coletar a página 28.
+
+================================
+COLETA FINALIZADA
+================================
+Total de registros coletados: 270
+
+[ ]
+import json
+
+with open("pncp_rj_pregao_marco_2026_parcial.json", "w", encoding="utf-8") as arquivo:
+    json.dump(todos_registros, arquivo, ensure_ascii=False, indent=2)
+
+print("Arquivo salvo com sucesso!")
+print("Registros salvos:", len(todos_registros))
+Arquivo salvo com sucesso!
+Registros salvos: 270
+
+[ ]
+import requests
+import time
+
+url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+
+for pagina in range(28, 137):
+
+    print(f"\nPágina {pagina} de 136")
+
+    sucesso = False
+
+    for tentativa in range(1, 6):
+
+        try:
+            resposta = requests.get(
+                url,
+                params={
+                    "dataInicial": "20260301",
+                    "dataFinal": "20260331",
+                    "codigoModalidadeContratacao": 6,
+                    "uf": "RJ",
+                    "pagina": pagina,
+                    "tamanhoPagina": 10
+                },
+                timeout=90
+            )
+
+            print(f"Tentativa {tentativa} - Status: {resposta.status_code}")
+
+            if resposta.status_code == 200:
+
+                dados = resposta.json()
+                registros = dados["data"]
+
+                todos_registros.extend(registros)
+
+                print("Registros recebidos:", len(registros))
+                print("Total acumulado:", len(todos_registros))
+
+                sucesso = True
+                break
+
+            else:
+                print("Resposta não esperada.")
+                print(resposta.text[:300])
+                print("Aguardando 10 segundos...")
+                time.sleep(10)
+
+        except requests.exceptions.RequestException as erro:
+
+            print("Erro de conexão:", erro)
+            print("Aguardando 10 segundos...")
+            time.sleep(10)
+
+    if not sucesso:
+
+        print(f"\nATENÇÃO: página {pagina} não foi coletada.")
+        print("A coleta foi interrompida para não perder o controle dos dados.")
+        break
+
+    time.sleep(3)
+
+print("\n================================")
+print("COLETA PARCIAL/FINALIZADA")
+print("================================")
+print("Total de registros:", len(todos_registros))
+
+Página 28 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 280
+
+Página 29 de 136
+Tentativa 1 - Status: 500
+Resposta não esperada.
+Erro na comunicação com o banco de dados.
+Aguardando 10 segundos...
+Tentativa 2 - Status: 502
+Resposta não esperada.
+<html><body><h1>502 Bad Gateway</h1>
+The server returned an invalid or incomplete response.
+</body></html>
+
+Aguardando 10 segundos...
+Tentativa 3 - Status: 503
+Resposta não esperada.
+<html><body><h1>503 Service Unavailable</h1>
+No server is available to handle this request.
+</body></html>
+
+Aguardando 10 segundos...
+Tentativa 4 - Status: 200
+Registros recebidos: 10
+Total acumulado: 290
+
+Página 30 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 300
+
+Página 31 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 310
+
+Página 32 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 320
+
+Página 33 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 330
+
+Página 34 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 340
+
+Página 35 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 350
+
+Página 36 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 360
+
+Página 37 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 370
+
+Página 38 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 380
+
+Página 39 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 390
+
+Página 40 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 400
+
+Página 41 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 410
+
+Página 42 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 420
+
+Página 43 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 430
+
+Página 44 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 440
+
+Página 45 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 450
+
+Página 46 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 460
+
+Página 47 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 470
+
+Página 48 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 480
+
+Página 49 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 490
+
+Página 50 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 500
+
+Página 51 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 510
+
+Página 52 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 520
+
+Página 53 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 530
+
+Página 54 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 540
+
+Página 55 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 550
+
+Página 56 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 560
+
+Página 57 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 570
+
+Página 58 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 580
+
+Página 59 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 590
+
+Página 60 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 600
+
+Página 61 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 610
+
+Página 62 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 620
+
+Página 63 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 630
+
+Página 64 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 640
+
+Página 65 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 650
+
+Página 66 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 660
+
+Página 67 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 670
+
+Página 68 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 680
+
+Página 69 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 690
+
+Página 70 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 700
+
+Página 71 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 710
+
+Página 72 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 720
+
+Página 73 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 730
+
+Página 74 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 740
+
+Página 75 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 750
+
+Página 76 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 760
+
+Página 77 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 770
+
+Página 78 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 780
+
+Página 79 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 790
+
+Página 80 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 800
+
+Página 81 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 810
+
+Página 82 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 820
+
+Página 83 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 830
+
+Página 84 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 840
+
+Página 85 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 850
+
+Página 86 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 860
+
+Página 87 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 870
+
+Página 88 de 136
+Tentativa 1 - Status: 500
+Resposta não esperada.
+{"timestamp":"2026-09-16T18:26:25.142+00:00","status":500,"error":"Internal Server Error","message":"Failed to obtain JDBC Connection; nested exception is java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.","path":"/pncp-consulta/v1
+Aguardando 10 segundos...
+Tentativa 2 - Status: 500
+Resposta não esperada.
+Erro na comunicação com o banco de dados.
+Aguardando 10 segundos...
+Tentativa 3 - Status: 500
+Resposta não esperada.
+{"timestamp":"2026-09-16T18:28:02.220+00:00","status":500,"error":"Internal Server Error","message":"Failed to obtain JDBC Connection; nested exception is java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.","path":"/pncp-consulta/v1
+Aguardando 10 segundos...
+Tentativa 4 - Status: 200
+Registros recebidos: 10
+Total acumulado: 880
+
+Página 89 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 890
+
+Página 90 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 900
+
+Página 91 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 910
+
+Página 92 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 920
+
+Página 93 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 930
+
+Página 94 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 940
+
+Página 95 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 950
+
+Página 96 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 960
+
+Página 97 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 970
+
+Página 98 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 980
+
+Página 99 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 990
+
+Página 100 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1000
+
+Página 101 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1010
+
+Página 102 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1020
+
+Página 103 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1030
+
+Página 104 de 136
+Tentativa 1 - Status: 503
+Resposta não esperada.
+<html><body><h1>503 Service Unavailable</h1>
+No server is available to handle this request.
+</body></html>
+
+Aguardando 10 segundos...
+Tentativa 2 - Status: 503
+Resposta não esperada.
+<html><body><h1>503 Service Unavailable</h1>
+No server is available to handle this request.
+</body></html>
+
+Aguardando 10 segundos...
+Tentativa 3 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1040
+
+Página 105 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1050
+
+Página 106 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1060
+
+Página 107 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1070
+
+Página 108 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1080
+
+Página 109 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1090
+
+Página 110 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1100
+
+Página 111 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1110
+
+Página 112 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1120
+
+Página 113 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1130
+
+Página 114 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1140
+
+Página 115 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1150
+
+Página 116 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1160
+
+Página 117 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1170
+
+Página 118 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1180
+
+Página 119 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1190
+
+Página 120 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1200
+
+Página 121 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1210
+
+Página 122 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1220
+
+Página 123 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1230
+
+Página 124 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1240
+
+Página 125 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1250
+
+Página 126 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1260
+
+Página 127 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1270
+
+Página 128 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1280
+
+Página 129 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1290
+
+Página 130 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1300
+
+Página 131 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1310
+
+Página 132 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1320
+
+Página 133 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1330
+
+Página 134 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1340
+
+Página 135 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 10
+Total acumulado: 1350
+
+Página 136 de 136
+Tentativa 1 - Status: 200
+Registros recebidos: 8
+Total acumulado: 1358
+
+================================
+COLETA PARCIAL/FINALIZADA
+================================
+Total de registros: 1358
+
+[ ]
+
+================================
+VERIFICAÇÃO DA COLETA
+================================
+Total de registros: 1358
+IDs PNCP encontrados: 1358
+IDs únicos: 1358
+Duplicados: 0
+UFs encontradas: {'RJ'}
+Modalidades encontradas: {6}
+Primeira publicação: 2026-03-02T07:00:59
+Última publicação: 2026-03-31T16:54:47
+
+[ ]
+import os
+import json
+
+# Caminho da coleta
+pasta = "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03"
+
+# Cria as pastas
+os.makedirs(pasta, exist_ok=True)
+
+# Salva os 1.358 registros
+arquivo = f"{pasta}/contratacoes_publicacao.json"
+
+with open(arquivo, "w", encoding="utf-8") as f:
+    json.dump(todos_registros, f, ensure_ascii=False, indent=2)
+
+print("================================")
+print("ARQUIVO SALVO")
+print("================================")
+print("Caminho:", arquivo)
+print("Registros:", len(todos_registros))
+================================
+ARQUIVO SALVO
+================================
+Caminho: data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json
+Registros: 1358
+
+[ ]
+import json
+import os
+
+arquivo = "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+
+print("================================")
+print("VERIFICAÇÃO DO ARQUIVO")
+print("================================")
+
+print("Arquivo existe:", os.path.exists(arquivo))
+print("Tamanho:", os.path.getsize(arquivo), "bytes")
+
+with open(arquivo, "r", encoding="utf-8") as f:
+    dados = json.load(f)
+
+print("Registros lidos:", len(dados))
+print("Primeiro registro:", dados[0]["numeroControlePNCP"])
+print("Último registro:", dados[-1]["numeroControlePNCP"])
+================================
+VERIFICAÇÃO DO ARQUIVO
+================================
+Arquivo existe: True
+Tamanho: 3145518 bytes
+Registros lidos: 1358
+Primeiro registro: 23274194000119-1-000015/2026
+Último registro: 32165706000108-1-000037/2026
+
+[ ]
+print(open(".gitignore", "r", encoding="utf-8").read())
+
+
+[ ]
+import os
+
+print("Pasta atual:")
+print(os.getcwd())
+
+print("\nArquivos e pastas:")
+print(os.listdir())
+Pasta atual:
+/content
+
+Arquivos e pastas:
+['.config', 'pncp_rj_pregao_marco_2026_ate_pagina_87.json', 'data', 'pncp_rj_pregao_marco_2026_parcial.json', 'sample_data']
+
+[ ]
+!git clone https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+Cloning into 'repositorio1'...
+fatal: could not read Username for 'https://github.com': No such device or address
+
+[ ]
+
+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··········
+
+[ ]
+
+Cloning into 'repositorio1'...
+remote: Enumerating objects: 35, done.
+remote: Counting objects: 100% (35/35), done.
+remote: Compressing objects: 100% (30/30), done.
+remote: Total 35 (delta 14), reused 16 (delta 4), pack-reused 0 (from 0)
+Receiving objects: 100% (35/35), 22.86 KiB | 2.54 MiB/s, done.
+Resolving deltas: 100% (14/14), done.
+
+[ ]
+
+================================
+COLETA COPIADA PARA O REPOSITÓRIO
+================================
+Destino: /content/repositorio1/data/raw
+
+[ ]
+%cd /content/repositorio1
+
+print("================================")
+print("CONTEÚDO DO .gitignore")
+print("================================")
+
+with open(".gitignore", "r", encoding="utf-8") as f:
+    print(f.read())
+/content/repositorio1
+================================
+CONTEÚDO DO .gitignore
+================================
+# Environment variables
+.env
+
+# Python / Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Data and logs
+data/raw/
+index/
+logs/
+
+
+[ ]
+!git status --short
+
+[ ]
+inventario = """# Corpus Inventory
+
+## Base estruturada — PNCP
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Estruturada
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **API:** Consulta PNCP
+- **Endpoint:** `/v1/contratacoes/publicacao`
+- **UF:** RJ
+- **Modalidade:** 6 — Pregão Eletrônico
+- **Período consultado:** 01/03/2026 a 31/03/2026
+- **Total de registros:** 1.358
+- **Registros duplicados:** 0
+
+### Integridade
+
+- **Primeira publicação encontrada:** 02/03/2026 07:00:59
+- **Última publicação encontrada:** 31/03/2026 16:54:47
+- **IDs PNCP encontrados:** 1.358
+- **IDs PNCP únicos:** 1.358
+- **UFs encontradas:** RJ
+- **Modalidades encontradas:** 6
+
+### Dados brutos
+
+Os dados brutos foram coletados e armazenados localmente em:
+
+`data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json`
+
+A pasta `data/raw/` está configurada no `.gitignore` e não deve ser versionada no GitHub.
+
+### Principais informações disponíveis
+
+Os registros coletados incluem informações como:
+
+- órgão/entidade;
+- CNPJ do órgão;
+- unidade administrativa;
+- município;
+- objeto da contratação;
+- modalidade;
+- número da compra;
+- número de controle PNCP;
+- valores estimado e homologado;
+- datas de publicação e atualização;
+- situação da contratação;
+- fornecedor e demais informações disponíveis no retorno da API.
+
+### Observação
+
+Este inventário documenta o recorte oficial utilizado para a base estruturada do projeto.
+"""
+
+arquivo_inventario = "CORPUS_INVENTORY.md"
+
+with open(arquivo_inventario, "w", encoding="utf-8") as f:
+    f.write(inventario)
+
+print("================================")
+print("INVENTÁRIO CRIADO")
+print("================================")
+print("Arquivo:", arquivo_inventario)
+================================
+INVENTÁRIO CRIADO
+================================
+Arquivo: CORPUS_INVENTORY.md
+
+[ ]
+print("================================")
+print("CONTEÚDO DO INVENTÁRIO")
+print("================================")
+
+with open("CORPUS_INVENTORY.md", "r", encoding="utf-8") as f:
+    print(f.read())
+================================
+CONTEÚDO DO INVENTÁRIO
+================================
+# Corpus Inventory
+
+## Base estruturada — PNCP
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Estruturada
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **API:** Consulta PNCP
+- **Endpoint:** `/v1/contratacoes/publicacao`
+- **UF:** RJ
+- **Modalidade:** 6 — Pregão Eletrônico
+- **Período consultado:** 01/03/2026 a 31/03/2026
+- **Total de registros:** 1.358
+- **Registros duplicados:** 0
+
+### Integridade
+
+- **Primeira publicação encontrada:** 02/03/2026 07:00:59
+- **Última publicação encontrada:** 31/03/2026 16:54:47
+- **IDs PNCP encontrados:** 1.358
+- **IDs PNCP únicos:** 1.358
+- **UFs encontradas:** RJ
+- **Modalidades encontradas:** 6
+
+### Dados brutos
+
+Os dados brutos foram coletados e armazenados localmente em:
+
+`data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json`
+
+A pasta `data/raw/` está configurada no `.gitignore` e não deve ser versionada no GitHub.
+
+### Principais informações disponíveis
+
+Os registros coletados incluem informações como:
+
+- órgão/entidade;
+- CNPJ do órgão;
+- unidade administrativa;
+- município;
+- objeto da contratação;
+- modalidade;
+- número da compra;
+- número de controle PNCP;
+- valores estimado e homologado;
+- datas de publicação e atualização;
+- situação da contratação;
+- fornecedor e demais informações disponíveis no retorno da API.
+
+### Observação
+
+Este inventário documenta o recorte oficial utilizado para a base estruturada do projeto.
+
+
+[ ]
+!git status --short
+?? CORPUS_INVENTORY.md
+
+[ ]
+!git add CORPUS_INVENTORY.md
+!git commit -m "docs: adiciona inventario da base estruturada do PNCP"
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'root@f5f9ebda0301.(none)')
+
+[ ]
+!git config user.name "Janice Lira"
+
+[ ]
+!git config user.email "lira.janice@gmail.com"
+
+[ ]
+!git config user.name
+!git config user.email
+Janice Lira
+lira.janice@gmail.com
+
+[ ]
+!git add CORPUS_INVENTORY.md
+!git commit -m "docs: adiciona inventario da base estruturada do PNCP"
+[main ecb5504] docs: adiciona inventario da base estruturada do PNCP
+ 1 file changed, 54 insertions(+)
+ create mode 100644 CORPUS_INVENTORY.md
+
+[ ]
+!git push origin main
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 1.05 KiB | 1.05 MiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+   b52d485..ecb5504  main -> main
+
+[ ]
+import os
+
+pasta = "data/raw/v1/normativa/federal/lei_14133_2021"
+
+os.makedirs(pasta, exist_ok=True)
+
+print("Pasta criada:")
+print(pasta)
+Pasta criada:
+data/raw/v1/normativa/federal/lei_14133_2021
+
+[ ]
+import requests
+import os
+
+url = "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14133.htm"
+
+arquivo = "data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html"
+
+resposta = requests.get(url, timeout=30)
+
+print("Status HTTP:", resposta.status_code)
+
+if resposta.status_code == 200:
+    with open(arquivo, "wb") as f:
+        f.write(resposta.content)
+
+    print("Arquivo salvo com sucesso!")
+    print("Caminho:", arquivo)
+    print("Tamanho:", os.path.getsize(arquivo), "bytes")
+else:
+    print("Não foi possível baixar o documento.")
+
+
+[ ]
+import requests
+
+url = "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14133.htm"
+
+headers = {
+    "User-Agent": "Mozilla/5.0"
+}
+
+try:
+    resposta = requests.get(
+        url,
+        headers=headers,
+        timeout=(15, 120)
+    )
+
+    print("Status HTTP:", resposta.status_code)
+    print("Tamanho recebido:", len(resposta.content), "bytes")
+
+except Exception as e:
+    print("Erro:", type(e).__name__)
+    print(e)
+Status HTTP: 200
+Tamanho recebido: 649705 bytes
+
+[ ]
+arquivo = "data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html"
+
+with open(arquivo, "wb") as f:
+    f.write(resposta.content)
+
+print("================================")
+print("LEI SALVA")
+print("================================")
+print("Arquivo:", arquivo)
+print("Tamanho:", len(resposta.content), "bytes")
+================================
+LEI SALVA
+================================
+Arquivo: data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html
+Tamanho: 649705 bytes
+
+[ ]
+from bs4 import BeautifulSoup
+import os
+
+arquivo = "data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html"
+
+with open(arquivo, "r", encoding="utf-8") as f:
+    html = f.read()
+
+soup = BeautifulSoup(html, "html.parser")
+texto = soup.get_text(" ", strip=True)
+
+print("================================")
+print("VERIFICAÇÃO DA LEI")
+print("================================")
+print("Arquivo existe:", os.path.exists(arquivo))
+print("Tamanho:", os.path.getsize(arquivo), "bytes")
+print("Caracteres de texto:", len(texto))
+
+print("\nPrimeiros 500 caracteres:")
+print(texto[:500])
+
+
+[ ]
+from bs4 import BeautifulSoup
+
+arquivo = "data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html"
+
+# Lê o arquivo como bytes
+with open(arquivo, "rb") as f:
+    conteudo = f.read()
+
+# Tenta a codificação usada normalmente em páginas antigas do Planalto
+try:
+    html = conteudo.decode("windows-1252")
+except:
+    html = conteudo.decode("latin-1")
+
+soup = BeautifulSoup(html, "html.parser")
+texto = soup.get_text(" ", strip=True)
+
+print("================================")
+print("VERIFICAÇÃO DA LEI")
+print("================================")
+print("Arquivo existe:", True)
+print("Tamanho:", len(conteudo), "bytes")
+print("Caracteres de texto:", len(texto))
+
+print("\nPrimeiros 500 caracteres:")
+print(texto[:500])
+================================
+VERIFICAÇÃO DA LEI
+================================
+Arquivo existe: True
+Tamanho: 649705 bytes
+Caracteres de texto: 289010
+
+Primeiros 500 caracteres:
+L14133 Presidência da República Secretaria-Geral Subchefia para
+  Assuntos Jurídicos LEI Nº 14.133, DE 
+	1º DE ABRIL DE 2021 Mensagem de 
+		veto Promulgação partes vetadas Regulamento Regulamento (Vide Decreto nº 
+	12.174, de 2024) (Vide Decreto nº 
+	12.343, de 2024) Vigência (Vide Decreto nº 
+	12.807, de 2025) Vigência Lei de Licitações 
+		e Contratos Administrativos. O PRESIDENTE DA REPÚBLICA Faço saber que o Congresso Nacional decreta e eu sanciono a seguinte Lei: TÍTULO I DISPOSIÇÕES 
+
+[ ]
+with open("CORPUS_INVENTORY.md", "a", encoding="utf-8") as f:
+    f.write("""
+
+## Base normativa — Lei 14.133/2021
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Normativa
+- **Documento:** Lei nº 14.133, de 1º de abril de 2021
+- **Título:** Lei de Licitações e Contratos Administrativos
+- **Fonte:** Presidência da República — Planalto
+- **Formato coletado:** HTML
+- **Arquivo bruto:** `data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html`
+
+### Verificação
+
+- **Status HTTP na coleta:** 200
+- **Tamanho do arquivo:** 649.705 bytes
+- **Texto extraído:** 289.010 caracteres
+- **Identificação do documento:** confirmada
+
+### Observação
+
+O documento foi coletado diretamente da fonte oficial do Governo Federal e armazenado na área de dados brutos do projeto. A página preserva as referências e indicações de alterações e regulamentações disponibilizadas na fonte oficial.
+""")
+
+print("Base normativa adicionada ao inventário.")
+Base normativa adicionada ao inventário.
+
+[ ]
+with open("CORPUS_INVENTORY.md", "r", encoding="utf-8") as f:
+    print(f.read())
+# Corpus Inventory
+
+## Base estruturada — PNCP
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Estruturada
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **API:** Consulta PNCP
+- **Endpoint:** `/v1/contratacoes/publicacao`
+- **UF:** RJ
+- **Modalidade:** 6 — Pregão Eletrônico
+- **Período consultado:** 01/03/2026 a 31/03/2026
+- **Total de registros:** 1.358
+- **Registros duplicados:** 0
+
+### Integridade
+
+- **Primeira publicação encontrada:** 02/03/2026 07:00:59
+- **Última publicação encontrada:** 31/03/2026 16:54:47
+- **IDs PNCP encontrados:** 1.358
+- **IDs PNCP únicos:** 1.358
+- **UFs encontradas:** RJ
+- **Modalidades encontradas:** 6
+
+### Dados brutos
+
+Os dados brutos foram coletados e armazenados localmente em:
+
+`data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json`
+
+A pasta `data/raw/` está configurada no `.gitignore` e não deve ser versionada no GitHub.
+
+### Principais informações disponíveis
+
+Os registros coletados incluem informações como:
+
+- órgão/entidade;
+- CNPJ do órgão;
+- unidade administrativa;
+- município;
+- objeto da contratação;
+- modalidade;
+- número da compra;
+- número de controle PNCP;
+- valores estimado e homologado;
+- datas de publicação e atualização;
+- situação da contratação;
+- fornecedor e demais informações disponíveis no retorno da API.
+
+### Observação
+
+Este inventário documenta o recorte oficial utilizado para a base estruturada do projeto.
+
+    
+## Base normativa — Lei 14.133/2021
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Normativa
+- **Documento:** Lei nº 14.133, de 1º de abril de 2021
+- **Título:** Lei de Licitações e Contratos Administrativos
+- **Fonte:** Presidência da República — Planalto
+- **Formato coletado:** HTML
+- **Arquivo bruto:** `data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html`
+
+### Verificação
+
+- **Status HTTP na coleta:** 200
+- **Tamanho do arquivo:** 649.705 bytes
+- **Texto extraído:** 289.010 caracteres
+- **Identificação do documento:** confirmada
+
+### Observação
+
+O documento foi coletado diretamente da fonte oficial do Governo Federal e armazenado na área de dados brutos do projeto. A página preserva as referências e indicações de alterações e regulamentações disponibilizadas na fonte oficial.
+
+
+[ ]
+!git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   CORPUS_INVENTORY.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+[ ]
+!git add CORPUS_INVENTORY.md
+
+[ ]
+!git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   CORPUS_INVENTORY.md
+
+
+[ ]
+!git commit -m "docs: adiciona base normativa ao inventario"
+[main 0ff68db] docs: adiciona base normativa ao inventario
+ 1 file changed, 24 insertions(+)
+
+[ ]
+!git push origin main
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 803 bytes | 803.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+   ecb5504..0ff68db  main -> main
+
+[ ]
+import json
+
+arquivo = "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+
+with open(arquivo, "r", encoding="utf-8") as f:
+    dados = json.load(f)
+
+print("Total de contratações:", len(dados))
+print("\nPrimeiro registro:")
+print(dados[0])
+Total de contratações: 1358
+
+Primeiro registro:
+{'srp': False, 'orgaoEntidade': {'cnpj': '23274194000119', 'razaoSocial': 'FURNAS-CENTRAIS ELETRICAS S.A.', 'poderId': 'E', 'esferaId': 'F'}, 'anoCompra': 2026, 'sequencialCompra': 15, 'dataInclusao': '2026-03-02T07:00:59', 'dataPublicacaoPncp': '2026-03-02T07:00:59', 'dataAtualizacao': '2026-03-02T07:00:59', 'numeroCompra': '90018', 'unidadeOrgao': {'ufNome': 'Rio de Janeiro', 'codigoUnidade': '910847', 'nomeUnidade': 'ELETROBRAS TERMONUCLEAR S/A', 'ufSigla': 'RJ', 'municipioNome': 'Rio de Janeiro', 'codigoIbge': '3304557'}, 'amparoLegal': {'descricao': 'pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns', 'nome': 'Lei 14.133/2021, Art. 28, I', 'codigo': 1}, 'dataAberturaProposta': '2026-03-02T08:00:00', 'dataEncerramentoProposta': '2026-03-17T09:30:00', 'informacaoComplementar': 'O Edital deverá ser baixado do site www.gov.br/compras.    No caso de discrepância entre a descrição do material no Portal Comprasnet e a descrição do material no Edital, prevalecerá a descrição do material do edital. Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=91084705900182026', 'processo': 'DAB.A/PE-018/2026', 'objetoCompra': 'Fornecimento de ROTOR DE BOMBA', 'linkSistemaOrigem': 'https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=acompanhamento-compra&compra=91084705900182026', 'justificativaPresencial': None, 'unidadeSubRogada': None, 'orgaoSubRogado': None, 'valorTotalHomologado': 44999.0, 'linkProcessoEletronico': None, 'modalidadeId': 6, 'numeroControlePNCP': '23274194000119-1-000015/2026', 'emendaParlamentar': None, 'dataAtualizacaoGlobal': '2026-03-23T07:48:41', 'modoDisputaId': 1, 'valorTotalEstimado': 79200.0, 'modalidadeNome': 'Pregão - Eletrônico', 'modoDisputaNome': 'Aberto', 'tipoInstrumentoConvocatorioCodigo': 1, 'tipoInstrumentoConvocatorioNome': 'Edital', 'fontesOrcamentarias': [], 'situacaoCompraId': 1, 'situacaoCompraNome': 'Divulgada no PNCP', 'usuarioNome': 'Compras.gov.br'}
+
+[ ]
+registros_srp = [r for r in dados if r.get("srp") is True]
+
+print("Contratações com SRP:", len(registros_srp))
+
+for r in registros_srp[:5]:
+    print(
+        r["orgaoEntidade"]["razaoSocial"],
+        "| CNPJ:", r["orgaoEntidade"]["cnpj"],
+        "| Ano:", r["anoCompra"],
+        "| Sequencial:", r["sequencialCompra"],
+        "| Objeto:", r["objetoCompra"]
+    )
+Contratações com SRP: 761
+FUNDACAO OSWALDO CRUZ | CNPJ: 33781055000135 | Ano: 2026 | Sequencial: 227 | Objeto: Aquisição de materiais da marca AGILENT.
+COMANDO DO EXERCITO | CNPJ: 00394452000103 | Ano: 2025 | Sequencial: 25300 | Objeto: Aquisição de material de consumo de informática do GCALC da 1ªRM.
+MINISTERIO DA SAUDE | CNPJ: 00394544000185 | Ano: 2026 | Sequencial: 359 | Objeto: Aquisição de Rodízios para Camas Elétricas Stryker. ( PROCESSO: 25410.002318/2025-91 )
+EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH | CNPJ: 15126437000305 | Ano: 2026 | Sequencial: 676 | Objeto: Aquisição de Produtos para Saúde - peças mamógrafas (chassis), para o Complexo Hospitalar da Universidade Federal do Rio de Janeiro (CH-UFRJ/EBSERH).
+FUNDO MUNICIPAL DE SAUDE PMVR SMS | CNPJ: 39563911000162 | Ano: 2026 | Sequencial: 29 | Objeto: Registro de preços para futura e eventual contratação de direito de uso temporário de 15 (quinze) licenças originais do software AutoDesk AutoCAD LT, incluindo suporte técnico na instalação, utilização e atualização do software.
+
+[ ]
+import requests
+
+url_ata = (
+    "https://pncp.gov.br/api/consulta/v1/"
+    "orgaos/33781055000135/"
+    "compras/2026/227/atas"
+)
+
+resposta = requests.get(
+    url_ata,
+    headers={"User-Agent": "Mozilla/5.0"},
+    timeout=(15, 60)
+)
+
+print("Status HTTP:", resposta.status_code)
+print("Resposta:")
+print(resposta.text[:5000])
+Status HTTP: 404
+Resposta:
+{"timestamp":"2026-09-16T19:39:19.596+00:00","status":404,"error":"Not Found","message":"No message available","path":"/pncp-consulta/v1/orgaos/33781055000135/compras/2026/227/atas"}
+
+[ ]
+import requests
+
+url_ata = (
+    "https://pncp.gov.br/api/pncp/v1/"
+    "orgaos/33781055000135/"
+    "compras/2026/227/atas"
+)
+
+resposta = requests.get(
+    url_ata,
+    headers={"Accept": "*/*", "User-Agent": "Mozilla/5.0"},
+    timeout=(15, 60)
+)
+
+print("Status HTTP:", resposta.status_code)
+print("Resposta:")
+print(resposta.text[:5000])
+Status HTTP: 200
+Resposta:
+{"data":[{"numeroAtaRegistroPreco":"00001","anoAta":2026,"dataAssinatura":"2026-03-23","dataVigenciaInicio":"2026-03-25","dataVigenciaFim":"2027-03-25","dataCancelamento":null,"cancelado":false,"dataPublicacaoPncp":"2026-03-24T09:43:24","dataInclusao":"2026-03-24T09:43:24","dataAtualizacao":"2026-05-12T19:56:50","dataAtualizacaoGlobal":"2026-05-12T19:56:50","sequencialAta":1,"numeroControlePNCP":"33781055000135-1-000227/2026-000001","orgaoEntidade":{"cnpj":"33781055000135","razaoSocial":"FUNDACAO OSWALDO CRUZ","esferaId":"F","poderId":"E"},"orgaoSubRogado":null,"unidadeOrgao":{"codigoUnidade":"254448","nomeUnidade":"INSTITUTO NAC. DE CONTROLE E QUALID. EM SAUDE","municipioNome":"Rio de Janeiro","codigoIbge":"3304557","ufSigla":"RJ","ufNome":"Rio de Janeiro"},"unidadeSubRogada":null,"modalidadeNome":"Pregão - Eletrônico","objetoCompra":"Aquisição de materiais da marca AGILENT.","informacaoComplementarCompra":"Seguir as especificações e orientações contidas no Termo de Referência, Anexo I do Edital. Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=25444805900052026","usuarioNome":"Contratos.gov.br","possibilidadeAdesao":true},{"numeroAtaRegistroPreco":"00002","anoAta":2026,"dataAssinatura":"2026-03-23","dataVigenciaInicio":"2026-03-25","dataVigenciaFim":"2027-03-25","dataCancelamento":null,"cancelado":false,"dataPublicacaoPncp":"2026-03-24T09:53:39","dataInclusao":"2026-03-24T09:53:39","dataAtualizacao":"2026-05-12T19:56:59","dataAtualizacaoGlobal":"2026-05-12T19:56:59","sequencialAta":2,"numeroControlePNCP":"33781055000135-1-000227/2026-000002","orgaoEntidade":{"cnpj":"33781055000135","razaoSocial":"FUNDACAO OSWALDO CRUZ","esferaId":"F","poderId":"E"},"orgaoSubRogado":null,"unidadeOrgao":{"codigoUnidade":"254448","nomeUnidade":"INSTITUTO NAC. DE CONTROLE E QUALID. EM SAUDE","municipioNome":"Rio de Janeiro","codigoIbge":"3304557","ufSigla":"RJ","ufNome":"Rio de Janeiro"},"unidadeSubRogada":null,"modalidadeNome":"Pregão - Eletrônico","objetoCompra":"Aquisição de materiais da marca AGILENT.","informacaoComplementarCompra":"Seguir as especificações e orientações contidas no Termo de Referência, Anexo I do Edital. Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=25444805900052026","usuarioNome":"Contratos.gov.br","possibilidadeAdesao":true}],"totalRegistros":2,"totalPaginas":1,"numeroPagina":1,"paginasRestantes":0,"empty":false}
+
+[ ]
+url_documentos = (
+    "https://pncp.gov.br/api/pncp/v1/"
+    "orgaos/33781055000135/"
+    "compras/2026/227/"
+    "atas/1/arquivos"
+)
+
+resposta = requests.get(
+    url_documentos,
+    headers={"Accept": "*/*", "User-Agent": "Mozilla/5.0"},
+    timeout=(15, 60)
+)
+
+print("Status HTTP:", resposta.status_code)
+print("Resposta:")
+print(resposta.text[:5000])
+Status HTTP: 200
+Resposta:
+[{"url":"https://pncp.gov.br/pncp-api/v1/orgaos/33781055000135/compras/2026/227/atas/1/arquivos/1","tipoDocumentoNome":"Ata de Registro de Preços","dataPublicacaoPncp":"2026-03-24T09:43:25","sequencialDocumento":1,"titulo":"Ata de Registro de Preços nº 00001","tipoDocumentoId":11}]
+
+[ ]
+import os
+
+pasta_ata = "data/raw/v1/conversacional/atas/fiocruz/2026"
+os.makedirs(pasta_ata, exist_ok=True)
+
+print("Pasta criada:", pasta_ata)
+Pasta criada: data/raw/v1/conversacional/atas/fiocruz/2026
+
+[ ]
+url_arquivo = "https://pncp.gov.br/pncp-api/v1/orgaos/33781055000135/compras/2026/227/atas/1/arquivos/1"
+
+resposta_arquivo = requests.get(
+    url_arquivo,
+    headers={"User-Agent": "Mozilla/5.0"},
+    timeout=(15, 120)
+)
+
+print("Status HTTP:", resposta_arquivo.status_code)
+print("Tipo de conteúdo:", resposta_arquivo.headers.get("Content-Type"))
+print("Tamanho:", len(resposta_arquivo.content), "bytes")
+Status HTTP: 200
+Tipo de conteúdo: application/octet-stream
+Tamanho: 117978 bytes
+
+[ ]
+conteudo_ata = resposta_arquivo.content
+
+print("Primeiros bytes:", conteudo_ata[:20])
+
+if conteudo_ata.startswith(b"%PDF"):
+    print("Formato identificado: PDF")
+elif conteudo_ata.startswith(b"PK"):
+    print("Formato identificado: ZIP/Office")
+else:
+    print("Formato ainda não identificado pelos bytes iniciais.")
+Primeiros bytes: b'%PDF-1.4\n%\xf6\xe4\xfc\xdf\n1 0 o'
+Formato identificado: PDF
+
+[ ]
+arquivo_ata = "data/raw/v1/conversacional/atas/fiocruz/2026/ata_00001.pdf"
+
+with open(arquivo_ata, "wb") as f:
+    f.write(resposta_arquivo.content)
+
+print("Arquivo salvo:", arquivo_ata)
+print("Tamanho:", os.path.getsize(arquivo_ata), "bytes")
+Arquivo salvo: data/raw/v1/conversacional/atas/fiocruz/2026/ata_00001.pdf
+Tamanho: 117978 bytes
+
+[ ]
+import os
+
+print("Existe:", os.path.exists(arquivo_ata))
+print("Tamanho:", os.path.getsize(arquivo_ata), "bytes")
+Existe: True
+Tamanho: 117978 bytes
+
+[ ]
+from pypdf import PdfReader
+
+reader = PdfReader(arquivo_ata)
+
+print("Número de páginas:", len(reader.pages))
+
+texto_ata = ""
+
+for pagina in reader.pages:
+    texto = pagina.extract_text()
+    if texto:
+        texto_ata += texto + "\n"
+
+print("Caracteres extraídos:", len(texto_ata))
+print("\n--- INÍCIO DO TEXTO ---\n")
+print(texto_ata[:3000])
+
+
+[ ]
+!pip install pypdf
+Collecting pypdf
+  Downloading pypdf-6.19.0-py3-none-any.whl.metadata (7.5 kB)
+Downloading pypdf-6.19.0-py3-none-any.whl (395 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 395.5/395.5 kB 7.3 MB/s eta 0:00:00
+Installing collected packages: pypdf
+Successfully installed pypdf-6.19.0
+
+[ ]
+
+Número de páginas: 8
+Caracteres extraídos: 23597
+
+--- INÍCIO DO TEXTO ---
+
+ATA DE REGISTRO DE PREÇOS
+INSTITUTO NACIONAL DE CONTROLE DE QUALIDADE EM SAÚDE
+Processo Administrativo n° 
+25385.000415/2025-01
+Pregão Eletrônico nº 90005/2026
+Ata de Registro de Preços nº 
+1/2026
+O Instituto Nacional de Controle de Qualidade em Saúde – INCQS/FIOCRUZ, com sede na 
+Avenida Brasil,
+4.365 - Manguinhos
+, na cidade de 
+Rio de Janeiro/RJ
+, inscrito no CNPJ sob o nº 
+33.781.055/0020-06
+, neste
+ato representado pela sua Diretora, Mychelle Monteiro Alves, nomeada pela Portaria de Pessoal nº 
+578
+, de
+02
+ de 
+julho
+ de 
+2025
+, publicada no
+ DOU 
+de 
+03
+ de 
+julho
+ de 
+2025
+, portador da Matrícula Funcional nº 
+2609158
+,
+considerando o julgamento da 
+licitação na modalidade de pregão, na forma eletrônica
+, para REGISTRO DE
+PREÇOS nº 90005/2026, publicada no Portal Nacional de Contratações Públicas-PNCP em 16/03/2026,
+processo administrativo n.º 
+25385.000415/2025-01
+, RESOLVE registrar os preços da empresa indicada e
+qualificada nesta ATA, de acordo com a classificação por ela alcançada e nas quantidades cotadas,
+atendendo as condições previstas no 
+Edital de licitação
+, sujeitando-se as partes às normas constantes na Lei
+nº 14.133, de 1º de abril de 2021, no Decreto n.º 11.462, de 31 de março de 2023, e em conformidade com
+as disposições a seguir:
+1. DO OBJETO
+1.1. A presente Ata tem por objeto o registro de preços para a eventual contratação de 
+aquisição de materiais
+da marca AGILENT
+, especificados nos itens 25 a 27
+ 
+do Termo de Referência, anexo 
+I 
+do
+ edital de licitação
+n.º 
+90005
+/
+2026
+, que é parte integrante desta Ata, assim como as propostas cujos preços tenham sido
+registrados, independentemente de transcrição.
+2. DOS PREÇOS, ESPECIFICAÇÕES E QUANTITATIVOS
+2.1. O preço registrado, as especificações do objeto, as quantidades mínimas e máximas de cada item,
+fornecedor(es) e as demais condições ofertadas na(s) proposta(s) são as que seguem:
+Item
+do
+TR
+CALIBRE SCIENTIFIC BRASIL LTDA.
+CNPJ: 01.530.501/0001-42
+AV GETULIO VARGAS, 8806 DISTRITO INDUSTRIAL ALVORADA-RS – CEP 94836-000
+MAYARA NUNES 
+mnunes@calibrescientific.com.br
+ +55 11910193024
+ANA PAULA MOREIRA DE ALMEIDA 
+amoreira@calibrescientific.com.br
+ +55 21996704138
+X
+Especificação
+Marca
+(se exigida
+no edital)
+Modelo
+(se exigido
+no edital)
+Unidade
+Quantidade
+Máxima
+Quantidade
+Mínima
+Valor
+Unitário
+Prazo
+garantia
+ou
+validade
+25
+FRASCO COM TAMPA DE
+ROSCA A-LINE, ÂMBAR,
+PONTO DE ESCRITA,
+CAPACIDADE 2 ML,
+PACOTE COM 100
+UNIDADES.
+REFERÊNCIA: 5190-9590.
+- Marca: AGILENT
+TECHNOLOGIES
+AGILENT
+5190-9590
+Pacote
+5
+-
+169,00
+12
+meses
+Ata de Registro de Preços (ARP) nº 1/2026 - CALIBRE SCIENTIFIC (6022600)         SEI 25385.000415/2025-01 / pg. 1
+26
+TAMPA DE ROSCA
+INTEGRADA, EM
+POLIPROPILENO, COM
+SEPTO PTFE/SILICONE
+BRANCO, DIÂMETRO 12
+MM, PACOTE COM 100
+UNIDADES.
+REFERÊNCIA: 5190-7021.
+- Marca: AGILENT
+TECHNOLOGIES
+AGILENT
+5190-7021
+Pacote
+5
+-
+158,00
+12
+meses
+27
+TAMPA DE ROSCA
+INTEGRADA, EM
+POLIPROPILENO, COM
+SEPTO PTFE/SILICONE
+VERMELHO, DIÂMETRO
+12 MM, PACOTE COM
+100 UNIDADES.
+REFERÊNC
+
+[ ]
+with open("CORPUS_INVENTORY.md", "a", encoding="utf-8") as f:
+    f.write("""
+
+## Base conversacional — Ata de Registro de Preços
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Conversacional
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **Órgão:** Fundação Oswaldo Cruz — INCQS/FIOCRUZ
+- **CNPJ do órgão:** 33.781.055/0020-06
+- **Ano da contratação:** 2026
+- **Sequencial da contratação:** 227
+- **Ata:** nº 00001
+- **Objeto:** Aquisição de materiais da marca AGILENT
+- **Formato:** PDF
+- **Páginas:** 8
+- **Caracteres extraídos:** 23.597
+- **Arquivo bruto:** `data/raw/v1/conversacional/atas/fiocruz/2026/ata_00001.pdf`
+
+### Conteúdo disponível
+
+A ata contém informações sobre:
+
+- processo administrativo;
+- pregão eletrônico;
+- objeto da contratação;
+- itens e especificações;
+- fornecedor;
+- CNPJ da empresa;
+- quantidades;
+- valores unitários;
+- condições de garantia ou validade.
+
+### Sensibilidade
+
+O documento contém dados de contato de pessoas físicas vinculadas ao fornecedor, como nome, e-mail e telefone.
+
+Esses dados deverão ser tratados conforme as regras de sensibilidade e guardrails do projeto, evitando sua exposição desnecessária nas respostas do RAG.
+
+### Verificação
+
+- **Status HTTP:** 200
+- **Tipo identificado:** PDF
+- **Tamanho:** 117.978 bytes
+- **Texto extraído:** confirmado
+""")
+
+print("Base conversacional adicionada ao inventário.")
+Base conversacional adicionada ao inventário.
+
+[ ]
+for i, r in enumerate(registros_srp[:10], start=1):
+    print(
+        f"{i}. {r['orgaoEntidade']['razaoSocial']} | "
+        f"CNPJ: {r['orgaoEntidade']['cnpj']} | "
+        f"Ano: {r['anoCompra']} | "
+        f"Sequencial: {r['sequencialCompra']} | "
+        f"Objeto: {r['objetoCompra']}"
+    )
+1. FUNDACAO OSWALDO CRUZ | CNPJ: 33781055000135 | Ano: 2026 | Sequencial: 227 | Objeto: Aquisição de materiais da marca AGILENT.
+2. COMANDO DO EXERCITO | CNPJ: 00394452000103 | Ano: 2025 | Sequencial: 25300 | Objeto: Aquisição de material de consumo de informática do GCALC da 1ªRM.
+3. MINISTERIO DA SAUDE | CNPJ: 00394544000185 | Ano: 2026 | Sequencial: 359 | Objeto: Aquisição de Rodízios para Camas Elétricas Stryker. ( PROCESSO: 25410.002318/2025-91 )
+4. EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH | CNPJ: 15126437000305 | Ano: 2026 | Sequencial: 676 | Objeto: Aquisição de Produtos para Saúde - peças mamógrafas (chassis), para o Complexo Hospitalar da Universidade Federal do Rio de Janeiro (CH-UFRJ/EBSERH).
+5. FUNDO MUNICIPAL DE SAUDE PMVR SMS | CNPJ: 39563911000162 | Ano: 2026 | Sequencial: 29 | Objeto: Registro de preços para futura e eventual contratação de direito de uso temporário de 15 (quinze) licenças originais do software AutoDesk AutoCAD LT, incluindo suporte técnico na instalação, utilização e atualização do software.
+6. COMANDO DA MARINHA | CNPJ: 00394502000144 | Ano: 2026 | Sequencial: 1045 | Objeto: Aquisição de materiais para uso em áreas comuns e alojamentos do Centro Logístico do Material da Marinha e de suas Organizações Militares Apoiadas, nos termos da tabela abaixo, conforme condições e exigências estabelecidas neste instrumento.
+7. MINISTERIO DA SAUDE | CNPJ: 00394544000185 | Ano: 2026 | Sequencial: 363 | Objeto: Aquisição de Material de Consumo (cateter Intravenoso Periférico) - Por Repetição
+8. COMANDO DO EXERCITO | CNPJ: 00394452000103 | Ano: 2026 | Sequencial: 4829 | Objeto: A presente licitação tem por objeto a aquisição de insumos e materiais diversos destinados à fabricação de armários de 2 (duas) e 4 (quatro) portas, destinados à estruturação e melhoria dos alojamentos
+9. MUNICIPIO DE NOVA FRIBURGO | CNPJ: 28606630000123 | Ano: 2026 | Sequencial: 17 | Objeto: REGISTRO DE PREÇOS para futura e eventual CONTRATAÇÃO DE  EMPRESA ESPECIALIZADA PARA O FORNECIMENTO DE MATERIAL DE  LIMPEZA – itens faltantes do PA n° 23400/2024, para atender as  necessidades da Rede Municipal de Saúde, pelo período de 01 (um) ano.
+10. MUNICIPIO DE VOLTA REDONDA | CNPJ: 32512501000143 | Ano: 2026 | Sequencial: 55 | Objeto: Aquisição de Arame Recozido Liso BWG 18
+
+[ ]
+url_ata_2 = (
+    "https://pncp.gov.br/api/pncp/v1/"
+    "orgaos/00394544000185/"
+    "compras/2026/359/atas"
+)
+
+resposta_ata_2 = requests.get(
+    url_ata_2,
+    headers={"Accept": "*/*", "User-Agent": "Mozilla/5.0"},
+    timeout=(15, 60)
+)
+
+print("Status HTTP:", resposta_ata_2.status_code)
+print("Resposta:")
+print(resposta_ata_2.text[:5000])
+Status HTTP: 200
+Resposta:
+{"data":[{"numeroAtaRegistroPreco":"00137","anoAta":2026,"dataAssinatura":"2026-04-10","dataVigenciaInicio":"2026-04-15","dataVigenciaFim":"2027-04-15","dataCancelamento":null,"cancelado":false,"dataPublicacaoPncp":"2026-04-14T14:14:04","dataInclusao":"2026-04-14T14:14:04","dataAtualizacao":"2026-05-12T21:23:19","dataAtualizacaoGlobal":"2026-05-12T21:23:19","sequencialAta":1,"numeroControlePNCP":"00394544000185-1-000359/2026-000001","orgaoEntidade":{"cnpj":"00394544000185","razaoSocial":"MINISTERIO DA SAUDE","esferaId":"F","poderId":"E"},"orgaoSubRogado":null,"unidadeOrgao":{"codigoUnidade":"250052","nomeUnidade":"INSTITUTO NACIONAL DO CANCER - RJ","municipioNome":"Rio de Janeiro","codigoIbge":"3304557","ufSigla":"RJ","ufNome":"Rio de Janeiro"},"unidadeSubRogada":null,"modalidadeNome":"Pregão - Eletrônico","objetoCompra":"Aquisição de Rodízios para Camas Elétricas Stryker. ( PROCESSO: 25410.002318/2025-91 )","informacaoComplementarCompra":"Acessar os sites www.compras.gov.br ou www.inca.gov.br para retirar o edital Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=25005205910512026","usuarioNome":"Contratos.gov.br","possibilidadeAdesao":false}],"totalRegistros":1,"totalPaginas":1,"numeroPagina":1,"paginasRestantes":0,"empty":false}
+
+[ ]
+url_documentos_2 = (
+    "https://pncp.gov.br/api/pncp/v1/"
+    "orgaos/00394544000185/"
+    "compras/2026/359/"
+    "atas/1/arquivos"
+)
+
+resposta_documentos_2 = requests.get(
+    url_documentos_2,
+    headers={"Accept": "*/*", "User-Agent": "Mozilla/5.0"},
+    timeout=(15, 60)
+)
+
+print("Status HTTP:", resposta_documentos_2.status_code)
+print("Resposta:")
+print(resposta_documentos_2.text[:5000])
+Status HTTP: 200
+Resposta:
+[{"url":"https://pncp.gov.br/pncp-api/v1/orgaos/00394544000185/compras/2026/359/atas/1/arquivos/1","tipoDocumentoNome":"Ata de Registro de Preços","dataPublicacaoPncp":"2026-04-14T14:14:05","sequencialDocumento":1,"titulo":"Ata de Registro de Preços nº 00137","tipoDocumentoId":11}]
+
+[ ]
+url_arquivo_2 = (
+    "https://pncp.gov.br/pncp-api/v1/"
+    "orgaos/00394544000185/"
+    "compras/2026/359/"
+    "atas/1/arquivos/1"
+)
+
+resposta_arquivo_2 = requests.get(
+    url_arquivo_2,
+    headers={"User-Agent": "Mozilla/5.0"},
+    timeout=(15, 120)
+)
+
+print("Status HTTP:", resposta_arquivo_2.status_code)
+print("Tipo de conteúdo:", resposta_arquivo_2.headers.get("Content-Type"))
+print("Tamanho:", len(resposta_arquivo_2.content), "bytes")
+Status HTTP: 200
+Tipo de conteúdo: application/octet-stream
+Tamanho: 264232 bytes
+
+[ ]
+conteudo_ata_2 = resposta_arquivo_2.content
+
+print("Primeiros bytes:", conteudo_ata_2[:20])
+
+if conteudo_ata_2.startswith(b"%PDF"):
+    print("Formato identificado: PDF")
+elif conteudo_ata_2.startswith(b"PK"):
+    print("Formato identificado: ZIP/Office")
+else:
+    print("Formato ainda não identificado.")
+Primeiros bytes: b'%PDF-1.4\n%\xd3\xeb\xe9\xe1\n1 0 o'
+Formato identificado: PDF
+
+[ ]
+import os
+
+pasta_ata_2 = "data/raw/v1/conversacional/atas/ministerio_saude/2026"
+os.makedirs(pasta_ata_2, exist_ok=True)
+
+arquivo_ata_2 = f"{pasta_ata_2}/ata_00137.pdf"
+
+with open(arquivo_ata_2, "wb") as f:
+    f.write(resposta_arquivo_2.content)
+
+print("Arquivo salvo:", arquivo_ata_2)
+print("Tamanho:", os.path.getsize(arquivo_ata_2), "bytes")
+Arquivo salvo: data/raw/v1/conversacional/atas/ministerio_saude/2026/ata_00137.pdf
+Tamanho: 264232 bytes
+
+[ ]
+from pypdf import PdfReader
+
+reader_ata_2 = PdfReader(arquivo_ata_2)
+
+print("Número de páginas:", len(reader_ata_2.pages))
+
+texto_ata_2 = ""
+
+for pagina in reader_ata_2.pages:
+    texto = pagina.extract_text()
+    if texto:
+        texto_ata_2 += texto + "\n"
+
+print("Caracteres extraídos:", len(texto_ata_2))
+print("\n--- INÍCIO DO TEXTO ---\n")
+print(texto_ata_2[:3000])
+Número de páginas: 10
+Caracteres extraídos: 32996
+
+--- INÍCIO DO TEXTO ---
+
+Ministério da Saúde
+Secretaria de Atenção Especializada à Saúde
+Instituto Nacional de Câncer
+Coordenação de Administração Geral
+Divisão de Suprimentos
+  
+ATA DE REGISTRO DE PREÇOS Nº 137/2026
+Processo nº 25410.002318/2025-91
+  
+REGISTRO DE PREÇOS nº 045/2025
+PREGÃO ELETRÔNICO Nº 91.051/2026 – INCA
+ 
+ 
+A União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça
+Cruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50,
+neste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, nomeado(a) pela Portaria nº 1.619,
+publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023,portador da Matrícula Funcional nº nº 6241986,
+considerando o julgamento da licitação na modalidade de pregão, na forma eletrônica, para REGISTRO DE PREÇOS n°
+045/2025, publicada no Portal Nacional de Contratações Públicas - PNCP de 01/04/2026, processo administrativo
+n.º 25410.002318/2025-91, RESOLVE registrar os preços da(s) empresa(s) indicada(s) e qualiﬁcada(s) nesta ATA, de
+acordo com a classiﬁcação por ela(s) alcançada(s) e na(s) quantidade(s) cotada(s), atendendo às condições previstas
+no Edital de licitação, sujeitando-se as partes às normas constantes na Lei nº 14.133, de 1º de abril de 2021, no
+Decreto n.º 11.462, de 31 de março de 2023, e em conformidade com as disposições a seguir:
+ 
+ 
+1. DO OBJETO
+1.1. A presente Ata tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS
+ELÉTRICAS, especiﬁcado(s) no(s) item(ns) 1 do Termo de Referência, anexo I do edital de licitação nº 91.051/2026
+que é parte integrante desta Ata, assim como as propostas cujos preços tenham sido registrados,
+independentemente de transcrição.
+ 
+2. DOS PREÇOS, ESPECIFICAÇÕES E QUANTITATIVO
+2.1. O preço registrado , as especiﬁcações do objeto, as quantidades mínimas e máximas de cada item,
+fornecedor(es) e as demais condições ofertadas na(s) proposta(s) são as que seguem:
+ 
+Item
+do
+TR
+ 
+ 
+AGIMED COMERCIO DE EQUIPAMENTOS LTDA
+CNPJ: 03.852.519/0001-96
+RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA, GO
+CEP: 74223052
+CONTATO: (62) 30914700
+ 
+Código Especiﬁcação Marca Modelo Unidade Quant.
+INCA
+Valor
+Unitário
+Valor
+Total
+1 A50372 RODÍZIO COM FREIO,
+DEMAIS ESPECIFICAÇÕES
+NO TR
+MARCA
+FABRICANTE DO
+RODIZIO TENTE
+- UN 1028 R$ 311,00 R$
+319.708,00
+ Valor total
+da ATA
+R$
+319.708,00
+2. 2. A listagem do cadastro de reserva referente ao presente registro de preços consta como anexo a esta Ata (se
+houver).
+ 
+3. ÓRGÃO(S) GERENCIADOR E PARTICIPANTE(S)
+3.1. O órgão gerenciador será o Instituto Nacional de câncer;
+3.2. Além do gerenciador, não há órgãos e entidades públicas participantes do registro de preços.
+ 
+4. DA ADESÃO À ATA DE REGISTRO DE PREÇOS
+4.1. Não será admitida a adesão à ata de registro de preços decorrente desta licitação ou desta contratação direta,
+conforme justiﬁcativa apresentada nos estudos técnicos preliminares.
+Vedação a acréscimo de quantita
+
+[ ]
+url_ata_3 = (
+    "https://pncp.gov.br/api/pncp/v1/"
+    "orgaos/1512637000305/"
+    "compras/2026/676/atas"
+)
+
+resposta_ata_3 = requests.get(
+    url_ata_3,
+    headers={"Accept": "*/*", "User-Agent": "Mozilla/5.0"},
+    timeout=(15, 60)
+)
+
+print("Status HTTP:", resposta_ata_3.status_code)
+print("Resposta:")
+print(resposta_ata_3.text[:5000])
+
+Status HTTP: 400
+Resposta:
+{"erros":[{"nomeCampo":"recuperarAtasPorFiltros.cnpj","mensagem":"CNPJ inválido"}]}
+
+[ ]
+url_ata_3 = (
+    "https://pncp.gov.br/api/pncp/v1/"
+    "orgaos/15126370000305/"
+    "compras/2026/676/atas"
+)
+
+resposta_ata_3 = requests.get(
+    url_ata_3,
+    headers={"Accept": "*/*", "User-Agent": "Mozilla/5.0"},
+    timeout=(15, 60)
+)
+
+print("Status HTTP:", resposta_ata_3.status_code)
+print("Resposta:")
+print(resposta_ata_3.text[:5000])
+Status HTTP: 400
+Resposta:
+{"erros":[{"nomeCampo":"recuperarAtasPorFiltros.cnpj","mensagem":"CNPJ inválido"}]}
+
+[ ]
+import json
+
+arquivo = "/content/repositorio1/data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+
+with open(arquivo, "r", encoding="utf-8") as f:
+    dados = json.load(f)
+
+print("Tipo do arquivo:", type(dados))
+print("Quantidade de registros:", len(dados))
+
+for registro in dados:
+    texto = str(registro).upper()
+
+    if "EBSERH" in texto:
+        print("Órgão:", registro.get("orgaoEntidade", {}).get("razaoSocial"))
+        print("CNPJ:", registro.get("orgaoEntidade", {}).get("cnpj"))
+        print("Ano:", registro.get("anoCompra"))
+        print("Sequencial:", registro.get("sequencialCompra"))
+        print("-" * 50)
+Tipo do arquivo: <class 'list'>
+Quantidade de registros: 1358
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 676
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 682
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 698
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 699
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 726
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 795
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 843
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 929
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 932
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 934
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 1017
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 1062
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 1096
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 1106
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 1108
+--------------------------------------------------
+Órgão: EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH
+CNPJ: 15126437000305
+Ano: 2026
+Sequencial: 1121
+--------------------------------------------------
+
+[ ]
+url_ata_3 = (
+    "https://pncp.gov.br/api/pncp/v1/"
+    "orgaos/15126437000305/"
+    "compras/2026/676/atas"
+)
+
+resposta_ata_3 = requests.get(
+    url_ata_3,
+    headers={"Accept": "*/*", "User-Agent": "Mozilla/5.0"},
+    timeout=(15, 60)
+)
+
+print("Status HTTP:", resposta_ata_3.status_code)
+print("Resposta:")
+print(resposta_ata_3.text[:5000])
+Status HTTP: 200
+Resposta:
+{"data":[{"numeroAtaRegistroPreco":"00191","anoAta":2026,"dataAssinatura":"2026-03-24","dataVigenciaInicio":"2026-03-25","dataVigenciaFim":"2027-03-25","dataCancelamento":null,"cancelado":false,"dataPublicacaoPncp":"2026-03-24T08:50:37","dataInclusao":"2026-03-24T08:50:37","dataAtualizacao":"2026-05-12T19:55:51","dataAtualizacaoGlobal":"2026-05-12T19:55:51","sequencialAta":1,"numeroControlePNCP":"15126437000305-1-000676/2026-000001","orgaoEntidade":{"cnpj":"15126437000305","razaoSocial":"EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH","esferaId":"N","poderId":"N"},"orgaoSubRogado":null,"unidadeOrgao":{"codigoUnidade":"157243","nomeUnidade":"COMPLEXO HOSPITALAR DA UNIVERSIDADE FEDERAL","municipioNome":"Rio de Janeiro","codigoIbge":"3304557","ufSigla":"RJ","ufNome":"Rio de Janeiro"},"unidadeSubRogada":null,"modalidadeNome":"Pregão - Eletrônico","objetoCompra":"Aquisição de Produtos para Saúde - peças mamógrafas (chassis), para o Complexo Hospitalar da Universidade Federal do Rio de Janeiro (CH-UFRJ/EBSERH).","informacaoComplementarCompra":" Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=15724305900192026","usuarioNome":"Contratos.gov.br","possibilidadeAdesao":true}],"totalRegistros":1,"totalPaginas":1,"numeroPagina":1,"paginasRestantes":0,"empty":false}
+
+[ ]
+url_documentos_ata_3 = (
+    "https://pncp.gov.br/api/pncp/v1/"
+    "orgaos/15126437000305/"
+    "compras/2026/676/atas/1/arquivos"
+)
+
+resposta_documentos_ata_3 = requests.get(
+    url_documentos_ata_3,
+    headers={"Accept": "*/*", "User-Agent": "Mozilla/5.0"},
+    timeout=(15, 60)
+)
+
+print("Status HTTP:", resposta_documentos_ata_3.status_code)
+print("Documentos:")
+print(resposta_documentos_ata_3.text[:5000])
+Status HTTP: 200
+Documentos:
+[{"url":"https://pncp.gov.br/pncp-api/v1/orgaos/15126437000305/compras/2026/676/atas/1/arquivos/1","dataPublicacaoPncp":"2026-03-24T08:50:38","sequencialDocumento":1,"titulo":"Ata de Registro de Preços nº 00191","tipoDocumentoNome":"Ata de Registro de Preços","tipoDocumentoId":11}]
+
+[ ]
+from pathlib import Path
+import requests
+
+url_pdf_ata_3 = (
+    "https://pncp.gov.br/pncp-api/v1/"
+    "orgaos/15126437000305/compras/2026/676/atas/1/arquivos/1"
+)
+
+destino_ata_3 = Path(
+    "/content/repositorio1/data/raw/v1/conversacional/"
+    "atas/ebserh/2026/ata_00191.pdf"
+)
+
+resposta_pdf_ata_3 = requests.get(
+    url_pdf_ata_3,
+    headers={"Accept": "*/*", "User-Agent": "Mozilla/5.0"},
+    timeout=(15, 120)
+)
+
+print("Status HTTP:", resposta_pdf_ata_3.status_code)
+print("Tipo informado:", resposta_pdf_ata_3.headers.get("Content-Type"))
+print("Início do arquivo:", resposta_pdf_ata_3.content[:8])
+
+if resposta_pdf_ata_3.status_code == 200 and resposta_pdf_ata_3.content.startswith(b"%PDF-"):
+    destino_ata_3.parent.mkdir(parents=True, exist_ok=True)
+    destino_ata_3.write_bytes(resposta_pdf_ata_3.content)
+    print("PDF salvo em:", destino_ata_3)
+    print("Tamanho:", destino_ata_3.stat().st_size, "bytes")
+else:
+    print("O arquivo não foi salvo porque a resposta não foi confirmada como PDF.")
+Status HTTP: 200
+Tipo informado: application/octet-stream
+Início do arquivo: b'%PDF-1.4'
+PDF salvo em: /content/repositorio1/data/raw/v1/conversacional/atas/ebserh/2026/ata_00191.pdf
+Tamanho: 146112 bytes
+
+[ ]
+from pypdf import PdfReader
+
+leitor_ata_3 = PdfReader(str(destino_ata_3))
+texto_ata_3 = "\n".join(
+    pagina.extract_text() or ""
+    for pagina in leitor_ata_3.pages
+)
+
+print("Páginas:", len(leitor_ata_3.pages))
+print("Caracteres extraídos:", len(texto_ata_3))
+print("Início do texto:")
+print(texto_ata_3[:1500])
+Páginas: 12
+Caracteres extraídos: 49243
+Início do texto:
+COMPLEXO	HOSPITALAR	DA	UNIVERSIDADE	FEDERAL	DO	RIO	DE	JANEIRO
+Rua	Prof.	Rodolpho	Paulo	Rocco,	255,	HU-CFF	
+-	Bairro	Cidade	Universitária
+Rio	de	Janeiro-RJ,	CEP	21941-913
+-	http://ch-ufrj.ebserh.gov.br
+		
+Ata	de	Registro	de	Preços	-	SEI	nº	191/2026
+Processo	nº	23877.005839/2026-78
+		
+ATA	DE	REGISTRO	DE	PREÇOS	Nº	
+191/20206
+A	 Empresa	 Brasileira	 de	 Serviços	 Hospitalares	 –	 Ebserh,	 FILIAL	 -	 COMPLEXO	 HOSPITALAR	 DA	 UNIVERSIDADE
+FEDERAL	 DO	 RIO	 DE	 JANEIRO	 –	 CH-UFRJ,	 sediado(a)	 na	 Rua	 Professor	 Rodolpho	 Paulo	 Rocco,	 25,	 Cidade
+Universitária,	Rio	de	Janeiro	-	RJ,	CEP	nº	21.941-913,	CNPJ	15.126.437/0045-64,	UG-157243,	neste	ato	representada
+pelo	 seu	 Superintendente	 Geral,	 Amâncio	 Paulino	 Carvalho,	 matrícula	 SIAPE:	 311040,	 nomeado	 por	 meio	 da
+Portaria/EBSERH	 número	 240	 de	 04	 de	 junho	 de	 2024,	 publicada	 no	 DOU,	 de	 05	 de	 junho	 de	 2024	 e	 por	 sua
+Superintendente	Administrativa,	Roberta	Rodrigues	Coelho,	matrícula	SIAPE:	3035578,	nomeada	pela	Portaria	-	SEI	nº
+589,	de	21	de	outubro	de	2025	publicada	no	Boletim	de	Serviço	nº	2159,	de	23	de	outubro	de	2025
+,	ambos	no	uso	das
+atribuições	conferidas	pelo	art.	277	do	Regulamento	de	Compras	e	Contratos	da	Ebserh,	versão	3.0,	aprovado	por	meio
+da	 Resolução	 n.º	 297/2025	 do	 Conselho	 de	 Administração
+,
+	
+considerando	 o	 julgamento	 do	 Pregão	 Eletrônico	 nº
+90019
+/2026
+,	publicado	no	Diário	Oficial	da	União	-	DOU	de	02/03/2026
+,	processo	administrativo	nº	
+23877.002295/2026-
+92
+,	 res
+
+[ ]
+from pathlib import Path
+
+inventario = Path("/content/repositorio1/CORPUS_INVENTORY.md")
+print(inventario.read_text(encoding="utf-8")[-5000:])
+# Corpus Inventory
+
+## Base estruturada — PNCP
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Estruturada
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **API:** Consulta PNCP
+- **Endpoint:** `/v1/contratacoes/publicacao`
+- **UF:** RJ
+- **Modalidade:** 6 — Pregão Eletrônico
+- **Período consultado:** 01/03/2026 a 31/03/2026
+- **Total de registros:** 1.358
+- **Registros duplicados:** 0
+
+### Integridade
+
+- **Primeira publicação encontrada:** 02/03/2026 07:00:59
+- **Última publicação encontrada:** 31/03/2026 16:54:47
+- **IDs PNCP encontrados:** 1.358
+- **IDs PNCP únicos:** 1.358
+- **UFs encontradas:** RJ
+- **Modalidades encontradas:** 6
+
+### Dados brutos
+
+Os dados brutos foram coletados e armazenados localmente em:
+
+`data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json`
+
+A pasta `data/raw/` está configurada no `.gitignore` e não deve ser versionada no GitHub.
+
+### Principais informações disponíveis
+
+Os registros coletados incluem informações como:
+
+- órgão/entidade;
+- CNPJ do órgão;
+- unidade administrativa;
+- município;
+- objeto da contratação;
+- modalidade;
+- número da compra;
+- número de controle PNCP;
+- valores estimado e homologado;
+- datas de publicação e atualização;
+- situação da contratação;
+- fornecedor e demais informações disponíveis no retorno da API.
+
+### Observação
+
+Este inventário documenta o recorte oficial utilizado para a base estruturada do projeto.
+
+    
+## Base normativa — Lei 14.133/2021
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Normativa
+- **Documento:** Lei nº 14.133, de 1º de abril de 2021
+- **Título:** Lei de Licitações e Contratos Administrativos
+- **Fonte:** Presidência da República — Planalto
+- **Formato coletado:** HTML
+- **Arquivo bruto:** `data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html`
+
+### Verificação
+
+- **Status HTTP na coleta:** 200
+- **Tamanho do arquivo:** 649.705 bytes
+- **Texto extraído:** 289.010 caracteres
+- **Identificação do documento:** confirmada
+
+### Observação
+
+O documento foi coletado diretamente da fonte oficial do Governo Federal e armazenado na área de dados brutos do projeto. A página preserva as referências e indicações de alterações e regulamentações disponibilizadas na fonte oficial.
+
+    
+## Base conversacional — Ata de Registro de Preços
+
+### Identificação
+
+- **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+- **Base:** Conversacional
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **Órgão:** Fundação Oswaldo Cruz — INCQS/FIOCRUZ
+- **CNPJ do órgão:** 33.781.055/0020-06
+- **Ano da contratação:** 2026
+- **Sequencial da contratação:** 227
+- **Ata:** nº 00001
+- **Objeto:** Aquisição de materiais da marca AGILENT
+- **Formato:** PDF
+- **Páginas:** 8
+- **Caracteres extraídos:** 23.597
+- **Arquivo bruto:** `data/raw/v1/conversacional/atas/fiocruz/2026/ata_00001.pdf`
+
+### Conteúdo disponível
+
+A ata contém informações sobre:
+
+- processo administrativo;
+- pregão eletrônico;
+- objeto da contratação;
+- itens e especificações;
+- fornecedor;
+- CNPJ da empresa;
+- quantidades;
+- valores unitários;
+- condições de garantia ou validade.
+
+### Sensibilidade
+
+O documento contém dados de contato de pessoas físicas vinculadas ao fornecedor, como nome, e-mail e telefone.
+
+Esses dados deverão ser tratados conforme as regras de sensibilidade e guardrails do projeto, evitando sua exposição desnecessária nas respostas do RAG.
+
+### Verificação
+
+- **Status HTTP:** 200
+- **Tipo identificado:** PDF
+- **Tamanho:** 117.978 bytes
+- **Texto extraído:** confirmado
+
+
+[ ]
+from pathlib import Path
+
+inventario = Path("/content/repositorio1/CORPUS_INVENTORY.md")
+conteudo = inventario.read_text(encoding="utf-8")
+
+secao_inca = """
+## Base conversacional — Ata INCA nº 00137/2026
+
+### Identificação
+
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **Órgão:** Ministério da Saúde — Instituto Nacional de Câncer (INCA)
+- **CNPJ do órgão no PNCP:** 00.394.544/0001-85
+- **Ano e sequencial da contratação:** 2026 / 359
+- **Objeto:** Aquisição de rodízios para camas elétricas Stryker
+- **Fornecedor identificado no documento:** AGIMED COMERCIO DE EQUIPAMENTOS LTDA
+- **Formato:** PDF
+- **Páginas:** 10
+- **Caracteres extraídos:** 32.996
+- **Arquivo bruto:** `data/raw/v1/conversacional/atas/ministerio_saude/2026/ata_00137.pdf`
+
+### Verificação e sensibilidade
+
+- **Status HTTP na coleta:** 200
+- **Tipo identificado pelo conteúdo:** PDF
+- **Texto extraído:** confirmado
+- **Tratamento necessário:** verificar e mascarar dados pessoais de contato antes de disponibilizar trechos nas respostas do RAG.
+"""
+
+secao_ebserh = """
+## Base conversacional — Ata EBSERH nº 00191/2026
+
+### Identificação
+
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **Órgão:** Empresa Brasileira de Serviços Hospitalares (EBSERH)
+- **Unidade:** Complexo Hospitalar da Universidade Federal do Rio de Janeiro (CH-UFRJ)
+- **CNPJ do órgão no registro PNCP:** 15.126.437/0003-05
+- **Ano e sequencial da contratação:** 2026 / 676
+- **Número de controle PNCP:** `15126437000305-1-000676/2026-000001`
+- **Objeto:** Aquisição de produtos para saúde — peças para mamógrafos (chassis)
+- **Formato:** PDF
+- **Páginas:** 12
+- **Caracteres extraídos:** 49.243
+- **Arquivo bruto:** `data/raw/v1/conversacional/atas/ebserh/2026/ata_00191.pdf`
+
+### Verificação e sensibilidade
+
+- **Status HTTP na coleta:** 200
+- **Tipo identificado pelo conteúdo:** PDF
+- **Tamanho:** 146.112 bytes
+- **Texto extraído:** confirmado
+- **Tratamento necessário:** verificar e mascarar dados pessoais, como identificadores funcionais e contatos, antes de disponibilizar trechos nas respostas do RAG.
+"""
+
+if "## Base conversacional — Ata INCA nº 00137/2026" not in conteudo:
+    conteudo += "\n" + secao_inca
+    print("Seção do INCA acrescentada.")
+else:
+    print("Seção do INCA já existe; nenhuma duplicação.")
+
+if "## Base conversacional — Ata EBSERH nº 00191/2026" not in conteudo:
+    conteudo += "\n" + secao_ebserh
+    print("Seção da EBSERH acrescentada.")
+else:
+    print("Seção da EBSERH já existe; nenhuma duplicação.")
+
+inventario.write_text(conteudo, encoding="utf-8")
+print("Inventário salvo:", inventario)
+Seção do INCA acrescentada.
+Seção da EBSERH acrescentada.
+Inventário salvo: /content/repositorio1/CORPUS_INVENTORY.md
+
+[ ]
+from pathlib import Path
+
+inventario = Path("/content/repositorio1/CORPUS_INVENTORY.md")
+texto = inventario.read_text(encoding="utf-8")
+
+print("Seção INCA:", texto.count("## Base conversacional — Ata INCA nº 00137/2026"))
+print("Seção EBSERH:", texto.count("## Base conversacional — Ata EBSERH nº 00191/2026"))
+print("PDF INCA existe:", Path(
+    "/content/repositorio1/data/raw/v1/conversacional/atas/ministerio_saude/2026/ata_00137.pdf"
+).exists())
+print("PDF EBSERH existe:", Path(
+    "/content/repositorio1/data/raw/v1/conversacional/atas/ebserh/2026/ata_00191.pdf"
+).exists())
+Seção INCA: 1
+Seção EBSERH: 1
+PDF INCA existe: True
+PDF EBSERH existe: True
+
+[ ]
+%cd /content/repositorio1
+!git add CORPUS_INVENTORY.md
+!git commit -m "docs: registra atas do INCA e da EBSERH no inventario"
+!git push origin main
+/content/repositorio1
+[main 6b3e55d] docs: registra atas do INCA e da EBSERH no inventario
+ 1 file changed, 94 insertions(+)
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+[ ]
+%cd /content/repositorio1
+!git fetch origin
+!git status -sb
+!git log --oneline --max-count=5 origin/main
+/content/repositorio1
+remote: Enumerating objects: 9, done.
+remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 7 (delta 3), reused 7 (delta 3), pack-reused 0 (from 0)
+Unpacking objects: 100% (7/7), 3.83 KiB | 1.92 MiB/s, done.
+From https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1
+   0ff68db..33c3d59  main       -> origin/main
+## main...origin/main [ahead 1, behind 2]
+33c3d59 (origin/main, origin/HEAD) Personas
+dae59e9 docs: adiciona acompanhamento de Luiz Carlos
+0ff68db docs: adiciona base normativa ao inventario
+ecb5504 docs: adiciona inventario da base estruturada do PNCP
+b52d485 docs: adiciona acompanhamento de Maria Eduarda Ribeiro
+
+[ ]
+%cd /content/repositorio1
+!git pull --rebase origin main
+/content/repositorio1
+From https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1
+ * branch            main       -> FETCH_HEAD
+Successfully rebased and updated refs/heads/main.
+
+[ ]
+%cd /content/repositorio1
+!git push origin main
+/content/repositorio1
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 2.33 KiB | 2.33 MiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+   33c3d59..bbe6429  main -> main
+
+[ ]
+from pathlib import Path
+from shutil import make_archive
+from google.colab import files
+
+pasta = Path("/content/repositorio1/data/raw")
+arquivo_zip = "/content/backup_bases_grande_desafio"
+
+if pasta.exists():
+    caminho_zip = make_archive(
+        arquivo_zip,
+        "zip",
+        root_dir=str(pasta.parent),
+        base_dir=pasta.name
+    )
+    print("Backup criado:", caminho_zip)
+    print("Tamanho:", Path(caminho_zip).stat().st_size, "bytes")
+    files.download(caminho_zip)
+else:
+    print("Pasta não encontrada. Nenhum backup foi criado.")
+
+
+[ ]
+from pathlib import Path
+
+repositorio = Path("/content/repositorio1")
+inventario = repositorio / "CORPUS_INVENTORY.md"
+pasta_atas = repositorio / "data/raw/v1/conversacional/atas"
+
+print("Repositório disponível:", repositorio.exists())
+print("Inventário disponível:", inventario.exists())
+print("Pasta das Atas disponível:", pasta_atas.exists())
+Repositório disponível: True
+Inventário disponível: True
+Pasta das Atas disponível: True
+
+[ ]
+from pathlib import Path
+
+pasta = Path(
+    "/content/repositorio1/data/raw/v1/conversacional/"
+    "comunicacoes_sinteticas"
+)
+pasta.mkdir(parents=True, exist_ok=True)
+
+arquivo = pasta / "troca_mensagens_material_escritorio_001.txt"
+
+conteudo = """DOCUMENTO SINTÉTICO — SIMULAÇÃO PARA TESTES DE RAG
+Este conteúdo é inteiramente fictício. Não representa comunicação,
+contratação, órgão público ou fornecedor real.
+
+Assunto: Dúvidas sobre entrega de material de escritório
+Processo fictício: SIM-RJ-001
+Data fictícia: 10/03/2026
+
+[MENSAGEM 1 — SETOR DE COMPRAS]
+Para: Fornecedor Fictício A
+Precisamos confirmar o prazo de entrega de 200 resmas de papel A4
+e 100 caixas de canetas. O prazo previsto na simulação é de 15 dias
+após a emissão do pedido.
+
+[MENSAGEM 2 — FORNECEDOR FICTÍCIO A]
+Para: Setor de Compras
+Confirmamos o recebimento da solicitação. Podemos entregar as
+200 resmas de papel A4 em 10 dias e as 100 caixas de canetas em
+15 dias após a emissão do pedido.
+
+[MENSAGEM 3 — SETOR DE COMPRAS]
+Para: Fornecedor Fictício A
+Agradecemos a confirmação. Para esta simulação, registramos
+entregas parciais: papel A4 em 10 dias e canetas em 15 dias.
+Nenhum pedido real foi emitido.
+"""
+
+if arquivo.exists():
+    print("O arquivo já existe. Nada foi sobrescrito.")
+else:
+    arquivo.write_text(conteudo, encoding="utf-8")
+    print("Arquivo sintético criado:", arquivo)
+
+print("Tamanho:", arquivo.stat().st_size, "bytes")
+print("Início do conteúdo:")
+print(arquivo.read_text(encoding="utf-8")[:350])
+O arquivo já existe. Nada foi sobrescrito.
+Tamanho: 977 bytes
+Início do conteúdo:
+DOCUMENTO SINTÉTICO — SIMULAÇÃO PARA TESTES DE RAG
+Este conteúdo é inteiramente fictício. Não representa comunicação,
+contratação, órgão público ou fornecedor real.
+
+Assunto: Dúvidas sobre entrega de material de escritório
+Processo fictício: SIM-RJ-001
+Data fictícia: 10/03/2026
+
+[MENSAGEM 1 — SETOR DE COMPRAS]
+Para: Fornecedor Fictício A
+Precisamos
+
+[ ]
+from pathlib import Path
+
+inventario = Path("/content/repositorio1/CORPUS_INVENTORY.md")
+texto = inventario.read_text(encoding="utf-8")
+
+titulo = "## Base conversacional — Comunicações sintéticas"
+
+secao = """
+## Base conversacional — Comunicações sintéticas
+
+### Identificação
+
+- **Natureza:** Conteúdo inteiramente fictício, criado para testes de RAG
+- **Fonte:** Simulação produzida pela equipe com apoio de IA; não é documento do PNCP
+- **Assunto:** Troca de mensagens sobre entrega de material de escritório
+- **Processo fictício:** SIM-RJ-001
+- **Quantidade de mensagens:** 3
+- **Formato:** TXT
+- **Arquivo bruto:** `data/raw/v1/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt`
+
+### Uso e limitações
+
+O arquivo permite testar perguntas sobre prazos de entrega e informações
+distribuídas entre mensagens. Seu conteúdo não deve ser citado como
+evidência de uma contratação pública real. As respostas do RAG devem
+identificá-lo explicitamente como simulação.
+"""
+
+if titulo not in texto:
+    inventario.write_text(texto.rstrip() + "\n\n" + secao.strip() + "\n", encoding="utf-8")
+    print("Seção sintética acrescentada ao inventário.")
+else:
+    print("A seção sintética já existe; nada foi duplicado.")
+
+print("Ocorrências da seção:", inventario.read_text(encoding="utf-8").count(titulo))
+Seção sintética acrescentada ao inventário.
+Ocorrências da seção: 1
+
+[ ]
+%cd /content/repositorio1
+!git status --short
+!git diff --check
+!git diff --stat
+/content/repositorio1
+ M CORPUS_INVENTORY.md
+ CORPUS_INVENTORY.md | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+[ ]
+%cd /content/repositorio1
+!git add CORPUS_INVENTORY.md
+!git commit -m "docs: registra comunicacoes sinteticas no inventario"
+/content/repositorio1
+[main 2f24fc2] docs: registra comunicacoes sinteticas no inventario
+ 1 file changed, 19 insertions(+)
+
+[ ]
+%cd /content/repositorio1
+!git fetch origin
+!git status -sb
+/content/repositorio1
+remote: Enumerating objects: 12, done.
+remote: Counting objects: 100% (10/10), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 6 (delta 3), reused 6 (delta 3), pack-reused 0 (from 0)
+Unpacking objects: 100% (6/6), 1.70 KiB | 249.00 KiB/s, done.
+From https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1
+   bbe6429..cbce0ab  main       -> origin/main
+## main...origin/main [ahead 1, behind 2]
+
+[ ]
+%cd /content/repositorio1
+!git pull --rebase origin main
+/content/repositorio1
+From https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1
+ * branch            main       -> FETCH_HEAD
+Successfully rebased and updated refs/heads/main.
+
+[ ]
+%cd /content/repositorio1
+!git push origin main
+/content/repositorio1
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 803 bytes | 803.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+   cbce0ab..1d6b1c3  main -> main
+
+[ ]
+
+Comece a programar ou gere código com IA.
+
+[ ]
+from pathlib import Path
+from shutil import make_archive
+from google.colab import files
+
+pasta = Path("/content/repositorio1/data/raw")
+
+if pasta.exists():
+    zip_atualizado = make_archive(
+        "/content/backup_bases_grande_desafio_atualizado",
+        "zip",
+        root_dir=str(pasta.parent),
+        base_dir=pasta.name
+    )
+    print("Backup atualizado:", zip_atualizado)
+    print("Tamanho:", Path(zip_atualizado).stat().st_size, "bytes")
+    files.download(zip_atualizado)
+else:
+    print("Pasta de dados não encontrada. Nenhum backup foi criado.")
+
+
+[ ]
+from pathlib import Path
+
+manifesto = Path("/content/repositorio1/corpus_manifest.yaml")
+
+if manifesto.exists():
+    print("O manifesto já existe. Conteúdo atual:")
+    print(manifesto.read_text(encoding="utf-8")[:6000])
+else:
+    print("O manifesto ainda não existe.")
+O manifesto ainda não existe.
+
+[ ]
+from pathlib import Path
+
+manifesto = Path("/content/repositorio1/corpus_manifest.yaml")
+
+conteudo = """scenario_id: contratacoes-rj
+version: v1
+description: >
+  Corpus do Cenário 1 — Contratações Públicas do Estado do Rio de Janeiro.
+  Reúne fontes oficiais e comunicações sintéticas identificadas como simulação.
+
+bases:
+  - base_id: estruturada_pncp_rj
+    natureza: estruturada
+    fonte: Portal Nacional de Contratações Públicas (PNCP)
+    acesso: API pública de consulta
+    endpoint: /v1/contratacoes/publicacao
+    selecao_deterministica:
+      uf: RJ
+      codigoModalidadeContratacao: 6
+      dataInicial: "20260301"
+      dataFinal: "20260331"
+      paginacao: todas_as_paginas
+    volume:
+      registros: 1358
+      ids_unicos: 1358
+    formato: JSON
+    arquivo_local: data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json
+    licenca: verificar_condicoes_de_reutilizacao_na_fonte
+    sensitivity_default: publico_com_verificacao_de_dados_pessoais
+    campo_vigencia: dataPublicacaoPncp
+    chunking_sugerido: um_registro_por_documento
+    metadados_extras:
+      - numeroControlePNCP
+      - orgaoEntidade
+      - unidadeOrgao
+      - objetoCompra
+      - modalidadeId
+      - valorTotalEstimado
+      - valorTotalHomologado
+"""
+
+if manifesto.exists():
+    print("O manifesto já existe. Nenhum conteúdo foi sobrescrito.")
+else:
+    manifesto.write_text(conteudo, encoding="utf-8")
+    print("Manifesto inicial criado:", manifesto)
+    print("Tamanho:", manifesto.stat().st_size, "bytes")
+Manifesto inicial criado: /content/repositorio1/corpus_manifest.yaml
+Tamanho: 1185 bytes
+
+[ ]
+from pathlib import Path
+
+manifesto = Path("/content/repositorio1/corpus_manifest.yaml")
+texto = manifesto.read_text(encoding="utf-8")
+
+base_normativa = """
+  - base_id: normativa_lei_14133
+    natureza: normativa
+    fonte: Presidência da República — Planalto
+    acesso: página pública oficial
+    url: https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14133.htm
+    selecao_deterministica:
+      documento: Lei nº 14.133/2021
+      criterio: URL oficial fixa
+    volume:
+      documentos: 1
+      caracteres_extraidos: 289010
+    formato: HTML
+    arquivo_local: data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html
+    licenca: verificar_condicoes_de_reutilizacao_na_fonte
+    sensitivity_default: publico
+    campo_vigencia: verificar_redacao_vigente_na_fonte
+    chunking_sugerido: por_artigo_e_paragrafo
+    metadados_extras:
+      - numero_lei
+      - artigo
+      - paragrafo
+      - url_fonte
+      - data_coleta
+"""
+
+if "base_id: normativa_lei_14133" in texto:
+    print("A base normativa já está no manifesto. Nada foi duplicado.")
+elif "bases:" not in texto:
+    print("Não encontrei a seção 'bases:'. O arquivo não foi alterado.")
+else:
+    with manifesto.open("a", encoding="utf-8") as f:
+        f.write("\n" + base_normativa)
+    print("Base normativa acrescentada ao manifesto.")
+
+print("Tamanho atual:", manifesto.stat().st_size, "bytes")
+Base normativa acrescentada ao manifesto.
+Tamanho atual: 1984 bytes
+
+[ ]
+from pathlib import Path
+
+manifesto = Path("/content/repositorio1/corpus_manifest.yaml")
+texto = manifesto.read_text(encoding="utf-8")
+
+novas_bases = """
+  - base_id: conversacional_atas_pncp
+    natureza: conversacional
+    fonte: Portal Nacional de Contratações Públicas (PNCP)
+    acesso: API pública e documentos oficiais
+    selecao_deterministica:
+      atas:
+        - cnpj_orgao: "33781055000135"
+          ano_compra: 2026
+          sequencial_compra: 227
+          sequencial_ata: 1
+          arquivo_local: data/raw/v1/conversacional/atas/fiocruz/2026/ata_00001.pdf
+        - cnpj_orgao: "00394544000185"
+          ano_compra: 2026
+          sequencial_compra: 359
+          sequencial_ata: 1
+          arquivo_local: data/raw/v1/conversacional/atas/ministerio_saude/2026/ata_00137.pdf
+        - cnpj_orgao: "15126437000305"
+          ano_compra: 2026
+          sequencial_compra: 676
+          sequencial_ata: 1
+          arquivo_local: data/raw/v1/conversacional/atas/ebserh/2026/ata_00191.pdf
+    volume:
+      documentos: 3
+      paginas: 30
+    formato: PDF
+    licenca: verificar_condicoes_de_reutilizacao_na_fonte
+    sensitivity_default: requer_mascaramento_de_dados_pessoais
+    campo_vigencia: dataVigenciaInicio_e_dataVigenciaFim
+    chunking_sugerido: por_secao_com_identificacao_da_ata
+    metadados_extras:
+      - numeroControlePNCP
+      - numeroAtaRegistroPreco
+      - orgao
+      - objetoCompra
+      - fornecedor
+      - url_fonte
+
+  - base_id: conversacional_comunicacoes_sinteticas
+    natureza: conversacional
+    fonte: simulacao_criada_pela_equipe_com_apoio_de_ia
+    acesso: arquivo_local
+    selecao_deterministica:
+      processo_ficticio: SIM-RJ-001
+      arquivo_local: data/raw/v1/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt
+    volume:
+      documentos: 1
+      mensagens: 3
+    formato: TXT
+    licenca: conteudo_sintetico_do_projeto
+    sensitivity_default: sintetico_sem_dados_pessoais_reais
+    campo_vigencia: data_ficticia_da_mensagem
+    chunking_sugerido: por_mensagem
+    metadados_extras:
+      - processo_ficticio
+      - numero_mensagem
+      - remetente_ficticio
+      - natureza_sintetica
+    observacao: >
+      Conteudo inteiramente ficticio para testes. Nunca apresentar como
+      evidencia de contratacao ou comunicacao publica real.
+"""
+
+if "base_id: conversacional_atas_pncp" in texto or "base_id: conversacional_comunicacoes_sinteticas" in texto:
+    print("Uma das bases já consta no manifesto. Nada foi acrescentado para evitar duplicação.")
+else:
+    with manifesto.open("a", encoding="utf-8") as f:
+        f.write("\n" + novas_bases)
+    print("Atas oficiais e comunicações sintéticas acrescentadas.")
+
+print("Tamanho atual:", manifesto.stat().st_size, "bytes")
+Atas oficiais e comunicações sintéticas acrescentadas.
+Tamanho atual: 4171 bytes
+
+[ ]
+from pathlib import Path
+import yaml
+
+raiz = Path("/content/repositorio1")
+manifesto = raiz / "corpus_manifest.yaml"
+
+try:
+    dados = yaml.safe_load(manifesto.read_text(encoding="utf-8"))
+    bases = dados.get("bases", [])
+
+    print("YAML válido: SIM")
+    print("Cenário:", dados.get("scenario_id"))
+    print("Versão:", dados.get("version"))
+    print("Quantidade de bases:", len(bases))
+
+    for base in bases:
+        print("\nBase:", base.get("base_id"))
+
+        caminhos = []
+        if base.get("arquivo_local"):
+            caminhos.append(base["arquivo_local"])
+
+        selecao = base.get("selecao_deterministica", {})
+        if selecao.get("arquivo_local"):
+            caminhos.append(selecao["arquivo_local"])
+
+        for ata in selecao.get("atas", []):
+            caminhos.append(ata["arquivo_local"])
+
+        for caminho in caminhos:
+            print("  Arquivo existe:", (raiz / caminho).exists(), "—", caminho)
+
+except Exception as erro:
+    print("Não foi possível validar o manifesto.")
+    print("Erro:", erro)
+YAML válido: SIM
+Cenário: contratacoes-rj
+Versão: v1
+Quantidade de bases: 4
+
+Base: estruturada_pncp_rj
+  Arquivo existe: True — data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json
+
+Base: normativa_lei_14133
+  Arquivo existe: True — data/raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html
+
+Base: conversacional_atas_pncp
+  Arquivo existe: True — data/raw/v1/conversacional/atas/fiocruz/2026/ata_00001.pdf
+  Arquivo existe: True — data/raw/v1/conversacional/atas/ministerio_saude/2026/ata_00137.pdf
+  Arquivo existe: True — data/raw/v1/conversacional/atas/ebserh/2026/ata_00191.pdf
+
+Base: conversacional_comunicacoes_sinteticas
+  Arquivo existe: True — data/raw/v1/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt
+
+[ ]
+%cd /content/repositorio1
+!git status --short
+!git diff --check
+!git fetch origin
+!git status -sb
+/content/repositorio1
+?? corpus_manifest.yaml
+## main...origin/main
+?? corpus_manifest.yaml
+
+[ ]
+%cd /content/repositorio1
+!git add corpus_manifest.yaml
+!git commit -m "docs: adiciona manifesto inicial do corpus"
+/content/repositorio1
+[main eae7c97] docs: adiciona manifesto inicial do corpus
+ 1 file changed, 122 insertions(+)
+ create mode 100644 corpus_manifest.yaml
+
+[ ]
+%cd /content/repositorio1
+!git push origin main
+/content/repositorio1
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 1.69 KiB | 1.69 MiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+   1d6b1c3..eae7c97  main -> main
+
+[ ]
+from pathlib import Path
+
+script = Path("/content/repositorio1/src/fetch_corpus.py")
+
+if script.exists():
+    print("O script já existe. Início do conteúdo:")
+    print(script.read_text(encoding="utf-8")[:3000])
+else:
+    print("O script de coleta ainda não existe.")
+O script de coleta ainda não existe.
+
+[ ]
+from pathlib import Path
+
+pasta_src = Path("/content/repositorio1/src")
+pasta_src.mkdir(parents=True, exist_ok=True)
+
+script = pasta_src / "fetch_corpus.py"
+
+codigo = '''"""Coleta reproduzível do corpus do Grande Desafio RAG."""
+
+import argparse
+from pathlib import Path
+
+import yaml
+
+
+def carregar_manifesto(caminho: Path) -> dict:
+    """Lê e valida os campos principais do manifesto."""
+    with caminho.open("r", encoding="utf-8") as arquivo:
+        dados = yaml.safe_load(arquivo)
+
+    if not isinstance(dados, dict) or not isinstance(dados.get("bases"), list):
+        raise ValueError("Manifesto inválido: a seção 'bases' deve ser uma lista.")
+
+    return dados
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Ferramenta de coleta do corpus")
+    parser.add_argument(
+        "comando",
+        choices=["inventory"],
+        help="Operação a executar",
+    )
+    parser.add_argument(
+        "--manifest",
+        default="corpus_manifest.yaml",
+        help="Caminho do manifesto YAML",
+    )
+    argumentos = parser.parse_args()
+
+    manifesto = carregar_manifesto(Path(argumentos.manifest))
+    print("Cenário:", manifesto.get("scenario_id"))
+    print("Versão:", manifesto.get("version"))
+    print("Bases cadastradas:")
+
+    for base in manifesto["bases"]:
+        print("-", base.get("base_id"), "|", base.get("natureza"))
+
+
+if __name__ == "__main__":
+    main()
+'''
+
+if script.exists():
+    print("O arquivo já existe. Nada foi sobrescrito.")
+else:
+    script.write_text(codigo, encoding="utf-8")
+    print("Script inicial criado:", script)
+Script inicial criado: /content/repositorio1/src/fetch_corpus.py
+
+[ ]
+%cd /content/repositorio1
+!python -m src.fetch_corpus inventory --manifest corpus_manifest.yaml
+/content/repositorio1
+Cenário: contratacoes-rj
+Versão: v1
+Bases cadastradas:
+- estruturada_pncp_rj | estruturada
+- normativa_lei_14133 | normativa
+- conversacional_atas_pncp | conversacional
+- conversacional_comunicacoes_sinteticas | conversacional
+
+[ ]
+%cd /content/repositorio1
+!git status --short
+!git diff --check
+/content/repositorio1
+?? src/
+
+[ ]
+from pathlib import Path
+
+pasta_src = Path("/content/repositorio1/src")
+
+for arquivo in sorted(pasta_src.rglob("*")):
+    if arquivo.is_file():
+        print(arquivo.relative_to(Path("/content/repositorio1")))
+src/__pycache__/fetch_corpus.cpython-313.pyc
+src/fetch_corpus.py
+
+[ ]
+%cd /content/repositorio1
+!git add src/fetch_corpus.py
+!git status --short
+!git diff --cached --check
+/content/repositorio1
+A  src/fetch_corpus.py
+
+[ ]
+%cd /content/repositorio1
+!git commit -m "feat: cria estrutura inicial do script de coleta"
+/content/repositorio1
+[main 2dac966] feat: cria estrutura inicial do script de coleta
+ 1 file changed, 44 insertions(+)
+ create mode 100644 src/fetch_corpus.py
+
+[ ]
+
+/content/repositorio1
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0 (from 0)
+Unpacking objects: 100% (3/3), 4.33 KiB | 4.33 MiB/s, done.
+From https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1
+   eae7c97..b57adb8  main       -> origin/main
+## main...origin/main [ahead 1, behind 1]
+
+[ ]
+
+/content/repositorio1
+From https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1
+ * branch            main       -> FETCH_HEAD
+Successfully rebased and updated refs/heads/main.
+
+[ ]
+
+/content/repositorio1
+Everything up-to-date
+
+[ ]
+%cd /content/repositorio1
+!git fetch origin
+!git status -sb
+
+from pathlib import Path
+
+script = Path("/content/repositorio1/src/fetch_corpus.py")
+print("\n--- Conteúdo atual do script ---")
+print(script.read_text(encoding="utf-8"))
+/content/repositorio1
+## main...origin/main
+
+--- Conteúdo atual do script ---
+"""Coleta reproduzível do corpus do Grande Desafio RAG."""
+
+import argparse
+from pathlib import Path
+
+import yaml
+
+
+def carregar_manifesto(caminho: Path) -> dict:
+    """Lê e valida os campos principais do manifesto."""
+    with caminho.open("r", encoding="utf-8") as arquivo:
+        dados = yaml.safe_load(arquivo)
+
+    if not isinstance(dados, dict) or not isinstance(dados.get("bases"), list):
+        raise ValueError("Manifesto inválido: a seção 'bases' deve ser uma lista.")
+
+    return dados
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Ferramenta de coleta do corpus")
+    parser.add_argument(
+        "comando",
+        choices=["inventory"],
+        help="Operação a executar",
+    )
+    parser.add_argument(
+        "--manifest",
+        default="corpus_manifest.yaml",
+        help="Caminho do manifesto YAML",
+    )
+    argumentos = parser.parse_args()
+
+    manifesto = carregar_manifesto(Path(argumentos.manifest))
+    print("Cenário:", manifesto.get("scenario_id"))
+    print("Versão:", manifesto.get("version"))
+    print("Bases cadastradas:")
+
+    for base in manifesto["bases"]:
+        print("-", base.get("base_id"), "|", base.get("natureza"))
+
+
+if __name__ == "__main__":
+    main()
+
+
+[ ]
+import requests
+import yaml
+from pathlib import Path
+
+manifesto = yaml.safe_load(
+    Path("/content/repositorio1/corpus_manifest.yaml").read_text(encoding="utf-8")
+)
+
+base = next(
+    b for b in manifesto["bases"]
+    if b["base_id"] == "estruturada_pncp_rj"
+)
+
+filtros = base["selecao_deterministica"]
+
+url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+parametros = {
+    "dataInicial": filtros["dataInicial"],
+    "dataFinal": filtros["dataFinal"],
+    "codigoModalidadeContratacao": filtros["codigoModalidadeContratacao"],
+    "uf": filtros["uf"],
+    "pagina": 1,
+    "tamanhoPagina": 10,
+}
+
+resposta = requests.get(url, params=parametros, timeout=(15, 60))
+
+print("Status HTTP:", resposta.status_code)
+if resposta.ok:
+    resultado = resposta.json()
+    print("Registros nesta página:", len(resultado.get("data", [])))
+    print("Total de páginas informado pelo PNCP:", resultado.get("totalPaginas"))
+    print("Total de registros informado pelo PNCP:", resultado.get("totalRegistros"))
+else:
+    print("Resposta:", resposta.text[:1000])
+Status HTTP: 500
+Resposta: Erro na comunicação com o banco de dados.
+
+[ ]
+import time
+
+time.sleep(10)
+
+try:
+    nova_resposta = requests.get(
+        url,
+        params=parametros,
+        timeout=(15, 60)
+    )
+
+    print("Status HTTP:", nova_resposta.status_code)
+
+    if nova_resposta.ok:
+        resultado = nova_resposta.json()
+        print("Registros na página:", len(resultado.get("data", [])))
+        print("Total de registros:", resultado.get("totalRegistros"))
+    else:
+        print("Resposta:", nova_resposta.text[:500])
+
+except requests.RequestException as erro:
+    print("Falha de conexão:", erro)
+Falha de conexão: HTTPSConnectionPool(host='pncp.gov.br', port=443): Read timed out. (read timeout=60)
+
+[ ]
+from pathlib import Path
+import json
+
+arquivo = Path(
+    "/content/repositorio1/data/raw/v1/estruturada/pncp/"
+    "rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+)
+
+print("Arquivo existe:", arquivo.exists())
+
+if arquivo.exists():
+    with arquivo.open("r", encoding="utf-8") as f:
+        registros = json.load(f)
+
+    print("Quantidade de registros:", len(registros))
+    print("Tamanho do arquivo:", arquivo.stat().st_size, "bytes")
+Arquivo existe: True
+Quantidade de registros: 1358
+Tamanho do arquivo: 3145518 bytes
+
+[ ]
+from pathlib import Path
+
+script = Path("/content/repositorio1/src/fetch_corpus.py")
+texto = script.read_text(encoding="utf-8")
+
+funcao = '''
+
+def verificar_destino_livre(destino: Path) -> None:
+    """Impede que uma coleta substitua dados brutos já existentes."""
+    if destino.exists():
+        raise FileExistsError(
+            f"Arquivo já existe e não será sobrescrito: {destino}"
+        )
+'''
+
+if "def verificar_destino_livre(" in texto:
+    print("A proteção já existe. Nenhuma alteração foi feita.")
+else:
+    marcador = "\ndef main() -> None:"
+    if marcador not in texto:
+        print("Não encontrei o local esperado. O script não foi alterado.")
+    else:
+        texto = texto.replace(marcador, funcao + marcador, 1)
+        script.write_text(texto, encoding="utf-8")
+        print("Proteção contra sobrescrita acrescentada ao script.")
+Proteção contra sobrescrita acrescentada ao script.
+
+[ ]
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from src.fetch_corpus import verificar_destino_livre
+
+with TemporaryDirectory() as pasta:
+    arquivo_teste = Path(pasta) / "teste.txt"
+
+    # Um destino que ainda não existe deve ser aceito.
+    verificar_destino_livre(arquivo_teste)
+    print("Destino livre: OK")
+
+    # Um arquivo existente deve ser protegido.
+    arquivo_teste.write_text("conteúdo original", encoding="utf-8")
+
+    try:
+        verificar_destino_livre(arquivo_teste)
+        print("ERRO: a proteção não funcionou.")
+    except FileExistsError:
+        print("Arquivo existente protegido: OK")
+
+    print("Conteúdo preservado:", arquivo_teste.read_text(encoding="utf-8"))
+Destino livre: OK
+Arquivo existente protegido: OK
+Conteúdo preservado: conteúdo original
+
+[ ]
+%cd /content/repositorio1
+!python -m py_compile src/fetch_corpus.py
+!git status --short
+!git diff --check
+!git diff --stat
+/content/repositorio1
+ M src/fetch_corpus.py
+ src/fetch_corpus.py | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+[ ]
+%cd /content/repositorio1
+!git add src/fetch_corpus.py
+!git commit -m "fix: impede sobrescrita de dados brutos na coleta"
+/content/repositorio1
+[main 723534e] fix: impede sobrescrita de dados brutos na coleta
+ 1 file changed, 8 insertions(+)
+
+[ ]
+%cd /content/repositorio1
+!git fetch origin
+!git status -sb
+/content/repositorio1
+## main...origin/main [ahead 1]
+
+[ ]
+%cd /content/repositorio1
+!git push origin main
+/content/repositorio1
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 560 bytes | 560.00 KiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+   f0905a5..723534e  main -> main
+
+[ ]
+
+Função de consulta acrescentada ao script.
+
+[ ]
+
+
+
+[ ]
+import importlib
+import src.fetch_corpus as coleta
+
+importlib.invalidate_caches()
+coleta = importlib.reload(coleta)
+
+print("Função disponível:", hasattr(coleta, "consultar_pagina_pncp"))
+Função disponível: True
+
+[ ]
+from unittest.mock import patch
+import requests
+
+parametros_teste = {
+    "dataInicial": "20260301",
+    "dataFinal": "20260331",
+    "codigoModalidadeContratacao": 6,
+    "uf": "RJ",
+    "pagina": 1,
+    "tamanhoPagina": 10,
+}
+
+with patch(
+    "requests.get",
+    side_effect=requests.exceptions.Timeout("Tempo esgotado no teste")
+):
+    try:
+        coleta.consultar_pagina_pncp(parametros_teste)
+        print("ERRO: a falha não foi tratada.")
+    except RuntimeError as erro:
+        print("Falha tratada corretamente: SIM")
+        print("Mensagem:", erro)
+Falha tratada corretamente: SIM
+Mensagem: Falha na consulta ao PNCP; nenhum arquivo foi alterado: Tempo esgotado no teste
+
+[ ]
+
+Consulta simulada: OK
+Registros recebidos: 1
+Total de páginas: 1
+Identificador fictício: REGISTRO-FICTICIO-001
+
+[ ]
+%cd /content/repositorio1
+!git status --short
+!git fetch origin
+!git status -sb
+/content/repositorio1
+ M src/fetch_corpus.py
+## main...origin/main
+ M src/fetch_corpus.py
+
+[ ]
+from pathlib import Path
+
+script = Path("/content/repositorio1/src/fetch_corpus.py")
+texto = script.read_text(encoding="utf-8")
+
+funcao = '''
+
+def coletar_paginas_pncp(parametros: dict) -> list:
+    """Reúne os registros de todas as páginas de uma consulta ao PNCP."""
+    registros = []
+    pagina = 1
+
+    while True:
+        parametros_pagina = {**parametros, "pagina": pagina}
+        resultado = consultar_pagina_pncp(parametros_pagina)
+
+        registros.extend(resultado["data"])
+
+        total_paginas = resultado.get("totalPaginas")
+        if not isinstance(total_paginas, int) or total_paginas < 1:
+            raise RuntimeError("Resposta inesperada do PNCP: totalPaginas inválido.")
+
+        if pagina >= total_paginas:
+            break
+
+        pagina += 1
+
+    return registros
+'''
+
+if "def coletar_paginas_pncp(" in texto:
+    print("A função de paginação já existe. Nada foi alterado.")
+elif "\ndef main() -> None:" not in texto:
+    print("Local de inserção não encontrado. Nada foi alterado.")
+else:
+    texto = texto.replace(
+        "\ndef main() -> None:",
+        funcao + "\ndef main() -> None:",
+        1,
+    )
+    script.write_text(texto, encoding="utf-8")
+    print("Função de paginação acrescentada ao script.")
+Função de paginação acrescentada ao script.
+
+[ ]
+import importlib
+from unittest.mock import patch
+import src.fetch_corpus as coleta
+
+# Recarrega o script após a alteração.
+coleta = importlib.reload(coleta)
+
+paginas_ficticias = [
+    {
+        "data": [{"numeroControlePNCP": "TESTE-001"}],
+        "totalPaginas": 2,
+    },
+    {
+        "data": [{"numeroControlePNCP": "TESTE-002"}],
+        "totalPaginas": 2,
+    },
+]
+
+with patch.object(
+    coleta,
+    "consultar_pagina_pncp",
+    side_effect=paginas_ficticias
+) as consulta_simulada:
+    registros = coleta.coletar_paginas_pncp(parametros_teste)
+
+    paginas_consultadas = [
+        chamada.args[0]["pagina"]
+        for chamada in consulta_simulada.call_args_list
+    ]
+
+print("Total de registros reunidos:", len(registros))
+print("Páginas consultadas:", paginas_consultadas)
+print("Identificadores:", [r["numeroControlePNCP"] for r in registros])
+
+assert len(registros) == 2
+assert paginas_consultadas == [1, 2]
+print("Teste de paginação: OK")
+Total de registros reunidos: 2
+Páginas consultadas: [1, 2]
+Identificadores: ['TESTE-001', 'TESTE-002']
+Teste de paginação: OK
+
+[ ]
+%cd /content/repositorio1
+!python -m py_compile src/fetch_corpus.py
+!git status --short
+!git diff --check
+!git diff --stat
+/content/repositorio1
+ M src/fetch_corpus.py
+ src/fetch_corpus.py | 54 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
+
+[ ]
+%cd /content/repositorio1
+!git add src/fetch_corpus.py
+!git commit -m "feat: adiciona consulta e paginacao do PNCP"
+/content/repositorio1
+[main 5fb8a2f] feat: adiciona consulta e paginacao do PNCP
+ 1 file changed, 54 insertions(+)
+
+[ ]
+%cd /content/repositorio1
+!git add src/fetch_corpus.py
+!git commit -m "feat: adiciona consulta e paginacao do PNCP"
+/content/repositorio1
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+[ ]
+%cd /content/repositorio1
+!git push origin main
+/content/repositorio1
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+[ ]
+%cd /content/repositorio1
+!git fetch origin
+!git status -sb
+/content/repositorio1
+remote: Enumerating objects: 7, done.
+remote: Counting objects: 100% (7/7), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 4 (delta 2), reused 4 (delta 2), pack-reused 0 (from 0)
+Unpacking objects: 100% (4/4), 1.36 KiB | 1.36 MiB/s, done.
+From https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1
+   723534e..377b439  main       -> origin/main
+## main...origin/main [ahead 1, behind 1]
+
+[ ]
+%cd /content/repositorio1
+!git pull --rebase origin main
+/content/repositorio1
+From https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1
+ * branch            main       -> FETCH_HEAD
+Successfully rebased and updated refs/heads/main.
+
+[ ]
+%cd /content/repositorio1
+!git push origin main
+/content/repositorio1
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 1.57 KiB | 1.57 MiB/s, done.
+Total 4 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+   377b439..65e4735  main -> main
+
+[ ]
+%cd /content/repositorio1
+!git fetch origin
+!git status -sb
+
+from pathlib import Path
+
+script = Path("/content/repositorio1/src/fetch_corpus.py")
+print("\n--- Conteúdo atual do script ---")
+print(script.read_text(encoding="utf-8"))
+/content/repositorio1
+## main...origin/main
+
+--- Conteúdo atual do script ---
+"""Coleta reproduzível do corpus do Grande Desafio RAG."""
+
+import argparse
+from pathlib import Path
+
+import yaml
+
+
+def carregar_manifesto(caminho: Path) -> dict:
+    """Lê e valida os campos principais do manifesto."""
+    with caminho.open("r", encoding="utf-8") as arquivo:
+        dados = yaml.safe_load(arquivo)
+
+    if not isinstance(dados, dict) or not isinstance(dados.get("bases"), list):
+        raise ValueError("Manifesto inválido: a seção 'bases' deve ser uma lista.")
+
+    return dados
+
+
+
+def verificar_destino_livre(destino: Path) -> None:
+    """Impede que uma coleta substitua dados brutos já existentes."""
+    if destino.exists():
+        raise FileExistsError(
+            f"Arquivo já existe e não será sobrescrito: {destino}"
+        )
+
+
+def consultar_pagina_pncp(parametros: dict) -> dict:
+    """Consulta uma página do PNCP e informa falhas de forma clara."""
+    import requests
+
+    url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+
+    try:
+        resposta = requests.get(
+            url,
+            params=parametros,
+            timeout=(15, 60),
+        )
+        resposta.raise_for_status()
+        resultado = resposta.json()
+    except requests.RequestException as erro:
+        raise RuntimeError(
+            f"Falha na consulta ao PNCP; nenhum arquivo foi alterado: {erro}"
+        ) from erro
+    except ValueError as erro:
+        raise RuntimeError(
+            "O PNCP retornou uma resposta que não é um JSON válido."
+        ) from erro
+
+    if not isinstance(resultado, dict) or not isinstance(
+        resultado.get("data"), list
+    ):
+        raise RuntimeError("Resposta inesperada do PNCP: campo 'data' ausente.")
+
+    return resultado
+
+
+def coletar_paginas_pncp(parametros: dict) -> list:
+    """Reúne os registros de todas as páginas de uma consulta ao PNCP."""
+    registros = []
+    pagina = 1
+
+    while True:
+        parametros_pagina = {**parametros, "pagina": pagina}
+        resultado = consultar_pagina_pncp(parametros_pagina)
+
+        registros.extend(resultado["data"])
+
+        total_paginas = resultado.get("totalPaginas")
+        if not isinstance(total_paginas, int) or total_paginas < 1:
+            raise RuntimeError("Resposta inesperada do PNCP: totalPaginas inválido.")
+
+        if pagina >= total_paginas:
+            break
+
+        pagina += 1
+
+    return registros
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Ferramenta de coleta do corpus")
+    parser.add_argument(
+        "comando",
+        choices=["inventory"],
+        help="Operação a executar",
+    )
+    parser.add_argument(
+        "--manifest",
+        default="corpus_manifest.yaml",
+        help="Caminho do manifesto YAML",
+    )
+    argumentos = parser.parse_args()
+
+    manifesto = carregar_manifesto(Path(argumentos.manifest))
+    print("Cenário:", manifesto.get("scenario_id"))
+    print("Versão:", manifesto.get("version"))
+    print("Bases cadastradas:")
+
+    for base in manifesto["bases"]:
+        print("-", base.get("base_id"), "|", base.get("natureza"))
+
+
+if __name__ == "__main__":
+    main()
+
+
+[ ]
+from pathlib import Path
+
+script = Path("/content/repositorio1/src/fetch_corpus.py")
+texto = script.read_text(encoding="utf-8")
+
+inicio = texto.index("def main() -> None:")
+fim = texto.index('\n\nif __name__ == "__main__":', inicio)
+
+novo_trecho = '''def executar_fetch(manifesto: dict, raiz: Path) -> None:
+    """Coleta a base estruturada sem substituir arquivos existentes."""
+    import json
+    import os
+    import tempfile
+
+    base = next(
+        (
+            item for item in manifesto["bases"]
+            if item.get("base_id") == "estruturada_pncp_rj"
+        ),
+        None,
+    )
+    if base is None:
+        raise ValueError("Base estruturada não encontrada no manifesto.")
+
+    destino = raiz / base["arquivo_local"]
+
+    # Esta verificação acontece ANTES de qualquer consulta à API.
+    verificar_destino_livre(destino)
+
+    filtros = base["selecao_deterministica"]
+    parametros = {
+        "dataInicial": filtros["dataInicial"],
+        "dataFinal": filtros["dataFinal"],
+        "codigoModalidadeContratacao": filtros["codigoModalidadeContratacao"],
+        "uf": filtros["uf"],
+        "tamanhoPagina": 50,
+    }
+
+    registros = coletar_paginas_pncp(parametros)
+    if not registros:
+        raise RuntimeError("A consulta não retornou registros; nada foi salvo.")
+
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    temporario = None
+
+    try:
+        # Grava primeiro em arquivo temporário. Só publica ao terminar.
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            suffix=".json.tmp",
+            dir=destino.parent,
+            delete=False,
+        ) as arquivo:
+            temporario = Path(arquivo.name)
+            json.dump(registros, arquivo, ensure_ascii=False, indent=2)
+
+        # Falha se outro processo tiver criado o destino nesse intervalo.
+        os.link(temporario, destino)
+        print(f"Coleta concluída: {len(registros)} registros")
+        print(f"Arquivo salvo: {destino}")
+    finally:
+        if temporario is not None:
+            temporario.unlink(missing_ok=True)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Ferramenta de coleta do corpus")
+    parser.add_argument(
+        "comando",
+        choices=["inventory", "fetch"],
+        help="Operação a executar",
+    )
+    parser.add_argument(
+        "--manifest",
+        default="corpus_manifest.yaml",
+        help="Caminho do manifesto YAML",
+    )
+    argumentos = parser.parse_args()
+
+    caminho_manifesto = Path(argumentos.manifest).resolve()
+    manifesto = carregar_manifesto(caminho_manifesto)
+
+    if argumentos.comando == "fetch":
+        executar_fetch(manifesto, caminho_manifesto.parent)
+        return
+
+    print("Cenário:", manifesto.get("scenario_id"))
+    print("Versão:", manifesto.get("version"))
+    print("Bases cadastradas:")
+
+    for base in manifesto["bases"]:
+        print("-", base.get("base_id"), "|", base.get("natureza"))
+'''
+
+if 'choices=["inventory", "fetch"]' in texto:
+    print("O comando fetch já existe. Nenhuma alteração foi feita.")
+else:
+    texto = texto[:inicio] + novo_trecho + texto[fim:]
+    script.write_text(texto, encoding="utf-8")
+    print("Comando fetch acrescentado ao script. Nenhuma coleta foi executada.")
+Comando fetch acrescentado ao script. Nenhuma coleta foi executada.
+
+[ ]
+%cd /content/repositorio1
+
+import json
+import yaml
+from pathlib import Path
+
+!python -m py_compile src/fetch_corpus.py
+
+manifesto = yaml.safe_load(Path("corpus_manifest.yaml").read_text(encoding="utf-8"))
+base = next(
+    (item for item in manifesto["bases"]
+     if item.get("base_id") == "estruturada_pncp_rj"),
+    None,
+)
+
+print("\n--- Base estruturada no manifesto ---")
+print(json.dumps(base, ensure_ascii=False, indent=2))
+/content/repositorio1
+
+--- Base estruturada no manifesto ---
+{
+  "base_id": "estruturada_pncp_rj",
+  "natureza": "estruturada",
+  "fonte": "Portal Nacional de Contratações Públicas (PNCP)",
+  "acesso": "API pública de consulta",
+  "endpoint": "/v1/contratacoes/publicacao",
+  "selecao_deterministica": {
+    "uf": "RJ",
+    "codigoModalidadeContratacao": 6,
+    "dataInicial": "20260301",
+    "dataFinal": "20260331",
+    "paginacao": "todas_as_paginas"
+  },
+  "volume": {
+    "registros": 1358,
+    "ids_unicos": 1358
+  },
+  "formato": "JSON",
+  "arquivo_local": "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json",
+  "licenca": "verificar_condicoes_de_reutilizacao_na_fonte",
+  "sensitivity_default": "publico_com_verificacao_de_dados_pessoais",
+  "campo_vigencia": "dataPublicacaoPncp",
+  "chunking_sugerido": "um_registro_por_documento",
+  "metadados_extras": [
+    "numeroControlePNCP",
+    "orgaoEntidade",
+    "unidadeOrgao",
+    "objetoCompra",
+    "modalidadeId",
+    "valorTotalEstimado",
+    "valorTotalHomologado"
+  ]
+}
+
+[ ]
+%cd /content/repositorio1
+
+from pathlib import Path
+import subprocess
+
+destino = Path(
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+)
+
+print("JSON original existe:", destino.is_file())
+if not destino.is_file():
+    print("Teste interrompido: o JSON original não foi encontrado.")
+else:
+    tamanho_antes = destino.stat().st_size
+
+    resultado = subprocess.run(
+        ["python", "src/fetch_corpus.py", "fetch"],
+        capture_output=True,
+        text=True,
+    )
+
+    print("Código de saída:", resultado.returncode)
+    print("Mensagem:", (resultado.stdout + resultado.stderr).strip())
+    print("JSON original preservado:", destino.stat().st_size == tamanho_antes)
+/content/repositorio1
+JSON original existe: True
+Código de saída: 1
+Mensagem: Traceback (most recent call last):
+  File "/content/repositorio1/src/fetch_corpus.py", line 170, in <module>
+    main()
+    ~~~~^^
+  File "/content/repositorio1/src/fetch_corpus.py", line 158, in main
+    executar_fetch(manifesto, caminho_manifesto.parent)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/repositorio1/src/fetch_corpus.py", line 101, in executar_fetch
+    verificar_destino_livre(destino)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/content/repositorio1/src/fetch_corpus.py", line 24, in verificar_destino_livre
+    raise FileExistsError(
+        f"Arquivo já existe e não será sobrescrito: {destino}"
+    )
+FileExistsError: Arquivo já existe e não será sobrescrito: /content/repositorio1/data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json
+JSON original preservado: True
+
+[ ]
+%cd /content/repositorio1
+!git status -sb
+!git diff --check
+!git diff --stat
+/content/repositorio1
+## main...origin/main
+ M src/fetch_corpus.py
+ src/fetch_corpus.py | 68 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 66 insertions(+), 2 deletions(-)
+
+[ ]
+%cd /content/repositorio1
+!git add src/fetch_corpus.py
+!git commit -m "feat: adiciona comando fetch com protecao contra sobrescrita"
+/content/repositorio1
+[main df675f4] feat: adiciona comando fetch com protecao contra sobrescrita
+ 1 file changed, 66 insertions(+), 2 deletions(-)
+
+[ ]
+%cd /content/repositorio1
+!git fetch origin
+!git status -sb
+/content/repositorio1
+## main...origin/main [ahead 1]
+
+[ ]
+%cd /content/repositorio1
+!git push origin main
+/content/repositorio1
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 1.27 KiB | 1.27 MiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+   65e4735..df675f4  main -> main
+
+[ ]
+%cd /content/repositorio1
+!git fetch origin
+!git status -sb
+
+from pathlib import Path
+
+teste = Path("data/raw/teste_fetch")
+print("Pasta de teste já existe:", teste.exists())
+/content/repositorio1
+## main...origin/main
+Pasta de teste já existe: False
+
+[ ]
+%cd /content/repositorio1
+
+from pathlib import Path
+
+texto = Path("src/fetch_corpus.py").read_text(encoding="utf-8")
+inicio = texto.index("def executar_fetch(")
+fim = texto.index("\ndef main()", inicio)
+
+print(texto[inicio:fim])
+/content/repositorio1
+def executar_fetch(manifesto: dict, raiz: Path) -> None:
+    """Coleta a base estruturada sem substituir arquivos existentes."""
+    import json
+    import os
+    import tempfile
+
+    base = next(
+        (
+            item for item in manifesto["bases"]
+            if item.get("base_id") == "estruturada_pncp_rj"
+        ),
+        None,
+    )
+    if base is None:
+        raise ValueError("Base estruturada não encontrada no manifesto.")
+
+    destino = raiz / base["arquivo_local"]
+
+    # Esta verificação acontece ANTES de qualquer consulta à API.
+    verificar_destino_livre(destino)
+
+    filtros = base["selecao_deterministica"]
+    parametros = {
+        "dataInicial": filtros["dataInicial"],
+        "dataFinal": filtros["dataFinal"],
+        "codigoModalidadeContratacao": filtros["codigoModalidadeContratacao"],
+        "uf": filtros["uf"],
+        "tamanhoPagina": 50,
+    }
+
+    registros = coletar_paginas_pncp(parametros)
+    if not registros:
+        raise RuntimeError("A consulta não retornou registros; nada foi salvo.")
+
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    temporario = None
+
+    try:
+        # Grava primeiro em arquivo temporário. Só publica ao terminar.
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            suffix=".json.tmp",
+            dir=destino.parent,
+            delete=False,
+        ) as arquivo:
+            temporario = Path(arquivo.name)
+            json.dump(registros, arquivo, ensure_ascii=False, indent=2)
+
+        # Falha se outro processo tiver criado o destino nesse intervalo.
+        os.link(temporario, destino)
+        print(f"Coleta concluída: {len(registros)} registros")
+        print(f"Arquivo salvo: {destino}")
+    finally:
+        if temporario is not None:
+            temporario.unlink(missing_ok=True)
+
+
+
+[ ]
+%cd /content/repositorio1
+
+import copy
+import json
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+import yaml
+
+from src.fetch_corpus import executar_fetch
+
+original = yaml.safe_load(
+    Path("corpus_manifest.yaml").read_text(encoding="utf-8")
+)
+
+with tempfile.TemporaryDirectory(prefix="teste_fetch_") as pasta:
+    raiz_teste = Path(pasta)
+    manifesto_teste = copy.deepcopy(original)
+
+    base = next(
+        item for item in manifesto_teste["bases"]
+        if item["base_id"] == "estruturada_pncp_rj"
+    )
+    base["arquivo_local"] = "resultado_teste.json"
+
+    registros_simulados = [
+        {"numeroControlePNCP": "TESTE-001"},
+        {"numeroControlePNCP": "TESTE-002"},
+    ]
+
+    with patch(
+        "src.fetch_corpus.coletar_paginas_pncp",
+        return_value=registros_simulados,
+    ) as consulta_simulada:
+        executar_fetch(manifesto_teste, raiz_teste)
+
+    destino_teste = raiz_teste / "resultado_teste.json"
+    dados_salvos = json.loads(destino_teste.read_text(encoding="utf-8"))
+
+    print("Arquivo de teste criado:", destino_teste.is_file())
+    print("Registros de teste salvos:", len(dados_salvos))
+    print("Consulta simulada chamada:", consulta_simulada.call_count)
+    print("Dados correspondem ao esperado:", dados_salvos == registros_simulados)
+
+print("Pasta temporária removida automaticamente.")
+
+
+[ ]
+%cd /content/repositorio1
+
+import importlib
+import src.fetch_corpus as modulo
+
+modulo = importlib.reload(modulo)
+
+print("Arquivo carregado:", modulo.__file__)
+print("Função executar_fetch disponível:", hasattr(modulo, "executar_fetch"))
+print("Funções relacionadas:", [
+    nome for nome in dir(modulo)
+    if "fetch" in nome or "coletar" in nome
+])
+/content/repositorio1
+Arquivo carregado: /content/repositorio1/src/fetch_corpus.py
+Função executar_fetch disponível: True
+Funções relacionadas: ['coletar_paginas_pncp', 'executar_fetch']
+
+[ ]
+%cd /content/repositorio1
+
+import copy
+import json
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+import yaml
+
+import src.fetch_corpus as modulo
+
+original = yaml.safe_load(
+    Path("corpus_manifest.yaml").read_text(encoding="utf-8")
+)
+
+with tempfile.TemporaryDirectory(prefix="teste_fetch_") as pasta:
+    raiz_teste = Path(pasta)
+    manifesto_teste = copy.deepcopy(original)
+
+    base = next(
+        item for item in manifesto_teste["bases"]
+        if item["base_id"] == "estruturada_pncp_rj"
+    )
+    base["arquivo_local"] = "resultado_teste.json"
+
+    registros_simulados = [
+        {"numeroControlePNCP": "TESTE-001"},
+        {"numeroControlePNCP": "TESTE-002"},
+    ]
+
+    with patch.object(
+        modulo,
+        "coletar_paginas_pncp",
+        return_value=registros_simulados,
+    ) as consulta_simulada:
+        modulo.executar_fetch(manifesto_teste, raiz_teste)
+
+    destino_teste = raiz_teste / "resultado_teste.json"
+    dados_salvos = json.loads(destino_teste.read_text(encoding="utf-8"))
+
+    print("Arquivo de teste criado:", destino_teste.is_file())
+    print("Registros de teste salvos:", len(dados_salvos))
+    print("Consulta simulada chamada:", consulta_simulada.call_count)
+    print("Dados correspondem ao esperado:", dados_salvos == registros_simulados)
+
+print("Pasta temporária removida automaticamente.")
+/content/repositorio1
+Coleta concluída: 2 registros
+Arquivo salvo: /tmp/teste_fetch_fljw6415/resultado_teste.json
+Arquivo de teste criado: True
+Registros de teste salvos: 2
+Consulta simulada chamada: 1
+Dados correspondem ao esperado: True
+Pasta temporária removida automaticamente.
+
+[ ]
+%cd /content/repositorio1
+!git status -sb
+
+/content/repositorio1
+## main...origin/main
+
+[ ]
+%cd /content/repositorio1
+
+import copy
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+import yaml
+import src.fetch_corpus as modulo
+
+manifesto = yaml.safe_load(
+    Path("corpus_manifest.yaml").read_text(encoding="utf-8")
+)
+
+with tempfile.TemporaryDirectory(prefix="teste_falha_fetch_") as pasta:
+    raiz_teste = Path(pasta)
+    manifesto_teste = copy.deepcopy(manifesto)
+
+    base = next(
+        item for item in manifesto_teste["bases"]
+        if item["base_id"] == "estruturada_pncp_rj"
+    )
+    base["arquivo_local"] = "resultado_teste.json"
+    destino = raiz_teste / "resultado_teste.json"
+
+    with patch.object(
+        modulo,
+        "coletar_paginas_pncp",
+        side_effect=RuntimeError("Falha simulada do PNCP"),
+    ):
+        try:
+            modulo.executar_fetch(manifesto_teste, raiz_teste)
+        except RuntimeError as erro:
+            print("Falha identificada:", erro)
+
+    print("JSON incompleto foi criado:", destino.exists())
+
+print("Pasta temporária removida automaticamente.")
+/content/repositorio1
+Falha identificada: Falha simulada do PNCP
+JSON incompleto foi criado: False
+Pasta temporária removida automaticamente.
+
+[ ]
+%cd /content/repositorio1
+
+import copy
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+import yaml
+import src.fetch_corpus as modulo
+
+manifesto = yaml.safe_load(
+    Path("corpus_manifest.yaml").read_text(encoding="utf-8")
+)
+
+with tempfile.TemporaryDirectory(prefix="teste_gravacao_") as pasta:
+    raiz_teste = Path(pasta)
+    manifesto_teste = copy.deepcopy(manifesto)
+
+    base = next(
+        item for item in manifesto_teste["bases"]
+        if item["base_id"] == "estruturada_pncp_rj"
+    )
+    base["arquivo_local"] = "resultado_teste.json"
+    destino = raiz_teste / "resultado_teste.json"
+
+    def falha_na_gravacao(*args, **kwargs):
+        raise OSError("Falha simulada durante a gravação")
+
+    with (
+        patch.object(
+            modulo,
+            "coletar_paginas_pncp",
+            return_value=[{"numeroControlePNCP": "TESTE-001"}],
+        ),
+        patch.object(modulo.json, "dump", side_effect=falha_na_gravacao),
+    ):
+        try:
+            modulo.executar_fetch(manifesto_teste, raiz_teste)
+        except OSError as erro:
+            print("Falha identificada:", erro)
+
+    print("JSON final foi criado:", destino.exists())
+    print(
+        "Arquivos temporários restantes:",
+        list(raiz_teste.glob("*.json.tmp")),
+    )
+
+print("Pasta de teste removida automaticamente.")
+
+
+[ ]
+%cd /content/repositorio1
+
+import copy
+import json
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+import yaml
+import src.fetch_corpus as modulo
+
+manifesto = yaml.safe_load(
+    Path("corpus_manifest.yaml").read_text(encoding="utf-8")
+)
+
+with tempfile.TemporaryDirectory(prefix="teste_gravacao_") as pasta:
+    raiz_teste = Path(pasta)
+    manifesto_teste = copy.deepcopy(manifesto)
+
+    base = next(
+        item for item in manifesto_teste["bases"]
+        if item["base_id"] == "estruturada_pncp_rj"
+    )
+    base["arquivo_local"] = "resultado_teste.json"
+    destino = raiz_teste / "resultado_teste.json"
+
+    with (
+        patch.object(
+            modulo,
+            "coletar_paginas_pncp",
+            return_value=[{"numeroControlePNCP": "TESTE-001"}],
+        ),
+        patch.object(
+            json,
+            "dump",
+            side_effect=OSError("Falha simulada durante a gravação"),
+        ),
+    ):
+        try:
+            modulo.executar_fetch(manifesto_teste, raiz_teste)
+        except OSError as erro:
+            print("Falha identificada:", erro)
+
+    print("JSON final foi criado:", destino.exists())
+    print(
+        "Arquivos temporários restantes:",
+        list(raiz_teste.glob("*.json.tmp")),
+    )
+
+print("Pasta de teste removida automaticamente.")
+/content/repositorio1
+Falha identificada: Falha simulada durante a gravação
+JSON final foi criado: False
+Arquivos temporários restantes: []
+Pasta de teste removida automaticamente.
+
+[ ]
+%cd /content/repositorio1
+!git status -sb
+/content/repositorio1
+## main...origin/main
+
+[ ]
+%cd /content/repositorio1
+
+import json
+from pathlib import Path
+
+arquivo = Path(
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+)
+
+if not arquivo.is_file():
+    print("ATENÇÃO: JSON original não encontrado.")
+else:
+    dados = json.loads(arquivo.read_text(encoding="utf-8"))
+    ids = [
+        item.get("numeroControlePNCP")
+        for item in dados
+        if isinstance(item, dict)
+    ]
+
+    print("JSON válido:", isinstance(dados, list))
+    print("Quantidade de registros:", len(dados))
+    print("IDs únicos:", len(set(ids)))
+    print("Tamanho em bytes:", arquivo.stat().st_size)
+/content/repositorio1
+JSON válido: True
+Quantidade de registros: 1358
+IDs únicos: 1358
+Tamanho em bytes: 3145518
+
+[ ]
+%cd /content/repositorio1
+
+import copy
+from pathlib import Path
+import yaml
+
+original = Path("corpus_manifest.yaml")
+manifesto = yaml.safe_load(original.read_text(encoding="utf-8"))
+manifesto_teste = copy.deepcopy(manifesto)
+
+base = next(
+    item for item in manifesto_teste["bases"]
+    if item["base_id"] == "estruturada_pncp_rj"
+)
+
+base["arquivo_local"] = (
+    "data/raw/teste_fetch/contratacoes_publicacao_teste.json"
+)
+
+arquivo_teste = Path("data/raw/teste_fetch/manifesto_teste.yaml")
+arquivo_teste.parent.mkdir(parents=True, exist_ok=True)
+
+if arquivo_teste.exists():
+    print("Manifesto de teste já existe; nada foi sobrescrito.")
+else:
+    arquivo_teste.write_text(
+        yaml.safe_dump(
+            manifesto_teste,
+            allow_unicode=True,
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+    print("Manifesto de teste criado:", arquivo_teste)
+
+print("Destino de teste:", base["arquivo_local"])
+print("Manifesto original preservado:", original.is_file())
+/content/repositorio1
+Manifesto de teste criado: data/raw/teste_fetch/manifesto_teste.yaml
+Destino de teste: data/raw/teste_fetch/contratacoes_publicacao_teste.json
+Manifesto original preservado: True
+
+[ ]
+%cd /content/repositorio1
+
+from pathlib import Path
+import yaml
+
+arquivo_teste = Path("data/raw/teste_fetch/manifesto_teste.yaml")
+manifesto_teste = yaml.safe_load(arquivo_teste.read_text(encoding="utf-8"))
+
+base = next(
+    item for item in manifesto_teste["bases"]
+    if item["base_id"] == "estruturada_pncp_rj"
+)
+
+base["arquivo_local"] = "contratacoes_publicacao_teste.json"
+
+arquivo_teste.write_text(
+    yaml.safe_dump(manifesto_teste, allow_unicode=True, sort_keys=False),
+    encoding="utf-8",
+)
+
+print("Destino corrigido:", arquivo_teste.parent / base["arquivo_local"])
+print("Manifesto original preservado:", Path("corpus_manifest.yaml").is_file())
+print(
+    "JSON original preservado:",
+    Path(
+        "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+        "2026-03/contratacoes_publicacao.json"
+    ).is_file(),
+)
+/content/repositorio1
+Destino corrigido: data/raw/teste_fetch/contratacoes_publicacao_teste.json
+Manifesto original preservado: True
+JSON original preservado: True
+
+[ ]
+%cd /content/repositorio1
+
+from pathlib import Path
+import yaml
+
+manifesto_teste = Path("data/raw/teste_fetch/manifesto_teste.yaml").resolve()
+dados = yaml.safe_load(manifesto_teste.read_text(encoding="utf-8"))
+
+base = next(
+    item for item in dados["bases"]
+    if item["base_id"] == "estruturada_pncp_rj"
+)
+
+destino_teste = (manifesto_teste.parent / base["arquivo_local"]).resolve()
+json_original = Path(
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+).resolve()
+
+print("Destino de teste:", destino_teste)
+print("Destino de teste já existe:", destino_teste.exists())
+print("JSON original existe:", json_original.is_file())
+print("Destinos são diferentes:", destino_teste != json_original)
+print("Manifesto original existe:", Path("corpus_manifest.yaml").is_file())
+/content/repositorio1
+Destino de teste: /content/repositorio1/data/raw/teste_fetch/contratacoes_publicacao_teste.json
+Destino de teste já existe: False
+JSON original existe: True
+Destinos são diferentes: True
+Manifesto original existe: True
+
+[ ]
+%cd /content/repositorio1
+!python src/fetch_corpus.py fetch --manifest data/raw/teste_fetch/manifesto_teste.yaml
+/content/repositorio1
+Traceback (most recent call last):
+  File "/content/repositorio1/src/fetch_corpus.py", line 41, in consultar_pagina_pncp
+    resposta.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/dist-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error:  for url: https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao?dataInicial=20260301&dataFinal=20260331&codigoModalidadeContratacao=6&uf=RJ&tamanhoPagina=50&pagina=20
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/content/repositorio1/src/fetch_corpus.py", line 170, in <module>
+    main()
+    ~~~~^^
+  File "/content/repositorio1/src/fetch_corpus.py", line 158, in main
+    executar_fetch(manifesto, caminho_manifesto.parent)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/repositorio1/src/fetch_corpus.py", line 112, in executar_fetch
+    registros = coletar_paginas_pncp(parametros)
+  File "/content/repositorio1/src/fetch_corpus.py", line 67, in coletar_paginas_pncp
+    resultado = consultar_pagina_pncp(parametros_pagina)
+  File "/content/repositorio1/src/fetch_corpus.py", line 44, in consultar_pagina_pncp
+    raise RuntimeError(
+        f"Falha na consulta ao PNCP; nenhum arquivo foi alterado: {erro}"
+    ) from erro
+RuntimeError: Falha na consulta ao PNCP; nenhum arquivo foi alterado: 500 Server Error:  for url: https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao?dataInicial=20260301&dataFinal=20260331&codigoModalidadeContratacao=6&uf=RJ&tamanhoPagina=50&pagina=20
+
+[ ]
+%cd /content/repositorio1
+
+from pathlib import Path
+import json
+
+teste = Path("data/raw/teste_fetch/contratacoes_publicacao_teste.json")
+original = Path(
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+)
+
+print("JSON de teste foi criado:", teste.exists())
+print("JSON original existe:", original.is_file())
+
+if original.is_file():
+    dados = json.loads(original.read_text(encoding="utf-8"))
+    print("Registros no JSON original:", len(dados))
+    print("Tamanho original em bytes:", original.stat().st_size)
+
+print(
+    "Arquivos temporários de teste:",
+    list(Path("data/raw/teste_fetch").glob("*.json.tmp")),
+)
+/content/repositorio1
+JSON de teste foi criado: False
+JSON original existe: True
+Registros no JSON original: 1358
+Tamanho original em bytes: 3145518
+Arquivos temporários de teste: []
+
+[ ]
+%cd /content/repositorio1
+!git fetch origin
+!git status -sb
+
+from pathlib import Path
+
+script = Path("src/fetch_corpus.py")
+texto = script.read_text(encoding="utf-8")
+inicio = texto.index("def consultar_pagina_pncp(")
+fim = texto.index("\ndef coletar_paginas_pncp(", inicio)
+
+print("\n--- Função de consulta atual ---")
+print(texto[inicio:fim])
+/content/repositorio1
+## main...origin/main
+
+--- Função de consulta atual ---
+def consultar_pagina_pncp(parametros: dict) -> dict:
+    """Consulta uma página do PNCP e informa falhas de forma clara."""
+    import requests
+
+    url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+
+    try:
+        resposta = requests.get(
+            url,
+            params=parametros,
+            timeout=(15, 60),
+        )
+        resposta.raise_for_status()
+        resultado = resposta.json()
+    except requests.RequestException as erro:
+        raise RuntimeError(
+            f"Falha na consulta ao PNCP; nenhum arquivo foi alterado: {erro}"
+        ) from erro
+    except ValueError as erro:
+        raise RuntimeError(
+            "O PNCP retornou uma resposta que não é um JSON válido."
+        ) from erro
+
+    if not isinstance(resultado, dict) or not isinstance(
+        resultado.get("data"), list
+    ):
+        raise RuntimeError("Resposta inesperada do PNCP: campo 'data' ausente.")
+
+    return resultado
+
+
+
+[ ]
+%cd /content/repositorio1
+
+from pathlib import Path
+
+script = Path("src/fetch_corpus.py")
+texto = script.read_text(encoding="utf-8")
+
+inicio = texto.index("def consultar_pagina_pncp(")
+fim = texto.index("\ndef coletar_paginas_pncp(", inicio)
+
+nova_funcao = '''def consultar_pagina_pncp(parametros: dict) -> dict:
+    """Consulta uma página, repetindo apenas falhas temporárias."""
+    import time
+    import requests
+
+    url = "https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao"
+    max_tentativas = 3
+
+    for tentativa in range(1, max_tentativas + 1):
+        try:
+            resposta = requests.get(
+                url,
+                params=parametros,
+                timeout=(15, 60),
+            )
+            resposta.raise_for_status()
+            resultado = resposta.json()
+        except requests.RequestException as erro:
+            status = getattr(getattr(erro, "response", None), "status_code", None)
+            temporario = (
+                isinstance(erro, (requests.Timeout, requests.ConnectionError))
+                or status in (429, 500, 502, 503, 504)
+            )
+
+            if not temporario or tentativa == max_tentativas:
+                raise RuntimeError(
+                    f"Falha na consulta ao PNCP após {tentativa} tentativa(s); "
+                    f"nenhum arquivo foi alterado: {erro}"
+                ) from erro
+
+            espera = 2 ** (tentativa - 1)
+            print(
+                f"Falha temporária na página {parametros.get('pagina')}. "
+                f"Nova tentativa em {espera} segundo(s) "
+                f"({tentativa}/{max_tentativas}).",
+                flush=True,
+            )
+            time.sleep(espera)
+            continue
+        except ValueError as erro:
+            raise RuntimeError(
+                "O PNCP retornou uma resposta que não é um JSON válido."
+            ) from erro
+
+        if not isinstance(resultado, dict) or not isinstance(
+            resultado.get("data"), list
+        ):
+            raise RuntimeError(
+                "Resposta inesperada do PNCP: campo 'data' ausente."
+            )
+
+        return resultado
+'''
+
+script.write_text(texto[:inicio] + nova_funcao + texto[fim:], encoding="utf-8")
+print("Função atualizada. Nenhuma consulta ao PNCP foi executada.")
+/content/repositorio1
+Função atualizada. Nenhuma consulta ao PNCP foi executada.
+
+[ ]
+%cd /content/repositorio1
+
+import importlib
+from unittest.mock import Mock, patch
+import requests
+import src.fetch_corpus as modulo
+
+modulo = importlib.reload(modulo)
+
+erro_500 = Mock()
+erro_500.raise_for_status.side_effect = requests.HTTPError(
+    "500 Server Error", response=Mock(status_code=500)
+)
+
+resposta_ok = Mock()
+resposta_ok.raise_for_status.return_value = None
+resposta_ok.json.return_value = {
+    "data": [{"numeroControlePNCP": "TESTE-001"}],
+    "totalPaginas": 1,
+}
+
+with (
+    patch.object(
+        modulo.requests if hasattr(modulo, "requests") else requests,
+        "get",
+        side_effect=[erro_500, resposta_ok],
+    ) as consulta,
+    patch("time.sleep") as espera,
+):
+    resultado = modulo.consultar_pagina_pncp({"pagina": 20})
+
+print("Tentativas realizadas:", consulta.call_count)
+print("Esperas simuladas:", espera.call_args_list)
+print("Registro retornado:", resultado["data"][0]["numeroControlePNCP"])
+/content/repositorio1
+Falha temporária na página 20. Nova tentativa em 1 segundo(s) (1/3).
+Tentativas realizadas: 2
+Esperas simuladas: [call(1)]
+Registro retornado: TESTE-001
+
+[ ]
+%cd /content/repositorio1
+
+from unittest.mock import Mock, patch
+import requests
+import src.fetch_corpus as modulo
+
+erro_500 = requests.HTTPError(
+    "500 Server Error",
+    response=Mock(status_code=500),
+)
+
+with (
+    patch("requests.get", side_effect=erro_500) as consulta,
+    patch("time.sleep") as espera,
+):
+    try:
+        modulo.consultar_pagina_pncp({"pagina": 20})
+    except RuntimeError as erro:
+        print("Falha final identificada:", erro)
+
+print("Tentativas realizadas:", consulta.call_count)
+print("Esperas simuladas:", espera.call_args_list)
+/content/repositorio1
+Falha temporária na página 20. Nova tentativa em 1 segundo(s) (1/3).
+Falha temporária na página 20. Nova tentativa em 2 segundo(s) (2/3).
+Falha final identificada: Falha na consulta ao PNCP após 3 tentativa(s); nenhum arquivo foi alterado: 500 Server Error
+Tentativas realizadas: 3
+Esperas simuladas: [call(1), call(2)]
+
+[ ]
+%cd /content/repositorio1
+
+from unittest.mock import Mock, patch
+import requests
+import src.fetch_corpus as modulo
+
+erro_400 = requests.HTTPError(
+    "400 Bad Request",
+    response=Mock(status_code=400),
+)
+
+with (
+    patch("requests.get", side_effect=erro_400) as consulta,
+    patch("time.sleep") as espera,
+):
+    try:
+        modulo.consultar_pagina_pncp({"pagina": 20})
+    except RuntimeError as erro:
+        print("Falha identificada:", erro)
+
+print("Tentativas realizadas:", consulta.call_count)
+print("Esperas realizadas:", espera.call_count)
+/content/repositorio1
+Falha identificada: Falha na consulta ao PNCP após 1 tentativa(s); nenhum arquivo foi alterado: 400 Bad Request
+Tentativas realizadas: 1
+Esperas realizadas: 0
+
+[ ]
+%cd /content/repositorio1
+!python -m py_compile src/fetch_corpus.py
+!git diff --check
+!git status -sb
+!git diff --stat
+/content/repositorio1
+## main...origin/main
+ M src/fetch_corpus.py
+ src/fetch_corpus.py | 74 ++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 48 insertions(+), 26 deletions(-)
+
+[ ]
+%cd /content/repositorio1
+!git add src/fetch_corpus.py
+!git commit -m "feat: adiciona tentativas para falhas temporarias do PNCP"
+/content/repositorio1
+[main b643ff1] feat: adiciona tentativas para falhas temporarias do PNCP
+ 1 file changed, 48 insertions(+), 26 deletions(-)
+
+[ ]
+%cd /content/repositorio1
+!git fetch origin
+!git status -sb
+
+/content/repositorio1
+## main...origin/main [ahead 1]
+
+[ ]
+%cd /content/repositorio1
+!git push origin main
+
+/content/repositorio1
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 914 bytes | 914.00 KiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+   df675f4..b643ff1  main -> main
+
+[1]
+0s
+from pathlib import Path
+
+raiz = Path("/content/repositorio1")
+original = raiz / (
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+)
+manifesto_teste = raiz / "data/raw/teste_fetch/manifesto_teste.yaml"
+destino_teste = raiz / "data/raw/teste_fetch/contratacoes_publicacao_teste.json"
+
+print("Repositório existe:", raiz.is_dir())
+print("JSON original existe:", original.is_file())
+print("Manifesto de teste existe:", manifesto_teste.is_file())
+print("JSON de teste já existe:", destino_teste.exists())
+Repositório existe: False
+JSON original existe: False
+Manifesto de teste existe: False
+JSON de teste já existe: False
+
+[2]
+0s
+%cd /content
+!git clone https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
+/content
+Cloning into 'repositorio1'...
+fatal: could not read Username for 'https://github.com': No such device or address
+
+[4]
+26s
+from google.colab import auth
+auth.authenticate_user()
+
+[5]
+0s
+from google.colab import userdata
+
+try:
+    token = userdata.get("GITHUB_TOKEN")
+    print("Credencial GITHUB_TOKEN disponível:", bool(token))
+except Exception:
+    print("Credencial GITHUB_TOKEN não está disponível nesta sessão.")
+Credencial GITHUB_TOKEN não está disponível nesta sessão.
+
+[ ]
+from google.colab import userdata
+userdata.get('secretName')
+
+[6]
+6s
+from google.colab import files
+
+enviados = files.upload()
+print("Arquivo recebido:", list(enviados.keys()))
+
+
+[7]
+0s
+from pathlib import Path
+import zipfile
+
+zip_codigo = Path("/content/repositorio1-main.zip")
+pasta_destino = Path("/content/repositorio1")
+
+if pasta_destino.exists():
+    print("A pasta repositorio1 já existe. Extração interrompida para não sobrescrever arquivos.")
+else:
+    with zipfile.ZipFile(zip_codigo) as arquivo:
+        nomes = arquivo.namelist()
+        if not nomes or not all(
+            nome == "repositorio1-main/" or nome.startswith("repositorio1-main/")
+            for nome in nomes
+        ):
+            print("Estrutura do ZIP inesperada. Nenhum arquivo foi extraído.")
+        else:
+            arquivo.extractall("/content")
+            Path("/content/repositorio1-main").rename(pasta_destino)
+            print("Código recuperado:", pasta_destino.is_dir())
+            print("Script encontrado:", (pasta_destino / "src/fetch_corpus.py").is_file())
+Código recuperado: True
+Script encontrado: True
+
+[8]
+24s
+from google.colab import files
+
+enviados = files.upload()
+print("Arquivo recebido:", list(enviados.keys()))
+
+
+[9]
+0s
+from pathlib import Path
+import zipfile
+
+backup = Path("/content/backup_bases_grande_desafio_atualizado.zip")
+
+with zipfile.ZipFile(backup) as arquivo:
+    nomes = arquivo.namelist()
+    encontrados = [
+        nome for nome in nomes
+        if nome.endswith("contratacoes_publicacao.json")
+    ]
+
+    print("ZIP válido:", arquivo.testzip() is None)
+    print("Quantidade de itens no ZIP:", len(nomes))
+    print("JSON do PNCP encontrado:", encontrados)
+    print("Primeiros caminhos do ZIP:")
+    for nome in nomes[:12]:
+        print("-", nome)
+ZIP válido: True
+Quantidade de itens no ZIP: 25
+JSON do PNCP encontrado: ['raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json']
+Primeiros caminhos do ZIP:
+- raw/
+- raw/v1/
+- raw/v1/conversacional/
+- raw/v1/estruturada/
+- raw/v1/normativa/
+- raw/v1/normativa/federal/
+- raw/v1/normativa/federal/lei_14133_2021/
+- raw/v1/normativa/federal/lei_14133_2021/lei_14133_2021.html
+- raw/v1/estruturada/pncp/
+- raw/v1/estruturada/pncp/rj/
+- raw/v1/estruturada/pncp/rj/pregao_eletronico/
+- raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/
+
+[10]
+0s
+from pathlib import Path
+import zipfile
+
+backup = Path("/content/backup_bases_grande_desafio_atualizado.zip")
+destino_base = Path("/content/repositorio1/data")
+restaurados = 0
+existentes = 0
+
+with zipfile.ZipFile(backup) as arquivo:
+    for item in arquivo.infolist():
+        if item.is_dir():
+            continue
+
+        caminho = Path(item.filename)
+
+        # Aceita apenas arquivos dentro da pasta raw/ do backup.
+        if caminho.is_absolute() or ".." in caminho.parts or caminho.parts[0] != "raw":
+            raise ValueError(f"Caminho inesperado no ZIP: {item.filename}")
+
+        destino = destino_base.joinpath(*caminho.parts)
+
+        if destino.exists():
+            existentes += 1
+            continue
+
+        destino.parent.mkdir(parents=True, exist_ok=True)
+
+        # Modo "xb": impede sobrescrita mesmo se o arquivo surgir nesse intervalo.
+        with arquivo.open(item) as origem, destino.open("xb") as saida:
+            import shutil
+            shutil.copyfileobj(origem, saida)
+
+        restaurados += 1
+
+print("Arquivos restaurados:", restaurados)
+print("Arquivos já existentes, não sobrescritos:", existentes)
+Arquivos restaurados: 6
+Arquivos já existentes, não sobrescritos: 0
+
+[11]
+0s
+%cd /content/repositorio1
+
+import json
+from pathlib import Path
+
+arquivo = Path(
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+)
+
+if not arquivo.is_file():
+    print("ATENÇÃO: JSON original não encontrado.")
+else:
+    dados = json.loads(arquivo.read_text(encoding="utf-8"))
+    ids = [item.get("numeroControlePNCP") for item in dados]
+
+    print("JSON é uma lista:", isinstance(dados, list))
+    print("Quantidade de registros:", len(dados))
+    print("IDs únicos:", len(set(ids)))
+    print("Tamanho em bytes:", arquivo.stat().st_size)
+/content/repositorio1
+JSON é uma lista: True
+Quantidade de registros: 1358
+IDs únicos: 1358
+Tamanho em bytes: 3145518
+
+[12]
+0s
+%cd /content/repositorio1
+
+from pathlib import Path
+
+script = Path("src/fetch_corpus.py")
+texto = script.read_text(encoding="utf-8")
+destino_teste = Path(
+    "data/raw/teste_fetch/contratacoes_publicacao_teste.json"
+)
+
+print("Comando fetch presente:", 'choices=["inventory", "fetch"]' in texto)
+print("Melhoria das 3 tentativas presente:", "max_tentativas = 3" in texto)
+print("JSON de teste já existe:", destino_teste.exists())
+/content/repositorio1
+Comando fetch presente: True
+Melhoria das 3 tentativas presente: True
+JSON de teste já existe: False
+
+[13]
+0s
+%cd /content/repositorio1
+
+import copy
+from pathlib import Path
+import yaml
+
+original = Path("corpus_manifest.yaml")
+arquivo_teste = Path("data/raw/teste_fetch/manifesto_teste.yaml")
+
+if arquivo_teste.exists():
+    print("Manifesto de teste já existe; nada foi sobrescrito.")
+else:
+    manifesto_teste = copy.deepcopy(
+        yaml.safe_load(original.read_text(encoding="utf-8"))
+    )
+
+    base = next(
+        item for item in manifesto_teste["bases"]
+        if item["base_id"] == "estruturada_pncp_rj"
+    )
+    # O caminho é relativo à pasta do manifesto de teste.
+    base["arquivo_local"] = "contratacoes_publicacao_teste.json"
+
+    arquivo_teste.parent.mkdir(parents=True, exist_ok=True)
+    arquivo_teste.write_text(
+        yaml.safe_dump(
+            manifesto_teste,
+            allow_unicode=True,
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+    print("Manifesto de teste criado:", arquivo_teste)
+
+print(
+    "Destino de teste:",
+    arquivo_teste.parent / "contratacoes_publicacao_teste.json",
+)
+/content/repositorio1
+Manifesto de teste criado: data/raw/teste_fetch/manifesto_teste.yaml
+Destino de teste: data/raw/teste_fetch/contratacoes_publicacao_teste.json
+
+[14]
+0s
+%cd /content/repositorio1
+
+from pathlib import Path
+import yaml
+
+arquivo_manifesto = Path("data/raw/teste_fetch/manifesto_teste.yaml").resolve()
+manifesto = yaml.safe_load(arquivo_manifesto.read_text(encoding="utf-8"))
+
+base = next(
+    item for item in manifesto["bases"]
+    if item["base_id"] == "estruturada_pncp_rj"
+)
+
+destino_teste = (arquivo_manifesto.parent / base["arquivo_local"]).resolve()
+json_original = Path(
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+).resolve()
+
+print("Destino de teste:", destino_teste)
+print("Destino de teste está livre:", not destino_teste.exists())
+print("Destino é diferente do original:", destino_teste != json_original)
+print("JSON original existe:", json_original.is_file())
+/content/repositorio1
+Destino de teste: /content/repositorio1/data/raw/teste_fetch/contratacoes_publicacao_teste.json
+Destino de teste está livre: True
+Destino é diferente do original: True
+JSON original existe: True
+
+[15]
+2min
+%cd /content/repositorio1
+!python src/fetch_corpus.py fetch --manifest data/raw/teste_fetch/manifesto_teste.yaml
+/content/repositorio1
+Coleta concluída: 1358 registros
+Arquivo salvo: /content/repositorio1/data/raw/teste_fetch/contratacoes_publicacao_teste.json
+
+[16]
+0s
+%cd /content/repositorio1
+
+import json
+from pathlib import Path
+
+original = Path(
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+)
+teste = Path("data/raw/teste_fetch/contratacoes_publicacao_teste.json")
+
+dados_originais = json.loads(original.read_text(encoding="utf-8"))
+dados_teste = json.loads(teste.read_text(encoding="utf-8"))
+
+por_id_original = {
+    item["numeroControlePNCP"]: item for item in dados_originais
+}
+por_id_teste = {
+    item["numeroControlePNCP"]: item for item in dados_teste
+}
+
+ids_originais = set(por_id_original)
+ids_teste = set(por_id_teste)
+
+print("Registros originais:", len(dados_originais))
+print("Registros de teste:", len(dados_teste))
+print("IDs únicos no teste:", len(ids_teste))
+print("IDs apenas no original:", len(ids_originais - ids_teste))
+print("IDs apenas no teste:", len(ids_teste - ids_originais))
+print(
+    "Registros com conteúdo diferente:",
+    sum(
+        por_id_original[identificador] != por_id_teste[identificador]
+        for identificador in ids_originais & ids_teste
+    ),
+)
+/content/repositorio1
+Registros originais: 1358
+Registros de teste: 1358
+IDs únicos no teste: 1358
+IDs apenas no original: 0
+IDs apenas no teste: 0
+Registros com conteúdo diferente: 7
+
+[17]
+0s
+
+    if antes != depois:
+        campos = sorted(
+            chave for chave in antes.keys() | depois.keys()
+            if antes.get(chave) != depois.get(chave)
+        )
+        print("ID:", identificador)
+        print("Campos alterados:", ", ".join(campos))
+        print("---")
+/content/repositorio1
+ID: 00394544000185-1-000409/2026
+Campos alterados: dataAtualizacao, dataAtualizacaoGlobal, emendaParlamentar
+---
+ID: 00394544000185-1-000508/2026
+Campos alterados: dataAtualizacao, dataAtualizacaoGlobal, emendaParlamentar
+---
+ID: 29507878000108-1-000005/2026
+Campos alterados: dataAtualizacao, dataAtualizacaoGlobal, emendaParlamentar
+---
+ID: 33781055000135-1-000236/2026
+Campos alterados: dataAtualizacao, dataAtualizacaoGlobal, emendaParlamentar
+---
+ID: 33781055000135-1-000349/2026
+Campos alterados: dataAtualizacao, dataAtualizacaoGlobal, emendaParlamentar
+---
+ID: 33781055000135-1-002467/2025
+Campos alterados: dataAtualizacao, dataAtualizacaoGlobal
+---
+ID: 39563911000162-1-000054/2026
+Campos alterados: dataAtualizacaoGlobal, valorTotalHomologado
+---
+
+[18]
+0s
+%cd /content/repositorio1
+
+import json
+from pathlib import Path
+
+original = Path(
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+)
+teste = Path("data/raw/teste_fetch/contratacoes_publicacao_teste.json")
+
+identificador = "39563911000162-1-000054/2026"
+
+dados_originais = json.loads(original.read_text(encoding="utf-8"))
+dados_teste = json.loads(teste.read_text(encoding="utf-8"))
+
+antes = next(
+    item for item in dados_originais
+    if item["numeroControlePNCP"] == identificador
+)
+depois = next(
+    item for item in dados_teste
+    if item["numeroControlePNCP"] == identificador
+)
+
+print("ID:", identificador)
+print("Valor homologado no original:", antes.get("valorTotalHomologado"))
+print("Valor homologado na nova coleta:", depois.get("valorTotalHomologado"))
+/content/repositorio1
+ID: 39563911000162-1-000054/2026
+Valor homologado no original: 4558552.38
+Valor homologado na nova coleta: 4492850.68
+
+[19]
+0s
+%cd /content/repositorio1
+
+from pathlib import Path
+
+for caminho in [
+    "data/inventory/v1.json",
+    "data/inventory/v2.json",
+    "data/inventory/DIFF_v1_v2.md",
+    "CORPUS_INVENTORY.md",
+]:
+    arquivo = Path(caminho)
+    print(f"{caminho}: {'existe' if arquivo.exists() else 'não existe'}")
+/content/repositorio1
+data/inventory/v1.json: não existe
+data/inventory/v2.json: não existe
+data/inventory/DIFF_v1_v2.md: não existe
+CORPUS_INVENTORY.md: existe
+
+[20]
+0s
+%cd /content/repositorio1
+
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+
+origem = Path(
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+)
+destino = Path("data/inventory/v1.json")
+
+if destino.exists():
+    print("Inventário v1 já existe; nada foi sobrescrito.")
+else:
+    registros = json.loads(origem.read_text(encoding="utf-8"))
+    ids = [item["numeroControlePNCP"] for item in registros]
+
+    inventario = {
+        "versao": "v1",
+        "base_id": "estruturada_pncp_rj",
+        "arquivo": str(origem),
+        "quantidade_registros": len(registros),
+        "quantidade_ids_unicos": len(set(ids)),
+        "tamanho_bytes": origem.stat().st_size,
+        "ids": sorted(set(ids)),
+    }
+
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    with destino.open("x", encoding="utf-8") as arquivo:
+        json.dump(inventario, arquivo, ensure_ascii=False, indent=2)
+
+    print("Inventário criado:", destino)
+    print("Registros:", inventario["quantidade_registros"])
+    print("IDs únicos:", inventario["quantidade_ids_unicos"])
+/content/repositorio1
+Inventário criado: data/inventory/v1.json
+Registros: 1358
+IDs únicos: 1358
+
+[21]
+0s
+%cd /content/repositorio1
+
+import json
+from pathlib import Path
+
+origem = Path("data/raw/teste_fetch/contratacoes_publicacao_teste.json")
+destino = Path("data/inventory/v2.json")
+
+if destino.exists():
+    print("Inventário v2 já existe; nada foi sobrescrito.")
+elif not origem.is_file():
+    print("Nova coleta não encontrada; nenhum inventário foi criado.")
+else:
+    registros = json.loads(origem.read_text(encoding="utf-8"))
+    ids = [item["numeroControlePNCP"] for item in registros]
+
+    inventario = {
+        "versao": "v2",
+        "base_id": "estruturada_pncp_rj",
+        "arquivo": str(origem),
+        "quantidade_registros": len(registros),
+        "quantidade_ids_unicos": len(set(ids)),
+        "tamanho_bytes": origem.stat().st_size,
+        "ids": sorted(set(ids)),
+    }
+
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    with destino.open("x", encoding="utf-8") as arquivo:
+        json.dump(inventario, arquivo, ensure_ascii=False, indent=2)
+
+    print("Inventário criado:", destino)
+    print("Registros:", inventario["quantidade_registros"])
+    print("IDs únicos:", inventario["quantidade_ids_unicos"])
+/content/repositorio1
+Inventário criado: data/inventory/v2.json
+Registros: 1358
+IDs únicos: 1358
+
+[22]
+0s
+%cd /content/repositorio1
+
+import json
+from pathlib import Path
+
+original = Path(
+    "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/"
+    "2026-03/contratacoes_publicacao.json"
+)
+nova_coleta = Path("data/raw/teste_fetch/contratacoes_publicacao_teste.json")
+relatorio = Path("data/inventory/DIFF_v1_v2.md")
+
+if relatorio.exists():
+    print("Relatório já existe; nada foi sobrescrito.")
+else:
+    v1 = {
+        item["numeroControlePNCP"]: item
+        for item in json.loads(original.read_text(encoding="utf-8"))
+    }
+    v2 = {
+        item["numeroControlePNCP"]: item
+        for item in json.loads(nova_coleta.read_text(encoding="utf-8"))
+    }
+
+    apenas_v1 = sorted(v1.keys() - v2.keys())
+    apenas_v2 = sorted(v2.keys() - v1.keys())
+    alterados = []
+
+    for identificador in sorted(v1.keys() & v2.keys()):
+        if v1[identificador] != v2[identificador]:
+            campos = sorted(
+                chave for chave in v1[identificador].keys() | v2[identificador].keys()
+                if v1[identificador].get(chave) != v2[identificador].get(chave)
+            )
+            alterados.append((identificador, campos))
+
+    linhas = [
+        "# Diferenças entre as coletas v1 e v2",
+        "",
+        "Base: contratações do PNCP, RJ, pregão eletrônico, março de 2026.",
+        "",
+        f"- IDs apenas na v1: {len(apenas_v1)}",
+        f"- IDs apenas na v2: {len(apenas_v2)}",
+        f"- Registros com conteúdo alterado: {len(alterados)}",
+        "",
+        "## Registros alterados",
+        "",
+    ]
+
+    for identificador, campos in alterados:
+        linhas.append(f"- `{identificador}` — campos: {', '.join(campos)}")
+
+    linhas += [
+        "",
+        "## Alteração no valor homologado",
+        "",
+        "- ID: `39563911000162-1-000054/2026`",
+        f"- Valor na v1: {v1['39563911000162-1-000054/2026'].get('valorTotalHomologado')}",
+        f"- Valor na v2: {v2['39563911000162-1-000054/2026'].get('valorTotalHomologado')}",
+        "",
+        "Os dados acima registram diferenças entre respostas do PNCP; "
+        "não estabelecem o motivo das alterações.",
+        "",
+    ]
+
+    relatorio.parent.mkdir(parents=True, exist_ok=True)
+    with relatorio.open("x", encoding="utf-8") as arquivo:
+        arquivo.write("\n".join(linhas))
+
+    print("Relatório criado:", relatorio)
+    print("IDs apenas na v1:", len(apenas_v1))
+    print("IDs apenas na v2:", len(apenas_v2))
+    print("Registros alterados:", len(alterados))
+/content/repositorio1
+Relatório criado: data/inventory/DIFF_v1_v2.md
+IDs apenas na v1: 0
+IDs apenas na v2: 0
+Registros alterados: 7
+
+[23]
+0s
+%cd /content/repositorio1
+
+from pathlib import Path
+
+relatorio = Path("data/inventory/DIFF_v1_v2.md")
+print("--- Relatório ---")
+print(relatorio.read_text(encoding="utf-8"))
+
+print("\n--- Estado dos arquivos ---")
+!git status --short
+/content/repositorio1
+--- Relatório ---
+# Diferenças entre as coletas v1 e v2
+
+Base: contratações do PNCP, RJ, pregão eletrônico, março de 2026.
+
+- IDs apenas na v1: 0
+- IDs apenas na v2: 0
+- Registros com conteúdo alterado: 7
+
+## Registros alterados
+
+- `00394544000185-1-000409/2026` — campos: dataAtualizacao, dataAtualizacaoGlobal, emendaParlamentar
+- `00394544000185-1-000508/2026` — campos: dataAtualizacao, dataAtualizacaoGlobal, emendaParlamentar
+- `29507878000108-1-000005/2026` — campos: dataAtualizacao, dataAtualizacaoGlobal, emendaParlamentar
+- `33781055000135-1-000236/2026` — campos: dataAtualizacao, dataAtualizacaoGlobal, emendaParlamentar
+- `33781055000135-1-000349/2026` — campos: dataAtualizacao, dataAtualizacaoGlobal, emendaParlamentar
+- `33781055000135-1-002467/2025` — campos: dataAtualizacao, dataAtualizacaoGlobal
+- `39563911000162-1-000054/2026` — campos: dataAtualizacaoGlobal, valorTotalHomologado
+
+## Alteração no valor homologado
+
+- ID: `39563911000162-1-000054/2026`
+- Valor na v1: 4558552.38
+- Valor na v2: 4492850.68
+
+Os dados acima registram diferenças entre respostas do PNCP; não estabelecem o motivo das alterações.
+
+
+--- Estado dos arquivos ---
+fatal: not a git repository (or any of the parent directories): .git
+
+[24]
+0s
+from pathlib import Path
+
+raiz = Path("/content/repositorio1")
+
+for nome in [
+    "data/inventory/v1.json",
+    "data/inventory/v2.json",
+    "data/inventory/DIFF_v1_v2.md",
+]:
+    arquivo = raiz / nome
+    print(f"{nome}: {'existe' if arquivo.is_file() else 'não existe'}")
+
+print("Metadados do Git presentes:", (raiz / ".git").is_dir())
+data/inventory/v1.json: existe
+data/inventory/v2.json: existe
+data/inventory/DIFF_v1_v2.md: existe
+Metadados do Git presentes: False
+
+[25]
+0s
+from pathlib import Path
+from zipfile import ZipFile, ZIP_DEFLATED
+from google.colab import files
+
+raiz = Path("/content/repositorio1")
+nomes = [
+    "data/inventory/v1.json",
+    "data/inventory/v2.json",
+    "data/inventory/DIFF_v1_v2.md",
+]
+backup = Path("/content/inventarios_grande_desafio.zip")
+
+with ZipFile(backup, "w", compression=ZIP_DEFLATED) as zip_saida:
+    for nome in nomes:
+        arquivo = raiz / nome
+        if not arquivo.is_file():
+            raise FileNotFoundError(f"Arquivo não encontrado: {nome}")
+        zip_saida.write(arquivo, arcname=nome)
+
+print("Backup criado:", backup.name)
+print("Documentos incluídos:", len(nomes))
+files.download(str(backup))
+
+
+[26]
+0s
+from pathlib import Path
+
+raiz = Path("/content/repositorio1")
+
+print("Pasta do projeto existe:", raiz.is_dir())
+print("Script existe:", (raiz / "src/fetch_corpus.py").is_file())
+print("Inventário v1 existe:", (raiz / "data/inventory/v1.json").is_file())
+print("Inventário v2 existe:", (raiz / "data/inventory/v2.json").is_file())
+print("Relatório existe:", (raiz / "data/inventory/DIFF_v1_v2.md").is_file())
+Pasta do projeto existe: True
+Script existe: True
+Inventário v1 existe: True
+Inventário v2 existe: True
+Relatório existe: True
+
+[27]
+0s
+import subprocess
+
+resultado = subprocess.run(
+    ["git", "--version"],
+    capture_output=True,
+    text=True,
+)
+print(resultado.stdout.strip() or resultado.stderr.strip())
+git version 2.43.0
+
+[28]
+0s
+from pathlib import Path
+from google.colab import files
+
+arquivo = Path(
+    "/content/repositorio1/data/raw/teste_fetch/contratacoes_publicacao_teste.json"
+)
+
+if arquivo.is_file():
+    print(f"Arquivo encontrado: {arquivo.name}")
+    files.download(str(arquivo))
+else:
+    print("Arquivo não encontrado. Me avise antes de fazer qualquer outra coisa.")
+
+
+[29]
+0s
+from pathlib import Path
+
+raiz = Path("/content/repositorio1/data/raw")
+v1 = raiz / "v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+v2_teste = raiz / "teste_fetch/contratacoes_publicacao_teste.json"
+
+print("Coleta v1 presente:", v1.is_file())
+print("Coleta v2 presente:", v2_teste.is_file())
+
+if v1.is_file():
+    print("Tamanho da v1:", v1.stat().st_size, "bytes")
+if v2_teste.is_file():
+    print("Tamanho da v2:", v2_teste.stat().st_size, "bytes")
+    
+Coleta v1 presente: True
+Coleta v2 presente: True
+Tamanho da v1: 3145518 bytes
+Tamanho da v2: 3145523 bytes
+
+[30]
+0s
+from pathlib import Path
+import shutil
+
+raiz = Path("/content/repositorio1/data/raw")
+origem = raiz / "teste_fetch/contratacoes_publicacao_teste.json"
+destino = raiz / "v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+
+if not origem.is_file():
+    print("A v2 de teste não foi encontrada. Nenhum arquivo foi alterado.")
+elif destino.exists():
+    print("A pasta v2 já contém um arquivo. Nada foi sobrescrito.")
+else:
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(origem, destino)
+    print("V2 copiada para:", destino)
+    print("Tamanho da cópia:", destino.stat().st_size, "bytes")
+    print("V1 preservada:", (raiz / "v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json").is_file())
+V2 copiada para: /content/repositorio1/data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json
+Tamanho da cópia: 3145523 bytes
+V1 preservada: True
+
+[31]
+0s
+from pathlib import Path
+import json
+
+raiz = Path("/content/repositorio1")
+inventario = raiz / "data/inventory/v2.json"
+novo_caminho = "data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+
+dados = json.loads(inventario.read_text(encoding="utf-8"))
+caminho_antigo = dados.get("arquivo")
+
+if not (raiz / novo_caminho).is_file():
+    print("Arquivo da v2 não encontrado no destino. Inventário não alterado.")
+else:
+    dados["arquivo"] = novo_caminho
+    inventario.write_text(
+        json.dumps(dados, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print("Caminho anterior:", caminho_antigo)
+    print("Caminho atualizado:", dados["arquivo"])
+    print("Quantidade de registros:", dados["quantidade_registros"])
+Caminho anterior: data/raw/teste_fetch/contratacoes_publicacao_teste.json
+Caminho atualizado: data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json
+Quantidade de registros: 1358
+
+[32]
+0s
+from pathlib import Path
+from zipfile import ZipFile, ZIP_DEFLATED
+from google.colab import files
+
+raiz = Path("/content/repositorio1")
+nomes = [
+    "data/inventory/v1.json",
+    "data/inventory/v2.json",
+    "data/inventory/DIFF_v1_v2.md",
+]
+backup = Path("/content/inventarios_grande_desafio_atualizados.zip")
+
+with ZipFile(backup, "w", compression=ZIP_DEFLATED) as pacote:
+    for nome in nomes:
+        arquivo = raiz / nome
+        if not arquivo.is_file():
+            raise FileNotFoundError(f"Arquivo não encontrado: {nome}")
+        pacote.write(arquivo, arcname=nome)
+
+print("ZIP atualizado criado:", backup.name)
+files.download(str(backup))
+
+
+[34]
+0s
+    print("Conteúdo do v1.json copiado. Volte ao GitHub e cole com Ctrl + V.")
+else:
+    print("Arquivo v1.json não encontrado. Não cole nada no GitHub.")
+
+Próximas etapas:
+
+[35]
+0s
+        + html.escape(conteudo)
+        + '</textarea>'
+    ))
+    print("Clique dentro da caixa acima, pressione Ctrl + A e depois Ctrl + C.")
+else:
+    print("Arquivo v1.json não encontrado. Não cole nada no GitHub.")
+
+Produtos pagos do Colab
+-
+Cancelar contratos
