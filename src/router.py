@@ -57,9 +57,27 @@ Rotas:
 ["agregada", "estruturada"]
 
 Pergunta:
+"Quantos contratos foram assinados por modalidade em 2025?"
+Rotas:
+["agregada", "estruturada"]
+
+Pergunta:
 "Quais contratos de software ficaram acima de R$ 500 mil?"
 Rotas:
 ["estruturada"]
+
+Pergunta:
+"O que foi discutido nas atas sobre a compra de equipamentos?"
+Rotas:
+["conversacional"]
+
+Importante:
+- Perguntas que pedem quantidade, média, total, soma, percentual ou agrupamento
+  exigem a base agregada.
+- Quando a pergunta pedir especificamente o conteúdo de atas, e-mails,
+  reclamações ou manifestações, use a base conversacional.
+- Não adicione uma base somente porque a pergunta menciona compra,
+  contrato ou modalidade. Identifique qual tipo de evidência foi solicitado.
 
 Regras de segurança:
 
