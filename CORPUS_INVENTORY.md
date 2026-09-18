@@ -221,7 +221,39 @@ O arquivo contém, entre outros campos, unidade responsável, identificação e 
 
 ### Observação
 
-Este arquivo documenta a coleta do PCA de 2026. **Os valores homologados por item ainda precisam ser coletados e documentados separadamente** para completar a base agregada.
+Este arquivo documenta a coleta do PCA de 2026. **Os valores homologados por item ainda precisam ser coletados e documentados separadamente** para completar a base agregada.   
+
+## Base agregada — Valores homologados por item (PE 038/26/2026)
+
+### Identificação
+
+- **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+- **Órgão:** Estado do Rio de Janeiro — Fundo Estadual de Saúde
+- **ID da contratação PNCP:** `42498600000171-1-000757/2026`
+- **Edital:** PE 038/26/2026
+- **URL:** https://pncp.gov.br/editais/42498600000171/2026/757
+- **Data dos resultados de homologação informados:** 18/09/2026
+
+### Dados coletados
+
+- **Total de itens:** 19
+- **Itens homologados:** 8
+- **Itens fracassados:** 9
+- **Itens desertos:** 2
+- **Soma dos valores homologados por item:** R$ 141.002,08
+- **Conferência:** a soma coincide com o valor total homologado informado na página da contratação.
+
+**Arquivo bruto local:**
+
+`data/raw/v1/agregada/pncp/rj/homologacoes/2026/itens_pe_038_26_2026.csv`
+
+**Registro da fonte local:**
+
+`data/raw/v1/agregada/pncp/rj/homologacoes/2026/FONTE_PE_038_26_2026.txt`
+
+### Observações
+
+Os itens fracassados e desertos foram mantidos sem valor homologado, e não com valor zero. Esta coleta documenta uma contratação específica e não representa todas as contratações do Estado do Rio de Janeiro.
 
 
 ### Uso e limitações
