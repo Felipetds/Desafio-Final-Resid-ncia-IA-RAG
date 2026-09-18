@@ -172,7 +172,7 @@ Esses dados deverão ser tratados conforme as regras de sensibilidade e guardrai
 - **Tratamento necessário:** verificar e mascarar dados pessoais, como identificadores funcionais e contatos, antes de disponibilizar trechos nas respostas do RAG.
 
 ## Base conversacional — Comunicações sintéticas
-- **Arquivo bruto:** `data/raw/v1/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt`
+
 ### Identificação
 
 - **Natureza:** Conteúdo inteiramente fictício, criado para testes de RAG
@@ -182,6 +182,13 @@ Esses dados deverão ser tratados conforme as regras de sensibilidade e guardrai
 - **Quantidade de mensagens:** 3
 - **Formato:** TXT
 - **Arquivo bruto:** `data/raw/v1/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt`
+
+### Uso e limitações
+
+O arquivo permite testar perguntas sobre prazos de entrega e informações
+distribuídas entre mensagens. Seu conteúdo não deve ser citado como
+evidência de uma contratação pública real. As respostas do RAG devem
+identificá-lo explicitamente como simulação.
 
 ## Base agregada — Plano de Contratações Anual (PCA) 2026
 
