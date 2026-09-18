@@ -48,3 +48,38 @@ A equipe definiu a divisão de responsabilidades do projeto e iniciou a execuç�
 * Atualizar o `ARQUITETURA.md` com a divisão de responsabilidades definida pela equipe.
 * Iniciar o desenvolvimento e a organização da interface.
 * Acompanhar a integração progressiva entre os módulos do sistema.
+
+## Encontro 3 — 18/09/2026
+
+### Minha participação
+
+- Atualizei o `ARQUITETURA.md` com a divisão de responsabilidades definida pela equipe.
+- Desenvolvi a primeira versão da interface em Gradio e realizei testes de execução no Google Colab.
+- Estruturei o adaptador responsável por conectar a interface aos módulos de roteamento, recuperação e, futuramente, geração.
+- Implementei o módulo `src/obs.py` para registrar os eventos do pipeline em logs estruturados no formato JSONL.
+- Criei o `docs/GUIA_DO_PIPELINE.md` para explicar o funcionamento geral do sistema, as entradas e saídas dos módulos e a estratégia de testes.
+- Criei a primeira versão do `README.md`, incluindo objetivo, arquitetura, instalação, execução da interface, política de sensibilidade e estado atual do projeto.
+- Acompanhei o andamento das responsabilidades da equipe e auxiliei na organização das próximas entregas.
+
+### Apoio de IA
+
+Utilizei ferramentas de IA para apoiar a estruturação inicial da interface, do módulo de observabilidade e da documentação técnica. Também utilizei esse suporte para revisar comandos de execução no Colab, organizar o guia do pipeline e identificar problemas de autenticação e sincronização com o GitHub. Todo o conteúdo foi revisado, testado e ajustado antes de ser incorporado ao repositório.
+
+### Atividades realizadas pela equipe
+
+Durante o encontro, a equipe avançou na ingestão, indexação, roteamento, recuperação, documentação e integração inicial do sistema. Também foram discutidas as dependências entre os módulos e a necessidade de compreender os contratos de entrada e saída para o desenvolvimento dos testes e da geração das respostas.
+
+### Dificuldades encontradas
+
+- Integração da interface enquanto o módulo de geração ainda está em desenvolvimento.
+- Ausência de evidências para algumas rotas que ainda não possuem bases completamente processadas e indexadas.
+- Problemas de autenticação e sincronização do repositório no Google Colab.
+- Necessidade de alinhar as entregas e dependências entre os integrantes da equipe.
+
+### Próximas atividades
+
+- Integrar a interface ao `generate.py` e ao `schema.py` quando esses módulos estiverem disponíveis.
+- Integrar o `obs.py` aos demais estágios do pipeline.
+- Validar o funcionamento da interface com as quatro bases.
+- Acompanhar a implementação dos testes unitários, de contrato e de integração.
+- Atualizar o README conforme novos módulos forem finalizados.
