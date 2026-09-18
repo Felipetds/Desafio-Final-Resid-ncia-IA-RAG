@@ -228,7 +228,7 @@ O arquivo contém, entre outros campos, unidade responsável, identificação e 
 
 ### Observação
 
-Este arquivo documenta a coleta do PCA de 2026. **Os valores homologados por item ainda precisam ser coletados e documentados separadamente** para completar a base agregada.   
+ Este arquivo documenta a coleta do PCA de 2026. A coleta separada de valores homologados por item foi iniciada e está documentada na seção “Base agregada — Valores homologados por item (PE 038/26/2026)”. Essa coleta abrange apenas uma contratação e não completa a cobertura da base agregada.
 
 ## Base agregada — Valores homologados por item (PE 038/26/2026)
 
