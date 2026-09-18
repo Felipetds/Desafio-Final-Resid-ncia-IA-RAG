@@ -228,32 +228,37 @@ A arquitetura seguirá a estrutura de módulos prevista para o projeto:
 | `src/generate.py` | Síntese da resposta e guardrails |
 | `src/schema.py` | Modelos Pydantic e resposta estruturada |
 | `src/obs.py` | Logging estruturado e contabilização de tokens |
+| `app/` | Interface visual e integração do pipeline com o usuário |
 
 ---
 
 ## 11. Divisão de responsabilidades
 
-A equipe adotará responsáveis por módulo. A responsabilidade indica o integrante que acompanhará principalmente a implementação e integração daquele componente, sem impedir a colaboração dos demais membros.
+A equipe adotou uma divisão de responsabilidades por módulos e etapas do pipeline. Cada integrante ficará responsável por acompanhar principalmente a implementação, os testes iniciais e a integração de sua parte, sem impedir a colaboração dos demais membros.
 
-| Área/Módulo | Responsável |
-|---|---|
-| Coordenação da equipe | **A definir pela equipe** |
-| Coleta e versionamento — `fetch_corpus.py` | **A definir pela equipe** |
-| Ingestão — `ingest.py` | **A definir pela equipe** |
-| Indexação — `index.py` | **A definir pela equipe** |
-| Roteamento — `router.py` | **A definir pela equipe** |
-| Recuperação — `retrieve.py` | **A definir pela equipe** |
-| Geração e guardrails — `generate.py` | **A definir pela equipe** |
-| Schemas — `schema.py` | **A definir pela equipe** |
-| Observabilidade — `obs.py` | **A definir pela equipe** |
-| Testes e avaliação | **A definir pela equipe** |
-| Interface e documentação | **A definir pela equipe** |
+| Área/Módulo | Responsável | Responsabilidade principal |
+|---|---|---|
+| Coordenação da equipe | **Maria Eduarda** | Acompanhar tarefas, dependências, bloqueios, commits, documentação e integração entre os módulos |
+| Coleta e versionamento — `fetch_corpus.py` | **Janice** | Coletar, versionar e organizar as quatro bases, além de atualizar o manifesto e o inventário |
+| Ingestão — `ingest.py` | **Eridalgdo** | Extrair o conteúdo, gerar chunks e incluir os metadados obrigatórios |
+| Indexação — `index.py` | **Eridalgdo** | Gerar embeddings, índice FAISS, índice BM25, cache e persistência dos índices |
+| Roteamento — `router.py` | **Luiz Carlos** | Analisar as consultas, extrair filtros e decidir quais bases deverão ser consultadas |
+| Recuperação — `retrieve.py` | **Luiz Carlos** | Executar recuperação densa, BM25, filtros e fusão RRF, retornando as evidências encontradas |
+| Geração e guardrails — `generate.py` | **Felipe e Calvin** | Produzir respostas fundamentadas nas evidências e aplicar regras de segurança, sensibilidade e recusa |
+| Schemas — `schema.py` | **Felipe e Calvin** | Definir e validar os contratos dos objetos utilizados na geração e na resposta estruturada |
+| Observabilidade — `obs.py` | **Maria Eduarda** | Implementar e padronizar o logging estruturado, enquanto cada responsável integra os logs ao próprio módulo |
+| Testes e avaliação | **Felipe e Calvin** | Criar testes unitários, de contrato e de integração, além de organizar os resultados em `eval/` |
+| Interface e integração | **Maria Eduarda** | Desenvolver a interface, conectar o fluxo completo e apresentar respostas, fontes e evidências |
+| Documentação | **Maria Eduarda, com contribuição da equipe** | Atualizar arquitetura, planejamento, dependências, decisões e orientações de execução |
 
-> **Pendência da versão inicial:** a equipe deverá definir o coordenador e associar os integrantes aos módulos antes da consolidação desta seção, mantendo a divisão explícita de responsabilidades exigida pelo desafio.
+A execução seguirá a dependência entre as etapas. A coleta libera a ingestão; a ingestão libera a indexação; os índices permitem validar a recuperação; a recuperação fornece evidências para a geração; e a geração libera a integração final com a interface.
+
+Cada integrante também deverá atualizar seu arquivo individual em `acompanhamento/`, registrando sua participação, dificuldades, próximos passos e utilização de ferramentas de IA.
 
 ---
 
 ## 12. Fluxo resumido
+
 
 **Usuário → `query_analysis` → `roteamento` → `retrieval_denso` + `retrieval_bm25` → `fusao_rrf` → `rerank` → `geracao` → `validacao` → `feedback` → Resposta**
 
