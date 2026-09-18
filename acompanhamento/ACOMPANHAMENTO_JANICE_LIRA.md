@@ -54,3 +54,34 @@ Finalizar a coleta e higienização dos dados do Cenário 1.
 Criar o arquivo corpus_manifest.yaml para registrar as fontes coletadas.
 
 Iniciar o rascunho dos documentos ARQUITETURA.md e PERSONAS.md.
+
+### Encontro 3 — 18/09/2026
+Minha participação
+Revisão da Base de Dados: Iniciei o processo de revisão, análise e validação dos dados coletados para garantir a qualidade, consistência e adequação das informações antes das etapas do pipeline.
+Documentação Arquitetural e Geral: Atualizei o ARQUITETURA.md com a divisão de responsabilidades definida pela equipe e criei a primeira versão do README.md (objetivo, arquitetura, instalação, execução da interface, política de sensibilidade e estado atual).
+
+### Apoio de IA
+Utilizei ferramentas de IA para apoiar a estruturação inicial da interface, do módulo de observabilidade e da documentação técnica, além de auxiliar no diagnóstico de problemas de autenticação/sincronização no Colab e GitHub. Todo o conteúdo gerado foi revisado, testado e ajustado antes de ser incorporado ao repositório.
+
+### Atividades realizadas pela equipe
+Durante o encontro, a equipe avançou na ingestão, indexação, roteamento, recuperação, documentação e integração inicial do sistema. Discutiram-se as dependências entre os módulos e a necessidade de padronizar os contratos de entrada e saída para alinhar o desenvolvimento dos testes e do módulo de geração.
+
+### Dificuldades encontradas
+Necessidade de revisão minuciosa e tratamento dos dados coletados na base.
+
+Ausência de evidências para algumas rotas cujas bases ainda estão em fase de processamento e indexação.
+
+Integração da interface enquanto o módulo de geração ainda está em desenvolvimento.
+
+Ajustes de autenticação e sincronização do repositório no ambiente do Google Colab.
+
+### Próximas atividades
+Dar continuidade e finalizar a revisão da base de dados coletados.
+
+Integrar a interface aos módulos generate.py e schema.py conforme forem disponibilizados.
+
+Conectar o obs.py aos demais estágios do pipeline.
+
+Validar o funcionamento da interface e do fluxo RAG com as quatro bases tratadas.
+
+Acompanhar a implementação dos testes unitários, de contrato e de integração.
