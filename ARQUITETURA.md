@@ -240,8 +240,8 @@ A equipe adotou uma divisão de responsabilidades por módulos e etapas do pipel
 |---|---|---|
 | Coordenação da equipe | **Maria Eduarda** | Acompanhar tarefas, dependências, bloqueios, commits, documentação e integração entre os módulos |
 | Coleta e versionamento — `fetch_corpus.py` | **Janice** | Coletar, versionar e organizar as quatro bases, além de atualizar o manifesto e o inventário |
-| Ingestão — `ingest.py` | **Eridalgdo** | Extrair o conteúdo, gerar chunks e incluir os metadados obrigatórios |
-| Indexação — `index.py` | **Eridalgdo** | Gerar embeddings, índice FAISS, índice BM25, cache e persistência dos índices |
+| Ingestão — `ingest.py` | **Eridalgo** | Extrair o conteúdo, gerar chunks e incluir os metadados obrigatórios |
+| Indexação — `index.py` | **Eridalgo** | Gerar embeddings, índice FAISS, índice BM25, cache e persistência dos índices |
 | Roteamento — `router.py` | **Luiz Carlos** | Analisar as consultas, extrair filtros e decidir quais bases deverão ser consultadas |
 | Recuperação — `retrieve.py` | **Luiz Carlos** | Executar recuperação densa, BM25, filtros e fusão RRF, retornando as evidências encontradas |
 | Geração e guardrails — `generate.py` | **Felipe e Calvin** | Produzir respostas fundamentadas nas evidências e aplicar regras de segurança, sensibilidade e recusa |
