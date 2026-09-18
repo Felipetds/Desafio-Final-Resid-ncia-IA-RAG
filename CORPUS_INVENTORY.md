@@ -172,7 +172,7 @@ Esses dados deverão ser tratados conforme as regras de sensibilidade e guardrai
 - **Tratamento necessário:** verificar e mascarar dados pessoais, como identificadores funcionais e contatos, antes de disponibilizar trechos nas respostas do RAG.
 
 ## Base conversacional — Comunicações sintéticas
-
+- **Arquivo bruto:** `data/raw/v1/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt`
 ### Identificação
 
 - **Natureza:** Conteúdo inteiramente fictício, criado para testes de RAG
@@ -256,9 +256,4 @@ Este arquivo documenta a coleta do PCA de 2026. **Os valores homologados por ite
 Os itens fracassados e desertos foram mantidos sem valor homologado, e não com valor zero. Esta coleta documenta uma contratação específica e não representa todas as contratações do Estado do Rio de Janeiro.
 
 
-### Uso e limitações
 
-O arquivo permite testar perguntas sobre prazos de entrega e informações
-distribuídas entre mensagens. Seu conteúdo não deve ser citado como
-evidência de uma contratação pública real. As respostas do RAG devem
-identificá-lo explicitamente como simulação.
