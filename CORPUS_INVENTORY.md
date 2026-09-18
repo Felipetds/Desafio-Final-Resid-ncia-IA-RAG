@@ -183,6 +183,47 @@ Esses dados deverão ser tratados conforme as regras de sensibilidade e guardrai
 - **Formato:** TXT
 - **Arquivo bruto:** `data/raw/v1/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt`
 
+## Base agregada — Plano de Contratações Anual (PCA) 2026
+
+### Identificação
+
+* **Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+* **Base:** Agregada
+* **Fonte:** Portal Nacional de Contratações Públicas (PNCP)
+* **Órgão:** Estado do Rio de Janeiro
+* **CNPJ do órgão:** 42.498.600/0001-71
+* **Ano do PCA:** 2026
+* **Data de publicação no PNCP:** 01/08/2025
+* **Última atualização informada na consulta:** 18/09/2026
+* **Formato coletado:** CSV
+* **Quantidade de itens informada no portal:** 36.994
+* **Valor total estimado informado no portal:** R$ 55.968.524.178,3319
+
+### Dados brutos
+
+O CSV foi baixado do PNCP e armazenado localmente em:
+
+`data/raw/v1/agregada/pncp/rj/pca/2026/pca_2026_estado_rj.csv`
+
+A pasta `data/raw/` está no `.gitignore` e não deve ser versionada no GitHub.
+
+### Verificação
+
+* **Tamanho do arquivo:** 14.469.918 bytes
+* **Separador:** ponto e vírgula (`;`)
+* **Quantidade de colunas:** 20
+* **Linhas de dados no CSV:** 36.994
+* **Conferência com a quantidade informada no PNCP:** coincidente
+
+### Conteúdo disponível
+
+O arquivo contém, entre outros campos, unidade responsável, identificação e descrição do item, quantidade estimada, valor unitário estimado, valor total estimado e data desejada.
+
+### Observação
+
+Este arquivo documenta a coleta do PCA de 2026. **Os valores homologados por item ainda precisam ser coletados e documentados separadamente** para completar a base agregada.
+
+
 ### Uso e limitações
 
 O arquivo permite testar perguntas sobre prazos de entrega e informações
