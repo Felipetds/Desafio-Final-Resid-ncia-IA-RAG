@@ -3,9 +3,9 @@ import json
 
 def criar_chunk(texto, source_file, doc_type, chunk_idx, base_id="estruturada_pncp_rj"):
     return {
-        "chunk_id": f"{source_file}_chunk_{chunk_idx}",
         "text": texto,
         "metadata": {
+            "chunk_id": f"{source_file}_chunk_{chunk_idx}",
             "source_file": source_file,
             "doc_type": doc_type,
             "sensitivity": "publico",

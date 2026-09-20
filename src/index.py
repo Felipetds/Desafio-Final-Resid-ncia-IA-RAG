@@ -25,9 +25,9 @@ def gerar_indices():
         
     print(f"Total de chunks carregados: {len(chunks)}")
     
-    # Extração de textos e IDs
+    # CORREÇÃO: Agora busca o chunk_id corretamente dentro de 'metadata'
     textos = [c["text"] for c in chunks]
-    ids_lista = [c["chunk_id"] for c in chunks]
+    ids_lista = [c["metadata"]["chunk_id"] for c in chunks]
     
     # 2. Configurar o cliente da API para embeddings densos
     client = OpenAI(base_url=OLLAMA_URL, api_key="ollama")
