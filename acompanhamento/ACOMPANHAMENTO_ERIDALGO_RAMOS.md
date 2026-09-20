@@ -77,3 +77,17 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 
 * **Versionamento:** 
   * Códigos-fonte devidamente versionados e enviados ao repositório remoto (`commit: 11af8b7`).
+
+
+---
+
+### Atualização — 20/09/2026 (Referente ao Planejamento de 21/09)
+
+**Minhas Atividades:**
+
+* **Ordem 2 Concluída:** 
+  * Corrigi a estrutura de metadados no `src/ingest.py`, movendo o `chunk_id` para dentro do dicionário `metadata`.
+  * Atualizei a lógica de extração de IDs no `src/index.py` para refletir o novo formato.
+  * Validei a reindexação completa (FAISS e BM25) com sucesso utilizando os dados simulados (*fixtures*).
+* **Versionamento:**
+  * Correção validada e enviada para a branch principal (`commit: db3415d`), liberando o formato final para a criação das *fixtures* pela equipe.
