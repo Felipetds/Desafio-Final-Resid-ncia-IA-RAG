@@ -42,6 +42,12 @@ def consultar_pagina_pncp(parametros: dict) -> dict:
                 timeout=(15, 60),
             )
             resposta.raise_for_status()
+            if resposta.status_code == 204:
+                raise RuntimeError(
+                    "O PNCP retornou HTTP 204 (sem conteúdo) na página "
+                    f"{parametros.get('pagina')}. "
+                    "Nenhum JSON final será publicado."
+                )
             resultado = resposta.json()
         except requests.RequestException as erro:
             status = getattr(getattr(erro, "response", None), "status_code", None)
@@ -79,29 +85,129 @@ def consultar_pagina_pncp(parametros: dict) -> dict:
 
         return resultado
 
-def coletar_paginas_pncp(parametros: dict) -> list:
-    """Reúne os registros de todas as páginas de uma consulta ao PNCP."""
+def coletar_paginas_pncp(
+    parametros: dict, pasta_progresso: Path, retomar: bool = False
+) -> list:
+    """Salva páginas completas e exige autorização para retomar."""
+    import hashlib
+    import json
+    import os
+    import tempfile
+
+    assinatura = hashlib.sha256(
+        json.dumps(parametros, sort_keys=True).encode("utf-8")
+    ).hexdigest()[:16]
+    pasta = pasta_progresso / assinatura
+    configuracao = pasta / "configuracao.json"
+    existe_progresso = pasta.exists() and any(pasta.iterdir())
+
+    if existe_progresso and not retomar:
+        raise RuntimeError(
+            "Há progresso anterior. Confira os checkpoints antes de usar --retomar. "
+            "Nenhum arquivo foi alterado."
+        )
+    if retomar and not existe_progresso:
+        raise RuntimeError("Não há progresso anterior para retomar.")
+
+    def salvar_checkpoint(caminho: Path, conteudo) -> None:
+        temporario = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                mode="w", encoding="utf-8", suffix=".tmp",
+                dir=caminho.parent, delete=False
+            ) as arquivo:
+                temporario = Path(arquivo.name)
+                json.dump(conteudo, arquivo, ensure_ascii=False, indent=2)
+                arquivo.flush()
+                os.fsync(arquivo.fileno())
+            # Não substitui um checkpoint já existente.
+            os.link(temporario, caminho)
+        finally:
+            if temporario is not None:
+                temporario.unlink(missing_ok=True)
+
+    if existe_progresso:
+        if not configuracao.is_file():
+            raise RuntimeError("Progresso sem configuração; retomada bloqueada.")
+        anterior = json.loads(configuracao.read_text(encoding="utf-8"))
+        if anterior != parametros:
+            raise RuntimeError("Filtros diferentes dos checkpoints; retomada bloqueada.")
+    else:
+        pasta.mkdir(parents=True, exist_ok=True)
+        salvar_checkpoint(configuracao, parametros)
+
     registros = []
+    total_paginas_esperado = None
+    total_registros_esperado = None
     pagina = 1
 
     while True:
-        parametros_pagina = {**parametros, "pagina": pagina}
-        resultado = consultar_pagina_pncp(parametros_pagina)
+        arquivo_pagina = pasta / f"pagina_{pagina:06d}.json"
+        if arquivo_pagina.exists():
+            resultado = json.loads(arquivo_pagina.read_text(encoding="utf-8"))
+            print(f"Página {pagina}: recuperada do progresso salvo.", flush=True)
+        else:
+            resultado = consultar_pagina_pncp({**parametros, "pagina": pagina})
+
+        if (
+            not isinstance(resultado, dict)
+            or not isinstance(resultado.get("data"), list)
+            or type(resultado.get("totalPaginas")) is not int
+            or resultado["totalPaginas"] < 1
+            or type(resultado.get("totalRegistros")) is not int
+            or resultado["totalRegistros"] < 0
+        ):
+            raise RuntimeError(f"Resposta ou checkpoint inválido na página {pagina}.")
+
+        total_paginas = resultado["totalPaginas"]
+        total_registros = resultado["totalRegistros"]
+
+        if total_paginas_esperado is None:
+            total_paginas_esperado = total_paginas
+            total_registros_esperado = total_registros
+        elif (
+            total_paginas != total_paginas_esperado
+            or total_registros != total_registros_esperado
+        ):
+            raise RuntimeError(
+                "Paginação ou total de registros mudou; JSON final não será criado."
+            )
+
+        if not resultado["data"]:
+            raise RuntimeError(f"Página {pagina} vazia; coleta interrompida.")
+
+        if not arquivo_pagina.exists():
+            salvar_checkpoint(arquivo_pagina, resultado)
+            print(f"Página {pagina}/{total_paginas}: progresso salvo.", flush=True)
 
         registros.extend(resultado["data"])
 
-        total_paginas = resultado.get("totalPaginas")
-        if not isinstance(total_paginas, int) or total_paginas < 1:
-            raise RuntimeError("Resposta inesperada do PNCP: totalPaginas inválido.")
-
-        if pagina >= total_paginas:
+        if pagina == total_paginas:
             break
-
         pagina += 1
+
+    if len(registros) != total_registros_esperado:
+        raise RuntimeError(
+            f"Contagem divergente: {len(registros)} coletados; "
+            f"{total_registros_esperado} informados pelo PNCP."
+        )
+
+    ids = [
+        item.get("numeroControlePNCP")
+        for item in registros if isinstance(item, dict)
+    ]
+    if (
+        len(ids) != len(registros)
+        or any(not identificador for identificador in ids)
+        or len(set(ids)) != len(ids)
+    ):
+        raise RuntimeError(
+            "Identificadores ausentes ou duplicados; JSON final não será criado."
+        )
 
     return registros
 
-def executar_fetch(manifesto: dict, raiz: Path) -> None:
+def executar_fetch(manifesto: dict, raiz: Path, retomar: bool = False) -> None:
     """Coleta a base estruturada sem substituir arquivos existentes."""
     import json
     import os
@@ -131,7 +237,9 @@ def executar_fetch(manifesto: dict, raiz: Path) -> None:
         "tamanhoPagina": 50,
     }
 
-    registros = coletar_paginas_pncp(parametros)
+    registros = coletar_paginas_pncp(
+        parametros, destino.parent / "_progresso_fetch", retomar=retomar
+    )
     if not registros:
         raise RuntimeError("A consulta não retornou registros; nada foi salvo.")
 
@@ -149,6 +257,8 @@ def executar_fetch(manifesto: dict, raiz: Path) -> None:
         ) as arquivo:
             temporario = Path(arquivo.name)
             json.dump(registros, arquivo, ensure_ascii=False, indent=2)
+            arquivo.flush()
+            os.fsync(arquivo.fileno())
 
         # Falha se outro processo tiver criado o destino nesse intervalo.
         os.link(temporario, destino)
@@ -171,13 +281,19 @@ def main() -> None:
         default="corpus_manifest.yaml",
         help="Caminho do manifesto YAML",
     )
+    parser.add_argument(
+        "--retomar", action="store_true",
+        help="Reutiliza checkpoints existentes após conferência manual.",
+    )
     argumentos = parser.parse_args()
 
     caminho_manifesto = Path(argumentos.manifest).resolve()
     manifesto = carregar_manifesto(caminho_manifesto)
 
     if argumentos.comando == "fetch":
-        executar_fetch(manifesto, caminho_manifesto.parent)
+        executar_fetch(
+            manifesto, caminho_manifesto.parent, retomar=argumentos.retomar
+        )
         return
 
     print("Cenário:", manifesto.get("scenario_id"))
@@ -190,3 +306,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
