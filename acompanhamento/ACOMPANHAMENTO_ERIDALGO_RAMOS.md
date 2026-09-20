@@ -81,11 +81,10 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 
 ---
 
-### Atualização — 20/09/2026 (Referente ao Planejamento de 21/09)
+### Atualização — 21/09/2026 
 
 **Minhas Atividades:**
-
-* **Ordem 2 Concluída:** 
+ 
   * Corrigi a estrutura de metadados no `src/ingest.py`, movendo o `chunk_id` para dentro do dicionário `metadata`.
   * Atualizei a lógica de extração de IDs no `src/index.py` para refletir o novo formato.
   * Validei a reindexação completa (FAISS e BM25) com sucesso utilizando os dados simulados (*fixtures*).
