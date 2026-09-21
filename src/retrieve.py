@@ -91,8 +91,8 @@ def carregar_artefatos(
 
     for chunk in chunks:
         chunk_id = (
-            chunk.get("chunk_id")
-            or chunk.get("metadata", {}).get("chunk_id")
+            chunk.get("metadata", {}).get("chunk_id")
+            or chunk.get("chunk_id")
         )
 
         if not chunk_id:
