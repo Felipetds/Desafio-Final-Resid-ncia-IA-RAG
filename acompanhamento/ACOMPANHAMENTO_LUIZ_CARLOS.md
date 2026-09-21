@@ -115,3 +115,39 @@ A recuperação ainda foi testada com uma fixture pequena, contendo somente docu
 - Comparar os resultados da busca densa e do BM25 com o ranking produzido pelo RRF.
 - Apoiar Felipe e Calvin na integração da saída do recuperador com o `generate.py`.
 - Documentar o contrato de entrada e saída dos módulos no repositório.
+
+---
+
+## Encontro 3 — 21/09/2026
+
+### Minha participação
+
+- Participei da validação dos módulos `router.py` e `retrieve.py` com os chunks gerados pelo `ingest.py`.
+- Verifiquei o funcionamento do roteamento por meio de consultas normais e de uma consulta que exigia recusa por envolver acusação de fraude.
+- Durante o teste de integração, identifiquei uma incompatibilidade entre o formato atual dos chunks e o módulo de recuperação.
+- O `ingest.py` passou a armazenar o `chunk_id` dentro de `metadata`, enquanto o `retrieve.py` ainda priorizava a leitura desse identificador no nível principal do chunk.
+- Atualizei o `retrieve.py` para buscar primeiro o `chunk_id` em `metadata`, mantendo compatibilidade com o formato anterior.
+- A correção foi enviada ao repositório para permitir que os testes de integração realizados por Felipe continuem.
+
+### Dificuldades encontradas
+
+A principal dificuldade foi a incompatibilidade entre os contratos dos módulos após a correção dos metadados da ingestão. O teste de recuperação apresentou um `KeyError` porque o `retrieve.py` esperava o `chunk_id` em uma posição diferente daquela produzida pelo `ingest.py`.
+
+Também foi necessário diferenciar o teste de recusa do teste completo de recuperação. A consulta sobre fraude validou o roteamento e a regra de recusa, mas não executou a recuperação densa, o BM25 e a fusão RRF, pois o pipeline foi interrompido corretamente antes dessas etapas.
+
+### Apoio de IA
+
+Utilizei uma ferramenta de IA para auxiliar na interpretação do erro apresentado durante a integração e na revisão da compatibilidade entre `ingest.py`, `index.py` e `retrieve.py`. A sugestão foi revisada antes da aplicação, e a alteração foi limitada à leitura do `chunk_id`, preservando as demais funções já implementadas no módulo.
+
+### Atividades realizadas pela equipe
+
+A equipe avançou na integração entre ingestão, indexação, roteamento, recuperação, schemas e geração. Felipe desenvolveu testes de schema e corpus e iniciou os testes do módulo de geração. A correção do `retrieve.py` foi disponibilizada para que o teste de integração possa ser executado novamente.
+
+### Próximas atividades
+
+- Repetir o teste de recuperação após atualizar o repositório.
+- Confirmar a recuperação de evidências em uma consulta que não seja de recusa.
+- Verificar a execução da busca densa, do BM25 e da fusão RRF.
+- Validar o resultado da recuperação com os schemas definidos.
+- Corrigir outras incompatibilidades que apareçam durante o teste de integração.
+
