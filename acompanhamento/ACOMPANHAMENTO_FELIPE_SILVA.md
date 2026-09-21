@@ -64,3 +64,29 @@ Estamos finalizando a parte de gerar as perguntas e iremos iniciar os testes no 
 ### Próximos passos
 
 Iremos iniciar o desenvolvimentos dos teste no próximo encontro.
+
+## Encontro 4 — 21/09/2026**
+
+### Minha contribuição**
+
+* Revisão da estratégia de testes: analisei os requisitos do projeto para as três camadas previstas: testes unitários, de contrato e de integração.
+
+* Validação dos testes existentes: revisei os testes dos módulos schema.py, generate.py, router.py e retrieve.py, verificando o comportamento individual de cada componente.
+
+* Execução dos testes de integração: executei os testes ponta a ponta para avaliar o funcionamento conjunto das etapas do pipeline com perguntas conhecidas.
+
+* Análise das falhas: investiguei os resultados dos testes de integração e identifiquei que as falhas estavam relacionadas à estrutura dos dados utilizados nos testes, especificamente ao campo chunk_id.
+
+* Realizei uma correção no modulo generate.py. Erro na importação de outros modulos.
+
+### Uso de IA
+
+Utilizei IA para entender os erros e as respostas geradas pelos testes, o uso principal foi no teste de integração.
+
+### Resumo da equipe
+
+Finalizamos os teste dos modulos individualmente. Observamos pontos que precisão se corrigidos na etapa de ingestão e indexação, após a correção iremos executar o teste novamente.
+
+### Próximos passos
+
+Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar na resolução dos problemas encontrados no teste de integração.
