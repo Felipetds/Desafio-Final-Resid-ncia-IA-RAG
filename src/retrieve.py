@@ -87,10 +87,20 @@ def carregar_artefatos(
             f"mas existem {len(ids)} IDs."
         )
 
-    chunks_por_id = {
-        chunk["chunk_id"]: chunk
-        for chunk in chunks
-    }
+    chunks_por_id = {}
+
+    for chunk in chunks:
+        chunk_id = (
+            chunk.get("chunk_id")
+            or chunk.get("metadata", {}).get("chunk_id")
+        )
+
+        if not chunk_id:
+            raise ValueError(
+                "Chunk sem chunk_id no nível principal ou em metadata."
+            )
+
+        chunks_por_id[chunk_id] = chunk
 
     return chunks, chunks_por_id, ids, indice_faiss, indice_bm25
 
