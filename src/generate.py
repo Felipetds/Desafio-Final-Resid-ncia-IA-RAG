@@ -15,7 +15,12 @@ import re
 import time
 from typing import List
 from openai import OpenAI
-from schema import RAGResponse, RetrievalResult, SourceEvidence, TokenUsage
+from repositorio1.src.schema import (
+    RAGResponse,
+    RetrievalResult,
+    SourceEvidence,
+    TokenUsage,
+)
 
 # Configurações
 
