@@ -11,6 +11,13 @@ from openai import OpenAI
 
 from src.router import OLLAMA_URL, analisar_consulta
 
+try:
+    from . import obs
+    from .schema import RetrievalResult
+except ImportError:  # permite "python src/retrieve.py" direto, sem pacote.
+    import obs
+    from schema import RetrievalResult
+
 
 EMBEDDING_MODEL = "xagi/qwen3-embedding:0.6b-q4_k_m"
 
@@ -147,16 +154,25 @@ def _converter_numero(valor: Any) -> Optional[float]:
 def chunk_atende_rotas(
     chunk: Dict[str, Any],
     rotas: List[str],
+    exigir_natureza: bool = False,
 ) -> bool:
+    """
+    exigir_natureza=False (padrão): mantém o comportamento atual, usado
+    pelas fixtures e pelos testes — chunk sem "natureza" continua elegível.
+
+    exigir_natureza=True: para uso com os dados reais das quatro bases.
+    Um chunk sem "natureza" identificável é bloqueado (não passa no
+    filtro de rota), em vez de ser aceito por padrão. Ativar isso deve
+    ser combinado com a Janice e o Eridalgo assim que o corpus real
+    estiver disponível, pois hoje ele bloquearia toda a fixture de teste.
+    """
     if not rotas:
         return True
 
     natureza = identificar_natureza(chunk)
 
-    # Durante a fase de fixtures, alguns chunks antigos podem não ter natureza.
-    # Eles continuam elegíveis para permitir o teste do pipeline.
     if natureza is None:
-        return True
+        return not exigir_natureza
 
     return natureza in rotas
 
@@ -299,6 +315,7 @@ def filtrar_resultados(
     chunks_por_id: Dict[str, Dict[str, Any]],
     rotas: List[str],
     filtros: Dict[str, Any],
+    exigir_natureza: bool = False,
 ) -> List[Dict[str, Any]]:
     saida = []
 
@@ -308,7 +325,7 @@ def filtrar_resultados(
         if not chunk:
             continue
 
-        if not chunk_atende_rotas(chunk, rotas):
+        if not chunk_atende_rotas(chunk, rotas, exigir_natureza=exigir_natureza):
             continue
 
         if not chunk_atende_filtros(chunk, filtros):
@@ -370,16 +387,38 @@ def fusao_rrf(
     ]
 
 
+def _validar_com_retrieval_result(resultado: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Valida explicitamente a saída de recuperar_evidencias contra o schema
+    RetrievalResult (src/schema.py) antes de devolvê-la para quem chamou
+    (por exemplo o generate.py). Isso garante que campos obrigatórios,
+    tipos e as regras de consistência do schema (como "recusa não pode
+    ter evidências") sejam sempre respeitados na saída real do pipeline,
+    e não só nos testes.
+    """
+    validado = RetrievalResult(**resultado)
+    return validado.model_dump()
+
+
 def recuperar_evidencias(
     pergunta: str,
     top_k: int = 5,
     fetch_k: int = 50,
     client: OpenAI | None = None,
+    exigir_natureza: bool = False,
 ) -> Dict[str, Any]:
     """
     Executa roteamento, Dense, BM25, filtros e RRF.
+
+    exigir_natureza: repassado para filtrar_resultados/chunk_atende_rotas.
+    Mantém-se False por padrão para não quebrar a fixture atual (chunks
+    sem "natureza" continuam elegíveis). Deve ser ativado como True ao
+    validar com os dados reais das quatro bases (ver Janice/Eridalgo),
+    quando um chunk sem natureza identificável deve ser bloqueado em vez
+    de passar por padrão.
     """
     inicio = time.perf_counter()
+    run_id = obs.novo_run_id()
 
     if client is None:
         client = OpenAI(
@@ -392,10 +431,12 @@ def recuperar_evidencias(
         client=client,
     )
 
+    query_id = analise["query_id"]
+
     if analise.get("is_refusal"):
-        return {
+        resultado = {
             "query": pergunta,
-            "query_id": analise["query_id"],
+            "query_id": query_id,
             "routes": analise["routes"],
             "filters": analise["filters"],
             "is_refusal": True,
@@ -407,6 +448,7 @@ def recuperar_evidencias(
                 2,
             ),
         }
+        return _validar_com_retrieval_result(resultado)
 
     (
         chunks,
@@ -416,72 +458,109 @@ def recuperar_evidencias(
         indice_bm25,
     ) = carregar_artefatos()
 
-    resultados_densos = busca_densa(
-        pergunta=pergunta,
-        client=client,
-        indice_faiss=indice_faiss,
-        ids=ids,
-        fetch_k=fetch_k,
-    )
+    with obs.observar_etapa(
+        run_id=run_id,
+        query_id=query_id,
+        stage="retrieval_denso",
+        input_data={"pergunta": pergunta, "fetch_k": fetch_k},
+    ) as observacao_densa:
+        resultados_densos = busca_densa(
+            pergunta=pergunta,
+            client=client,
+            indice_faiss=indice_faiss,
+            ids=ids,
+            fetch_k=fetch_k,
+        )
+        observacao_densa["output"] = {
+            "candidatos": len(resultados_densos),
+        }
 
-    resultados_bm25 = busca_bm25(
-        pergunta=pergunta,
-        indice_bm25=indice_bm25,
-        ids=ids,
-        fetch_k=fetch_k,
-    )
+    with obs.observar_etapa(
+        run_id=run_id,
+        query_id=query_id,
+        stage="retrieval_bm25",
+        input_data={"pergunta": pergunta, "fetch_k": fetch_k},
+    ) as observacao_bm25:
+        resultados_bm25 = busca_bm25(
+            pergunta=pergunta,
+            indice_bm25=indice_bm25,
+            ids=ids,
+            fetch_k=fetch_k,
+        )
+        observacao_bm25["output"] = {
+            "candidatos": len(resultados_bm25),
+        }
 
     rotas = analise.get("routes", [])
     filtros = analise.get("filters", {})
 
-    resultados_densos = filtrar_resultados(
-        resultados=resultados_densos,
-        chunks_por_id=chunks_por_id,
-        rotas=rotas,
-        filtros=filtros,
-    )
-
-    resultados_bm25 = filtrar_resultados(
-        resultados=resultados_bm25,
-        chunks_por_id=chunks_por_id,
-        rotas=rotas,
-        filtros=filtros,
-    )
-
-    ranking_rrf = fusao_rrf(
-        resultados_densos=resultados_densos,
-        resultados_bm25=resultados_bm25,
-    )
-
-    evidencias = []
-
-    for item in ranking_rrf[:top_k]:
-        chunk = chunks_por_id[item["chunk_id"]]
-        metadata = chunk.get("metadata", {})
-
-        evidencias.append(
-            {
-                "chunk_id": item["chunk_id"],
-                "text": chunk.get("text", ""),
-                "rrf_score": round(item["rrf_score"], 6),
-                "retrieval_sources": item["retrieval_sources"],
-                "dense_distance": item.get("dense_distance"),
-                "bm25_score": item.get("bm25_score"),
-                "source_file": metadata.get("source_file"),
-                "doc_type": metadata.get("doc_type"),
-                "sensitivity": metadata.get(
-                    "sensitivity",
-                    "publico",
-                ),
-                "base_id": metadata.get("base_id"),
-                "natureza": identificar_natureza(chunk),
-                "metadata": metadata,
-            }
+    with obs.observar_etapa(
+        run_id=run_id,
+        query_id=query_id,
+        stage="fusao_rrf",
+        input_data={
+            "routes": rotas,
+            "filters": filtros,
+            "top_k": top_k,
+        },
+    ) as observacao_fusao:
+        resultados_densos = filtrar_resultados(
+            resultados=resultados_densos,
+            chunks_por_id=chunks_por_id,
+            rotas=rotas,
+            filtros=filtros,
+            exigir_natureza=exigir_natureza,
         )
 
-    return {
+        resultados_bm25 = filtrar_resultados(
+            resultados=resultados_bm25,
+            chunks_por_id=chunks_por_id,
+            rotas=rotas,
+            filtros=filtros,
+            exigir_natureza=exigir_natureza,
+        )
+
+        ranking_rrf = fusao_rrf(
+            resultados_densos=resultados_densos,
+            resultados_bm25=resultados_bm25,
+        )
+
+        evidencias = []
+
+        for item in ranking_rrf[:top_k]:
+            chunk = chunks_por_id[item["chunk_id"]]
+            metadata = chunk.get("metadata", {})
+
+            evidencias.append(
+                {
+                    "chunk_id": item["chunk_id"],
+                    "text": chunk.get("text", ""),
+                    "rrf_score": round(item["rrf_score"], 6),
+                    "retrieval_sources": item["retrieval_sources"],
+                    "dense_distance": item.get("dense_distance"),
+                    "bm25_score": item.get("bm25_score"),
+                    "source_file": metadata.get("source_file"),
+                    "doc_type": metadata.get("doc_type"),
+                    "sensitivity": metadata.get(
+                        "sensitivity",
+                        "publico",
+                    ),
+                    "base_id": metadata.get("base_id"),
+                    "natureza": identificar_natureza(chunk),
+                    "metadata": metadata,
+                }
+            )
+
+        observacao_fusao["output"] = {
+            "dense_candidates": len(resultados_densos),
+            "bm25_candidates": len(resultados_bm25),
+            "rrf_candidates": len(ranking_rrf),
+            "returned": len(evidencias),
+        }
+
+    resultado = {
         "query": pergunta,
-        "query_id": analise["query_id"],
+        "query_id": query_id,
         "routes": rotas,
         "filters": filtros,
         "router_justification": analise.get("justification"),
@@ -501,6 +580,8 @@ def recuperar_evidencias(
             2,
         ),
     }
+
+    return _validar_com_retrieval_result(resultado)
 
 
 if __name__ == "__main__":

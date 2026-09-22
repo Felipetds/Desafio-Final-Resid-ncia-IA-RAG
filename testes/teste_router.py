@@ -207,6 +207,82 @@ def test_multiplas_rotas():
     assert len(resultado["routes"]) == 2
 
 
+# ------------------------------------------------------------
+# CROSS-SOURCE: consultas que exigem mais de uma base ao mesmo
+# tempo. O router.py já suporta isso (ver _normalizar_rotas),
+# mas faltava um teste explícito cobrindo cada combinação citada
+# no checklist do Sprint.
+# ------------------------------------------------------------
+
+def test_cross_source_normativa_e_estruturada():
+    client = FakeClient(
+        resposta_router(
+            routes=["normativa", "estruturada"],
+            filters={"uf": "RJ"},
+            justification=(
+                "A pergunta pede a regra de participação (normativa) "
+                "e também contratos abertos (estruturada)."
+            ),
+        )
+    )
+
+    resultado = analisar_consulta(
+        "Sou MEI, posso participar de pregão eletrônico? "
+        "Existe algum contrato aberto no RJ agora?",
+        client=client,
+    )
+
+    assert set(resultado["routes"]) == {"normativa", "estruturada"}
+    assert len(resultado["routes"]) == 2
+    assert resultado["is_refusal"] is False
+    assert resultado["router_fallback"] is False
+
+
+def test_cross_source_agregada_e_estruturada():
+    client = FakeClient(
+        resposta_router(
+            routes=["agregada", "estruturada"],
+            filters={"uf": "RJ", "ano": 2025},
+        )
+    )
+
+    resultado = analisar_consulta(
+        "Quantos contratos foram assinados por modalidade em 2025 no RJ?",
+        client=client,
+    )
+
+    assert set(resultado["routes"]) == {"agregada", "estruturada"}
+    assert len(resultado["routes"]) == 2
+
+
+def test_cross_source_normativa_agregada_e_estruturada():
+    client = FakeClient(
+        resposta_router(
+            routes=["normativa", "agregada", "estruturada"],
+            filters={"uf": "RJ", "ano": 2025},
+            justification=(
+                "A pergunta pede a norma aplicável, uma média (agregada) "
+                "e os contratos que a compõem (estruturada)."
+            ),
+        )
+    )
+
+    resultado = analisar_consulta(
+        "Pela Lei 14.133/2021, qual o valor médio permitido por dispensa "
+        "de licitação, e quais contratos do RJ em 2025 usaram essa regra?",
+        client=client,
+    )
+
+    assert set(resultado["routes"]) == {
+        "normativa",
+        "agregada",
+        "estruturada",
+    }
+    assert len(resultado["routes"]) == 3
+    assert resultado["is_refusal"] is False
+    assert resultado["router_fallback"] is False
+
+
 def test_remove_rotas_invalidas_e_duplicadas():
     client = FakeClient(
         resposta_router(
@@ -279,6 +355,81 @@ def test_extracao_de_filtros_retornados_pelo_llm():
     assert filtros["modalidade"] == "Pregão - Eletrônico"
     assert filtros["municipio"] == "Rio de Janeiro"
     assert filtros["fornecedor"] == "Exemplo Tecnologia Ltda."
+
+
+# ------------------------------------------------------------
+# FILTRO NUMÉRICO: "contratos acima de R$ 500 mil" e variações.
+# valor_minimo/valor_maximo não passam pela checagem de "aparece
+# literalmente no texto" (o LLM converte "500 mil" em 500000),
+# então o que se valida aqui é que o número chega correto tanto
+# quando o LLM responde quanto no fallback por regex.
+# ------------------------------------------------------------
+
+def test_filtro_numerico_valor_minimo_via_llm():
+    client = FakeClient(
+        resposta_router(
+            routes=["estruturada"],
+            filters={
+                "uf": "RJ",
+                "valor_minimo": 500000,
+                "valor_maximo": None,
+            },
+        )
+    )
+
+    resultado = analisar_consulta(
+        "Quais contratos de tecnologia ficaram acima de R$ 500 mil?",
+        client=client,
+    )
+
+    assert resultado["routes"] == ["estruturada"]
+    assert resultado["filters"]["valor_minimo"] == 500000
+    assert resultado["filters"]["valor_maximo"] is None
+
+
+def test_filtro_numerico_valor_maximo_via_llm():
+    client = FakeClient(
+        resposta_router(
+            routes=["estruturada"],
+            filters={
+                "uf": "RJ",
+                "valor_minimo": None,
+                "valor_maximo": 200000,
+            },
+        )
+    )
+
+    resultado = analisar_consulta(
+        "Quais contratos ficaram abaixo de R$ 200 mil?",
+        client=client,
+    )
+
+    assert resultado["filters"]["valor_minimo"] is None
+    assert resultado["filters"]["valor_maximo"] == 200000
+
+
+def test_fallback_extrai_valor_minimo_em_mil():
+    client = FakeClient(erro=RuntimeError("Falha simulada"))
+
+    resultado = analisar_consulta(
+        "Quais contratos de tecnologia no RJ em 2025 acima de R$ 500 mil?",
+        client=client,
+    )
+
+    assert resultado["router_fallback"] is True
+    assert resultado["filters"]["valor_minimo"] == 500000.0
+
+
+def test_fallback_extrai_valor_minimo_em_milhoes():
+    client = FakeClient(erro=RuntimeError("Falha simulada"))
+
+    resultado = analisar_consulta(
+        "Contratos superiores a 2 milhões de reais no RJ.",
+        client=client,
+    )
+
+    assert resultado["router_fallback"] is True
+    assert resultado["filters"]["valor_minimo"] == 2_000_000.0
 
 
 # ============================================================

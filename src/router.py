@@ -6,6 +6,11 @@ from typing import Any, Dict, List
 
 from openai import OpenAI
 
+try:
+    from . import obs  # funciona como src.router ou repositorio1.src.router
+except ImportError:  # permite "python src/router.py" direto, sem pacote.
+    import obs
+
 
 OLLAMA_URL = "http://ecoa-llm.duckdns.org:11434/v1"
 GENERATION_MODEL = "qcwind/qwen3-8b-instruct-Q4-K-M"
@@ -16,6 +21,15 @@ ROTAS_VALIDAS = {
     "conversacional",
     "agregada",
 }
+
+# Campos de filtro que só devem ser aceitos se aparecerem
+# explicitamente no texto da pergunta (evita filtro inventado pelo LLM).
+CAMPOS_FILTRO_VALIDADOS_NO_TEXTO = [
+    "ano",
+    "modalidade",
+    "municipio",
+    "fornecedor",
+]
 
 
 PROMPT_ROTEADOR = """
@@ -79,6 +93,14 @@ Importante:
 - Não adicione uma base somente porque a pergunta menciona compra,
   contrato ou modalidade. Identifique qual tipo de evidência foi solicitado.
 
+Regras de extração de filtros:
+- Extraia um filtro SOMENTE se o valor estiver explícito na pergunta.
+- "serviços de tecnologia" é o OBJETO da contratação, não uma modalidade.
+  Modalidade só deve ser preenchida se a pergunta citar termos como
+  "pregão eletrônico", "concorrência", "dispensa", "inexigibilidade" etc.
+- Nunca preencha "ano" se a pergunta não mencionar um ano explicitamente.
+- Se não houver evidência textual de um filtro, retorne null para esse campo.
+
 Regras de segurança:
 
 - Não faça acusações de fraude ou ilegalidade.
@@ -141,6 +163,58 @@ def _normalizar_rotas(rotas: Any) -> List[str]:
                 resultado.append(rota_normalizada)
 
     return resultado
+
+
+def _normalizar_texto_para_comparacao(texto: str) -> str:
+    """
+    Remove pontuação e espaços repetidos antes de comparar.
+
+    O LLM costuma normalizar valores (ex.: "Pregão - Eletrônico"),
+    enquanto a pergunta original vem sem essa formatação
+    (ex.: "pregão eletrônico"). Sem essa normalização, a comparação
+    literal descarta filtros válidos por engano.
+    """
+    texto = texto.lower()
+    texto = re.sub(r"[^\wà-ÿ\s]", " ", texto, flags=re.UNICODE)
+    texto = re.sub(r"\s+", " ", texto).strip()
+    return texto
+
+
+def _validar_filtros_contra_pergunta(
+    pergunta: str,
+    filtros: Dict[str, Any] | None,
+) -> Dict[str, Any]:
+    """
+    Remove filtros que o LLM tenha inventado, ou seja, que não
+    apareçam explicitamente no texto da pergunta.
+
+    Isso funciona como uma segunda camada de segurança além das
+    instruções do prompt: mesmo que o modelo ignore a instrução e
+    "chute" um valor, o filtro é descartado aqui antes de seguir
+    para o retrieve.py.
+
+    A comparação é feita após normalizar pontuação e espaços dos
+    dois lados (ver _normalizar_texto_para_comparacao), para não
+    descartar filtros válidos só porque o LLM formatou o valor de
+    forma diferente da pergunta original (ex.: hífen, maiúsculas,
+    pontuação).
+
+    valor_minimo e valor_maximo não entram nessa checagem porque o
+    LLM normalmente converte expressões como "acima de R$ 500 mil"
+    para um número (500000), que não aparece literalmente no texto.
+    """
+    if not isinstance(filtros, dict):
+        return {}
+
+    texto = _normalizar_texto_para_comparacao(pergunta)
+
+    for campo in CAMPOS_FILTRO_VALIDADOS_NO_TEXTO:
+        valor = filtros.get(campo)
+
+        if valor and _normalizar_texto_para_comparacao(str(valor)) not in texto:
+            filtros[campo] = None
+
+    return filtros
 
 
 def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
@@ -224,7 +298,8 @@ def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
 
     valor_minimo = None
     valor_encontrado = re.search(
-        r"(?:acima|superior|mais de)\s+(?:r\$\s*)?([\d.,]+)\s*(mil|milhão|milhoes|milhões)?",
+        r"(?:acima\s+de|superior(?:es)?\s+a|mais\s+de)\s+"
+        r"(?:r\$\s*)?([\d.,]+)\s*(milhões|milhoes|milhão|mil)?",
         texto,
     )
 
@@ -259,15 +334,38 @@ def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
 def analisar_consulta(
     pergunta: str,
     client: OpenAI | None = None,
+    run_id: str | None = None,
 ) -> Dict[str, Any]:
     """
     Analisa a pergunta e retorna rotas, filtros e decisão de segurança.
+
+    run_id agrupa, no log JSONL do obs.py, as etapas "query_analysis" e
+    "roteamento" desta mesma chamada. É opcional: quando quem chama (por
+    exemplo o retrieve.py ou os testes) não informa um run_id, um novo é
+    gerado aqui mesmo, então nada quebra em quem já usava a função sem
+    esse parâmetro.
     """
     inicio = time.perf_counter()
     query_id = f"q_{uuid.uuid4().hex[:8]}"
 
     if not pergunta or not pergunta.strip():
         raise ValueError("A pergunta não pode estar vazia.")
+
+    run_id = run_id or obs.novo_run_id()
+    pergunta_limpa = pergunta.strip()
+
+    # Etapa "query_analysis": registra a pergunta recebida antes de decidir
+    # rotas. Não envolve chamada ao LLM, então dificilmente falha; mesmo
+    # assim fica dentro do observar_etapa para logar erro caso ocorra.
+    with obs.observar_etapa(
+        run_id=run_id,
+        query_id=query_id,
+        stage="query_analysis",
+        input_data={"pergunta": pergunta_limpa},
+    ) as observacao_analise:
+        observacao_analise["output"] = {
+            "tamanho_pergunta": len(pergunta_limpa),
+        }
 
     if client is None:
         client = OpenAI(
@@ -276,45 +374,67 @@ def analisar_consulta(
         )
 
     try:
-        resposta = client.chat.completions.create(
-            model=GENERATION_MODEL,
-            temperature=0,
-            messages=[
-                {
-                    "role": "system",
-                    "content": PROMPT_ROTEADOR,
-                },
-                {
-                    "role": "user",
-                    "content": pergunta.strip(),
-                },
-            ],
-        )
+        with obs.observar_etapa(
+            run_id=run_id,
+            query_id=query_id,
+            stage="roteamento",
+            input_data={"pergunta": pergunta_limpa},
+            modelo=GENERATION_MODEL,
+        ) as observacao_roteamento:
+            resposta = client.chat.completions.create(
+                model=GENERATION_MODEL,
+                temperature=0,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": PROMPT_ROTEADOR,
+                    },
+                    {
+                        "role": "user",
+                        "content": pergunta_limpa,
+                    },
+                ],
+            )
 
-        conteudo = resposta.choices[0].message.content
-        resultado = _extrair_json(conteudo)
+            conteudo = resposta.choices[0].message.content
+            resultado = _extrair_json(conteudo)
 
-        resultado["routes"] = _normalizar_rotas(
-            resultado.get("routes", [])
-        )
+            resultado["routes"] = _normalizar_rotas(
+                resultado.get("routes", [])
+            )
 
-        if not resultado["routes"] and not resultado.get("is_refusal"):
-            resultado["routes"] = ["estruturada"]
+            # Importante: setdefault ANTES de validar, senão resultado["filters"]
+            # pode não existir (KeyError) ou vir como null (AttributeError).
+            resultado.setdefault("filters", {})
 
-        resultado.setdefault("filters", {})
-        resultado.setdefault("is_refusal", False)
-        resultado.setdefault("refusal_reason", None)
-        resultado.setdefault("justification", "")
+            resultado["filters"] = _validar_filtros_contra_pergunta(
+                pergunta,
+                resultado["filters"],
+            )
 
-        uso = getattr(resposta, "usage", None)
+            if not resultado["routes"] and not resultado.get("is_refusal"):
+                resultado["routes"] = ["estruturada"]
 
-        tokens = {
-            "prompt": getattr(uso, "prompt_tokens", 0) if uso else 0,
-            "completion": getattr(uso, "completion_tokens", 0) if uso else 0,
-            "total": getattr(uso, "total_tokens", 0) if uso else 0,
-        }
+            resultado.setdefault("is_refusal", False)
+            resultado.setdefault("refusal_reason", None)
+            resultado.setdefault("justification", "")
 
-        resultado["router_fallback"] = False
+            uso = getattr(resposta, "usage", None)
+
+            tokens = {
+                "prompt": getattr(uso, "prompt_tokens", 0) if uso else 0,
+                "completion": getattr(uso, "completion_tokens", 0) if uso else 0,
+                "total": getattr(uso, "total_tokens", 0) if uso else 0,
+            }
+
+            resultado["router_fallback"] = False
+
+            observacao_roteamento["output"] = {
+                "routes": resultado["routes"],
+                "filters": resultado["filters"],
+                "is_refusal": resultado["is_refusal"],
+            }
+            observacao_roteamento["tokens"] = tokens
 
     except Exception as erro:
         resultado = _roteamento_fallback(pergunta)
@@ -327,7 +447,7 @@ def analisar_consulta(
             "total": 0,
         }
 
-    resultado["query"] = pergunta.strip()
+    resultado["query"] = pergunta_limpa
     resultado["query_id"] = query_id
     resultado["stage"] = "roteamento"
     resultado["latencia_ms"] = round(
