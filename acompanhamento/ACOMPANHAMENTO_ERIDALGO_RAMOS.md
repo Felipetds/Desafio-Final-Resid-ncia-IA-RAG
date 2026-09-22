@@ -90,3 +90,11 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
   * Validei a reindexação completa (FAISS e BM25) com sucesso utilizando os dados simulados (*fixtures*).
 * **Versionamento:**
   * Correção validada e enviada para a branch principal (`commit: db3415d`), liberando o formato final para a criação das *fixtures* pela equipe.
+
+### Atualização — 22/09/2026
+
+**Status das Entregas (Ordens 2 e 3):**
+* **Pipeline:** Ingestão adaptada para as 4 bases. Ingestão real da base estruturada (PNCP) concluída (1358 registros).
+* **Otimização:** Cache de embeddings em disco comprovado e validado. Pausa de 10s e lotes de 50 respeitados.
+* **Pendência Externa:** Aguardando a conclusão da Ordem 1 pela Janice para substituir as fixtures das bases normativa, conversacional e agregada.
+* Código liberado para testes de integração.
