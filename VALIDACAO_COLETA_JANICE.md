@@ -14,6 +14,9 @@
 - Diff por SHA-256: identificou corretamente 1 arquivo modificado
   em teste isolado e 7 idênticos.
 - Testes automatizados: 2 passaram.
+- Fontes locais: os 8 arquivos previstos no manifesto foram encontrados, e os 8 hashes SHA-256 conferiram.
+- Teste isolado do `update`: terminou com código de saída 0, criou a v2 com 8 arquivos e registrou 0 falhas.
+- Teste das quatro categorias do diff: identificou corretamente 1 arquivo adicionado, 1 removido, 1 alterado e 1 idêntico em inventários fictícios.
 
 ## Verificação pendente 
 
