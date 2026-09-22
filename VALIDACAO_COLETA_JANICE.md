@@ -1,7 +1,7 @@
 # Validação da coleta e do inventário — Janice
 
 ## Verificações concluídas
-
+- Conferência adicional da v2: o SHA-256 do arquivo `data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json` corresponde ao hash registrado em `data/inventory/v2.json` (`08e28c39c44be375afe98abb94deb0b6fffd359401753a1f9eb69af54d7832aa`).
 - JSON estruturado existente: 1.358 registros.
 - `numeroControlePNCP`: 1.358 preenchidos e 1.358 únicos.
 - `dataPublicacaoPncp`: 1.358 datas válidas, todas entre
