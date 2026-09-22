@@ -15,12 +15,12 @@
   em teste isolado e 7 idênticos.
 - Testes automatizados: 2 passaram.
 
-## Verificação pendente
+## Verificação pendente 
 
-A tentativa de consultar a primeira página do PNCP com os filtros
-do manifesto retornou HTTP 500: "Erro na comunicação com o banco
-de dados". Por isso, a reconstrução dos 1.358 registros por uma
-nova execução de `fetch` ainda não foi comprovada.
+A tentativa anterior de consultar o PNCP retornou erro HTTP 500.
+Em uma nova tentativa, realizada em pasta separada, a consulta à primeira página do PNCP não respondeu dentro do tempo limite, mesmo após três tentativas. Nenhum JSON final foi gerado.
+Por isso, a reconstrução online dos 1.358 registros ainda não foi comprovada. Os testes com os oito arquivos locais foram concluídos com sucesso.
+
 
 ## Limite dos testes
 
