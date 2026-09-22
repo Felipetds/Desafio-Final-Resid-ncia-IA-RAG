@@ -269,39 +269,34 @@ def executar_fetch(manifesto: dict, raiz: Path, retomar: bool = False) -> None:
             temporario.unlink(missing_ok=True)
 
 
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Ferramenta de coleta do corpus")
-    parser.add_argument(
-        "comando",
-        choices=["inventory", "fetch"],
-        help="Operação a executar",
-    )
-    parser.add_argument(
-        "--manifest",
-        default="corpus_manifest.yaml",
-        help="Caminho do manifesto YAML",
-    )
-    parser.add_argument(
-        "--retomar", action="store_true",
-        help="Reutiliza checkpoints existentes após conferência manual.",
-    )
+    parser.add_argument("comando", choices=["inventory", "fetch", "update"])
+    parser.add_argument("--manifest", default="corpus_manifest.yaml")
+    parser.add_argument("--retomar", action="store_true")
+    parser.add_argument("--version", default="v1")
+    parser.add_argument("--sources", help="Pasta com as fontes locais")
     argumentos = parser.parse_args()
 
     caminho_manifesto = Path(argumentos.manifest).resolve()
     manifesto = carregar_manifesto(caminho_manifesto)
 
-    if argumentos.comando == "fetch":
+    if argumentos.comando == "fetch" and not argumentos.sources:
         executar_fetch(
             manifesto, caminho_manifesto.parent, retomar=argumentos.retomar
         )
         return
 
-    print("Cenário:", manifesto.get("scenario_id"))
-    print("Versão:", manifesto.get("version"))
-    print("Bases cadastradas:")
+    from .corpus_cli import main as corpus_main
+    import sys
 
-    for base in manifesto["bases"]:
-        print("-", base.get("base_id"), "|", base.get("natureza"))
+    sys.argv = [
+        sys.argv[0], argumentos.comando,
+        "--manifest", str(caminho_manifesto),
+        "--version", argumentos.version,
+    ] + (["--sources", argumentos.sources] if argumentos.sources else [])
+    corpus_main()
 
 
 if __name__ == "__main__":
