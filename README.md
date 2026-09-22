@@ -224,9 +224,13 @@ Coleta inicial:
 python -m src.fetch_corpus fetch --manifest corpus_manifest.yaml
 ```
 
+
 Criação de uma nova versão:
 
+```bash
 python -m src.fetch_corpus update --manifest corpus_manifest.yaml --sources /caminho/para/fontes_locais
+```
+
 
 Geração ou atualização do inventário:
 
