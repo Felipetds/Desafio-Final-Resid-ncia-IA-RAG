@@ -114,9 +114,9 @@
 
 ### Resumo das atividades da equipe
 
-* **Coleta de dados:** etapa finalizada.
-* **Ingestão de dados:** etapa finalizada.
-* **Indexação:** etapa finalizada.
+* **Coleta de dados:** etapa em andamento.
+* **Ingestão de dados:** etapa em andamento.
+* **Indexação:** etapa em andamento.
 * **Testes e fixtures (`tests/fixtures`):** início da preparação dos dados e cenários de teste.
 * **`schema.py`:** início da implementação do módulo.
 * **`generate.py`:** início da implementação do módulo de geração de respostas.
