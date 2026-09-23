@@ -34,7 +34,7 @@ if str(REPOSITORIO_DIR) not in sys.path:
 
 import src.retrieve as retrieve
 
-from repositorio1.src.generate import (
+from src.generate import (
     OLLAMA_URL,
     RAGResponse,
     gerar_resposta,

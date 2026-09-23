@@ -114,9 +114,9 @@
 
 ### Resumo das atividades da equipe
 
-* **Coleta de dados:** etapa finalizada.
-* **Ingestão de dados:** etapa finalizada.
-* **Indexação:** etapa finalizada.
+* **Coleta de dados:** etapa em andamento.
+* **Ingestão de dados:** etapa em andamento.
+* **Indexação:** etapa em andamento.
 * **Testes e fixtures (`tests/fixtures`):** início da preparação dos dados e cenários de teste.
 * **`schema.py`:** início da implementação do módulo.
 * **`generate.py`:** início da implementação do módulo de geração de respostas.
@@ -137,4 +137,47 @@
 * Preparar a integração dos novos módulos com as etapas de coleta, ingestão e indexação já concluídas.
 * Registrar os encaminhamentos e as responsabilidades definidos pela equipe para o próximo encontro.
 
+## Encontro 5 — 23/09/2026
 
+### Minha contribuição
+
+* **Validação do corpus v2:** Confirmei a integridade do corpus utilizado pela equipe, composto por 8 arquivos distribuídos em 5 bases e 4 naturezas: estruturada, normativa, conversacional e agregada.
+* **Validação da base estruturada:** Confirmei a existência de 1.358 registros e 1.358 valores únicos de `numeroControlePNCP`, além da compatibilidade do período de publicação com o intervalo definido no manifesto.
+* **Validação de integridade:** Mantive preservado o corpus v2 existente e seu SHA-256, sem reescrever os dados brutos congelados.
+* **Teste de reconstrução online:** Executei uma nova tentativa isolada de coleta pela API do PNCP. A primeira página retornou HTTP 502 (Bad Gateway), mesmo após as três tentativas previstas pelo mecanismo de retry. Nenhum JSON final foi criado.
+* **Verificação de checkpoint:** Confirmei que, após a falha da API, foi preservado apenas o arquivo de configuração em `_progresso_fetch`, contendo os parâmetros da coleta: período de 01/03/2026 a 31/03/2026, modalidade 6, UF RJ e 50 registros por página.
+* **Determinismo da coleta:** Identifiquei que o JSON v2 existente não estava ordenado por `numeroControlePNCP`. Foi implementada no `fetch_corpus.py` uma ordenação explícita dos registros por esse identificador para tornar determinística a ordem das coletas futuras.
+* **Teste da ordenação:** Validei a regra com entradas apresentadas em ordens diferentes, obtendo a mesma ordenação final. A alteração também passou pela verificação de sintaxe do Python.
+* **Documentação:** Atualizei o `VALIDACAO_COLETA_JANICE.md` com as evidências da tentativa online, limitações encontradas e validação do determinismo.
+* **Integração com a equipe:** Disponibilizei o `corpus_v2_para_equipe.zip`, contendo os 8 arquivos organizados em `raw/v2/`, ao integrante responsável pela etapa seguinte. O corpus já está sendo utilizado na continuidade do trabalho.
+
+### Uso de IA
+
+* Utilizei um assistente de IA como apoio na preparação e revisão dos procedimentos de validação, interpretação das saídas dos testes e documentação das evidências.
+* Os comandos foram executados no Google Colab e seus resultados foram conferidos antes das alterações no repositório.
+* As alterações foram testadas inicialmente em ambiente isolado antes de serem incorporadas ao código do projeto.
+
+### Resultados
+
+* Corpus v2 preservado e validado localmente.
+* 8 arquivos das quatro naturezas disponíveis para integração.
+* 1.358 registros estruturados e 1.358 identificadores únicos confirmados.
+* Ordenação determinística adicionada ao fluxo de coleta para execuções futuras.
+* Documentação de validação atualizada.
+* Corpus v2 entregue para continuidade da integração pela equipe.
+
+### Dificuldades e limitações
+
+* A API do PNCP retornou HTTP 502 na primeira página da nova tentativa de coleta.
+* Como nenhuma página de dados foi salva, ainda não foi possível comprovar uma retomada real utilizando `--retomar`.
+* A reconstrução online completa dos 1.358 registros permanece não comprovada devido às falhas observadas na API do PNCP.
+* Os testes das quatro naturezas com fontes locais verificam o corpus disponível, mas não comprovam o download automático de todas as fontes por outra pessoa.
+
+### Próximos passos
+
+* Acompanhar a utilização do corpus v2 na etapa de ingestão/integração.
+* Realizar nova tentativa de reconstrução online quando a API do PNCP estiver disponível.
+* Testar `--retomar` caso uma execução futura consiga salvar pelo menos uma página antes de uma interrupção.
+* Preservar as versões congeladas do corpus e manter `data/raw/` fora do GitHub.
+
+---

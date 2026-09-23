@@ -43,9 +43,9 @@ Utilizei IA para duvidas sobre o funcionamento do Regex e para aplicabilidade de
 
 * Elaborar o ARQUITETURA.md.
 
-## Encontro 3 — 18/09/2026**
+## Encontro 3 — 18/09/2026
 
-### Minha contribuição**
+### Minha contribuição
 
 * Iniciei o desenvolvimento do schema.py para padronizar e validar os dados entre as etapas do RAG, definindo estruturas para roteamento, evidências, filtros, tokens e respostas, além de regras para recusas e consistência dos dados.
 
@@ -65,9 +65,9 @@ Estamos finalizando a parte de gerar as perguntas e iremos iniciar os testes no 
 
 Iremos iniciar o desenvolvimentos dos teste no próximo encontro.
 
-## Encontro 4 — 21/09/2026**
+## Encontro 4 — 21/09/2026
 
-### Minha contribuição**
+### Minha contribuição
 
 * Revisão da estratégia de testes: analisei os requisitos do projeto para as três camadas previstas: testes unitários, de contrato e de integração.
 
@@ -90,3 +90,27 @@ Finalizamos os teste dos modulos individualmente. Observamos pontos que precisã
 ### Próximos passos
 
 Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar na resolução dos problemas encontrados no teste de integração.
+
+## Encontro 5 — 23/09/2026
+
+### Minha contribuição
+
+* Atualização do generate.py, integração da observabilidade na etapa de geração, registro de execução bem-sucedida e falhas do LLM, manutenção dos guardrails, fontes, confiança e contagem de tokens.
+
+* Finalização dos testes de geração, ampliação do teste_generate.py, testes de resposta com e sem evidências, testes de recusa e resposta vazia, validação de CPF, RG, telefone, e-mail, dados bancários e credenciais, preservação de CNPJ, Resultado final: 18/18 testes aprovados.
+
+* Teste de observabilidade, simulação de falha do LLM, confirmação do registro stage="geracao" e status="erro" no JSONL, validação do funcionamento do obs.py.
+
+* Testes de integração ponta a ponta, validação do pipeline com Router → Retrieval → Generation, testes das consultas das personas e dos guardrails, resultado: 7/7 testes aprovados.
+
+### Uso de IA
+
+Utilizei IA para entender os erros e as respostas geradas pelos testes, o uso principal foi no teste de integração.
+
+### Resumo da equipe
+
+Finalizamos os teste dos modulos individualmente.
+
+### Próximos passos
+
+Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar na resolução dos problemas encontrados no teste de integração e Validação do checklist, pendências de geração, contratos, guardrails, integração e registro de falhas atendidas e avaliação/benchmark ficou como próxima etapa.

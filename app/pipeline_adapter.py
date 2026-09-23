@@ -84,6 +84,7 @@ def executar_pipeline(
         recuperacao = recuperar_evidencias(
             pergunta=pergunta,
             top_k=int(top_k),
+            run_id=run_id,
         )
 
         query_id = recuperacao.get(
@@ -297,6 +298,20 @@ def executar_para_interface(
             resultado.get("filters", {}),
             resultado.get("evidences", []),
             status,
+        )
+
+    except FileNotFoundError:
+        return (
+            (
+                "### Base de consulta indisponível\n\n"
+                "Os artefatos de ingestão e indexação ainda não "
+                "estão disponíveis neste ambiente. Execute primeiro "
+                "as etapas de ingestão e indexação."
+            ),
+            "Indisponível",
+            {},
+            [],
+            "**Status:** aguardando preparação da base",
         )
 
     except Exception as erro:

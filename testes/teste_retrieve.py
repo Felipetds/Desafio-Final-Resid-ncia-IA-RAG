@@ -478,7 +478,7 @@ def test_recuperar_evidencias_recusa_sem_carregar_indices(monkeypatch):
     monkeypatch.setattr(
         retrieve,
         "analisar_consulta",
-        lambda pergunta, client: analise,
+        lambda pergunta, client, run_id=None: analise,
     )
 
     def nao_deve_carregar():
@@ -531,7 +531,7 @@ def test_recuperar_evidencias_fluxo_normal(monkeypatch, chunks_teste):
     monkeypatch.setattr(
         retrieve,
         "analisar_consulta",
-        lambda pergunta, client: analise,
+        lambda pergunta, client, run_id=None: analise,
     )
 
     monkeypatch.setattr(
@@ -647,7 +647,7 @@ def test_recuperar_evidencias_respeita_top_k(monkeypatch, chunks_teste):
     monkeypatch.setattr(
         retrieve,
         "analisar_consulta",
-        lambda pergunta, client: analise,
+        lambda pergunta, client, run_id=None: analise,
     )
 
     monkeypatch.setattr(
