@@ -1,8 +1,10 @@
 import os
 import json
+import csv
+from bs4 import BeautifulSoup
+import pypdf
 
 def criar_chunk_base(texto, source_file, doc_type, chunk_idx, base_id, sensitivity, extras):
-    # Mantém os metadados obrigatórios do contrato do projeto
     metadata = {
         "chunk_id": f"{source_file}_chunk_{chunk_idx}",
         "source_file": source_file,
@@ -10,110 +12,98 @@ def criar_chunk_base(texto, source_file, doc_type, chunk_idx, base_id, sensitivi
         "sensitivity": sensitivity,
         "base_id": base_id
     }
-    # Adiciona os metadados específicos da natureza do dado
     metadata.update(extras)
-    
-    return {
-        "text": texto,
-        "metadata": metadata
-    }
+    return {"text": texto, "metadata": metadata}
 
-def processar_normativa(texto, arquivo):
-    # Checklist: seção, artigo ou cláusula com overlap
+def processar_estruturada(caminho):
     chunks = []
-    artigos = texto.split("Art. ")
-    for idx, art in enumerate(artigos[1:], 1): # Pula o índice 0 (cabeçalho antes do primeiro artigo)
-        extras = {"natureza": "normativa", "orgao": "Governo Estadual"}
-        chunks.append(criar_chunk_base(f"Art. {art.strip()}", arquivo, "lei", idx, "base_normativa", "publico", extras))
+    if not os.path.exists(caminho): return chunks
+    with open(caminho, "r", encoding="utf-8") as f:
+        dados = json.load(f)
+    registros = dados if isinstance(dados, list) else [dados]
+    for idx, reg in enumerate(registros, 1):
+        texto = json.dumps(reg, ensure_ascii=False)
+        extras = {"natureza": "estruturada"}
+        chunks.append(criar_chunk_base(texto, os.path.basename(caminho), "contrato", idx, "base_estruturada", "publico", extras))
     return chunks
 
-def processar_estruturada(registro, arquivo, idx):
-    # Checklist: um registro completo por chunk
-    texto = json.dumps(registro, ensure_ascii=False)
-    extras = {
-        "natureza": "estruturada",
-        "uf": registro.get("uf", ""),
-        "ano": registro.get("ano", ""),
-        "modalidade": registro.get("modalidade", ""),
-        "valor": registro.get("valor", ""),
-        "fornecedor": registro.get("fornecedor", ""),
-        "vigencia": registro.get("vigencia", "")
-    }
-    return criar_chunk_base(texto, arquivo, "contrato", idx, "base_estruturada", "publico", extras)
-
-def processar_conversacional(mensagem, arquivo, idx, sensibilidade="restrito"):
-    # Checklist: mensagens/atas com sensibilidade
-    extras = {"natureza": "conversacional"}
-    return criar_chunk_base(mensagem, arquivo, "ata_reuniao", idx, "base_conversacional", sensibilidade, extras)
-
-def processar_agregada(dado, arquivo, idx):
-    # Checklist: número com unidade, período e recorte
-    texto = f"Resultado: {dado['valor']} {dado['unidade']} registradas no período de {dado['periodo']} para o recorte de {dado['recorte']}."
-    extras = {
-        "natureza": "agregada",
-        "municipio": dado.get("municipio", "")
-    }
-    return criar_chunk_base(texto, arquivo, "relatorio", idx, "base_agregada", "publico", extras)
-
-def rodar_ingestao_hibrida():
-    print("Iniciando ingestão adaptada para as 4 bases (Regras do Checklist)...")
-    todos_chunks = []
+def processar_normativa(caminho):
+    chunks = []
+    if not os.path.exists(caminho): return chunks
     
-    # 1. Teste Normativa
-    texto_norma = "Preâmbulo da lei. Art. 1 O pipeline RAG será implementado imediatamente. Art. 2 Os dados sensíveis devem ser anonimizados antes da indexação."
-    todos_chunks.extend(processar_normativa(texto_norma, "lei_rag_2026.txt"))
-    
-    # 2. Teste Estruturada
-    registro = {"uf": "RJ", "ano": "2026", "modalidade": "Pregao Eletronico", "valor": "R$ 150.000", "fornecedor": "Tech Solucoes LTDA", "vigencia": "12 meses"}
-    todos_chunks.append(processar_estruturada(registro, "compras_rj_marco.json", 1))
-    
-    # 3. Teste Conversacional
-    todos_chunks.append(processar_conversacional("Discussão técnica: Acesso ao banco de dados PNCP concedido ao usuário administrador.", "log_reuniao_01.txt", 1, "sigiloso"))
-    
-    # 4. Teste Agregada
-    dado_agg = {"valor": "345", "unidade": "licitações", "periodo": "1º trimestre de 2026", "recorte": "Serviços de TI", "municipio": "Rio de Janeiro"}
-    todos_chunks.append(processar_agregada(dado_agg, "indicadores_trimestrais.json", 1))
-
-    os.makedirs("data/processed", exist_ok=True)
-    caminho_saida = "data/processed/chunks_teste.json"
-    
-    with open(caminho_saida, "w", encoding="utf-8") as f:
-        json.dump(todos_chunks, f, ensure_ascii=False, indent=4)
-        
-    print(f"✅ Ingestão concluída! {len(todos_chunks)} chunks gerados englobando as 4 naturezas exigidas.")
-
-if __name__ == "__main__":
-    rodar_ingestao_hibrida()
-
-# Redefinir apenas a função principal para carregar o JSON real
-def rodar_ingestao_hibrida():
-    print("Iniciando ingestão (Base Estruturada REAL + Fixtures para o resto)...")
-    todos_chunks = []
-    
-    # 1. Base Estruturada (AGORA COM OS 1358 DADOS REAIS!)
-    caminho_real = "data/raw/v1/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
-    if os.path.exists(caminho_real):
-        with open(caminho_real, "r", encoding="utf-8") as f:
-            dados_reais = json.load(f)
-            # O PNCP geralmente agrupa os dados numa lista
-            registros = dados_reais if isinstance(dados_reais, list) else [dados_reais]
+    # Correção: Tentar utf-8 primeiro, se falhar (como no Gov.br), usar latin-1
+    try:
+        with open(caminho, "r", encoding="utf-8") as f:
+            soup = BeautifulSoup(f, "html.parser")
+    except UnicodeDecodeError:
+        with open(caminho, "r", encoding="latin-1") as f:
+            soup = BeautifulSoup(f, "html.parser")
             
-            print(f"Extraindo {len(registros)} registros estruturados do PNCP...")
-            for idx, reg in enumerate(registros, 1):
-                todos_chunks.append(processar_estruturada(reg, "contratacoes_publicacao.json", idx))
-    else:
-        print("⚠️ Erro: Arquivo estruturado real não encontrado.")
+    texto = soup.get_text(separator=" ")
+    artigos = texto.split("Art. ")
+    for idx, art in enumerate(artigos[1:], 1):
+        extras = {"natureza": "normativa"}
+        chunks.append(criar_chunk_base(f"Art. {art.strip()}", os.path.basename(caminho), "lei", idx, "base_normativa", "publico", extras))
+    return chunks
 
-    # 2. Teste Normativa (Fixture mantida até entrega da Janice)
-    texto_norma = "Preâmbulo da lei. Art. 1 O pipeline RAG será implementado imediatamente. Art. 2 Os dados sensíveis devem ser anonimizados."
-    todos_chunks.extend(processar_normativa(texto_norma, "lei_rag_2026.txt"))
+def processar_agregada(caminho):
+    chunks = []
+    if not os.path.exists(caminho): return chunks
+    with open(caminho, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for idx, row in enumerate(reader, 1):
+            texto = " | ".join([f"{k}: {v}" for k, v in row.items() if v])
+            extras = {"natureza": "agregada"}
+            chunks.append(criar_chunk_base(texto, os.path.basename(caminho), "relatorio", idx, "base_agregada", "publico", extras))
+    return chunks
+
+def processar_conversacional(caminho):
+    chunks = []
+    if not os.path.exists(caminho): return chunks
+    texto_completo = ""
     
-    # 3. Teste Conversacional (Fixture mantida)
-    todos_chunks.append(processar_conversacional("Discussão técnica: Acesso ao PNCP concedido.", "log_reuniao_01.txt", 1, "sigiloso"))
+    if caminho.endswith(".pdf"):
+        with open(caminho, "rb") as f:
+            reader = pypdf.PdfReader(f)
+            for page in reader.pages:
+                extract = page.extract_text()
+                if extract:
+                    texto_completo += extract + "\n"
+    elif caminho.endswith(".txt"):
+        with open(caminho, "r", encoding="utf-8") as f:
+            texto_completo = f.read()
+            
+    paragrafos = [p.strip() for p in texto_completo.split("\n\n") if len(p.strip()) > 10]
+    for idx, p in enumerate(paragrafos, 1):
+        extras = {"natureza": "conversacional"}
+        chunks.append(criar_chunk_base(p, os.path.basename(caminho), "ata_reuniao", idx, "base_conversacional", "restrito", extras))
+    return chunks
+
+def rodar_ingestao_hibrida():
+    print("Iniciando ingestão definitiva (Bases REAIS da versão v2)...")
+    todos_chunks = []
     
-    # 4. Teste Agregada (Fixture mantida)
-    dado_agg = {"valor": "345", "unidade": "licitações", "periodo": "1º trimestre de 2026", "recorte": "Serviços de TI", "municipio": "Rio de Janeiro"}
-    todos_chunks.append(processar_agregada(dado_agg, "indicadores_trimestrais.json", 1))
+    caminho_est = "data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+    todos_chunks.extend(processar_estruturada(caminho_est))
+    
+    caminho_norm = "data/raw/v2/normativa/federal/lei_14133_2021/lei_14133_2021.html"
+    todos_chunks.extend(processar_normativa(caminho_norm))
+    
+    caminhos_agg = [
+        "data/raw/v2/agregada/pca_2026_estado_rj.csv",
+        "data/raw/v2/agregada/itens_pe_038_26_2026.csv"
+    ]
+    for c in caminhos_agg:
+        todos_chunks.extend(processar_agregada(c))
+        
+    caminhos_conv = [
+        "data/raw/v2/conversacional/atas/ebserh/2026/ata_00191.pdf",
+        "data/raw/v2/conversacional/atas/fiocruz/2026/ata_00001.pdf",
+        "data/raw/v2/conversacional/atas/ministerio_saude/2026/ata_00137.pdf",
+        "data/raw/v2/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt"
+    ]
+    for c in caminhos_conv:
+        todos_chunks.extend(processar_conversacional(c))
 
     os.makedirs("data/processed", exist_ok=True)
     caminho_saida = "data/processed/chunks_teste.json"
@@ -121,7 +111,7 @@ def rodar_ingestao_hibrida():
     with open(caminho_saida, "w", encoding="utf-8") as f:
         json.dump(todos_chunks, f, ensure_ascii=False, indent=4)
         
-    print(f"✅ Ingestão concluída! {len(todos_chunks)} chunks gerados.")
+    print(f"✅ Ingestão concluída! {len(todos_chunks)} chunks REAIS gerados englobando as 4 naturezas.")
 
 if __name__ == "__main__":
     rodar_ingestao_hibrida()
