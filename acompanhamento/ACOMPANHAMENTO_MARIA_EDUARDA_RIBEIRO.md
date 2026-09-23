@@ -25,6 +25,10 @@ A equipe configurou o repositório privado, organizou os acessos dos integrantes
 * Definir a divisão de responsabilidades da equipe.
 
 
+---
+
+## Encontro 2 — 16/09/2026
+
 ### Minha contribuição
 
 * Elaborei a versão inicial do `ARQUITETURA.md`, organizando a arquitetura proposta para o sistema e o fluxo das etapas do pipeline RAG.
@@ -86,7 +90,7 @@ Durante o encontro, a equipe avançou na ingestão, indexação, roteamento, rec
 
 ---
 
-## Encontro 3 — 21/09/2026
+## Encontro 4 — 21/09/2026
 
 ### Minha participação
 
@@ -118,3 +122,55 @@ A equipe avançou na coleta, ingestão, indexação, roteamento, recuperação, 
 - Revisar a extração de filtros realizada pelo roteador.
 - Executar os testes automatizados e validar a interface com as perguntas das personas.
 
+---
+
+## Encontro 5 — 23/09/2026
+
+### Minha participação
+
+- Acompanhei o andamento das entregas da equipe e revisei as atividades concluídas, pendentes e dependentes de outros módulos.
+- Auxiliei na validação das correções realizadas em `router.py` e `retrieve.py`, incluindo filtros monetários, roteamento de consultas sobre o PCA e regras de recusa.
+- Acompanhei a integração das correções de roteamento e recuperação à branch `main` por meio de Pull Request.
+- Validei os testes específicos de roteamento e recuperação e acompanhei a execução da suíte de testes offline do projeto.
+- Analisei o teste de integração ponta a ponta desenvolvido por Felipe, verificando os cenários de recuperação, geração, fontes, `top_k`, guardrails e recusa.
+- Identifiquei uma incompatibilidade de import no teste de integração e a ausência dos artefatos locais necessários para a execução completa após o reinício do ambiente do Colab.
+- Testei a interface Gradio com uma consulta de recusa e confirmei a aplicação dos guardrails, a ausência de evidências e a exibição de confiança, latência, tokens, `query_id` e `run_id`.
+- Melhorei o tratamento da interface quando os artefatos de ingestão e indexação não estão disponíveis, substituindo a mensagem técnica por uma orientação compreensível ao usuário.
+- Validei os logs JSONL e confirmei a presença dos campos obrigatórios em todos os registros analisados.
+- Identifiquei que uma mesma consulta utilizava dois valores diferentes de `run_id` e corrigi a propagação desse identificador entre o adaptador, a recuperação e o roteamento.
+- Atualizei os mocks dos testes de recuperação para manter compatibilidade com o parâmetro opcional `run_id`.
+
+### Resultados obtidos
+
+- A interface executou corretamente uma consulta recusada pelos guardrails.
+- A ausência dos índices passou a ser apresentada de forma amigável, sem interromper a interface.
+- Os registros analisados apresentaram todos os campos obrigatórios definidos na arquitetura.
+- As etapas `query_analysis`, `roteamento`, `fusao_rrf`, `geracao` e `validacao` passaram a utilizar o mesmo `run_id`.
+- O teste de integração enviado por Felipe contém sete testes, incluindo mais de três cenários ponta a ponta.
+- A execução completa das consultas que utilizam recuperação ficou pendente devido à ausência local dos chunks e índices após o reinício do Colab.
+
+### Apoio de IA
+
+Utilizei ferramentas de IA como apoio para revisar os resultados dos testes, interpretar falhas de integração, identificar a duplicidade do `run_id` e organizar as correções no adaptador e no módulo de recuperação. As sugestões foram conferidas por meio da execução da interface, da inspeção dos logs e dos testes disponíveis antes de serem consideradas no projeto.
+
+### Atividades realizadas pela equipe
+
+A equipe avançou na ingestão, indexação, roteamento, recuperação, geração e testes. Luiz concluiu os ajustes de roteamento e recuperação. Eridalgo validou a ingestão das quatro bases, a geração dos chunks e a persistência dos índices, mantendo como próxima etapa o aprimoramento dos metadados específicos. Felipe adicionou os testes de integração ponta a ponta. Também acompanhei as pendências e dependências necessárias para a continuação das atividades.
+
+### Dificuldades encontradas
+
+- Ausência dos chunks e índices locais após o reinício do ambiente do Google Colab.
+- Incompatibilidade de import no teste de integração.
+- Utilização de valores diferentes de `run_id` entre etapas pertencentes à mesma consulta.
+- Necessidade de atualizar mocks após a alteração do contrato do recuperador.
+- Dependência dos artefatos regenerados para validar consultas normais na interface e executar os testes ponta a ponta completos.
+- Necessidade de acompanhar entregas da equipe que ainda não receberam retorno ou commit correspondente.
+
+### Próximas atividades
+
+- Validar novamente a suíte de testes offline após as correções.
+- Repetir os testes ponta a ponta quando os chunks e índices estiverem disponíveis.
+- Validar a interface com consultas normais, múltiplas bases, fontes e evidências.
+- Conferir os logs completos das etapas de recuperação com os artefatos definitivos.
+- Acompanhar a correção do teste de integração e o registro do marcador `llm`.
+- Realizar a integração final após a atualização dos metadados e a regeneração dos índices.
