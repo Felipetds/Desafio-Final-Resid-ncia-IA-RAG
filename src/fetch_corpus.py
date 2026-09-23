@@ -204,7 +204,9 @@ def coletar_paginas_pncp(
         raise RuntimeError(
             "Identificadores ausentes ou duplicados; JSON final não será criado."
         )
-
+    # Garante ordem determinística independentemente da ordem retornada pela API.
+    registros.sort(key=lambda item: item["numeroControlePNCP"])
+    
     return registros
 
 def executar_fetch(manifesto: dict, raiz: Path, retomar: bool = False) -> None:
