@@ -14,7 +14,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from repositorio1.src.router import analisar_consulta
+from src.router import analisar_consulta
 
 
 class FakeCompletions:

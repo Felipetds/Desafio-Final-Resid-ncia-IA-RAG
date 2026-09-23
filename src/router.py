@@ -88,6 +88,9 @@ Rotas:
 Importante:
 - Perguntas que pedem quantidade, média, total, soma, percentual ou agrupamento
   exigem a base agregada.
+- Perguntas sobre o Plano de Contratações Anual ou PCA devem usar
+  a base agregada. Inclua também a estruturada somente se a pergunta
+  exigir comparação com contratos efetivamente realizados.
 - Quando a pergunta pedir especificamente o conteúdo de atas, e-mails,
   reclamações ou manifestações, use a base conversacional.
 - Não adicione uma base somente porque a pergunta menciona compra,
@@ -180,39 +183,134 @@ def _normalizar_texto_para_comparacao(texto: str) -> str:
     return texto
 
 
+def _converter_valor_monetario(
+    numero_texto: str,
+    unidade: str | None,
+) -> float:
+    """
+    Converte valores monetários escritos em formato brasileiro.
+
+    Exemplos:
+    500 mil -> 500000
+    1 milhão -> 1000000
+    1,5 milhão -> 1500000
+    750.000 -> 750000
+    """
+    numero_texto = numero_texto.strip()
+
+    if "," in numero_texto:
+        numero_normalizado = (
+            numero_texto
+            .replace(".", "")
+            .replace(",", ".")
+        )
+    elif re.fullmatch(r"\d{1,3}(?:\.\d{3})+", numero_texto):
+        numero_normalizado = numero_texto.replace(".", "")
+    else:
+        numero_normalizado = numero_texto
+
+    valor = float(numero_normalizado)
+    unidade = (unidade or "").lower().strip()
+
+    if unidade == "mil":
+        valor *= 1_000
+    elif unidade in {
+        "milhão",
+        "milhao",
+        "milhões",
+        "milhoes",
+    }:
+        valor *= 1_000_000
+
+    return valor
+
+
+def _extrair_filtros_monetarios(
+    pergunta: str,
+) -> Dict[str, float | None]:
+    """
+    Extrai limites monetários diretamente da pergunta.
+
+    A extração determinística impede que o LLM transforme,
+    por exemplo, R$ 500 mil em R$ 500 milhões.
+    """
+    texto = pergunta.lower()
+
+    numero = r"([\d]+(?:[.,][\d]+)*)"
+    unidade = (
+        r"(milhões|milhoes|milhão|milhao|mil)?"
+    )
+
+    padrao_minimo = re.search(
+        rf"(?:acima\s+de|superior(?:es)?\s+a|mais\s+de)"
+        rf"\s+(?:r\$\s*)?{numero}\s*{unidade}",
+        texto,
+    )
+
+    padrao_maximo = re.search(
+        rf"(?:abaixo\s+de|inferior(?:es)?\s+a|menos\s+de|"
+        rf"até|ate)\s+(?:r\$\s*)?{numero}\s*{unidade}",
+        texto,
+    )
+
+    valor_minimo = None
+    valor_maximo = None
+
+    if padrao_minimo:
+        valor_minimo = _converter_valor_monetario(
+            padrao_minimo.group(1),
+            padrao_minimo.group(2),
+        )
+
+    if padrao_maximo:
+        valor_maximo = _converter_valor_monetario(
+            padrao_maximo.group(1),
+            padrao_maximo.group(2),
+        )
+
+    return {
+        "valor_minimo": valor_minimo,
+        "valor_maximo": valor_maximo,
+    }
+
+
 def _validar_filtros_contra_pergunta(
     pergunta: str,
     filtros: Dict[str, Any] | None,
 ) -> Dict[str, Any]:
     """
-    Remove filtros que o LLM tenha inventado, ou seja, que não
-    apareçam explicitamente no texto da pergunta.
-
-    Isso funciona como uma segunda camada de segurança além das
-    instruções do prompt: mesmo que o modelo ignore a instrução e
-    "chute" um valor, o filtro é descartado aqui antes de seguir
-    para o retrieve.py.
-
-    A comparação é feita após normalizar pontuação e espaços dos
-    dois lados (ver _normalizar_texto_para_comparacao), para não
-    descartar filtros válidos só porque o LLM formatou o valor de
-    forma diferente da pergunta original (ex.: hífen, maiúsculas,
-    pontuação).
-
-    valor_minimo e valor_maximo não entram nessa checagem porque o
-    LLM normalmente converte expressões como "acima de R$ 500 mil"
-    para um número (500000), que não aparece literalmente no texto.
+    Remove filtros inventados pelo modelo e corrige valores
+    monetários utilizando diretamente o texto da pergunta.
     """
     if not isinstance(filtros, dict):
-        return {}
+        filtros = {}
 
+    filtros = dict(filtros)
     texto = _normalizar_texto_para_comparacao(pergunta)
 
     for campo in CAMPOS_FILTRO_VALIDADOS_NO_TEXTO:
         valor = filtros.get(campo)
 
-        if valor and _normalizar_texto_para_comparacao(str(valor)) not in texto:
+        if (
+            valor
+            and _normalizar_texto_para_comparacao(
+                str(valor)
+            ) not in texto
+        ):
             filtros[campo] = None
+
+    limites = _extrair_filtros_monetarios(pergunta)
+
+    # Se a pergunta não contém limite explícito, qualquer
+    # valor sugerido pelo modelo é descartado.
+    filtros["valor_minimo"] = limites["valor_minimo"]
+    filtros["valor_maximo"] = limites["valor_maximo"]
+
+    filtros.setdefault("uf", None)
+    filtros.setdefault("ano", None)
+    filtros.setdefault("modalidade", None)
+    filtros.setdefault("municipio", None)
+    filtros.setdefault("fornecedor", None)
 
     return filtros
 
@@ -227,6 +325,41 @@ def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
     texto = pergunta.lower()
     rotas = []
 
+    termos_recusa = [
+        "foi uma fraude",
+        "é uma fraude",
+        "e uma fraude",
+        "contrato fraudulento",
+        "foi ilegal",
+        "é ilegal",
+        "e ilegal",
+        "houve corrupção",
+        "houve corrupcao",
+    ]
+
+    if any(termo in texto for termo in termos_recusa):
+        return {
+            "routes": [],
+            "filters": {
+                "uf": None,
+                "ano": None,
+                "valor_minimo": None,
+                "valor_maximo": None,
+                "modalidade": None,
+                "municipio": None,
+                "fornecedor": None,
+            },
+            "is_refusal": True,
+            "refusal_reason": (
+                "Pergunta envolve acusação de fraude ou "
+                "ilegalidade, que não pode ser determinada "
+                "pelo sistema."
+            ),
+            "justification": (
+                "Recusa aplicada pelas regras de segurança."
+            ),
+        }
+
     termos_agregados = [
         "média",
         "media",
@@ -237,6 +370,9 @@ def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
         "comparação",
         "comparar",
         "percentual",
+        "plano de contratações anual",
+        "plano de contratacoes anual",
+        "pca",
     ]
 
     termos_normativos = [
@@ -257,7 +393,6 @@ def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
         "reclamacao",
         "e-mail",
         "email",
-        "ata",
         "manifestação",
         "manifestacao",
         "ouvidoria",
@@ -285,7 +420,15 @@ def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
     if any(termo in texto for termo in termos_normativos):
         rotas.append("normativa")
 
-    if any(termo in texto for termo in termos_conversacionais):
+    consulta_conversacional = (
+        any(
+            termo in texto
+            for termo in termos_conversacionais
+        )
+        or re.search(r"\batas?\b", texto) is not None
+    )
+
+    if consulta_conversacional:
         rotas.append("conversacional")
 
     if any(termo in texto for termo in termos_estruturados):
@@ -412,12 +555,62 @@ def analisar_consulta(
                 resultado["filters"],
             )
 
-            if not resultado["routes"] and not resultado.get("is_refusal"):
-                resultado["routes"] = ["estruturada"]
-
             resultado.setdefault("is_refusal", False)
             resultado.setdefault("refusal_reason", None)
             resultado.setdefault("justification", "")
+
+            texto_consulta = (
+                _normalizar_texto_para_comparacao(
+                    pergunta_limpa
+                )
+            )
+
+            consulta_pca = (
+                "plano de contratações anual"
+                in texto_consulta
+                or "plano de contratacoes anual"
+                in texto_consulta
+                or re.search(
+                    r"\bpca\b",
+                    texto_consulta,
+                )
+            )
+
+            if consulta_pca:
+                termos_cross_source = [
+                    "contratos assinados",
+                    "contratacoes realizadas",
+                    "contratações realizadas",
+                    "fornecedores contratados",
+                    "comparar com contratos",
+                ]
+
+                if any(
+                    termo in texto_consulta
+                    for termo in termos_cross_source
+                ):
+                    resultado["routes"] = [
+                        "agregada",
+                        "estruturada",
+                    ]
+                else:
+                    resultado["routes"] = ["agregada"]
+
+            if resultado["is_refusal"]:
+                resultado["routes"] = []
+
+                resultado["filters"] = {
+                    "uf": None,
+                    "ano": None,
+                    "valor_minimo": None,
+                    "valor_maximo": None,
+                    "modalidade": None,
+                    "municipio": None,
+                    "fornecedor": None,
+                }
+
+            elif not resultado["routes"]:
+                resultado["routes"] = ["estruturada"]
 
             uso = getattr(resposta, "usage", None)
 
