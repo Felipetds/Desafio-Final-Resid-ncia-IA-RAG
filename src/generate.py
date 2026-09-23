@@ -15,7 +15,7 @@ import re
 import time
 from typing import List
 from openai import OpenAI
-from repositorio1.src.schema import (
+from src.schema import (
     RAGResponse,
     RetrievalResult,
     SourceEvidence,

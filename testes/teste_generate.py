@@ -8,14 +8,14 @@ Testes offline para repositorio1/src/generate.py.
 
 from types import SimpleNamespace
 
-from repositorio1.src.generate import (
+from src.generate import (
     calcular_confianca,
     gerar_resposta,
     mascarar_dados_pessoais,
     montar_contexto,
 )
 
-from repositorio1.src.schema import (
+from src.schema import (
     QueryFilters,
     RetrievalResult,
     SourceEvidence,
@@ -86,7 +86,7 @@ class FakeClient:
 
 def instalar_llm_falso(monkeypatch, cliente):
     monkeypatch.setattr(
-        "repositorio1.src.generate.OpenAI",
+        "src.generate.OpenAI",
         lambda **kwargs: cliente,
     )
 
@@ -197,7 +197,7 @@ def test_recusa_nao_chama_llm(monkeypatch):
     def nao_deve_chamar(**kwargs):
         raise AssertionError("LLM não deveria ser chamado.")
 
-    monkeypatch.setattr("repositorio1.src.generate.OpenAI", nao_deve_chamar)
+    monkeypatch.setattr("src.generate.OpenAI", nao_deve_chamar)
 
     resposta = gerar_resposta(retrieval)
 
@@ -212,7 +212,7 @@ def test_sem_evidencias_nao_chama_llm(monkeypatch):
     def nao_deve_chamar(**kwargs):
         raise AssertionError("LLM não deveria ser chamado.")
 
-    monkeypatch.setattr("repositorio1.src.generate.OpenAI", nao_deve_chamar)
+    monkeypatch.setattr("src.generate.OpenAI", nao_deve_chamar)
 
     resposta = gerar_resposta(retrieval)
 
