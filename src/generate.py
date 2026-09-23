@@ -1,5 +1,6 @@
 """
 generate.py
+
 Responsabilidades:
 - Receber o resultado produzido pelo retrieve.py.
 - Respeitar recusas definidas anteriormente pelo roteador.
@@ -8,27 +9,46 @@ Responsabilidades:
 - Evitar respostas quando não houver evidências suficientes.
 - Aplicar proteção de dados pessoais na saída.
 - Registrar fontes, tokens e latência.
+- Registrar sucesso ou falha da etapa de geração no log.
 - Validar a resposta final utilizando RAGResponse.
 """
 
 import re
 import time
 from typing import List
-from openai import OpenAI
-from src.schema import (
-    RAGResponse,
-    RetrievalResult,
-    SourceEvidence,
-    TokenUsage,
-)
 
+from openai import OpenAI
+
+try:
+    from . import obs
+    from .schema import (
+        RAGResponse,
+        RetrievalResult,
+        SourceEvidence,
+        TokenUsage,
+    )
+except ImportError:
+    import obs
+    from schema import (
+        RAGResponse,
+        RetrievalResult,
+        SourceEvidence,
+        TokenUsage,
+    )
+
+
+# ============================================================
 # Configurações
+# ============================================================
 
 OLLAMA_URL = "http://ecoa-llm.duckdns.org:11434/v1"
 
 GENERATION_MODEL = "qcwind/qwen3-8b-instruct-Q4-K-M"
 
+
+# ============================================================
 # Prompt para gerar respostas
+# ============================================================
 
 PROMPT_GERADOR = """
 Você é o módulo de geração de um sistema Adaptive RAG especializado
@@ -74,12 +94,19 @@ Regras obrigatórias:
 Retorne apenas a resposta final destinada ao usuário.
 """
 
+
+# ============================================================
 # Proteção de dados
+# ============================================================
 
 def mascarar_dados_pessoais(texto: str) -> str:
-# Aplica uma camada adicional de proteção à resposta gerada.
-# Esta função funciona como guardrail de saída.
-# Ela não substitui a classificação de sensibilidade realizada anteriormente no pipeline.
+    """
+    Aplica uma camada adicional de proteção à resposta gerada.
+
+    Esta função funciona como guardrail de saída.
+    Ela não substitui a classificação de sensibilidade
+    realizada anteriormente no pipeline.
+    """
 
     padroes = [
         (
@@ -135,12 +162,17 @@ def mascarar_dados_pessoais(texto: str) -> str:
 
     return texto_seguro
 
+
+# ============================================================
 # Contexto
+# ============================================================
 
 def montar_contexto(
     evidencias: List[SourceEvidence],
 ) -> str:
-  # Converte as evidências recuperadas em contexto para o LLM.
+    """
+    Converte as evidências recuperadas em contexto para o LLM.
+    """
 
     blocos = []
 
@@ -148,9 +180,16 @@ def montar_contexto(
         evidencias,
         start=1,
     ):
-        fonte = evidencia.source_file or "fonte_desconhecida"
+        fonte = (
+            evidencia.source_file
+            or "fonte_desconhecida"
+        )
 
-        base = evidencia.base_id or evidencia.natureza or "desconhecida"
+        base = (
+            evidencia.base_id
+            or evidencia.natureza
+            or "desconhecida"
+        )
 
         bloco = (
             f"EVIDÊNCIA {numero}\n"
@@ -164,13 +203,20 @@ def montar_contexto(
 
     return "\n\n---\n\n".join(blocos)
 
+
+# ============================================================
 # Confiança
+# ============================================================
 
 def calcular_confianca(
     evidencias: List[SourceEvidence],
 ) -> str:
-    # Define um nível simples de confiança com base na quantidade e na diversidade das evidências recuperadas.
-    # Não representa uma probabilidade estatística.
+    """
+    Define um nível simples de confiança com base na quantidade
+    e na diversidade das evidências recuperadas.
+
+    Não representa uma probabilidade estatística.
+    """
 
     if not evidencias:
         return "baixa"
@@ -181,7 +227,10 @@ def calcular_confianca(
         if evidencia.source_file
     }
 
-    if len(evidencias) >= 3 and len(fontes) >= 2:
+    if (
+        len(evidencias) >= 3
+        and len(fontes) >= 2
+    ):
         return "alta"
 
     if len(evidencias) >= 2:
@@ -189,16 +238,26 @@ def calcular_confianca(
 
     return "baixa"
 
+
+# ============================================================
 # Resposta em caso de recusa
+# ============================================================
 
 def gerar_resposta_recusa(
     resultado: RetrievalResult,
 ) -> RAGResponse:
-    # Gera uma resposta determinística quando o roteador já classificou a consulta como uma solicitação que deve ser recusada.
+    """
+    Gera uma resposta determinística quando o roteador
+    classificou a consulta como uma solicitação que deve
+    ser recusada.
+    """
 
     motivo = (
         resultado.refusal_reason
-        or "A solicitação envolve informação que não pode ser fornecida."
+        or (
+            "A solicitação envolve informação "
+            "que não pode ser fornecida."
+        )
     )
 
     resposta = (
@@ -219,12 +278,18 @@ def gerar_resposta_recusa(
         latencia_ms=0.0,
     )
 
-# Resposta em caso de não ter evidencias
+
+# ============================================================
+# Resposta em caso de ausência de evidências
+# ============================================================
 
 def gerar_resposta_sem_evidencias(
     resultado: RetrievalResult,
 ) -> RAGResponse:
-  # Retorna uma resposta determinística quando nenhuma evidência relevante foi recuperada.
+    """
+    Retorna uma resposta determinística quando nenhuma
+    evidência relevante foi recuperada.
+    """
 
     return RAGResponse(
         query=resultado.query,
@@ -242,14 +307,19 @@ def gerar_resposta_sem_evidencias(
         latencia_ms=0.0,
     )
 
+
+# ============================================================
 # Geração com LLM
+# ============================================================
 
 def chamar_llm(
     pergunta: str,
     contexto: str,
     client: OpenAI,
 ):
-    # Executa a chamada ao modelo de geração.
+    """
+    Executa a chamada ao modelo de geração.
+    """
 
     mensagem_usuario = f"""
 PERGUNTA:
@@ -278,10 +348,17 @@ Produza a resposta final utilizando somente o contexto acima.
         ],
     )
 
-# Contagem de Tokens
 
-def extrair_tokens(resposta_llm) -> TokenUsage:
-    # Extrai informações de tokens quando fornecidas pelo servidor.
+# ============================================================
+# Contagem de tokens
+# ============================================================
+
+def extrair_tokens(
+    resposta_llm,
+) -> TokenUsage:
+    """
+    Extrai informações de tokens quando fornecidas pelo servidor.
+    """
 
     uso = getattr(
         resposta_llm,
@@ -310,27 +387,35 @@ def extrair_tokens(resposta_llm) -> TokenUsage:
         ) or 0,
     )
 
+
+# ============================================================
 # Geração principal
+# ============================================================
 
 def gerar_resposta(
     resultado_recuperacao,
     client: OpenAI | None = None,
 ) -> RAGResponse:
-    # Executa a etapa completa de geração.
+    """
+    Executa a etapa completa de geração.
 
-    #Fluxo:
+    Fluxo:
 
-    #RetrievalResult
-    #    -> verificação de recusa
-    #    -> verificação de evidências
-    #    -> montagem do contexto
-    #    -> chamada ao LLM
-    #    -> guardrail de saída
-    #    -> RAGResponse
+    RetrievalResult
+        -> verificação de recusa
+        -> verificação de evidências
+        -> montagem do contexto
+        -> chamada ao LLM
+        -> observabilidade
+        -> guardrail de saída
+        -> RAGResponse
+    """
 
     inicio = time.perf_counter()
 
+    # --------------------------------------------------------
     # Validação do contrato recebido do retrieve.py
+    # --------------------------------------------------------
 
     if isinstance(
         resultado_recuperacao,
@@ -343,7 +428,9 @@ def gerar_resposta(
             resultado_recuperacao
         )
 
+    # --------------------------------------------------------
     # Recusa definida anteriormente pelo pipeline
+    # --------------------------------------------------------
 
     if resultado.is_refusal:
         resposta = gerar_resposta_recusa(
@@ -357,7 +444,9 @@ def gerar_resposta(
 
         return resposta
 
+    # --------------------------------------------------------
     # Nenhuma evidência recuperada
+    # --------------------------------------------------------
 
     if not resultado.evidences:
         resposta = gerar_resposta_sem_evidencias(
@@ -371,7 +460,9 @@ def gerar_resposta(
 
         return resposta
 
+    # --------------------------------------------------------
     # Cliente do modelo
+    # --------------------------------------------------------
 
     if client is None:
         client = OpenAI(
@@ -379,38 +470,75 @@ def gerar_resposta(
             api_key="ollama",
         )
 
+    # --------------------------------------------------------
     # Construção do contexto
+    # --------------------------------------------------------
 
     contexto = montar_contexto(
         resultado.evidences
     )
 
-    # Chamada ao modelo
+    # --------------------------------------------------------
+    # Identificador da execução da geração
+    # --------------------------------------------------------
+
+    run_id = obs.novo_run_id()
+
+    # --------------------------------------------------------
+    # Chamada ao modelo + observabilidade
+    # --------------------------------------------------------
 
     try:
-        resposta_llm = chamar_llm(
-            pergunta=resultado.query,
-            contexto=contexto,
-            client=client,
-        )
+        with obs.observar_etapa(
+            run_id=run_id,
+            query_id=resultado.query_id,
+            stage="geracao",
+            input_data={
+                "query": resultado.query,
+                "quantidade_evidencias": len(
+                    resultado.evidences
+                ),
+            },
+            modelo=GENERATION_MODEL,
+        ) as observacao_geracao:
 
-        conteudo = (
-            resposta_llm
-            .choices[0]
-            .message
-            .content
-        )
-
-        if not conteudo or not conteudo.strip():
-            raise ValueError(
-                "O modelo retornou uma resposta vazia."
+            resposta_llm = chamar_llm(
+                pergunta=resultado.query,
+                contexto=contexto,
+                client=client,
             )
 
-        tokens = extrair_tokens(
-            resposta_llm
-        )
+            conteudo = (
+                resposta_llm
+                .choices[0]
+                .message
+                .content
+            )
 
-    except Exception as erro:
+            if (
+                not conteudo
+                or not conteudo.strip()
+            ):
+                raise ValueError(
+                    "O modelo retornou uma resposta vazia."
+                )
+
+            tokens = extrair_tokens(
+                resposta_llm
+            )
+
+            observacao_geracao["output"] = {
+                "resposta_gerada": True,
+                "quantidade_fontes": len(
+                    resultado.evidences
+                ),
+            }
+
+            observacao_geracao["tokens"] = (
+                tokens.model_dump()
+            )
+
+    except Exception:
         return RAGResponse(
             query=resultado.query,
             query_id=resultado.query_id,
@@ -431,19 +559,25 @@ def gerar_resposta(
             stage="geracao",
         )
 
+    # --------------------------------------------------------
     # Guardrail final
+    # --------------------------------------------------------
 
     resposta_segura = mascarar_dados_pessoais(
         conteudo.strip()
     )
 
+    # --------------------------------------------------------
     # Confiança
+    # --------------------------------------------------------
 
     confianca = calcular_confianca(
         resultado.evidences
     )
 
+    # --------------------------------------------------------
     # Contrato final
+    # --------------------------------------------------------
 
     resposta_final = RAGResponse(
         query=resultado.query,
