@@ -30,8 +30,6 @@ def processar_estruturada(caminho):
 def processar_normativa(caminho):
     chunks = []
     if not os.path.exists(caminho): return chunks
-    
-    # Correção: Tentar utf-8 primeiro, se falhar (como no Gov.br), usar latin-1
     try:
         with open(caminho, "r", encoding="utf-8") as f:
             soup = BeautifulSoup(f, "html.parser")
@@ -46,12 +44,16 @@ def processar_normativa(caminho):
         chunks.append(criar_chunk_base(f"Art. {art.strip()}", os.path.basename(caminho), "lei", idx, "base_normativa", "publico", extras))
     return chunks
 
-def processar_agregada(caminho):
+def processar_agregada(caminho, limit=500):
+    # LIMIT_DEV: Limita o processamento a N linhas para acelerar testes de UI
+    # O arquivo CSV original permanece intacto. Remover o limit na prod.
     chunks = []
     if not os.path.exists(caminho): return chunks
     with open(caminho, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for idx, row in enumerate(reader, 1):
+            if idx > limit:
+                break
             texto = " | ".join([f"{k}: {v}" for k, v in row.items() if v])
             extras = {"natureza": "agregada"}
             chunks.append(criar_chunk_base(texto, os.path.basename(caminho), "relatorio", idx, "base_agregada", "publico", extras))
@@ -80,7 +82,7 @@ def processar_conversacional(caminho):
     return chunks
 
 def rodar_ingestao_hibrida():
-    print("Iniciando ingestão definitiva (Bases REAIS da versão v2)...")
+    print("Iniciando ingestão (Modo Desenvolvimento - Amostra 500 records na Agregada)...")
     todos_chunks = []
     
     caminho_est = "data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
@@ -94,7 +96,8 @@ def rodar_ingestao_hibrida():
         "data/raw/v2/agregada/itens_pe_038_26_2026.csv"
     ]
     for c in caminhos_agg:
-        todos_chunks.extend(processar_agregada(c))
+        # APLICADO O LIMITE APENAS NA BASE AGREGADA CONFORME SOLICITADO PELA GERENCIA
+        todos_chunks.extend(processar_agregada(c, limit=500))
         
     caminhos_conv = [
         "data/raw/v2/conversacional/atas/ebserh/2026/ata_00191.pdf",
@@ -111,7 +114,7 @@ def rodar_ingestao_hibrida():
     with open(caminho_saida, "w", encoding="utf-8") as f:
         json.dump(todos_chunks, f, ensure_ascii=False, indent=4)
         
-    print(f"✅ Ingestão concluída! {len(todos_chunks)} chunks REAIS gerados englobando as 4 naturezas.")
+    print(f"✅ Ingestão concluída! {len(todos_chunks)} chunks gerados para desenvolvimento.")
 
 if __name__ == "__main__":
     rodar_ingestao_hibrida()
