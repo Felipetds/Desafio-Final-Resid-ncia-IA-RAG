@@ -83,3 +83,38 @@ Durante o encontro, a equipe avançou na ingestão, indexação, roteamento, rec
 - Validar o funcionamento da interface com as quatro bases.
 - Acompanhar a implementação dos testes unitários, de contrato e de integração.
 - Atualizar o README conforme novos módulos forem finalizados.
+
+---
+
+## Encontro 3 — 21/09/2026
+
+### Minha participação
+
+- Acompanhei a integração dos módulos desenvolvidos pela equipe e auxiliei na identificação de incompatibilidades entre `ingest.py`, `retrieve.py` e `generate.py`.
+- Integrei o `obs.py` ao fluxo principal para registrar as etapas de recuperação, geração e validação em logs JSONL.
+- Atualizei o `pipeline_adapter.py` para conectar `retrieve.py`, `generate.py`, `schema.py` e a interface Gradio.
+- Realizei um teste integrado com consulta normal, obtendo roteamento para a base estruturada, recuperação Dense + BM25, fusão RRF, duas evidências, resposta gerada pelo LLM, fontes, latência e contagem de tokens.
+- Auxiliei Luiz na correção do `retrieve.py`, que ainda esperava o `chunk_id` fora de `metadata`.
+- Orientei a equipe sobre dependências, testes, atualização dos acompanhamentos e continuidade das atividades.
+
+### Dificuldades encontradas
+
+Durante a integração, ocorreram incompatibilidades entre os contratos dos módulos, ausência dos índices locais no Colab e conflitos de rebase causados por alterações simultâneas no repositório. As correções foram realizadas preservando as versões mais recentes enviadas pela equipe.
+
+O teste atual ainda utiliza fixtures, portanto existem limitações nos dados simulados, como diferenças entre o ano identificado na consulta e o ano presente no nome do arquivo.
+
+### Apoio de IA
+
+Utilizei IA para auxiliar na análise dos erros de integração, na revisão dos contratos entre os módulos e na estruturação do adaptador do pipeline. Revisei as sugestões antes da aplicação e adaptei o código ao formato já utilizado no projeto.
+
+### Atividades realizadas pela equipe
+
+A equipe avançou na coleta, ingestão, indexação, roteamento, recuperação, schemas, geração e testes. Também foram corrigidas incompatibilidades entre os metadados dos chunks e o módulo de recuperação, permitindo a execução do pipeline integrado com dados simulados.
+
+### Próximas atividades
+
+- Repetir a integração com dados reais quando a API do PNCP estiver disponível.
+- Ampliar a instrumentação para registrar individualmente os demais estágios do pipeline.
+- Revisar a extração de filtros realizada pelo roteador.
+- Executar os testes automatizados e validar a interface com as perguntas das personas.
+

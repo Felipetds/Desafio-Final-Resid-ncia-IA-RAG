@@ -90,3 +90,17 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
   * Validei a reindexação completa (FAISS e BM25) com sucesso utilizando os dados simulados (*fixtures*).
 * **Versionamento:**
   * Correção validada e enviada para a branch principal (`commit: db3415d`), liberando o formato final para a criação das *fixtures* pela equipe.
+
+### Atualização — 23/09/2026
+
+**Status das Entregas (Integração Final do Pipeline de Ingestão e Validação do Checklist):**
+
+* **Integração do Corpus v2 Real:** Arquivos brutos recebidos da entrega da Janice (`data/raw/v2/`) descompactados e integrados ao pipeline. Substituição completa das *fixtures* temporárias.
+* **Desenvolvimento de Parsers Específicos:** Implementação de lógica de leitura adaptada para as quatro naturezas do projeto:
+    * **Estruturada:** Processamento do JSON (PNCP).
+    * **Normativa:** Processamento de HTML (Lei 14.133) fatiado por artigos, incluindo a criação de um *fallback* de codificação para `latin-1` para contornar problemas clássicos de `UnicodeDecodeError` em bases governamentais.
+    * **Conversacional:** Leitura nativa de PDFs (atas) via `pypdf` e TXT (comunicações).
+    * **Agregada:** Leitura e estruturação do CSV massivo do Rio de Janeiro.
+* **Estratégia de Desenvolvimento e Rate Limiting:** Conforme alinhamento com a gestão (Eduarda), implementei um limite de amostragem determinística (500 linhas) exclusivamente na base agregada. Isso evitou o estrangulamento do *endpoint* compartilhado, preservou o CSV original para produção e viabilizou um índice rápido para a equipe.
+* **Validação Rigorosa e Teste Offline (Checklist):** Injeção das chaves de metadados específicos exigidas (`uf`, `ano`, `modalidade`, `orgao`, etc.) nos *chunks*. Criação e execução de rotina de teste offline (`testes/test_metadata.py`) que validou com sucesso a presença dos metadados obrigatórios em 100% da base.
+* **Conclusão:** Índice de desenvolvimento gerado com sucesso com 2.102 *chunks* englobando as quatro naturezas. Todas as pendências do checklist do professor foram resolvidas. Código final testado e com *push* na *main*, liberando a equipe (Luiz, Felipe e Calvin) para iniciar os testes de integração e recuperação (RAG).

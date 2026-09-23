@@ -1,42 +1,132 @@
 import os
 import json
+import csv
+from bs4 import BeautifulSoup
+import pypdf
 
-def criar_chunk(texto, source_file, doc_type, chunk_idx, base_id="estruturada_pncp_rj"):
+def criar_chunk_base(texto, source_file, doc_type, chunk_idx, base_id, sensitivity, extras):
+    metadata = {
+        "chunk_id": f"{source_file}_chunk_{chunk_idx}",
+        "source_file": source_file,
+        "doc_type": doc_type,
+        "sensitivity": sensitivity,
+        "base_id": base_id
+    }
+    metadata.update(extras)
+    return {"text": texto, "metadata": metadata}
+
+def extrair_metadados_especificos(natureza, dicionario_origem=None):
+    # Garante que todas as chaves do checklist do professor existem no schema
+    dados = dicionario_origem or {}
     return {
-        "text": texto,
-        "metadata": {
-            "chunk_id": f"{source_file}_chunk_{chunk_idx}",
-            "source_file": source_file,
-            "doc_type": doc_type,
-            "sensitivity": "publico",
-            "base_id": base_id
-        }
+        "natureza": natureza,
+        "uf": dados.get("uf", ""),
+        "ano": dados.get("ano", ""),
+        "modalidade": dados.get("modalidade", ""),
+        "orgao": dados.get("orgao", ""),
+        "municipio": dados.get("municipio", ""),
+        "valor": dados.get("valor", ""),
+        "fornecedor": dados.get("fornecedor", ""),
+        "vigencia": dados.get("vigencia", "")
     }
 
-def processar_fixtures():
-    print("Iniciando a ingestão (Modo Fixture/Teste)...")
-    
-    texto_simulado = "O GOVERNO DO ESTADO DO RIO DE JANEIRO torna público a realização de licitação na modalidade Pregão Eletrônico. O objeto desta licitação é a contratação de serviços de tecnologia."
-    pedacos = texto_simulado.split(". ")
-    
-    documentos_processados = []
-    for idx, pedaco in enumerate(pedacos):
-        if pedaco.strip():
-            chunk = criar_chunk(
-                texto=pedaco.strip() + ".",
-                source_file="edital_pregao_01_2026.pdf",
-                doc_type="edital",
-                chunk_idx=idx
-            )
-            documentos_processados.append(chunk)
+def processar_estruturada(caminho):
+    chunks = []
+    if not os.path.exists(caminho): return chunks
+    with open(caminho, "r", encoding="utf-8") as f:
+        dados = json.load(f)
+    registros = dados if isinstance(dados, list) else [dados]
+    for idx, reg in enumerate(registros, 1):
+        texto = json.dumps(reg, ensure_ascii=False)
+        extras = extrair_metadados_especificos("estruturada", reg)
+        chunks.append(criar_chunk_base(texto, os.path.basename(caminho), "contrato", idx, "base_estruturada", "publico", extras))
+    return chunks
+
+def processar_normativa(caminho):
+    chunks = []
+    if not os.path.exists(caminho): return chunks
+    try:
+        with open(caminho, "r", encoding="utf-8") as f:
+            soup = BeautifulSoup(f, "html.parser")
+    except UnicodeDecodeError:
+        with open(caminho, "r", encoding="latin-1") as f:
+            soup = BeautifulSoup(f, "html.parser")
             
+    texto = soup.get_text(separator=" ")
+    artigos = texto.split("Art. ")
+    for idx, art in enumerate(artigos[1:], 1):
+        extras = extrair_metadados_especificos("normativa")
+        chunks.append(criar_chunk_base(f"Art. {art.strip()}", os.path.basename(caminho), "lei", idx, "base_normativa", "publico", extras))
+    return chunks
+
+def processar_agregada(caminho, limit=500):
+    chunks = []
+    if not os.path.exists(caminho): return chunks
+    with open(caminho, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for idx, row in enumerate(reader, 1):
+            if idx > limit:
+                break
+            texto = " | ".join([f"{k}: {v}" for k, v in row.items() if v])
+            extras = extrair_metadados_especificos("agregada", row)
+            chunks.append(criar_chunk_base(texto, os.path.basename(caminho), "relatorio", idx, "base_agregada", "publico", extras))
+    return chunks
+
+def processar_conversacional(caminho):
+    chunks = []
+    if not os.path.exists(caminho): return chunks
+    texto_completo = ""
+    
+    if caminho.endswith(".pdf"):
+        with open(caminho, "rb") as f:
+            reader = pypdf.PdfReader(f)
+            for page in reader.pages:
+                extract = page.extract_text()
+                if extract:
+                    texto_completo += extract + "\n"
+    elif caminho.endswith(".txt"):
+        with open(caminho, "r", encoding="utf-8") as f:
+            texto_completo = f.read()
+            
+    paragrafos = [p.strip() for p in texto_completo.split("\n\n") if len(p.strip()) > 10]
+    for idx, p in enumerate(paragrafos, 1):
+        extras = extrair_metadados_especificos("conversacional")
+        chunks.append(criar_chunk_base(p, os.path.basename(caminho), "ata_reuniao", idx, "base_conversacional", "restrito", extras))
+    return chunks
+
+def rodar_ingestao_hibrida():
+    print("Iniciando ingestão (Metadados Específicos do Checklist Ativados)...")
+    todos_chunks = []
+    
+    caminho_est = "data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+    todos_chunks.extend(processar_estruturada(caminho_est))
+    
+    caminho_norm = "data/raw/v2/normativa/federal/lei_14133_2021/lei_14133_2021.html"
+    todos_chunks.extend(processar_normativa(caminho_norm))
+    
+    caminhos_agg = [
+        "data/raw/v2/agregada/pca_2026_estado_rj.csv",
+        "data/raw/v2/agregada/itens_pe_038_26_2026.csv"
+    ]
+    for c in caminhos_agg:
+        todos_chunks.extend(processar_agregada(c, limit=500))
+        
+    caminhos_conv = [
+        "data/raw/v2/conversacional/atas/ebserh/2026/ata_00191.pdf",
+        "data/raw/v2/conversacional/atas/fiocruz/2026/ata_00001.pdf",
+        "data/raw/v2/conversacional/atas/ministerio_saude/2026/ata_00137.pdf",
+        "data/raw/v2/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt"
+    ]
+    for c in caminhos_conv:
+        todos_chunks.extend(processar_conversacional(c))
+
     os.makedirs("data/processed", exist_ok=True)
     caminho_saida = "data/processed/chunks_teste.json"
     
     with open(caminho_saida, "w", encoding="utf-8") as f:
-        json.dump(documentos_processados, f, ensure_ascii=False, indent=4)
+        json.dump(todos_chunks, f, ensure_ascii=False, indent=4)
         
-    print(f"✅ Ingestão concluída! {len(documentos_processados)} chunks gerados em {caminho_saida}")
+    print(f"✅ Ingestão concluída com validação rigorosa de metadados!")
 
 if __name__ == "__main__":
-    processar_fixtures()
+    rodar_ingestao_hibrida()

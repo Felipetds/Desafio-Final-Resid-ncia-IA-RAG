@@ -118,7 +118,7 @@ A recuperação ainda foi testada com uma fixture pequena, contendo somente docu
 
 ---
 
-## Encontro 3 — 21/09/2026
+## Encontro 4 — 21/09/2026
 
 ### Minha participação
 
@@ -150,4 +150,46 @@ A equipe avançou na integração entre ingestão, indexação, roteamento, recu
 - Verificar a execução da busca densa, do BM25 e da fusão RRF.
 - Validar o resultado da recuperação com os schemas definidos.
 - Corrigir outras incompatibilidades que apareçam durante o teste de integração.
+
+---
+
+## Encontro 5 — 23/09/2026
+
+### Minha participação
+
+- Validei o funcionamento dos módulos `router.py` e `retrieve.py` com os artefatos de ingestão e indexação disponíveis.
+- Corrigi o tratamento dos filtros monetários, evitando que valores como “R$ 500 mil” fossem interpretados incorretamente.
+- Ajustei o roteamento das consultas relacionadas ao Plano de Contratações Anual para a base agregada.
+- Corrigi o comportamento das consultas que exigem recusa, garantindo que perguntas envolvendo acusações de fraude não prossigam para a recuperação.
+- Ajustei o roteamento de contingência para evitar a seleção incorreta da base conversacional.
+- Criei testes para validar o roteamento, os filtros, as recusas e a compatibilidade da recuperação.
+- Organizei as alterações em uma branch própria e realizei a integração com a branch `main` por meio de Pull Request.
+
+### Resultados obtidos
+
+- Os 11 testes específicos dos ajustes de roteamento e recuperação foram executados com sucesso.
+- Após a integração das alterações, a suíte completa apresentou 106 testes aprovados.
+- A busca densa, o BM25 e a fusão RRF permaneceram funcionando após as correções.
+- O Pull Request foi mesclado e encerrado com sucesso.
+
+### Apoio de IA
+
+Utilizei ferramentas de IA como apoio para analisar os resultados dos testes, identificar inconsistências no roteamento e auxiliar na elaboração das correções. As alterações foram revisadas e validadas com testes automatizados antes da integração à branch principal.
+
+### Atividades realizadas pela equipe
+
+A equipe acompanhou a validação dos módulos, corrigiu imports incompatíveis com a execução a partir da raiz do repositório e configurou o `pytest` para reconhecer arquivos `test_*.py` e `teste_*.py`. Após esses ajustes, todos os 106 testes disponíveis foram executados com sucesso.
+
+### Dificuldades encontradas
+
+Foram identificadas inconsistências na interpretação de valores monetários, no roteamento de consultas sobre o PCA e nos imports utilizados por alguns módulos e testes. Esses problemas foram corrigidos e validados.
+
+A validação definitiva dos filtros estruturados ainda depende do preenchimento dos metadados específicos durante a ingestão, como ano, modalidade, órgão, município, valor e vigência.
+
+### Próximas atividades
+
+- Aguardar a atualização do `ingest.py` com o preenchimento correto dos metadados específicos.
+- Regerar os chunks e os índices após a atualização da ingestão.
+- Validar os filtros estruturados com os dados corrigidos.
+- Executar uma nova verificação integrada de `router.py` e `retrieve.py` com os artefatos definitivos.
 

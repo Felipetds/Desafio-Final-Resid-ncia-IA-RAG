@@ -9,7 +9,7 @@ Os testes são offline e não dependem de API, LLM ou conexão com a internet.
 import pytest
 from pydantic import ValidationError
 
-from repositorio1.src.schema import (
+from src.schema import (
     QueryFilters,
     RAGResponse,
     RetrievalResult,

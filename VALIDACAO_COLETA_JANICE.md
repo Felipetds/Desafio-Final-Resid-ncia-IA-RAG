@@ -1,0 +1,37 @@
+# Validação da coleta e do inventário — Janice
+
+## Verificações concluídas
+- Conferência adicional da v2: o SHA-256 do arquivo `data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json` corresponde ao hash registrado em `data/inventory/v2.json` (`08e28c39c44be375afe98abb94deb0b6fffd359401753a1f9eb69af54d7832aa`).
+- JSON estruturado existente: 1.358 registros.
+- `numeroControlePNCP`: 1.358 preenchidos e 1.358 únicos.
+- `dataPublicacaoPncp`: 1.358 datas válidas, todas entre
+  02/03/2026 e 31/03/2026, dentro do período do manifesto
+  (01/03/2026 a 31/03/2026).
+- Inventário v2: contém os oito campos obrigatórios do contrato.
+- Inventário local: 8 arquivos, distribuídos em 5 bases e
+  4 naturezas (estruturada, normativa, conversacional e agregada).
+- `update`: criou v2 sem alterar a v1.
+- Diff por SHA-256: identificou corretamente 1 arquivo modificado
+  em teste isolado e 7 idênticos.
+- Testes automatizados: 2 passaram.
+- Fontes locais: os 8 arquivos previstos no manifesto foram encontrados, e os 8 hashes SHA-256 conferiram.
+- Teste isolado do `update`: terminou com código de saída 0, criou a v2 com 8 arquivos e registrou 0 falhas.
+- Teste das quatro categorias do diff: identificou corretamente 1 arquivo adicionado, 1 removido, 1 alterado e 1 idêntico em inventários fictícios.
+
+## Verificação pendente 
+
+A tentativa anterior de consultar o PNCP retornou erro HTTP 500.
+Em uma nova tentativa, realizada em pasta separada, a consulta à primeira página do PNCP não respondeu dentro do tempo limite, mesmo após três tentativas. Nenhum JSON final foi gerado.
+Por isso, a reconstrução online dos 1.358 registros ainda não foi comprovada. Os testes com os oito arquivos locais foram concluídos com sucesso.
+
+
+## Limite dos testes
+
+Os testes das quatro naturezas utilizaram fontes locais verificadas
+por SHA-256. Eles não comprovam que todas as fontes possam ser
+baixadas automaticamente por outra pessoa.
+
+## Cuidados na integração
+
+Preservar a coleta PNCP existente em `src/fetch_corpus.py`.
+Não incluir `data/raw/` no GitHub.
