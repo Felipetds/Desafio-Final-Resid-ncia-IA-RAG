@@ -406,6 +406,7 @@ def recuperar_evidencias(
     fetch_k: int = 50,
     client: OpenAI | None = None,
     exigir_natureza: bool = False,
+    run_id: str | None = None,
 ) -> Dict[str, Any]:
     """
     Executa roteamento, Dense, BM25, filtros e RRF.
@@ -418,7 +419,7 @@ def recuperar_evidencias(
     de passar por padrão.
     """
     inicio = time.perf_counter()
-    run_id = obs.novo_run_id()
+    run_id = run_id or obs.novo_run_id()
 
     if client is None:
         client = OpenAI(
@@ -429,6 +430,7 @@ def recuperar_evidencias(
     analise = analisar_consulta(
         pergunta=pergunta,
         client=client,
+        run_id=run_id,
     )
 
     query_id = analise["query_id"]
