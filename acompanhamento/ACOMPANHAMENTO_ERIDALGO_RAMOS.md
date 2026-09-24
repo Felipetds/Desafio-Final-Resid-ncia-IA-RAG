@@ -104,3 +104,13 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * **Estratégia de Desenvolvimento e Rate Limiting:** Conforme alinhamento com a gestão (Eduarda), implementei um limite de amostragem determinística (500 linhas) exclusivamente na base agregada. Isso evitou o estrangulamento do *endpoint* compartilhado, preservou o CSV original para produção e viabilizou um índice rápido para a equipe.
 * **Validação Rigorosa e Teste Offline (Checklist):** Injeção das chaves de metadados específicos exigidas (`uf`, `ano`, `modalidade`, `orgao`, etc.) nos *chunks*. Criação e execução de rotina de teste offline (`testes/test_metadata.py`) que validou com sucesso a presença dos metadados obrigatórios em 100% da base.
 * **Conclusão:** Índice de desenvolvimento gerado com sucesso com 2.102 *chunks* englobando as quatro naturezas. Todas as pendências do checklist do professor foram resolvidas. Código final testado e com *push* na *main*, liberando a equipe (Luiz, Felipe e Calvin) para iniciar os testes de integração e recuperação (RAG).
+
+### Atualização — 25/09/2026
+
+**Prioridades do Encontro Resolvidas:**
+* **Metadados Específicos:** Correção do preenchimento das chaves (uf, ano, modalidade, orgao, municipio, valor, fornecedor, vigencia). Extração de valores reais implementada na base estruturada do PNCP, respeitando a regra de manter vazio/nulo quando inexistente.
+* **Base Agregada:** Ficheiro CSV verificado, garantindo a utilização do separador `;` e que cada linha gera um *chunk* independente. Amostra determinística de 500 registos mantida para desenvolvimento.
+* **Base Conversacional e Normativa:** Fatiamento revisto nos três PDFs e no TXT (separação por parágrafos longos) e na Lei (separação por artigos).
+* **Regeneração de Índices:** Scripts `ingest.py` e `index.py` reexecutados. Total de 2.102 *chunks* gerados e validados no teste *offline*.
+* **Otimização:** Índices FAISS e BM25 regenerados com reaproveitamento total de cache (2.102 *embeddings* carregados localmente, 0 envios para API).
+* **Status:** Chunks e índices atualizados disponibilizados para os testes de recuperação e integração da equipa.
