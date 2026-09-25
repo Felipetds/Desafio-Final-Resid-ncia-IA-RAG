@@ -298,7 +298,7 @@ def test_geracao_sem_evidencias():
 # Recusa
 # ============================================================
 
-def test_geracao_recusa():
+def test_geracao_recusa(monkeypatch):
     resultado = RetrievalResult(
         query=(
             "Informe os dados bancários "
@@ -314,19 +314,39 @@ def test_geracao_recusa():
         evidences=[],
     )
 
+    # Se o código tentar chamar o LLM,
+    # o teste deve falhar imediatamente.
+    def mock_chamar_llm(*args, **kwargs):
+        raise AssertionError(
+            "O LLM não deve ser chamado "
+            "quando a consulta já foi recusada."
+        )
+
+    monkeypatch.setattr(
+        generate,
+        "chamar_llm",
+        mock_chamar_llm,
+    )
+
     resposta = generate.gerar_resposta(
         resultado
     )
 
+    # Validação da recusa
     assert resposta.is_refusal is True
     assert resposta.sources_used == []
-
     assert resposta.refusal_reason is not None
 
     assert (
         "dados bancários"
         in resposta.refusal_reason
     )
+
+    # Não houve utilização do LLM
+    assert resposta.tokens.prompt == 0
+    assert resposta.tokens.completion == 0
+    assert resposta.tokens.total == 0
+    assert resposta.modelo is None
 
 
 # ============================================================
