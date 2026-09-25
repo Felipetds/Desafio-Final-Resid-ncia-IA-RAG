@@ -1,7 +1,7 @@
 scenario_id: contratacoes-rj
 version: v1
-description: 'Corpus do Cenário 1 — Contratações Públicas do Estado do Rio de Janeiro. Reúne fontes oficiais
-  e comunicações sintéticas identificadas como simulação.
+description: 'Corpus do Cenário 1 — Contratações Públicas do Estado do Rio de Janeiro.
+  Reúne fontes oficiais e comunicações sintéticas identificadas como simulação.
 
   '
 bases:
@@ -35,7 +35,7 @@ bases:
   - valorTotalHomologado
   arquivos:
   - path: estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json
-    sha256: 08e28c39c44be375afe98abb94deb0b6fffd359401753a1f9eb69af54d7832aa
+    sha256: 681a935887201bf87073c0bc80979a388929adcc45f9de86e332e2e23cab565e
     origem: Portal Nacional de Contratações Públicas (PNCP)
   volume_alvo: 1
 - base_id: normativa_lei_14133
@@ -133,8 +133,8 @@ bases:
   - numero_mensagem
   - remetente_ficticio
   - natureza_sintetica
-  observacao: 'Conteudo inteiramente ficticio para testes. Nunca apresentar como evidencia de contratacao
-    ou comunicacao publica real.
+  observacao: 'Conteudo inteiramente ficticio para testes. Nunca apresentar como evidencia
+    de contratacao ou comunicacao publica real.
 
     '
   arquivos:
