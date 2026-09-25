@@ -124,7 +124,6 @@ A existência de um módulo no repositório não significa, isoladamente, que su
 ├── eval/                    # Resultados de avaliação
 ├── logs/                    # Logs locais, ignorados pelo Git
 ├── src/                     # Módulos do pipeline
-├── tests/                   # Testes e fixtures
 ├── ARQUITETURA.md
 ├── CORPUS_INVENTORY.md
 ├── PERSONAS.md
