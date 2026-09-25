@@ -121,3 +121,56 @@ A equipe avançou na coleta, ingestão, indexação, roteamento, recuperação, 
 * Ampliar a instrumentação para registrar individualmente os demais estágios do pipeline.
 * Revisar a extração de filtros realizada pelo roteador.
 * Validar a interface com as perguntas definidas pelas personas.
+
+
+## Encontro 6 — 25/09/2026
+
+### Minha participação
+
+- Configurei o ambiente local para executar os testes no VS Code e Git Bash.
+- Identifiquei que os comandos do pytest precisam ser executados na raiz.
+- Executei o teste offline, desconsiderando temporariamente a integração.
+- Verifiquei os testes de schema, geração, roteamento, recuperação,
+  metadados e inventário do corpus.
+- Revisei as orientações de execução presentes na documentação.
+- Documentei a diferença entre testes offline e testes de integração.
+
+### Resultados obtidos
+
+- A integração foi mantida separada porque depende de chunks, índices e modelos.
+- O pytest encontrou 109 testes offline.
+- Resultado: 109 passed, 1 warning in 4.59s.
+
+        configfile: pytest.ini
+        plugins: anyio-4.15.1
+        collected 109 items                                                                                                                                                               
+
+        testes\test_corpus_inventory_janice.py ..                                                                                                                                   [  1%]
+        testes\test_metadata.py .                                                                                                                                                   [  2%]
+        testes\teste_ajustes_router_retrieve.py ...........                                                                                                                         [ 12%]
+        testes\teste_corpus.py ............                                                                                                                                         [ 23%]
+        testes\teste_generate.py ..................                                                                                                                                 [ 40%]
+        testes\teste_obs.py .                                                                                                                                                       [ 41%]
+        testes\teste_retrieve.py .............................                                                                                                                      [ 67%]
+        testes\teste_router.py .........................                                                                                                                            [ 90%]
+        testes\teste_schema.py ..........                                                                                                                                           [100%]
+
+
+### Dificuldades encontradas
+
+Inicialmente, os testes foram executados dentro da pasta `testes`, fazendo
+com que caminhos e imports não fossem encontrados. O problema foi resolvido
+ao executar os comandos na raiz e definir `PYTHONPATH=.`.
+
+### Apoio de IA
+
+Utilizei uma ferramenta de IA para interpretar o erro, organizar os comandos
+e revisar a documentação. As orientações foram verificadas no ambiente local.
+
+### Próximas atividades
+
+- Executar a integração quando os artefatos atualizados estiverem disponíveis.
+- Validar o pipeline com consultas normais e evidências reais.
+- Registrar eventuais falhas encontradas na integração.
+- Continuar revisando a documentação do projeto.
+

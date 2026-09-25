@@ -425,6 +425,39 @@ Executar os testes offline:
 pytest -m "not llm" -v
 ```
 
+## Execução dos testes
+
+Os comandos devem ser executados na raiz do repositório.
+
+### Testes offline
+
+Os testes offline validam os módulos sem exigir a execução completa do
+pipeline, o acesso ao modelo ou os artefatos de indexação.
+
+```bash
+export PYTHONPATH=.
+python -m pytest -q --ignore=testes/teste_integracao.py
+```
+
+### Testes de integração
+
+```bash
+export PYTHONPATH=.
+python -m pytest -q testes/teste_integracao.py
+```
+
+A execução completa pode depender destes artefatos:
+
+- `data/processed/chunks_teste.json`;
+- `data/indices/faiss_index.bin`;
+- `data/indices/bm25_index.pkl`;
+- `data/indices/chunk_ids.json`;
+- acesso ao endpoint dos modelos.
+
+Se esses recursos não estiverem disponíveis, os testes offline podem ser
+executados separadamente.
+
+
 Executar testes que utilizam o endpoint do LLM:
 
 ```bash
