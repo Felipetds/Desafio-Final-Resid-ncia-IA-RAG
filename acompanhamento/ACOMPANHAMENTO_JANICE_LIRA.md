@@ -181,7 +181,7 @@
 * Preservar as versões congeladas do corpus e manter `data/raw/` fora do GitHub.
 
 ---
-## Encontro 5 — 25/09/2026
+## Encontro 6 — 25/09/2026
 
 ### Minha contribuição
 
