@@ -112,7 +112,7 @@ A existência de um módulo no repositório não significa, isoladamente, que su
 ---
 
 ## 5. Estrutura do repositório
-
+```text
 ├── testes/                  # Testes e fixtures
 ├── acompanhamento/          # Relatos individuais dos integrantes
 ├── app/                     # Interface e adaptador do pipeline
