@@ -174,3 +174,66 @@ A equipe avançou na ingestão, indexação, roteamento, recuperação, geraçã
 - Conferir os logs completos das etapas de recuperação com os artefatos definitivos.
 - Acompanhar a correção do teste de integração e o registro do marcador `llm`.
 - Realizar a integração final após a atualização dos metadados e a regeneração dos índices.
+
+---
+
+## Encontro 6 — 25/09/2026
+
+### Minha participação
+
+- Acompanhei e validei as atualizações realizadas pela equipe nos módulos de coleta, ingestão, roteamento, recuperação e testes.
+- Testei a coleta da base estruturada diretamente pela API do PNCP.
+- Durante o teste, identifiquei instabilidade temporária na API, com timeout e respostas HTTP 502 e 503.
+- Confirmei que o mecanismo de retentativas funcionou e permitiu concluir a coleta das 28 páginas.
+- Validei a obtenção de 1.358 registros estruturados, com 1.358 IDs únicos e nenhum registro duplicado.
+- Identifiquei que a coleta atual possui hash diferente do snapshot registrado no manifesto, apesar de manter a mesma quantidade de registros.
+- Preservei a nova coleta no Google Drive para permitir a comparação com a versão anterior.
+- Validei as correções realizadas nos separadores e metadados dos dois arquivos CSV da base agregada.
+- Confirmei o preenchimento de UF, ano, órgão, valor e vigência nos 500 chunks utilizados como amostra do PCA.
+- Confirmei o preenchimento dos metadados disponíveis nos itens homologados, incluindo ano, valor, fornecedor e data de homologação.
+- Verifiquei que a ingestão gerou 2.102 chunks, todos com IDs preenchidos e únicos, sem textos vazios.
+- Analisei o tamanho dos chunks da base conversacional e identifiquei que os três PDFs foram processados como chunks únicos excessivamente grandes.
+- Validei o fluxo de recusa do pipeline com uma consulta envolvendo acusação de fraude.
+- Confirmei que a consulta recusada não retornou evidências e apresentou resposta compatível com os guardrails.
+- Verifiquei que as etapas `query_analysis`, `roteamento`, `fusao_rrf`, `geracao` e `validacao` utilizaram o mesmo `run_id`.
+- Validei a mensagem amigável apresentada pela interface quando os artefatos de indexação não estão disponíveis.
+- Executei 29 testes específicos de observabilidade, geração e schema, todos aprovados.
+- Executei a suíte offline disponível, obtendo 109 testes aprovados.
+- Confirmei que o commit responsável pela unificação do `run_id` e pelo tratamento da falha da interface está presente na branch remota `main`.
+
+### Resultados obtidos
+
+- A coleta automatizada conseguiu recuperar os 1.358 registros mesmo diante da instabilidade temporária da API.
+- Os registros coletados apresentaram 1.358 IDs únicos e nenhuma duplicação.
+- Os separadores e os principais metadados da base agregada foram corrigidos.
+- A ingestão manteve 2.102 chunks válidos antes da revisão do fatiamento dos PDFs.
+- O fluxo de recusa, os guardrails e a ausência de evidências em consultas recusadas funcionaram corretamente.
+- Todas as etapas registradas para a consulta testada utilizaram um único `run_id`.
+- A interface apresentou uma orientação compreensível quando os índices estavam ausentes.
+- Os 29 testes específicos e os 109 testes offline foram aprovados.
+
+### Dificuldades encontradas
+
+- A API do PNCP apresentou timeout e respostas HTTP 502 e 503 durante as primeiras tentativas.
+- O conteúdo coletado atualmente apresentou hash diferente do snapshot anterior, indicando alteração na fonte pública.
+- Os três PDFs conversacionais foram transformados em chunks únicos com aproximadamente 23 mil, 32 mil e 49 mil caracteres.
+- Os índices FAISS, BM25 e a lista de IDs ainda não estavam disponíveis no ambiente atual do Google Colab.
+- A suíte de testes apresentou um aviso de configuração relacionado ao `testpaths`, embora todos os testes offline tenham sido aprovados.
+
+### Apoio de IA
+
+Utilizei ferramentas de IA como apoio para organizar os procedimentos de validação, interpretar os resultados da coleta, analisar os metadados gerados, identificar o tamanho inadequado dos chunks conversacionais e revisar os registros de observabilidade. Todos os resultados foram conferidos por meio da execução dos comandos, inspeção dos arquivos gerados e testes automatizados.
+
+### Atividades realizadas pela equipe
+
+A equipe avançou na coleta e validação do corpus, no preenchimento dos metadados específicos, nos testes de roteamento e recuperação e na preparação dos testes de integração. A correção da base agregada foi validada, mantendo como pendência a melhoria do fatiamento dos PDFs conversacionais. Também foram revisados os resultados da suíte offline e as dependências necessárias para a futura validação ponta a ponta.
+
+### Próximas atividades
+
+- Acompanhar a divisão dos três PDFs conversacionais em chunks menores, com sobreposição e preservação dos metadados.
+- Regenerar os chunks após a correção do fatiamento.
+- Reconstruir os índices FAISS e BM25 utilizando o cache de embeddings.
+- Validar a consistência entre a quantidade de chunks, vetores, documentos BM25 e IDs persistidos.
+- Executar os testes de integração com os artefatos definitivos.
+- Validar consultas normais, agregadas, conversacionais, normativas e de recusa na interface.
+- Preparar uma atualização objetiva do andamento do projeto para o próximo encontro com o professor.

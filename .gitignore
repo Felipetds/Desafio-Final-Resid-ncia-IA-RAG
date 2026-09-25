@@ -8,6 +8,7 @@ __pycache__/
 
 # Data and logs
 data/raw/
+data/inventory/raw/
 index/
 logs/
 .gradio/

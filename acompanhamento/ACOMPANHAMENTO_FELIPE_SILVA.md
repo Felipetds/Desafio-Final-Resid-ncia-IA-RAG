@@ -114,3 +114,33 @@ Finalizamos os teste dos modulos individualmente.
 ### Próximos passos
 
 Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar na resolução dos problemas encontrados no teste de integração e Validação do checklist, pendências de geração, contratos, guardrails, integração e registro de falhas atendidas e avaliação/benchmark ficou como próxima etapa.
+
+## Encontro 6 — 25/09/2026
+
+### Minha contribuição
+
+* Ajustei a configuração do pytest e organizei os testes de integração, separando os testes locais dos testes de integração/E2E que dependem do LLM.
+
+* Validei os testes de recusa e guardrails, garantindo que solicitações recusadas não acionem o LLM, não retornem fontes ou evidências e mantenham o consumo de tokens zerado.
+
+* Verifiquei os artefatos de recuperação, incluindo chunks, FAISS, BM25 e IDs, confirmando a consistência quantitativa entre os arquivos utilizados nos testes.
+
+* Ajustei a propagação do run_id entre recuperação e geração, permitindo utilizar o mesmo identificador durante uma execução e melhorando a rastreabilidade do pipeline.
+
+* Validei a observabilidade por meio dos logs, confirmando o uso do mesmo run_id nas diferentes etapas de uma consulta.
+
+* Executei os testes após atualizar minha branch com a main, obtendo 109 testes gerais e 7 testes de integração/E2E aprovados, totalizando 116 testes sem falhas antes do merge.
+
+### Uso de IA
+
+* Utilizei a IA para auxiliar na utilização de comandos do git e para resumir algumas informações das atividades atividades executadas. Ex: Como explicar os resultados obtidos nos testes e avaliação dos logs gerados.
+
+### Resumo da equipe
+
+* Estamos avançando bem e começando a corrigir detalhes. Praticamente todas as atividades ja estão bem adiantadas. Só precisamos resolver alguns detalhes que apareceram como as consultas feitas na API.
+
+### Próximos passos
+
+* Criar e executar um benchmark para avaliar o RAG, utilizando um conjunto de perguntas previamente definidas. 
+* Verificar se o sistema seleciona a rota correta, recupera evidências relevantes, gera respostas fundamentadas nas fontes e aplica corretamente recusas e guardrails.
+* Registrar os resultados e métricas para identificar possíveis pontos de melhoria no pipeline.

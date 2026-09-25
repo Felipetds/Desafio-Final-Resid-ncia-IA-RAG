@@ -34,6 +34,8 @@ if str(REPOSITORIO_DIR) not in sys.path:
 
 import src.retrieve as retrieve
 
+import src.obs as obs
+
 from src.generate import (
     OLLAMA_URL,
     RAGResponse,
@@ -64,18 +66,25 @@ def executar_pipeline(pergunta: str, client: OpenAI):
         router
           -> retrieve
           -> generate
+
+    Um único run_id é utilizado durante toda a execução
+    para permitir o rastreamento ponta a ponta nos logs.
     """
+
+    run_id = obs.novo_run_id()
 
     resultado_recuperacao = retrieve.recuperar_evidencias(
         pergunta=pergunta,
         top_k=5,
         fetch_k=50,
         client=client,
+        run_id=run_id,
     )
 
     resposta = gerar_resposta(
         resultado_recuperacao=resultado_recuperacao,
         client=client,
+        run_id=run_id,
     )
 
     return resultado_recuperacao, resposta

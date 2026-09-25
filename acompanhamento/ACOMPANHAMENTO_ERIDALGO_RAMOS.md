@@ -104,3 +104,31 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * **Estratégia de Desenvolvimento e Rate Limiting:** Conforme alinhamento com a gestão (Eduarda), implementei um limite de amostragem determinística (500 linhas) exclusivamente na base agregada. Isso evitou o estrangulamento do *endpoint* compartilhado, preservou o CSV original para produção e viabilizou um índice rápido para a equipe.
 * **Validação Rigorosa e Teste Offline (Checklist):** Injeção das chaves de metadados específicos exigidas (`uf`, `ano`, `modalidade`, `orgao`, etc.) nos *chunks*. Criação e execução de rotina de teste offline (`testes/test_metadata.py`) que validou com sucesso a presença dos metadados obrigatórios em 100% da base.
 * **Conclusão:** Índice de desenvolvimento gerado com sucesso com 2.102 *chunks* englobando as quatro naturezas. Todas as pendências do checklist do professor foram resolvidas. Código final testado e com *push* na *main*, liberando a equipe (Luiz, Felipe e Calvin) para iniciar os testes de integração e recuperação (RAG).
+
+### Atualização — 25/09/2026
+
+**Prioridades do Encontro Resolvidas:**
+* **Metadados Específicos:** Correção do preenchimento das chaves (uf, ano, modalidade, orgao, municipio, valor, fornecedor, vigencia). Extração de valores reais implementada na base estruturada do PNCP, respeitando a regra de manter vazio/nulo quando inexistente.
+* **Base Agregada:** Ficheiro CSV verificado, garantindo a utilização do separador `;` e que cada linha gera um *chunk* independente. Amostra determinística de 500 registos mantida para desenvolvimento.
+* **Base Conversacional e Normativa:** Fatiamento revisto nos três PDFs e no TXT (separação por parágrafos longos) e na Lei (separação por artigos).
+* **Regeneração de Índices:** Scripts `ingest.py` e `index.py` reexecutados. Total de 2.102 *chunks* gerados e validados no teste *offline*.
+* **Otimização:** Índices FAISS e BM25 regenerados com reaproveitamento total de cache (2.102 *embeddings* carregados localmente, 0 envios para API).
+* **Status:** Chunks e índices atualizados disponibilizados para os testes de recuperação e integração da equipa.
+
+### Atualização extra — 
+
+**Correções na Base Agregada:**
+* Tratamento do BOM (`\\ufeff`) invisível no arquivo PCA utilizando a codificação `utf-8-sig`.
+* Implementação de detecção dinâmica de separadores (`,` vs `;`) para abranger diferentes padrões de exportação.
+* Criação de mapeamento flexível de colunas (fallback de sinónimos para `Unidade Responsável`, `Valor Total Estimado (R$)`, `valor_total_homologado`, `Data Desejada`, etc.).
+* Implementação de varredura de IDs de contratação (buscando a string `/2026`) e recortes de datas para preencher anos faltantes.
+
+**Fatiamento de PDFs (Base Conversacional):**
+* Substituição de chunks únicos gigantes (até 49 mil caracteres) por uma função de fatiamento cirúrgica (`max_chars=2000`, `overlap=200`).
+* Adição do metadado `pagina` iterando pelas páginas originais do PDF, garantindo rastreabilidade para a equipa.
+
+**Regeneração e Resultados Finais:**
+* O total consolidado subiu de 2.102 para **2.125 chunks** únicos e válidos.
+* O sistema de cache reaproveitou 2.098 vetores antigos e chamou a API apenas para os 27 novos recortes de PDF.
+* Índices reconstruídos e 109 testes da suíte offline aprovados com sucesso.
+"""

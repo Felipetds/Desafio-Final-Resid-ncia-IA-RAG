@@ -193,3 +193,40 @@ A validação definitiva dos filtros estruturados ainda depende do preenchimento
 - Validar os filtros estruturados com os dados corrigidos.
 - Executar uma nova verificação integrada de `router.py` e `retrieve.py` com os artefatos definitivos.
 
+---
+
+## Encontro 6 — 25/09/2026
+
+### Minha participação
+
+- Validei os módulos `router.py` e `retrieve.py` após a atualização do repositório.
+- Executei os testes offline relacionados ao roteamento e à recuperação.
+- Testei o roteamento de contingência para consultas estruturadas, normativas, conversacionais e agregadas.
+- Validei a recusa de perguntas que envolvem acusação de fraude.
+- Testei a extração de filtros monetários.
+- Validei o funcionamento da fusão RRF.
+
+### Resultados obtidos
+
+- Os 65 testes offline de roteamento e recuperação foram aprovados.
+- As quatro rotas foram identificadas corretamente.
+- Os quatro casos de filtros monetários foram aprovados.
+- A fusão RRF funcionou sem duplicações e priorizou o chunk presente nos dois métodos.
+- A consulta envolvendo fraude foi recusada e não selecionou rotas.
+
+### Dificuldades encontradas
+
+Os artefatos `faiss_index.bin`, `bm25_index.pkl` e `chunk_ids.json` não estavam disponíveis no ambiente. Por esse motivo, a recuperação híbrida com os índices reais não foi executada.
+
+A validação definitiva também depende da correção dos metadados da base agregada e da regeneração dos índices.
+
+### Apoio de IA
+
+Utilizei uma ferramenta de IA para organizar os casos de teste, interpretar os resultados e diferenciar as validações offline das etapas que dependem dos artefatos de indexação.
+
+### Próximas atividades
+
+- Validar a recuperação Dense e BM25 com os índices regenerados.
+- Testar consultas relacionadas ao Plano de Contratações Anual.
+- Validar os filtros da base agregada.
+- Executar a recuperação com as quatro bases definitivas.

@@ -395,6 +395,7 @@ def extrair_tokens(
 def gerar_resposta(
     resultado_recuperacao,
     client: OpenAI | None = None,
+    run_id: str | None = None,
 ) -> RAGResponse:
     """
     Executa a etapa completa de geração.
@@ -482,7 +483,7 @@ def gerar_resposta(
     # Identificador da execução da geração
     # --------------------------------------------------------
 
-    run_id = obs.novo_run_id()
+    run_id = run_id or obs.novo_run_id()
 
     # --------------------------------------------------------
     # Chamada ao modelo + observabilidade
