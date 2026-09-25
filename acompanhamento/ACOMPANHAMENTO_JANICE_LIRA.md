@@ -185,56 +185,42 @@
 
 ### Minha contribuição
 
-* **Validação da nova coleta do PNCP:** Acompanhei a validação da coleta online realizada pela equipe. Apesar de ocorrências de timeout e respostas HTTP 502/503 durante a execução, o mecanismo de retentativas permitiu concluir as 28 páginas da consulta e obter 1.358 registros.
-
-* **Validação de integridade:** Confirmei que a nova coleta contém 1.358 registros, todos com `numeroControlePNCP` preenchido, 1.358 identificadores únicos e nenhuma duplicação.
-
-* **Comparação entre snapshots:** Restaurei e validei o snapshot v2 pelo SHA-256 e realizei a comparação registro a registro entre a v2 e a nova coleta. Foram identificados 0 IDs adicionados, 0 removidos, 1.314 registros idênticos e 44 registros alterados.
-
-* **Análise das alterações:** As diferenças foram identificadas principalmente nos campos `dataAtualizacaoGlobal`, `dataAtualizacao`, `valorTotalHomologado`, `emendaParlamentar` e `valorTotalEstimado`, além de alterações pontuais em campos relacionados a datas e situação da compra.
-
-* **Preservação da v2:** Confirmei que o snapshot v2 permaneceu imutável, mantendo o SHA-256 `08e28c39c44be375afe98abb94deb0b6fffd359401753a1f9eb69af54d7832aa`.
-
-* **Preparação e validação da v3:** Preparei as fontes da nova versão mantendo sete arquivos idênticos à v2 e substituindo somente o arquivo estruturado do PNCP pela nova coleta, cujo SHA-256 é `681a935887201bf87073c0bc80979a388929adcc45f9de86e332e2e23cab565e`.
-
-* **Teste do mecanismo de versionamento:** Executei o fluxo de `update` inicialmente em ambiente isolado. O teste permitiu identificar que o mecanismo depende da presença das versões anteriores em `data/raw/` e valida os hashes das fontes contra o `corpus_manifest.yaml`.
-
-* **Criação da v3:** Após preparar o ambiente e o manifesto de teste com o novo SHA, o comando `update` foi executado com código de saída 0 e criou a versão v3 com 8 arquivos e 0 falhas, preservando a v2.
-
-* **Geração do inventário e diff:** O processo gerou `data/inventory/v3.json` e `data/inventory/DIFF_v2_v3.md`. O diff por SHA-256 registrou 7 arquivos idênticos, 1 alterado, 0 adicionados e 0 removidos.
-
-* **Atualização do repositório:** Adicionei ao repositório o inventário da v3 e o diff v2 → v3. Também atualizei o SHA-256 da coleta estruturada no `corpus_manifest.yaml`. Os arquivos brutos continuam excluídos do GitHub por meio da regra `data/raw/` no `.gitignore`.
+* **Auditoria final do corpus v3:** Revisei a consistência entre o `corpus_manifest.yaml`, o inventário `data/inventory/v3.json`, o `DIFF_v2_v3.md` e a documentação do corpus.
+* **Correção do manifesto:** Atualizei o `corpus_manifest.yaml` para `version: v3` e corrigi as referências dos arquivos para os caminhos correspondentes à v3, preservando os hashes dos arquivos já validados.
+* **Sincronização do inventário:** Atualizei o `manifest_hash` do `data/inventory/v3.json` para corresponder ao manifesto v3 auditado, mantendo inalterados os hashes individuais dos oito arquivos inventariados.
+* **Atualização da documentação:** Atualizei o `CORPUS_INVENTORY.md` para representar a versão v3 e revisei o `README.md` para refletir o estado atual do corpus e distinguir funcionalidades implementadas de etapas ainda em integração ou validação.
+* **Preservação das versões:** Mantive a v2 como snapshot congelado e preservei os arquivos brutos das versões existentes, sem sobrescrever o corpus anterior.
 
 ### Uso de IA
 
-* Utilizei um assistente de IA como apoio na elaboração e execução dos procedimentos de validação, comparação de snapshots, análise dos hashes, diagnóstico do comportamento do `corpus_cli.py` e preparação do fluxo de versionamento.
-* Os comandos foram executados no Google Colab e seus resultados foram conferidos antes das alterações no repositório.
-* As alterações foram realizadas de forma incremental, preservando os snapshots anteriores e evitando a inclusão dos arquivos brutos no GitHub.
+* Utilizei um assistente de IA como apoio na revisão da consistência entre manifesto, inventário e documentação.
+* As alterações foram realizadas de forma incremental, conferindo os valores e hashes antes das atualizações.
+* O uso de IA foi direcionado à revisão técnica e documental, mantendo os dados e evidências produzidos pelos procedimentos executados no projeto.
 
 ### Resultados
 
-* Coleta online: 28 páginas concluídas.
-* Registros coletados: 1.358.
-* IDs únicos: 1.358.
-* Duplicações: 0.
-* Comparação v2 → nova coleta: 1.314 registros idênticos e 44 alterados.
-* SHA-256 v2 preservado: `08e28c39c44be375afe98abb94deb0b6fffd359401753a1f9eb69af54d7832aa`.
-* SHA-256 da nova coleta/v3: `681a935887201bf87073c0bc80979a388929adcc45f9de86e332e2e23cab565e`.
-* Versionamento v3: 8 arquivos e 0 falhas.
-* Diff v2 → v3: 7 idênticos, 1 alterado, 0 adicionados e 0 removidos.
+* `corpus_manifest.yaml` atualizado para a versão v3.
+* `data/inventory/v3.json` sincronizado com o manifesto atualizado.
+* Corpus v3 documentado com 8 arquivos e 0 falhas no inventário.
+* Base estruturada mantida com 1.358 registros e 1.358 identificadores únicos.
+* Comparação v2 → v3 mantida em 7 arquivos idênticos, 1 alterado, 0 adicionados e 0 removidos.
+* `CORPUS_INVENTORY.md` atualizado para a v3.
+* `README.md` revisado para refletir o estado atual do projeto.
+* Snapshot v2 preservado.
 
 ### Dificuldades e cuidados
 
-* A API do PNCP apresentou instabilidade durante a coleta, com timeout e respostas HTTP 502/503.
-* O mecanismo de `update` exige a presença da versão anterior em `data/raw/` para determinar automaticamente a próxima versão.
-* O `update` também valida os hashes das fontes contra o manifesto, exigindo a atualização controlada do SHA da nova coleta.
-* A v2 não foi sobrescrita.
-* Os arquivos de `data/raw/` não foram enviados ao GitHub.
-* O manifesto ainda contém o metadado `version: v1` e referências `data/raw/v1/...`, que serão objeto de uma última auditoria antes do encerramento definitivo da frente de Coleta e Versionamento.
+* Foi necessário corrigir referências remanescentes à v1 na documentação após a criação da v3.
+* O `manifest_hash` do inventário precisou ser sincronizado após a alteração do `corpus_manifest.yaml`.
+* A atualização foi limitada aos arquivos de documentação e metadados necessários, evitando alterações nos dados brutos congelados.
+* Foi mantida a distinção entre funcionalidades implementadas e funcionalidades cuja integração ponta a ponta ainda necessita de validação.
 
 ### Próximos passos
 
-* Realizar a auditoria final do `corpus_manifest.yaml`, verificando o significado de `version: v1` e das referências `data/raw/v1/...`.
-* Confirmar que `v3.json`, `DIFF_v2_v3.md` e o manifesto atualizado estão consistentes no repositório.
-* Registrar o encerramento da frente de Coleta e Versionamento após essa conferência.
-* Disponibilizar à equipe as informações necessárias para utilização do snapshot v3 nas próximas etapas de ingestão, indexação e avaliação.
+* Disponibilizar o estado documentado da v3 para continuidade das etapas de ingestão e indexação.
+* Apoiar a integração do corpus v3 ao pipeline RAG.
+* Acompanhar os testes de recuperação, geração e integração das quatro naturezas de evidência.
+* Preservar a rastreabilidade das versões do corpus durante as próximas etapas do projeto.
+
+
+
