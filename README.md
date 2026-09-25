@@ -78,42 +78,42 @@ Para uma descrição mais detalhada, consulte:
 
 ---
 
-## 4. Estado atual
-
-Atualmente, o repositório possui:
-
+## 4. Atualmente, o repositório possui implementações para:
 - coleta e versionamento do corpus;
-- ingestão inicial;
+- corpus v3 com inventário e hashes SHA-256;
+- ingestão e preparação de documentos;
 - geração de embeddings;
 - índice vetorial FAISS;
 - índice lexical BM25;
 - persistência dos índices;
 - roteamento adaptativo;
-- extração inicial de filtros;
-- regras iniciais de recusa;
+- extração de filtros;
+- regras de recusa;
 - recuperação híbrida;
 - fusão RRF;
-- logging estruturado;
-- interface inicial desenvolvida com Gradio;
+- geração de respostas e guardrails;
+- schemas compartilhados;
+- logging estruturado e observabilidade;
+- interface desenvolvida com Gradio;
+- testes unitários, de contrato e de integração;
 - documentação da arquitetura e do pipeline.
 
-Ainda estão em desenvolvimento ou integração:
+Ainda estão em consolidação e validação:
 
-- geração final das respostas;
-- schemas compartilhados;
-- guardrails completos;
 - reranqueamento por cross-encoder;
-- testes unitários, de contrato e de integração;
-- avaliação do pipeline;
-- integração completa das quatro bases.
+- integração ponta a ponta das quatro naturezas de evidência;
+- execução da suíte completa de testes no ambiente com todas as dependências e artefatos;
+- avaliação sistemática do pipeline e ablações;
+- validação final da geração, guardrails e comportamento cross-source.
 
-A interface pode funcionar provisoriamente apenas com roteamento e recuperação enquanto o módulo de geração estiver em desenvolvimento.
+A existência de um módulo no repositório não significa, isoladamente, que sua integração ponta a ponta já tenha sido validada. O projeto diferencia implementação, integração e validação experimental.
+
 
 ---
 
 ## 5. Estrutura do repositório
 
-```text
+├── testes/                  # Testes e fixtures
 ├── acompanhamento/          # Relatos individuais dos integrantes
 ├── app/                     # Interface e adaptador do pipeline
 ├── data/
@@ -235,7 +235,7 @@ python -m src.fetch_corpus update --manifest corpus_manifest.yaml --sources /cam
 Geração ou atualização do inventário:
 
 ```bash
-python -m src.fetch_corpus inventory --version v2
+python -m src.fetch_corpus inventory --version v3
 ```
 
 A pasta `data/raw/` não é versionada no Git.
