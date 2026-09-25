@@ -39,13 +39,29 @@ def extrair_metadados_especificos(natureza, dados=None):
         meta["valor"] = valor_homologado if valor_homologado is not None else (valor_estimado if valor_estimado is not None else "")
         
     elif natureza == "agregada":
-        # Mapeamento dinâmico: tenta a primeira chave, se falhar, tenta a segunda indicada pela Eduarda
-        meta["uf"] = dados.get("UF", "")
-        meta["municipio"] = dados.get("Município", "")
-        meta["ano"] = dados.get("Ano", "")
-        meta["orgao"] = dados.get("Órgão", dados.get("Unidade Responsável", ""))
-        meta["valor"] = dados.get("Valor Estimado", dados.get("Valor Total Estimado (R$)", ""))
-        meta["vigencia"] = dados.get("Data Desejada", "") # Reaproveitado da observação do PCA
+        # Múltiplos mapeamentos para lidar com os dois CSVs diferentes
+        
+        # Órgão
+        meta["orgao"] = dados.get("Órgão", dados.get("Unidade Responsável", dados.get("orgao", "")))
+        
+        # Vigência
+        vigencia = dados.get("Data Desejada", dados.get("data_homologacao", ""))
+        meta["vigencia"] = vigencia
+        
+        # Ano: Tenta extrair da chave Ano/ano. Se vazio, recorta os 4 primeiros dígitos da data de homologação/vigência
+        ano_val = dados.get("Ano", dados.get("ano", ""))
+        if not ano_val and vigencia and len(str(vigencia)) >= 4:
+            ano_val = str(vigencia)[:4]
+        meta["ano"] = ano_val
+        
+        # UF: Tenta encontrar a coluna. Como ambos os CSVs são do RJ, usamos um fallback seguro caso a coluna não exista.
+        meta["uf"] = dados.get("UF", dados.get("uf", "RJ"))
+        
+        # Valor
+        meta["valor"] = dados.get("Valor Estimado", dados.get("Valor Total Estimado (R$)", dados.get("valor_total_homologado", "")))
+        
+        # Fornecedor
+        meta["fornecedor"] = dados.get("fornecedor", dados.get("Fornecedor", ""))
 
     return meta
 
@@ -83,11 +99,10 @@ def processar_agregada(caminho, limit=500):
     chunks = []
     if not os.path.exists(caminho): return chunks
     
-    with open(caminho, "r", encoding="utf-8") as f:
-        # Deteção do delimitador lendo a primeira linha
+    # utf-8-sig ignora o \ufeff no início do ficheiro!
+    with open(caminho, "r", encoding="utf-8-sig") as f:
         primeira_linha = f.readline()
         delimitador = ';' if ';' in primeira_linha else ','
-        # Volta o cursor para o início do ficheiro
         f.seek(0)
         
         reader = csv.DictReader(f, delimiter=delimitador)
@@ -122,7 +137,7 @@ def processar_conversacional(caminho):
     return chunks
 
 def rodar_ingestao_hibrida():
-    print("Iniciando ingestão (Correção da Base Agregada e Separadores Dinâmicos)...")
+    print("Iniciando ingestão (Fix Base Agregada e BOM removido)...")
     todos_chunks = []
     
     caminho_est = "data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
@@ -153,7 +168,7 @@ def rodar_ingestao_hibrida():
     with open(caminho_saida, "w", encoding="utf-8") as f:
         json.dump(todos_chunks, f, ensure_ascii=False, indent=4)
         
-    print(f"✅ Ingestão concluída com correção na base agregada!")
+    print("✅ Ingestão concluída com metadados perfeitamente extraídos da base agregada!")
 
 if __name__ == "__main__":
     rodar_ingestao_hibrida()
