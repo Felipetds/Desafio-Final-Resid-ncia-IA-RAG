@@ -1,6 +1,7 @@
 import os
 import json
 import csv
+import re
 from bs4 import BeautifulSoup
 import pypdf
 
@@ -14,6 +15,29 @@ def criar_chunk_base(texto, source_file, doc_type, chunk_idx, base_id, sensitivi
     }
     metadata.update(extras)
     return {"text": texto, "metadata": metadata}
+
+def extrair_ano(data_str):
+    if not data_str:
+        return ""
+    
+    data_str = str(data_str).strip()
+    
+    # Valida formato AAAA-MM-DD (ex: 2026-09-18)
+    match_iso = re.search(r'^(\d{4})-\d{2}-\d{2}', data_str)
+    if match_iso:
+        return match_iso.group(1)
+        
+    # Valida formato DD/MM/AAAA (ex: 01/01/2026)
+    match_br = re.search(r'\d{2}/\d{2}/(\d{4})', data_str)
+    if match_br:
+        return match_br.group(1)
+        
+    # Valida se o ano já foi fornecido diretamente como número/texto exato (ex: 2026)
+    match_year = re.search(r'^(\d{4})$', data_str)
+    if match_year:
+        return match_year.group(1)
+        
+    return ""
 
 def extrair_metadados_especificos(natureza, dados=None):
     meta = {
@@ -43,23 +67,34 @@ def extrair_metadados_especificos(natureza, dados=None):
         vigencia = dados.get("Data Desejada", dados.get("data_homologacao", ""))
         meta["vigencia"] = vigencia
         
-        ano_val = str(dados.get("Ano", dados.get("ano", "")))
-        if not ano_val and vigencia and len(str(vigencia)) >= 4:
-            ano_val = str(vigencia)[:4]
+        # Extração de ano usando a nova validação por Regex
+        ano_bruto = str(dados.get("Ano", dados.get("ano", "")))
+        ano_val = extrair_ano(ano_bruto)
+        
+        if not ano_val and vigencia:
+            ano_val = extrair_ano(vigencia)
             
-        # NOVA REGRA: Extrair o ano do ID (ex: "XXXX/2026") se ainda estiver vazio
+        # Extrair o ano do ID (ex: "XXXX/2026") se ainda estiver vazio, passando pelo filtro Regex
         if not ano_val:
             for v in dados.values():
                 if isinstance(v, str) and "/202" in v:
                     partes = v.split("/")
-                    if len(partes) > 1 and len(partes[-1]) >= 4 and partes[-1][:4].isdigit():
-                        ano_val = partes[-1][:4]
-                        break
-                        
+                    if len(partes) > 1:
+                        ano_candidato = extrair_ano(partes[-1][:4])
+                        if ano_candidato:
+                            ano_val = ano_candidato
+                            break
+                            
         meta["ano"] = ano_val
         meta["uf"] = dados.get("UF", dados.get("uf", "RJ"))
         meta["valor"] = dados.get("Valor Estimado", dados.get("Valor Total Estimado (R$)", dados.get("valor_total_homologado", "")))
         meta["fornecedor"] = dados.get("fornecedor", dados.get("Fornecedor", ""))
+
+    elif natureza == "conversacional":
+        # Atribui UF do Rio de Janeiro caso o nome do ficheiro identifique um órgão de lá
+        if isinstance(dados, str):
+            if "fiocruz" in dados.lower() or "ebserh" in dados.lower():
+                meta["uf"] = "RJ"
 
     return meta
 
@@ -70,7 +105,6 @@ def fatiar_texto(texto, max_chars=2000, overlap=200):
     while start < text_len:
         end = start + max_chars
         bloco = texto[start:end]
-        # Tenta quebrar num espaço em branco para não cortar palavras ao meio
         if end < text_len:
             last_space = bloco.rfind(' ')
             if last_space != -1 and last_space > max_chars // 2:
@@ -135,18 +169,19 @@ def processar_conversacional(caminho):
     if not os.path.exists(caminho): return chunks
     chunk_idx = 1
     
+    nome_arquivo = os.path.basename(caminho)
+    
     if caminho.endswith(".pdf"):
         with open(caminho, "rb") as f:
             reader = pypdf.PdfReader(f)
-            # Lê o PDF página a página e aplica o fatiamento em janelas de 2000 caracteres
             for page_num, page in enumerate(reader.pages, 1):
                 extract = page.extract_text()
                 if extract:
                     blocos = fatiar_texto(extract, max_chars=2000, overlap=200)
                     for bloco in blocos:
-                        extras = extrair_metadados_especificos("conversacional")
-                        extras["pagina"] = page_num # Requisito de observabilidade cumprido!
-                        chunks.append(criar_chunk_base(bloco, os.path.basename(caminho), "ata_reuniao", chunk_idx, "base_conversacional", "restrito", extras))
+                        extras = extrair_metadados_especificos("conversacional", nome_arquivo)
+                        extras["pagina"] = page_num 
+                        chunks.append(criar_chunk_base(bloco, nome_arquivo, "ata_reuniao", chunk_idx, "base_conversacional", "restrito", extras))
                         chunk_idx += 1
                         
     elif caminho.endswith(".txt"):
@@ -154,14 +189,14 @@ def processar_conversacional(caminho):
             texto_completo = f.read()
         blocos = fatiar_texto(texto_completo, max_chars=2000, overlap=200)
         for bloco in blocos:
-            extras = extrair_metadados_especificos("conversacional")
-            chunks.append(criar_chunk_base(bloco, os.path.basename(caminho), "ata_reuniao", chunk_idx, "base_conversacional", "restrito", extras))
+            extras = extrair_metadados_especificos("conversacional", nome_arquivo)
+            chunks.append(criar_chunk_base(bloco, nome_arquivo, "ata_reuniao", chunk_idx, "base_conversacional", "restrito", extras))
             chunk_idx += 1
             
     return chunks
 
 def rodar_ingestao_hibrida():
-    print("Iniciando ingestão (Chunks Conversacionais Seguros e Extração de Ano)...")
+    print("Iniciando ingestão (Chunks Conversacionais Seguros e Extração de Ano por Regex)...")
     todos_chunks = []
     
     caminho_est = "data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
@@ -192,7 +227,7 @@ def rodar_ingestao_hibrida():
     with open(caminho_saida, "w", encoding="utf-8") as f:
         json.dump(todos_chunks, f, ensure_ascii=False, indent=4)
         
-    print(f"✅ Ingestão concluída! Total gerado: {len(todos_chunks)} chunks (o número subiu devido ao fatiamento correto dos PDFs!).")
+    print(f"✅ Ingestão concluída! Total gerado: {len(todos_chunks)} chunks.")
 
 if __name__ == "__main__":
     rodar_ingestao_hibrida()
