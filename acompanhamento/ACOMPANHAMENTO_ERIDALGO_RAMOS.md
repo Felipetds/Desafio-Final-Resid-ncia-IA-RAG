@@ -132,3 +132,11 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * O sistema de cache reaproveitou 2.098 vetores antigos e chamou a API apenas para os 27 novos recortes de PDF.
 * Índices reconstruídos e 109 testes da suíte offline aprovados com sucesso.
 """
+
+### Atualização - 29/09/26
+
+**Atividades Realizadas:**
+* Refatoração da extração de ano no `ingest.py`, substituindo recortes de string por validação estrita via Regex (formatos ISO, BR e ano exato).
+* Adicionada injeção de metadado `uf: RJ` nas bases conversacionais com origem conhecida (Fiocruz e Ebserh).
+* Criação e aprovação do teste offline `test_extracao_ano.py` com as asserções mínimas exigidas.
+* **Bloqueio Operacional:** Em conformidade com o planeamento, a regeneração dos *chunks* e índices (`ingest.py` e `index.py`) está em modo de espera, aguardando os commits de integração do resto da equipa.
