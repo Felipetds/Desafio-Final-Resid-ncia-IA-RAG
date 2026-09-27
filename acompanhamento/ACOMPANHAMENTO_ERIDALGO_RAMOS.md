@@ -133,7 +133,7 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * Índices reconstruídos e 109 testes da suíte offline aprovados com sucesso.
 """
 
-### Atualização - 29/09/26
+### Atualização - 28/09/26
 
 **Atividades Realizadas:**
 * Refatoração da extração de ano no `ingest.py`, substituindo recortes de string por validação estrita via Regex (formatos ISO, BR e ano exato).
