@@ -230,3 +230,66 @@ Utilizei uma ferramenta de IA para organizar os casos de teste, interpretar os r
 - Testar consultas relacionadas ao Plano de Contratações Anual.
 - Validar os filtros da base agregada.
 - Executar a recuperação com as quatro bases definitivas.
+
+---
+
+## Encontro 7 — 28/09/2026
+
+### Minha participação
+
+- Atualizei a branch principal e criei branches específicas para as correções de roteamento e recuperação.
+- Reproduzi a consulta conversacional que anteriormente não retornava evidências.
+- Confirmei que a consulta era encaminhada corretamente para a rota `conversacional`, mas recebia indevidamente o filtro `uf: RJ`, mesmo sem mencionar localização.
+- Corrigi o roteador para aplicar a UF somente quando a pergunta mencionar explicitamente `RJ` ou `Rio de Janeiro`.
+- Corrigi também o roteamento de contingência, que anteriormente adicionava `uf: RJ` automaticamente.
+- Criei testes automatizados para validar a remoção de UF inventada e o reconhecimento das formas explícitas da localização.
+- Testei consultas estruturadas com e sem indicação de UF para confirmar a preservação dos filtros corretos.
+- Após a correção do filtro geográfico, investiguei por que a consulta conversacional ainda retornava zero evidências.
+- Confirmei que os 31 chunks conversacionais estavam presentes nos chunks e nos índices.
+- Identifiquei que os candidatos eram eliminados pela política de sensibilidade, pois os documentos conversacionais estavam classificados como `restrito`.
+- Ajustei a recuperação para permitir conteúdos restritos somente quando pertencem à base conversacional.
+- Mantive bloqueados os conteúdos restritos das demais naturezas.
+- Implementei a sanitização dos textos conversacionais antes de sua exposição como evidência.
+- Criei testes para validar a ocultação de e-mail, telefone e CPF.
+- Restaurei o corpus v2, regenerei os 2.125 chunks e carreguei os índices definitivos salvos no Google Drive.
+- Validei a correspondência entre chunks, vetores FAISS, documentos BM25 e IDs persistidos.
+- Executei uma consulta conversacional completa com busca densa, BM25 e fusão RRF.
+
+### Resultados obtidos
+
+- A consulta conversacional sem localização passou a retornar `uf: null`.
+- Consultas que mencionam `RJ` ou `Rio de Janeiro` continuam retornando `uf: RJ`.
+- A consulta estruturada com ano e sem localização preservou `ano: 2026` e retornou `uf: null`.
+- Os quatro testes do filtro de UF foram aprovados.
+- A suíte offline apresentou 118 testes aprovados após a inclusão dos testes de sanitização.
+- Os 2.125 chunks, vetores FAISS, documentos BM25 e IDs persistidos apresentaram quantidades consistentes.
+- A consulta conversacional recuperou 31 candidatos na busca densa e 31 candidatos no BM25.
+- A fusão RRF reuniu 31 candidatos e retornou três evidências.
+- Todas as evidências retornadas pertenciam à natureza `conversacional`.
+- As evidências foram identificadas como `restrito_sanitizado`.
+- A validação confirmou que os padrões testados de e-mail e CPF não foram expostos nos textos retornados.
+
+### Dificuldades encontradas
+
+A primeira dificuldade foi identificar que o filtro geográfico não era validado da mesma forma que os demais filtros. Além disso, o roteamento de contingência utilizava `RJ` como valor fixo.
+
+Depois da correção do roteamento, a consulta ainda não retornava evidências. A investigação mostrou que os chunks conversacionais estavam presentes nos índices, mas eram eliminados pela regra que permitia apenas conteúdos classificados como públicos.
+
+Também foi necessário restaurar o corpus e os índices depois que os artefatos locais foram perdidos com a reinicialização do ambiente do Google Colab.
+
+### Apoio de IA
+
+Utilizei uma ferramenta de IA para apoiar a reprodução dos problemas, a inspeção da validação dos filtros, a identificação da etapa que eliminava os candidatos conversacionais e a elaboração dos testes automatizados. Todas as alterações foram verificadas por testes específicos, pela suíte offline e por uma consulta real utilizando os índices definitivos.
+
+### Atividades realizadas pela equipe
+
+A equipe corrigiu os metadados conversacionais, o preenchimento da UF, a proteção contra ingestão vazia e o roteamento de consultas sem localização explícita. Com os artefatos definitivos restaurados, também foi possível validar a recuperação conversacional e a sanitização das evidências restritas.
+
+### Próximas atividades
+
+- Integrar a correção da recuperação por meio de Pull Request.
+- Executar novamente os testes de integração após o merge.
+- Validar a consulta conversacional pela interface Gradio.
+- Confirmar que a resposta final utiliza somente evidências sanitizadas.
+- Revalidar as quatro rotas e a recusa após a integração.
+
