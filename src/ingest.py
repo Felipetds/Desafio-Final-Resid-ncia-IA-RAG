@@ -67,14 +67,14 @@ def extrair_metadados_especificos(natureza, dados=None):
         vigencia = dados.get("Data Desejada", dados.get("data_homologacao", ""))
         meta["vigencia"] = vigencia
         
-        # Extração de ano usando a nova validação por Regex
+        # Extração de ano usando a validação por Regex
         ano_bruto = str(dados.get("Ano", dados.get("ano", "")))
         ano_val = extrair_ano(ano_bruto)
         
         if not ano_val and vigencia:
             ano_val = extrair_ano(vigencia)
             
-        # Extrair o ano do ID (ex: "XXXX/2026") se ainda estiver vazio, passando pelo filtro Regex
+        # Extrair o ano do ID se ainda estiver vazio, passando pelo filtro Regex
         if not ano_val:
             for v in dados.values():
                 if isinstance(v, str) and "/202" in v:
@@ -91,7 +91,7 @@ def extrair_metadados_especificos(natureza, dados=None):
         meta["fornecedor"] = dados.get("fornecedor", dados.get("Fornecedor", ""))
 
     elif natureza == "conversacional":
-        # Atribui UF do Rio de Janeiro caso o nome do ficheiro identifique um órgão de lá
+        # Recebe o caminho completo do ficheiro (ex: .../atas/fiocruz/2026/ata.pdf) para encontrar a UF
         if isinstance(dados, str):
             if "fiocruz" in dados.lower() or "ebserh" in dados.lower():
                 meta["uf"] = "RJ"
@@ -179,7 +179,8 @@ def processar_conversacional(caminho):
                 if extract:
                     blocos = fatiar_texto(extract, max_chars=2000, overlap=200)
                     for bloco in blocos:
-                        extras = extrair_metadados_especificos("conversacional", nome_arquivo)
+                        # CORREÇÃO 1: Passa o 'caminho' completo e não apenas o 'nome_arquivo'
+                        extras = extrair_metadados_especificos("conversacional", caminho)
                         extras["pagina"] = page_num 
                         chunks.append(criar_chunk_base(bloco, nome_arquivo, "ata_reuniao", chunk_idx, "base_conversacional", "restrito", extras))
                         chunk_idx += 1
@@ -189,14 +190,15 @@ def processar_conversacional(caminho):
             texto_completo = f.read()
         blocos = fatiar_texto(texto_completo, max_chars=2000, overlap=200)
         for bloco in blocos:
-            extras = extrair_metadados_especificos("conversacional", nome_arquivo)
+            # CORREÇÃO 1: Passa o 'caminho' completo
+            extras = extrair_metadados_especificos("conversacional", caminho)
             chunks.append(criar_chunk_base(bloco, nome_arquivo, "ata_reuniao", chunk_idx, "base_conversacional", "restrito", extras))
             chunk_idx += 1
             
     return chunks
 
 def rodar_ingestao_hibrida():
-    print("Iniciando ingestão (Chunks Conversacionais Seguros e Extração de Ano por Regex)...")
+    print("Iniciando ingestão (Fix: UF conversacional e Trava de Segurança de Chunks Vazios)...")
     todos_chunks = []
     
     caminho_est = "data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
@@ -220,6 +222,11 @@ def rodar_ingestao_hibrida():
     ]
     for c in caminhos_conv:
         todos_chunks.extend(processar_conversacional(c))
+
+    # CORREÇÃO 2: Aborta a operação se os ficheiros não tiverem sido encontrados/processados
+    if not todos_chunks:
+        print("❌ Erro: Nenhum chunk foi gerado! Os ficheiros originais podem estar ausentes ou com o caminho errado. O ficheiro de destino NÃO foi sobrescrito.")
+        return
 
     os.makedirs("data/processed", exist_ok=True)
     caminho_saida = "data/processed/chunks_teste.json"
