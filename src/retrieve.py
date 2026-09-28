@@ -177,6 +177,30 @@ def chunk_atende_rotas(
     return natureza in rotas
 
 
+def _sanitizar_texto_evidencia(
+    texto: str,
+    sensitivity: str,
+) -> tuple[str, str]:
+    """Mascara dados pessoais antes de expor evidências restritas."""
+    sensibilidade = str(sensitivity or "publico").lower().strip()
+
+    if sensibilidade in {"publico", "público"}:
+        return texto, "publico"
+
+    if sensibilidade == "restrito":
+        try:
+            from .generate import mascarar_dados_pessoais
+        except ImportError:
+            from generate import mascarar_dados_pessoais
+
+        return (
+            mascarar_dados_pessoais(texto),
+            "restrito_sanitizado",
+        )
+
+    return "", "bloqueado"
+
+
 def chunk_atende_filtros(
     chunk: Dict[str, Any],
     filtros: Dict[str, Any],
@@ -188,7 +212,13 @@ def chunk_atende_filtros(
     ).lower()
 
     if sensitivity not in {"publico", "público"}:
-        return False
+        restrito_conversacional = (
+            sensitivity == "restrito"
+            and identificar_natureza(chunk) == "conversacional"
+        )
+
+        if not restrito_conversacional:
+            return False
 
     uf = filtros.get("uf")
 
@@ -532,24 +562,33 @@ def recuperar_evidencias(
         for item in ranking_rrf[:top_k]:
             chunk = chunks_por_id[item["chunk_id"]]
             metadata = chunk.get("metadata", {})
+            sensibilidade_original = metadata.get(
+                "sensitivity",
+                "publico",
+            )
+            texto_seguro, sensibilidade_saida = (
+                _sanitizar_texto_evidencia(
+                    chunk.get("text", ""),
+                    sensibilidade_original,
+                )
+            )
+            metadata_segura = dict(metadata)
+            metadata_segura["sensitivity"] = sensibilidade_saida
 
             evidencias.append(
                 {
                     "chunk_id": item["chunk_id"],
-                    "text": chunk.get("text", ""),
+                    "text": texto_seguro,
                     "rrf_score": round(item["rrf_score"], 6),
                     "retrieval_sources": item["retrieval_sources"],
                     "dense_distance": item.get("dense_distance"),
                     "bm25_score": item.get("bm25_score"),
                     "source_file": metadata.get("source_file"),
                     "doc_type": metadata.get("doc_type"),
-                    "sensitivity": metadata.get(
-                        "sensitivity",
-                        "publico",
-                    ),
+                    "sensitivity": sensibilidade_saida,
                     "base_id": metadata.get("base_id"),
                     "natureza": identificar_natureza(chunk),
-                    "metadata": metadata,
+                    "metadata": metadata_segura,
                 }
             )
 
