@@ -237,3 +237,59 @@ A equipe avançou na coleta e validação do corpus, no preenchimento dos metada
 - Executar os testes de integração com os artefatos definitivos.
 - Validar consultas normais, agregadas, conversacionais, normativas e de recusa na interface.
 - Preparar uma atualização objetiva do andamento do projeto para o próximo encontro com o professor.
+
+---
+
+## Encontro 7 — 28/09/2026
+
+### Minha participação
+
+- Atualizei a documentação geral do projeto e disponibilizei um arquivo de status para facilitar o acompanhamento das entregas e a apresentação do andamento ao professor.
+- Acompanhei a correção do roteamento realizada por Luiz, verificando o comportamento do filtro de UF em perguntas com e sem localização explícita.
+- Confirmei que perguntas sem localização passaram a retornar `uf: null`, enquanto consultas com `RJ` ou `Rio de Janeiro` mantiveram `uf: RJ`.
+- Acompanhei a criação de testes específicos para o filtro geográfico e validei a execução de 114 testes offline.
+- Validei as atualizações realizadas por Eridalgo na ingestão, incluindo a extração de ano, o preenchimento da UF conversacional e a proteção contra a geração de arquivos de chunks vazios.
+- Restaurei o corpus bruto no ambiente do Google Colab e executei novamente a ingestão.
+- Confirmei a geração de 2.125 chunks, com 2.125 IDs únicos e nenhum texto vazio.
+- Verifiquei que os 519 chunks agregados não apresentaram anos em formato inválido.
+- Testei o roteamento de consultas estruturadas, conversacionais, normativas, agregadas e de recusa, confirmando as rotas esperadas nos cinco casos.
+- Restaurei os índices persistidos e executei a interface Gradio com consultas das quatro bases e uma consulta sensível.
+- Confirmei o funcionamento das respostas estruturada, normativa e agregada e da recusa por guardrails.
+- Investiguei a ausência de evidências na consulta conversacional e identifiquei o ponto exato em que os resultados eram eliminados.
+- Confirmei que a busca densa e o BM25 localizam os 31 chunks conversacionais, mas a filtragem remove todos porque estão classificados com sensibilidade `restrito`.
+- Registrei a necessidade de revisar a política de sensibilidade antes de liberar evidências conversacionais, evitando a exposição de nomes, telefones, e-mails ou outros dados pessoais.
+
+### Resultados obtidos
+
+- A documentação de status do projeto foi integrada à branch principal.
+- O filtro geográfico deixou de ser aplicado quando a pergunta não menciona localização.
+- As cinco consultas de validação foram encaminhadas para as rotas esperadas.
+- A ingestão gerou 2.125 chunks válidos.
+- Os 114 testes offline foram aprovados.
+- A interface executou consultas estruturadas, normativas, agregadas e de recusa.
+- A causa da ausência de evidências conversacionais foi identificada na regra de sensibilidade, e não no roteamento, nos índices ou nos métodos Dense e BM25.
+
+### Dificuldades encontradas
+
+- O ambiente do Colab voltou para uma versão anterior da branch `main` após o reinício da sessão, exigindo nova atualização do repositório.
+- O corpus bruto e os índices precisaram ser restaurados do Google Drive.
+- Algumas consultas apresentaram demora elevada devido ao servidor dos modelos.
+- A base conversacional possui documentos marcados como restritos, e a regra atual bloqueia todos antes da fusão RRF.
+- A liberação desses documentos exige mascaramento ou sanitização das evidências para evitar exposição de dados pessoais.
+
+### Apoio de IA
+
+Utilizei ferramentas de IA para organizar os procedimentos de validação, interpretar os resultados do roteamento, investigar a recuperação conversacional e localizar a etapa responsável pela eliminação das evidências. Todas as conclusões foram verificadas por meio da execução do código, inspeção dos metadados, análise das funções e testes automatizados.
+
+### Atividades realizadas pela equipe
+
+Luiz corrigiu o filtro de UF no roteador e adicionou testes automatizados. Eridalgo atualizou a ingestão para preencher metadados conversacionais e impedir a sobrescrita por uma saída vazia. A equipe também avançou na documentação, nos testes offline e na validação integrada da interface.
+
+### Próximas atividades
+
+- Revisar a política de sensibilidade da base conversacional.
+- Implementar mascaramento de dados pessoais nos textos e evidências.
+- Permitir a recuperação apenas de conteúdo conversacional sanitizado.
+- Repetir a busca densa, o BM25 e a fusão RRF após a correção.
+- Validar novamente a consulta conversacional na interface.
+- Executar a suíte de integração após a estabilização das quatro rotas.
