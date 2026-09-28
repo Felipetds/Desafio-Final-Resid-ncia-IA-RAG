@@ -222,5 +222,74 @@
 * Acompanhar os testes de recuperação, geração e integração das quatro naturezas de evidência.
 * Preservar a rastreabilidade das versões do corpus durante as próximas etapas do projeto.
 
+## Encontro 7 — 28/09/2026
 
+### Minha contribuição
+
+#### Coleta e validação da API do PNCP
+
+- Dei continuidade às atividades relacionadas à coleta e ao versionamento do corpus do Cenário 1 — Contratações Públicas do Estado do Rio de Janeiro.
+- Realizei uma nova tentativa de reconstrução online da base estruturada do PNCP em ambiente isolado, sem alterar os corpora v2 e v3.
+- A coleta foi concluída com sucesso, com 28 páginas processadas e 1.358 registros.
+- Confirmei que os checkpoints das páginas foram persistidos durante a execução.
+
+#### Validação do mecanismo `--retomar`
+
+- Preparei um teste controlado de interrupção da coleta utilizando checkpoints reais.
+- Mantive apenas `configuracao.json` e os checkpoints das páginas 1, 2 e 3, sem o arquivo JSON final.
+- Executei novamente a coleta utilizando a opção `--retomar`.
+- O sistema recuperou corretamente as páginas 1, 2 e 3 dos checkpoints existentes e continuou a consulta ao PNCP a partir da página 4.
+- A retomada chegou até a página 28 e produziu novamente 1.358 registros.
+- A comparação entre a coleta normal e a coleta retomada apresentou a mesma quantidade de registros e igualdade do conteúdo JSON.
+- Os arquivos finais apresentaram hashes SHA-256 binários diferentes, apesar de possuírem o mesmo conteúdo JSON e o mesmo tamanho. Essa diferença não foi utilizada para alterar o corpus v3.
+
+#### Proteção contra sobrescrita
+
+- Também validei a proteção contra sobrescrita do arquivo final.
+- Ao tentar utilizar `--retomar` quando o JSON final já existia, a execução foi bloqueada com `FileExistsError`.
+- Os testes foram realizados exclusivamente em diretórios isolados e não sobrescreveram os snapshots v2 ou v3.
+
+#### Auditoria do corpus v3
+
+- Realizei a auditoria de consistência entre `corpus_manifest.yaml`, `data/inventory/v3.json` e `data/inventory/DIFF_v2_v3.md`.
+- Confirmei que o `scenario_id` está definido como `contratacoes-rj` e a versão como `v3` tanto no manifesto quanto no inventário.
+- Confirmei a presença das mesmas cinco bases no manifesto e no inventário.
+- O inventário v3 registra 8 arquivos, 18.797.136 bytes e 0 falhas.
+- Os caminhos dos 8 arquivos declarados no manifesto foram encontrados corretamente no inventário.
+- Os hashes SHA-256 declarados no `corpus_manifest.yaml` coincidem com os hashes registrados no `v3.json`.
+- A comparação automática entre `v2.json` e `v3.json` confirmou o conteúdo do `DIFF_v2_v3.md`: 0 arquivos adicionados, 0 removidos, 1 alterado e 7 idênticos.
+- O único arquivo alterado entre v2 e v3 corresponde à base estruturada do PNCP.
+
+### Uso de IA
+
+Utilizei IA como apoio para revisar os procedimentos de teste, organizar a validação do mecanismo de retomada, preparar os comandos executados no ambiente isolado e auxiliar na auditoria de consistência entre o manifesto, os inventários e o arquivo de diferenças entre as versões.
+
+As execuções e os resultados foram conferidos antes de considerar as validações concluídas.
+
+### Resultados
+
+- Coleta online do PNCP concluída com 28/28 páginas.
+- 1.358 registros obtidos.
+- Checkpoints por página confirmados.
+- Mecanismo `--retomar` validado em cenário controlado de interrupção.
+- Recuperação das páginas 1 a 3 a partir dos checkpoints confirmada.
+- Continuação da coleta da página 4 até a página 28 confirmada.
+- Proteção contra sobrescrita validada.
+- Corpora v2 e v3 preservados durante os testes.
+- `corpus_manifest.yaml` e `v3.json` consistentes quanto a cenário, versão, bases, caminhos e hashes declarados.
+- `DIFF_v2_v3.md` validado automaticamente: 0 adicionados, 0 removidos, 1 alterado e 7 idênticos.
+- Auditoria lógica e documental da versão v3 concluída sem inconsistências entre os artefatos verificados.
+
+### Dificuldades e limitações
+
+- A disponibilidade da API do PNCP pode variar entre as execuções, exigindo que os testes sejam realizados de maneira controlada.
+- Na comparação entre a coleta normal e a retomada, os dois arquivos apresentaram o mesmo conteúdo JSON e o mesmo tamanho, porém SHA-256 binários diferentes.
+- A auditoria realizada confirmou a consistência dos hashes declarados entre o manifesto e o inventário. Não foi realizado o recálculo físico dos hashes dos oito arquivos brutos da v3 neste ambiente.
+
+### Próximos passos
+
+- Manter a v2 preservada como snapshot anterior e a v3 como versão atual documentada do corpus.
+- Evitar novas alterações no corpus congelado sem necessidade de uma nova versão.
+- Disponibilizar a saída da coleta para continuidade das etapas de ingestão e indexação, sob responsabilidade do integrante responsável por essa frente.
+- Acompanhar a integração da coleta com as demais etapas do pipeline Adaptive RAG.
 
