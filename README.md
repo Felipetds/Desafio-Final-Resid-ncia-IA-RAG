@@ -575,3 +575,7 @@ A responsabilidade principal por um módulo não impede a colaboração dos dema
 ## 19. Equipe
 
 Projeto desenvolvido pelo Grupo 1 no cenário de Contratações Públicas do Estado do Rio de Janeiro.
+
+## Status do desenvolvimento
+
+Consulte o [Status atual do projeto](docs/STATUS_DO_PROJETO.md) para visualizar a arquitetura, os módulos implementados, os dados processados, os testes realizados, as limitações conhecidas e as próximas atividades.
