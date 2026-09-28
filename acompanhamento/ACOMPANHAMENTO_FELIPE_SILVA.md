@@ -144,3 +144,32 @@ Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar
 * Criar e executar um benchmark para avaliar o RAG, utilizando um conjunto de perguntas previamente definidas. 
 * Verificar se o sistema seleciona a rota correta, recupera evidências relevantes, gera respostas fundamentadas nas fontes e aplica corretamente recusas e guardrails.
 * Registrar os resultados e métricas para identificar possíveis pontos de melhoria no pipeline.
+
+## Encontro 7 — 28/09/2026
+
+### Minha contribuição
+
+* Baixei e instalei as bibliotecas beautifulsoup4 e pypdf.
+
+* Executei os testes offline, com 118 testes aprovados.
+
+* Verifiquei os testes já existentes para extração do ano e não inferência indevida de UF, evitando duplicação de testes e adicionei testes de integração para recuperação da base conversacional e para a pergunta multirrota normativa + estruturada.
+
+* Validei novamente as regras de recusa: 7 testes passaram, mantendo consultas recusadas sem evidências. Executei os testes de integração: 8 passaram e 1 falhou. O teste multirrota passou; a falha ocorreu na recuperação conversacional, que retornou zero evidências. (Preciso corrigir)
+
+* Não consegui avançar mais por causa de problemas de conexão, estou tentando resolver o mais rápido possível.
+
+### Uso de IA
+
+* Utilizei apenas pra estruturar as atividades que executei hoje de acordo com as demandas enviadar pela gerente Maria Eduarda.
+
+### Resumo da equipe
+
+* Estamos avançando bem e começando a corrigir detalhes. Praticamente todas as atividades ja estão bem adiantadas. Só precisamos resolver alguns detalhes que apareceram como as consultas feitas na API.
+
+### Próximos passos
+
+* Corrigir a falha na recuperação conversacional. 
+* Criar e executar um benchmark para avaliar o RAG, utilizando um conjunto de perguntas previamente definidas. 
+* Verificar se o sistema seleciona a rota correta, recupera evidências relevantes, gera respostas fundamentadas nas fontes e aplica corretamente recusas e guardrails.
+* Registrar os resultados e métricas para identificar possíveis pontos de melhoria no pipeline.
