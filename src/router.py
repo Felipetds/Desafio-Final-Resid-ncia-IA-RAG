@@ -274,6 +274,16 @@ def _extrair_filtros_monetarios(
     }
 
 
+def _extrair_uf_explicita(pergunta: str) -> str | None:
+    """Retorna RJ somente quando a localização aparece na pergunta."""
+    texto = _normalizar_texto_para_comparacao(pergunta)
+
+    if re.search(r"\brj\b", texto) or "rio de janeiro" in texto:
+        return "RJ"
+
+    return None
+
+
 def _validar_filtros_contra_pergunta(
     pergunta: str,
     filtros: Dict[str, Any] | None,
@@ -306,7 +316,8 @@ def _validar_filtros_contra_pergunta(
     filtros["valor_minimo"] = limites["valor_minimo"]
     filtros["valor_maximo"] = limites["valor_maximo"]
 
-    filtros.setdefault("uf", None)
+    # A UF só pode ser aplicada quando estiver explícita na pergunta.
+    filtros["uf"] = _extrair_uf_explicita(pergunta)
     filtros.setdefault("ano", None)
     filtros.setdefault("modalidade", None)
     filtros.setdefault("municipio", None)
@@ -460,7 +471,7 @@ def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
     return {
         "routes": rotas,
         "filters": {
-            "uf": "RJ",
+            "uf": _extrair_uf_explicita(pergunta),
             "ano": int(ano_encontrado.group(1)) if ano_encontrado else None,
             "valor_minimo": valor_minimo,
             "valor_maximo": None,
