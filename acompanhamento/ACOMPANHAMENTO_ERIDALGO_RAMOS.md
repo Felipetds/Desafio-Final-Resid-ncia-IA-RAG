@@ -140,3 +140,9 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * Adicionada injeção de metadado `uf: RJ` nas bases conversacionais com origem conhecida (Fiocruz e Ebserh).
 * Criação e aprovação do teste offline `test_extracao_ano.py` com as asserções mínimas exigidas.
 * **Bloqueio Operacional:** Em conformidade com o planeamento, a regeneração dos *chunks* e índices (`ingest.py` e `index.py`) está em modo de espera, aguardando os commits de integração do resto da equipa.
+
+### Atualização (30/09/2026) - Estrutura Configurável de Rerank
+* Criado o módulo `src/rerank.py` preparado para receber perguntas e a lista de candidatos do RRF.
+* O sistema possui configuração de `fallback` para manter a ordenação original e suporta variáveis como URL, autenticação e *timeout*.
+* O módulo `testes/test_rerank.py` foi implementado e 4 testes simulados (lista vazia, top_k, timeout e manutenção de metadados) passaram com sucesso.
+* **Nota de dependência:** A configuração `RERANK_ENABLED` está definida como `false` por defeito. A integração real no pipeline está paralisada, pois a conexão depende exclusivamente da disponibilização do endpoint pelo professor.
