@@ -587,3 +587,51 @@ def test_fallback_possui_rota_valida():
         rota in rotas_validas
         for rota in resultado["routes"]
     )
+
+
+def test_fallback_mei_somente_normativa():
+    client = FakeClient(
+        erro=RuntimeError("Falha simulada")
+    )
+
+    resultado = analisar_consulta(
+        "Sou MEI, posso participar de pregão eletrônico?",
+        client=client,
+    )
+
+    assert resultado["router_fallback"] is True
+    assert resultado["routes"] == ["normativa"]
+
+
+def test_fallback_contratacao_somente_estruturada():
+    client = FakeClient(
+        erro=RuntimeError("Falha simulada")
+    )
+
+    resultado = analisar_consulta(
+        "Existe alguma contratação relacionada "
+        "a material de escritório?",
+        client=client,
+    )
+
+    assert resultado["router_fallback"] is True
+    assert resultado["routes"] == ["estruturada"]
+
+
+def test_fallback_cross_source_normativa_estruturada():
+    client = FakeClient(
+        erro=RuntimeError("Falha simulada")
+    )
+
+    resultado = analisar_consulta(
+        "Sou MEI, posso participar de pregão eletrônico? "
+        "Existe alguma contratação relacionada "
+        "a material de escritório?",
+        client=client,
+    )
+
+    assert resultado["router_fallback"] is True
+    assert set(resultado["routes"]) == {
+        "normativa",
+        "estruturada",
+    }

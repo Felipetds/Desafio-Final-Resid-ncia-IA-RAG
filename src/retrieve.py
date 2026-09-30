@@ -430,6 +430,61 @@ def _validar_com_retrieval_result(resultado: Dict[str, Any]) -> Dict[str, Any]:
     return validado.model_dump()
 
 
+
+def selecionar_resultados_multirrota(
+    ranking_rrf: List[Dict[str, Any]],
+    chunks_por_id: Dict[str, Dict[str, Any]],
+    rotas: List[str],
+    top_k: int,
+) -> List[Dict[str, Any]]:
+    """
+    Seleciona resultados do RRF garantindo, quando possível,
+    pelo menos uma evidência de cada rota solicitada.
+
+    Se uma rota não possuir evidências, os espaços restantes
+    são preenchidos seguindo a ordem original do RRF.
+    """
+    if top_k <= 0:
+        return []
+
+    if len(rotas) <= 1:
+        return ranking_rrf[:top_k]
+
+    ids_selecionados = set()
+
+    # Reserva uma evidência por rota, quando disponível.
+    for rota in rotas:
+        if len(ids_selecionados) >= top_k:
+            break
+
+        for item in ranking_rrf:
+            chunk_id = item.get("chunk_id")
+            chunk = chunks_por_id.get(chunk_id, {})
+
+            if (
+                chunk_id not in ids_selecionados
+                and identificar_natureza(chunk) == rota
+            ):
+                ids_selecionados.add(chunk_id)
+                break
+
+    # Completa as vagas respeitando o ranking original.
+    for item in ranking_rrf:
+        if len(ids_selecionados) >= top_k:
+            break
+
+        chunk_id = item.get("chunk_id")
+
+        if chunk_id not in ids_selecionados:
+            ids_selecionados.add(chunk_id)
+
+    # Mantém a ordem original calculada pelo RRF.
+    return [
+        item
+        for item in ranking_rrf
+        if item.get("chunk_id") in ids_selecionados
+    ][:top_k]
+
 def recuperar_evidencias(
     pergunta: str,
     top_k: int = 5,
@@ -557,9 +612,16 @@ def recuperar_evidencias(
             resultados_bm25=resultados_bm25,
         )
 
+        ranking_selecionado = selecionar_resultados_multirrota(
+            ranking_rrf=ranking_rrf,
+            chunks_por_id=chunks_por_id,
+            rotas=rotas,
+            top_k=top_k,
+        )
+
         evidencias = []
 
-        for item in ranking_rrf[:top_k]:
+        for item in ranking_selecionado:
             chunk = chunks_por_id[item["chunk_id"]]
             metadata = chunk.get("metadata", {})
             sensibilidade_original = metadata.get(

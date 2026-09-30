@@ -391,11 +391,15 @@ def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
         "decreto",
         "norma",
         "pode participar",
+        "posso participar",
         "permitido",
         "proibido",
         "obrigatório",
         "obrigatorio",
         "regra",
+        "requisito",
+        "requisitos",
+        "mei",
         "vigente",
     ]
 
@@ -411,6 +415,11 @@ def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
 
     termos_estruturados = [
         "contrato",
+        "contratos",
+        "contratação",
+        "contratacao",
+        "contratações",
+        "contratacoes",
         "fornecedor",
         "cnpj",
         "empresa",
@@ -421,8 +430,6 @@ def _roteamento_fallback(pergunta: str) -> Dict[str, Any]:
         "valor",
         "licitação",
         "licitacao",
-        "pregão",
-        "pregao",
     ]
 
     if any(termo in texto for termo in termos_agregados):
