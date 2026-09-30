@@ -173,3 +173,36 @@ Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar
 * Criar e executar um benchmark para avaliar o RAG, utilizando um conjunto de perguntas previamente definidas. 
 * Verificar se o sistema seleciona a rota correta, recupera evidências relevantes, gera respostas fundamentadas nas fontes e aplica corretamente recusas e guardrails.
 * Registrar os resultados e métricas para identificar possíveis pontos de melhoria no pipeline.
+
+## Encontro 8 — 30/09/2026
+
+### Minha contribuição
+
+* Executei os 9 testes de integração, incluindo recuperação conversacional e consulta multirrota, com 9 testes aprovados.
+
+* Analisei os logs do pipeline, verificando as etapas de roteamento, recuperação Dense, BM25, fusão RRF e geração.
+
+* Analisei o retrieve.py para iniciar minha atividade de observabilidade da recuperação. Identifiquei que os eventos retrieval_denso e retrieval_bm25 já são registrados separadamente, mas ainda precisam ser complementados com informações como rota/base e IDs dos primeiros resultados. Já iniciei a inclusão das outras informações, devo terminar no próximo encontro.
+
+### Uso de IA
+
+* Utilizei apenas pra estruturar as atividades que foram executadas hoje de acordo com as demandas enviadar pela gerente Maria Eduarda.
+
+### Resumo da equipe
+
+* Testes de integração: executei 9 testes, e todos foram aprovados, incluindo os cenários de recuperação conversacional e multirrota.
+
+* Suíte completa: executei todos os testes do projeto e obtive 139 testes aprovados, sem falhas, em aproximadamente 5 minutos.
+
+* Esses resultados indicam que o pipeline está funcionando de forma consistente e que as alterações atuais não causaram regressões nos testes existentes.
+
+### Próximos passos
+
+* Verificar se os logs passam a registrar rota/base, quantidade de candidatos e IDs dos primeiros resultados, sem expor o conteúdo das evidências.
+
+* Implementar os testes de observabilidade em teste_retrieve.py, cobrindo os eventos Dense/BM25, campos obrigatórios, consistência do run_id, busca sem resultados e falha controlada.
+
+* Executar novamente os testes específicos e, depois, a suíte completa, comparando com o baseline atual de 139 testes aprovados.
+
+* Analisar os novos logs e atualizar o arquivo de acompanhamento com os resultados obtidos.
+
