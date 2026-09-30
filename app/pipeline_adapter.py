@@ -1,5 +1,8 @@
+import os
 import time
-from typing import Any, Dict, List
+from typing import Any, Callable, Dict, List
+
+import gradio as gr
 
 from src.generate import GENERATION_MODEL, gerar_resposta
 from src.obs import (
@@ -10,6 +13,12 @@ from src.obs import (
 )
 from src.retrieve import recuperar_evidencias
 from src.schema import RAGResponse
+
+
+ProgressCallback = Callable[
+    [float, str],
+    None,
+]
 
 
 def _converter_dict(valor: Any) -> Dict[str, Any]:
@@ -26,7 +35,8 @@ def _converter_dict(valor: Any) -> Dict[str, Any]:
         return valor.dict()
 
     raise TypeError(
-        f"Não foi possível converter {type(valor).__name__} para dicionário."
+        f"Não foi possível converter "
+        f"{type(valor).__name__} para dicionário."
     )
 
 
@@ -38,14 +48,19 @@ def _formatar_evidencias(
     """
     evidencias_formatadas = []
 
-    for posicao, evidencia in enumerate(evidencias, start=1):
+    for posicao, evidencia in enumerate(
+        evidencias,
+        start=1,
+    ):
         evidencias_formatadas.append(
             {
                 "posição": posicao,
                 "chunk_id": evidencia.get("chunk_id"),
                 "trecho": evidencia.get("text", ""),
                 "fonte": evidencia.get("source_file"),
-                "tipo_documento": evidencia.get("doc_type"),
+                "tipo_documento": evidencia.get(
+                    "doc_type"
+                ),
                 "base": evidencia.get("base_id"),
                 "natureza": evidencia.get("natureza"),
                 "score_rrf": evidencia.get("rrf_score"),
@@ -59,23 +74,78 @@ def _formatar_evidencias(
     return evidencias_formatadas
 
 
+def _obter_fetch_k() -> int:
+    """
+    Retorna uma quantidade segura de candidatos para recuperação.
+
+    O valor pode ser alterado pela variável RAG_FETCH_K, mas fica
+    limitado entre 20 e 200 para evitar consultas exageradamente
+    custosas na interface.
+    """
+    try:
+        valor = int(
+            os.getenv(
+                "RAG_FETCH_K",
+                "50",
+            )
+        )
+    except (TypeError, ValueError):
+        valor = 50
+
+    return max(
+        20,
+        min(valor, 200),
+    )
+
+
+def _notificar_progresso(
+    callback: ProgressCallback | None,
+    percentual: float,
+    descricao: str,
+) -> None:
+    """Executa o callback de progresso quando ele estiver disponível."""
+    if callback is not None:
+        callback(
+            percentual,
+            descricao,
+        )
+
+
 def executar_pipeline(
     pergunta: str,
-    top_k: int = 5,
+    top_k: int = 3,
+    on_progress: ProgressCallback | None = None,
 ) -> Dict[str, Any]:
     """
     Executa recuperação, geração, validação e observabilidade.
     """
-    pergunta = pergunta.strip()
+    pergunta = str(pergunta or "").strip()
+    top_k = max(
+        1,
+        min(int(top_k), 5),
+    )
+    fetch_k = _obter_fetch_k()
 
     if not pergunta:
         raise ValueError(
             "Digite uma pergunta antes de executar a consulta."
         )
 
+    _notificar_progresso(
+        on_progress,
+        0.05,
+        "Validando a pergunta...",
+    )
+
     run_id = novo_run_id()
     query_id_temporario = novo_query_id()
     inicio_pipeline = time.perf_counter()
+
+    _notificar_progresso(
+        on_progress,
+        0.15,
+        "Analisando rota, filtros e índices...",
+    )
 
     # Recuperação
     inicio_recuperacao = time.perf_counter()
@@ -83,7 +153,8 @@ def executar_pipeline(
     try:
         recuperacao = recuperar_evidencias(
             pergunta=pergunta,
-            top_k=int(top_k),
+            top_k=top_k,
+            fetch_k=fetch_k,
             run_id=run_id,
         )
 
@@ -102,9 +173,15 @@ def executar_pipeline(
             ) * 1000,
             input_data=pergunta,
             output_data={
-                "rotas": recuperacao.get("routes", []),
+                "rotas": recuperacao.get(
+                    "routes",
+                    [],
+                ),
                 "quantidade_evidencias": len(
-                    recuperacao.get("evidences", [])
+                    recuperacao.get(
+                        "evidences",
+                        [],
+                    )
                 ),
                 "recusa": recuperacao.get(
                     "is_refusal",
@@ -114,8 +191,12 @@ def executar_pipeline(
             tokens=None,
             modelo=None,
             extra={
-                "filtros": recuperacao.get("filters", {}),
-                "top_k": int(top_k),
+                "filtros": recuperacao.get(
+                    "filters",
+                    {},
+                ),
+                "top_k": top_k,
+                "fetch_k": fetch_k,
                 "resumo": recuperacao.get(
                     "retrieval_summary",
                     {},
@@ -139,9 +220,18 @@ def executar_pipeline(
             },
             tokens=None,
             modelo=None,
-            extra={"top_k": int(top_k)},
+            extra={
+                "top_k": top_k,
+                "fetch_k": fetch_k,
+            },
         )
         raise
+
+    _notificar_progresso(
+        on_progress,
+        0.55,
+        "Evidências recuperadas. Gerando a resposta...",
+    )
 
     # Geração
     with observar_etapa(
@@ -151,12 +241,20 @@ def executar_pipeline(
         input_data={
             "pergunta": pergunta,
             "quantidade_evidencias": len(
-                recuperacao.get("evidences", [])
+                recuperacao.get(
+                    "evidences",
+                    [],
+                )
             ),
         },
         modelo=GENERATION_MODEL,
         extra={
-            "rotas": recuperacao.get("routes", []),
+            "rotas": recuperacao.get(
+                "routes",
+                [],
+            ),
+            "top_k": top_k,
+            "fetch_k": fetch_k,
         },
     ) as observacao:
         resposta_modelo = gerar_resposta(
@@ -175,7 +273,10 @@ def executar_pipeline(
                 "confidence_level"
             ),
             "quantidade_fontes": len(
-                resposta_dict.get("sources_used", [])
+                resposta_dict.get(
+                    "sources_used",
+                    [],
+                )
             ),
             "recusa": resposta_dict.get(
                 "is_refusal",
@@ -187,6 +288,12 @@ def executar_pipeline(
             "tokens",
             {},
         )
+
+    _notificar_progresso(
+        on_progress,
+        0.90,
+        "Validando a resposta e organizando as fontes...",
+    )
 
     # Validação final pelo schema
     with observar_etapa(
@@ -212,7 +319,10 @@ def executar_pipeline(
                 False,
             ),
             "quantidade_fontes": len(
-                resposta_dict.get("sources_used", [])
+                resposta_dict.get(
+                    "sources_used",
+                    [],
+                )
             ),
         }
 
@@ -221,7 +331,16 @@ def executar_pipeline(
         2,
     )
 
-    fontes = resposta_dict.get("sources_used", [])
+    fontes = resposta_dict.get(
+        "sources_used",
+        [],
+    )
+
+    _notificar_progresso(
+        on_progress,
+        1.0,
+        "Consulta concluída.",
+    )
 
     return {
         "answer": resposta_dict["answer"],
@@ -243,29 +362,54 @@ def executar_pipeline(
             "confidence_level",
             "baixa",
         ),
-        "tokens": resposta_dict.get("tokens", {}),
+        "tokens": resposta_dict.get(
+            "tokens",
+            {},
+        ),
         "modelo": resposta_dict.get("modelo"),
         "retrieval_summary": recuperacao.get(
             "retrieval_summary",
             {},
         ),
+        "fetch_k": fetch_k,
+        "top_k": top_k,
     }
 
 
 def executar_para_interface(
     pergunta: str,
     top_k: int,
+    progress=gr.Progress(),
 ):
     """
     Converte a saída do pipeline para os componentes do Gradio.
     """
+
+    def atualizar_progresso(
+        percentual: float,
+        descricao: str,
+    ) -> None:
+        progress(
+            percentual,
+            desc=descricao,
+        )
+
     try:
+        atualizar_progresso(
+            0.02,
+            "Preparando a consulta...",
+        )
+
         resultado = executar_pipeline(
             pergunta=pergunta,
             top_k=int(top_k),
+            on_progress=atualizar_progresso,
         )
 
-        rotas = resultado.get("routes", [])
+        rotas = resultado.get(
+            "routes",
+            [],
+        )
 
         rotas_texto = (
             ", ".join(rotas)
@@ -278,7 +422,10 @@ def executar_para_interface(
         else:
             modo = "Pipeline integrado"
 
-        tokens = resultado.get("tokens", {})
+        tokens = resultado.get(
+            "tokens",
+            {},
+        )
 
         status = (
             f"**Modo:** {modo}  \n"
@@ -289,14 +436,29 @@ def executar_para_interface(
             f"**Latência total:** "
             f"{resultado.get('latency_ms')} ms  \n"
             f"**Tokens:** "
-            f"{tokens.get('total', 0)}"
+            f"{tokens.get('total', 0)}  \n"
+            f"**Evidências solicitadas:** "
+            f"{resultado.get('top_k')}  \n"
+            f"**Candidatos analisados por busca:** "
+            f"{resultado.get('fetch_k')}"
+        )
+
+        atualizar_progresso(
+            1.0,
+            "Resposta pronta.",
         )
 
         return (
             resultado["answer"],
             rotas_texto,
-            resultado.get("filters", {}),
-            resultado.get("evidences", []),
+            resultado.get(
+                "filters",
+                {},
+            ),
+            resultado.get(
+                "evidences",
+                [],
+            ),
             status,
         )
 
