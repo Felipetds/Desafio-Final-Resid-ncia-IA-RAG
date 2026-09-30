@@ -293,3 +293,67 @@ Luiz corrigiu o filtro de UF no roteador e adicionou testes automatizados. Erida
 - Repetir a busca densa, o BM25 e a fusão RRF após a correção.
 - Validar novamente a consulta conversacional na interface.
 - Executar a suíte de integração após a estabilização das quatro rotas.
+---
+
+## Encontro 8 — 30/09/2026
+
+### Minha participação
+
+- Abri e validei novamente a interface integrada do projeto no Google Colab.
+- Executei consultas estruturadas e normativas para conferir o funcionamento do pipeline ponta a ponta.
+- Confirmei a apresentação da resposta, rota selecionada, filtros, fontes, evidências, `chunk_id`, latência, tokens, `query_id` e `run_id`.
+- Utilizei como consulta principal de demonstração: “Quais contratações envolvem serviços de tecnologia?”.
+- Mantive como consulta alternativa: “O que a Lei nº 14.133 estabelece sobre licitações?”.
+- Implementei um formulário de avaliação com as opções “Útil” e “Não útil”.
+- Adicionei um campo de comentário opcional e um botão específico para enviar o feedback.
+- Implementei a persistência dos feedbacks em arquivo JSONL.
+- Corrigi a extração de `query_id` e `run_id` apresentados no status da interface em formato Markdown.
+- Corrigi o botão “Limpar” para apagar também a avaliação, o comentário e a confirmação de salvamento.
+- Configurei a limpeza do feedback anterior sempre que uma nova consulta é iniciada.
+- Adicionei um indicador de progresso para mostrar as etapas de preparação, recuperação, geração e validação.
+- Reduzi a quantidade padrão de evidências de cinco para três.
+- Configurei um limite seguro de candidatos analisados na recuperação, com `fetch_k` padrão igual a 50.
+- Adicionei testes automatizados para validar a persistência do feedback.
+- Configurei o `.gitignore` para impedir o versionamento dos arquivos JSONL produzidos durante o uso da interface.
+- Organizei as alterações em uma branch própria e preparei um Pull Request para revisão antes da integração com a `main`.
+
+### Resultados obtidos
+
+- A interface executou consultas completas e apresentou respostas acompanhadas de fontes e evidências.
+- O formulário de feedback passou a exigir a seleção de uma avaliação antes do envio.
+- Os feedbacks foram registrados em `data/feedback/feedback.jsonl`.
+- Os registros válidos apresentaram pergunta, avaliação, comentário, rota, fonte, `query_id` e `run_id`.
+- O arquivo de feedback permaneceu disponível após o reinício da interface no mesmo ambiente.
+- O botão “Limpar” removeu corretamente os dados da consulta e do formulário de feedback.
+- O indicador de progresso tornou o processamento mais compreensível para o usuário.
+- A consulta passou a utilizar três evidências por padrão e até 50 candidatos por mecanismo de busca.
+- O tempo observado em uma das consultas ficou em aproximadamente 20 segundos, representando melhoria em relação às execuções anteriores de aproximadamente 60 segundos.
+- O código foi validado com `py_compile`.
+- A suíte offline foi concluída com **132 testes aprovados**.
+
+### Dificuldades encontradas
+
+- O feedback registrado antes da correção não apresentava `query_id` e `run_id`, pois a marcação Markdown impedia a extração correta desses campos.
+- Foi necessário preservar o formato textual da rota para manter compatibilidade com os testes existentes.
+- Algumas portas do Gradio permaneceram ocupadas por execuções anteriores da interface no Google Colab.
+- O tempo de resposta continua sujeito à disponibilidade do endpoint compartilhado de geração e embeddings.
+- A porcentagem de progresso indica etapas reais do pipeline, mas pode permanecer mais tempo na etapa de geração, que depende da resposta do modelo externo.
+- Os arquivos de feedback armazenados localmente permanecem disponíveis após reiniciar a interface, mas podem ser perdidos se o runtime completo do Colab for apagado.
+
+### Apoio de IA
+
+Utilizei uma ferramenta de IA como apoio para revisar a estrutura da interface, organizar a persistência dos feedbacks, interpretar a falha do teste automatizado e planejar a apresentação do progresso do pipeline. Todas as alterações foram verificadas por inspeção dos registros JSONL, execução da interface, compilação dos arquivos e testes automatizados.
+
+### Atividades realizadas pela equipe
+
+A equipe continuou trabalhando na reprodutibilidade, ingestão, recuperação e preparação da demonstração ponta a ponta. Calvin iniciou a validação do projeto em ambiente limpo e identificou a necessidade de documentar a restauração local do corpus em `data/raw/v2`. As demais correções integradas anteriormente permitiram utilizar os chunks, índices e rotas na interface.
+
+### Próximas atividades
+
+- Aguardar a revisão do Pull Request da funcionalidade de feedback e progresso.
+- Integrar a alteração à branch `main` somente após a conferência dos arquivos modificados.
+- Atualizar `docs/STATUS_DO_PROJETO.md` em um commit separado.
+- Conferir os Pull Requests e acompanhamentos dos integrantes.
+- Validar a demonstração depois que as alterações de reprodutibilidade forem integradas.
+- Preparar um plano alternativo com resultado previamente registrado caso o endpoint compartilhado apresente lentidão.
+- Avaliar o armazenamento do histórico de feedback em local persistente para evitar perda após o encerramento do runtime do Colab.
