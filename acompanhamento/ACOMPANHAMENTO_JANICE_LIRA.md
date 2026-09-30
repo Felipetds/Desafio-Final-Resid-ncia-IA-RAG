@@ -293,3 +293,67 @@ As execuções e os resultados foram conferidos antes de considerar as validaç�
 - Disponibilizar a saída da coleta para continuidade das etapas de ingestão e indexação, sob responsabilidade do integrante responsável por essa frente.
 - Acompanhar a integração da coleta com as demais etapas do pipeline Adaptive RAG.
 
+## Encontro 8 — 30/09/2026
+
+### Minha contribuição
+
+#### Validação da coleta do PNCP
+
+- Realizei uma nova tentativa de validação da API do PNCP em ambiente isolado, utilizando o mesmo recorte definido para a base estruturada do corpus v3: Estado do Rio de Janeiro, modalidade Pregão Eletrônico (código 6), no período de 01/03/2026 a 31/03/2026.
+- Utilizei um manifesto exclusivo para o teste, direcionando a saída para `data/raw/validacao_20260930/`, sem alterar o `corpus_manifest.yaml` original e sem sobrescrever os corpora v2 ou v3.
+- A API respondeu normalmente nas páginas 1 a 8, e os respectivos checkpoints foram persistidos.
+- Na página 9, a API retornou HTTP 429 (`Too Many Requests`).
+- O mecanismo de retry realizou as novas tentativas previstas e encerrou a execução após a permanência do erro.
+- Confirmei localmente a existência de 8 checkpoints, correspondentes às páginas 1 a 8.
+- Nesta execução não foi possível reconfirmar as 28 páginas e os 1.358 registros devido ao limite de requisições da API. A validação completa anterior permanece registrada com 28 páginas e 1.358 registros.
+
+#### Revisão das personas e preparação da avaliação
+
+- Revisei o `PERSONAS.md` considerando o corpus atual v3.
+- Identifiquei perguntas anteriores que utilizavam períodos ou informações não compatíveis com o corpus disponível e substituí essas consultas por perguntas sustentadas pelas evidências existentes.
+- Mantive as três personas do projeto: Eduardo (Auditor Municipal), Renata (Advogada de uma Empresa Fornecedora) e Lucas (Gestor de Compras de um Hospital Público).
+- Foram definidas nove perguntas de avaliação, sendo três para cada persona.
+- As perguntas contemplam as naturezas estruturada, normativa, conversacional e agregada, além de cenários de privacidade, recusa e controle de escopo.
+- Também foi mantido um cenário mais complexo para avaliação de recuperação cross-source e reconhecimento dos limites das evidências disponíveis.
+
+#### Arquivo de avaliação
+
+- Criei o arquivo `eval/perguntas_personas.json`.
+- O arquivo contém nove perguntas identificadas de P01 a P09.
+- Para cada pergunta foram registrados a persona, o tipo de consulta, a rota esperada, as bases esperadas, os filtros aplicáveis e o resultado esperado.
+- Foram incluídos também casos em que o sistema deve recusar a solicitação ou reconhecer que o corpus não possui evidências suficientes para responder.
+- O `PERSONAS.md` e o arquivo `eval/perguntas_personas.json` foram adicionados/atualizados no repositório.
+
+### Uso de IA
+
+- Utilizei um assistente de IA como apoio na preparação do teste isolado da API do PNCP, na interpretação do retorno HTTP 429 e na conferência dos checkpoints persistidos.
+- Utilizei IA também como apoio à revisão das perguntas das personas e à estruturação do arquivo de avaliação em JSON.
+- As perguntas foram elaboradas considerando as bases e evidências efetivamente documentadas no corpus v3.
+- Os resultados dos comandos executados no Google Colab foram conferidos antes do registro das conclusões.
+
+### Resultados
+
+- Nova tentativa de validação da API executada em ambiente isolado.
+- 8 páginas coletadas e 8 checkpoints persistidos antes da ocorrência do HTTP 429 na página 9.
+- Mecanismo de retry acionado corretamente.
+- Corpora v2 e v3 preservados sem sobrescrita.
+- `PERSONAS.md` revisado e alinhado ao corpus v3.
+- Nove perguntas de avaliação definidas para as três personas.
+- `eval/perguntas_personas.json` criado com rotas, filtros, bases e resultados esperados.
+- Casos de privacidade, recusa e controle de escopo incluídos na avaliação.
+- Tarefa de revisão das personas e preparação das perguntas de avaliação concluída.
+
+### Dificuldades e limitações
+
+- A tentativa de coleta realizada em 30/09/2026 foi interrompida na página 9 devido ao retorno HTTP 429 (`Too Many Requests`) da API do PNCP.
+- Por esse motivo, nesta execução específica não foi possível reconfirmar as 28 páginas e os 1.358 registros obtidos na validação completa anterior.
+- Foi necessário revisar as perguntas das personas para evitar consultas que dependessem de informações não sustentadas pelo corpus atual.
+- A criação das perguntas de avaliação foi limitada às evidências disponíveis no corpus v3, evitando definir resultados esperados sem suporte nas bases existentes.
+
+### Próximos passos
+
+- Disponibilizar as nove perguntas de avaliação para utilização nos testes do pipeline RAG.
+- Acompanhar a execução das perguntas P01 a P09 nos módulos de roteamento, recuperação, geração e guardrails.
+- Comparar as respostas produzidas pelo sistema com as rotas, bases, filtros e resultados esperados registrados em `eval/perguntas_personas.json`.
+- Preservar o corpus v3 como referência atual e evitar alterações nos dados brutos congelados.
+- Realizar novas consultas à API somente quando necessárias, respeitando as limitações de requisição observadas.
