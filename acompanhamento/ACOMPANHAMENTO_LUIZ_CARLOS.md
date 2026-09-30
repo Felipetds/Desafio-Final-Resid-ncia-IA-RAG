@@ -293,3 +293,55 @@ A equipe corrigiu os metadados conversacionais, o preenchimento da UF, a proteç
 - Confirmar que a resposta final utiliza somente evidências sanitizadas.
 - Revalidar as quatro rotas e a recusa após a integração.
 
+---
+
+## Encontro 8 — 30/09/2026
+
+### Minha participação
+
+- Atualizei a branch de trabalho a partir da versão mais recente da `main`.
+- Validei o suporte já existente para consultas com múltiplas rotas nos módulos `router.py`, `retrieve.py` e `schema.py`.
+- Testei uma consulta cross-source envolvendo uma dúvida normativa sobre a participação de MEI em pregão eletrônico e a busca por uma contratação relacionada a material de escritório.
+- Identifiquei que o roteamento de contingência reconhecia somente a rota `estruturada`, deixando de identificar a intenção `normativa`.
+- Corrigi os termos utilizados pelo fallback para reconhecer consultas relacionadas a MEI, requisitos e permissão para participação.
+- Ajustei os termos estruturados para reconhecer as variações de contrato e contratação.
+- Mantive o funcionamento das consultas que exigem somente uma rota.
+- Implementei uma seleção multirrota após a fusão RRF.
+- A seleção passou a garantir, quando disponíveis, evidências de cada rota solicitada.
+- Mantive a ordem relativa produzida pelo RRF e o limite global definido por `top_k`.
+- Implementei tratamento para situações em que uma das rotas não possui evidências.
+- Adicionei três testes de fallback e cinco testes específicos da recuperação multirrota.
+- Organizei as alterações em uma branch própria e enviei o commit técnico ao repositório.
+
+### Resultados obtidos
+
+- A consulta sobre participação de MEI passou a selecionar somente a rota `normativa`.
+- A consulta sobre contratação passou a selecionar somente a rota `estruturada`.
+- A consulta cross-source passou a selecionar simultaneamente as rotas `normativa` e `estruturada`.
+- A recuperação passou a preservar evidências das duas rotas quando elas estão disponíveis.
+- A seleção multirrota respeitou o limite global de resultados.
+- A ausência de evidências em uma das rotas não interrompeu o pipeline.
+- Os 5 testes específicos de múltiplas rotas foram aprovados.
+- Os 73 testes relacionados ao roteamento e à recuperação foram aprovados.
+- A suíte offline foi concluída com 130 testes aprovados e 7 testes dependentes do LLM desmarcados.
+- A branch `feat/multiplas-rotas-luiz` foi enviada ao repositório para abertura do Pull Request.
+
+### Dificuldades encontradas
+
+O roteador principal já possuía suporte a múltiplas rotas, mas o roteamento de contingência baseado em palavras-chave não reconhecia a intenção normativa da consulta sobre MEI. Além disso, embora a recuperação aceitasse uma lista de rotas, a seleção final utilizava apenas as primeiras posições do ranking RRF, sem garantir a presença de evidências de todas as naturezas solicitadas.
+
+Também foi necessário reinstalar as dependências do projeto no ambiente do Colab após a reinicialização do runtime.
+
+### Apoio de IA
+
+Utilizei uma ferramenta de IA para revisar o fluxo existente de roteamento e recuperação, identificar quais partes do suporte multirrota já estavam implementadas, organizar os novos casos de teste e analisar os resultados. As alterações sugeridas foram aplicadas de forma controlada, revisadas no `git diff` e validadas pela suíte automatizada antes do envio ao repositório.
+
+### Próximas atividades
+
+- Abrir e revisar o Pull Request da recuperação multirrota.
+- Validar a consulta cross-source utilizando os chunks e índices definitivos.
+- Confirmar a presença de pelo menos uma evidência normativa e uma estruturada no pipeline completo.
+- Verificar se a etapa de geração apresenta separadamente a regra normativa e as contratações encontradas.
+- Confirmar a exibição das fontes das duas bases na interface.
+- Apoiar a equipe na validação da demonstração ponta a ponta.
+
