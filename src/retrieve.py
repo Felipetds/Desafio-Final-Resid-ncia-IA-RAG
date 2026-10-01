@@ -11,11 +11,15 @@ from openai import OpenAI
 
 from src.router import OLLAMA_URL, analisar_consulta
 
+# Importação do novo módulo de rerank e documentação de configuração (02/10)
+# Para ativar o rerank futuramente, definir RERANK_ENABLED=true no .env
+# Variáveis preparadas: RERANK_URL, RERANK_AUTH, RERANK_MODEL, RERANK_TIMEOUT
 try:
-    from . import obs
+    from . import obs, rerank
     from .schema import RetrievalResult
 except ImportError:  # permite "python src/retrieve.py" direto, sem pacote.
     import obs
+    import rerank
     from schema import RetrievalResult
 
 
@@ -156,16 +160,6 @@ def chunk_atende_rotas(
     rotas: List[str],
     exigir_natureza: bool = False,
 ) -> bool:
-    """
-    exigir_natureza=False (padrão): mantém o comportamento atual, usado
-    pelas fixtures e pelos testes — chunk sem "natureza" continua elegível.
-
-    exigir_natureza=True: para uso com os dados reais das quatro bases.
-    Um chunk sem "natureza" identificável é bloqueado (não passa no
-    filtro de rota), em vez de ser aceito por padrão. Ativar isso deve
-    ser combinado com a Janice e o Eridalgo assim que o corpus real
-    estiver disponível, pois hoje ele bloquearia toda a fixture de teste.
-    """
     if not rotas:
         return True
 
@@ -371,32 +365,19 @@ def fusao_rrf(
     resultados_bm25: List[Dict[str, Any]],
     k_rrf: int = 60,
 ) -> List[Dict[str, Any]]:
-    """
-    Reciprocal Rank Fusion:
-
-        score = soma(1 / (k + posição_no_ranking))
-    """
     scores: Dict[str, float] = {}
     origens: Dict[str, Set[str]] = {}
     detalhes: Dict[str, Dict[str, Any]] = {}
 
     for posicao, item in enumerate(resultados_densos, start=1):
         chunk_id = item["chunk_id"]
-
-        scores[chunk_id] = scores.get(chunk_id, 0.0) + (
-            1.0 / (k_rrf + posicao)
-        )
-
+        scores[chunk_id] = scores.get(chunk_id, 0.0) + (1.0 / (k_rrf + posicao))
         origens.setdefault(chunk_id, set()).add("dense")
         detalhes.setdefault(chunk_id, {}).update(item)
 
     for posicao, item in enumerate(resultados_bm25, start=1):
         chunk_id = item["chunk_id"]
-
-        scores[chunk_id] = scores.get(chunk_id, 0.0) + (
-            1.0 / (k_rrf + posicao)
-        )
-
+        scores[chunk_id] = scores.get(chunk_id, 0.0) + (1.0 / (k_rrf + posicao))
         origens.setdefault(chunk_id, set()).add("bm25")
         detalhes.setdefault(chunk_id, {}).update(item)
 
@@ -418,70 +399,47 @@ def fusao_rrf(
 
 
 def _validar_com_retrieval_result(resultado: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Valida explicitamente a saída de recuperar_evidencias contra o schema
-    RetrievalResult (src/schema.py) antes de devolvê-la para quem chamou
-    (por exemplo o generate.py). Isso garante que campos obrigatórios,
-    tipos e as regras de consistência do schema (como "recusa não pode
-    ter evidências") sejam sempre respeitados na saída real do pipeline,
-    e não só nos testes.
-    """
     validado = RetrievalResult(**resultado)
     return validado.model_dump()
 
 
-
 def selecionar_resultados_multirrota(
-    ranking_rrf: List[Dict[str, Any]],
+    ranking: List[Dict[str, Any]],
     chunks_por_id: Dict[str, Dict[str, Any]],
     rotas: List[str],
     top_k: int,
 ) -> List[Dict[str, Any]]:
-    """
-    Seleciona resultados do RRF garantindo, quando possível,
-    pelo menos uma evidência de cada rota solicitada.
-
-    Se uma rota não possuir evidências, os espaços restantes
-    são preenchidos seguindo a ordem original do RRF.
-    """
     if top_k <= 0:
         return []
 
     if len(rotas) <= 1:
-        return ranking_rrf[:top_k]
+        return ranking[:top_k]
 
     ids_selecionados = set()
 
-    # Reserva uma evidência por rota, quando disponível.
+    # Reserva uma evidência por rota
     for rota in rotas:
         if len(ids_selecionados) >= top_k:
             break
-
-        for item in ranking_rrf:
+        for item in ranking:
             chunk_id = item.get("chunk_id")
             chunk = chunks_por_id.get(chunk_id, {})
-
-            if (
-                chunk_id not in ids_selecionados
-                and identificar_natureza(chunk) == rota
-            ):
+            if chunk_id not in ids_selecionados and identificar_natureza(chunk) == rota:
                 ids_selecionados.add(chunk_id)
                 break
 
-    # Completa as vagas respeitando o ranking original.
-    for item in ranking_rrf:
+    # Completa vagas
+    for item in ranking:
         if len(ids_selecionados) >= top_k:
             break
-
         chunk_id = item.get("chunk_id")
-
         if chunk_id not in ids_selecionados:
             ids_selecionados.add(chunk_id)
 
-    # Mantém a ordem original calculada pelo RRF.
+    # Mantém ordem calculada (agora pode ser a ordem do Rerank)
     return [
         item
-        for item in ranking_rrf
+        for item in ranking
         if item.get("chunk_id") in ids_selecionados
     ][:top_k]
 
@@ -493,16 +451,6 @@ def recuperar_evidencias(
     exigir_natureza: bool = False,
     run_id: str | None = None,
 ) -> Dict[str, Any]:
-    """
-    Executa roteamento, Dense, BM25, filtros e RRF.
-
-    exigir_natureza: repassado para filtrar_resultados/chunk_atende_rotas.
-    Mantém-se False por padrão para não quebrar a fixture atual (chunks
-    sem "natureza" continuam elegíveis). Deve ser ativado como True ao
-    validar com os dados reais das quatro bases (ver Janice/Eridalgo),
-    quando um chunk sem natureza identificável deve ser bloqueado em vez
-    de passar por padrão.
-    """
     inicio = time.perf_counter()
     run_id = run_id or obs.novo_run_id()
 
@@ -529,11 +477,8 @@ def recuperar_evidencias(
             "is_refusal": True,
             "refusal_reason": analise.get("refusal_reason"),
             "evidences": [],
-            "stage": "fusao_rrf",
-            "latencia_ms": round(
-                (time.perf_counter() - inicio) * 1000,
-                2,
-            ),
+            "stage": "rerank",
+            "latencia_ms": round((time.perf_counter() - inicio) * 1000, 2),
         }
         return _validar_com_retrieval_result(resultado)
 
@@ -546,94 +491,64 @@ def recuperar_evidencias(
     ) = carregar_artefatos()
 
     with obs.observar_etapa(
-        run_id=run_id,
-        query_id=query_id,
-        stage="retrieval_denso",
-        input_data={"pergunta": pergunta, "fetch_k": fetch_k},
+        run_id=run_id, query_id=query_id, stage="retrieval_denso", input_data={"pergunta": pergunta, "fetch_k": fetch_k}
     ) as observacao_densa:
-        resultados_densos = busca_densa(
-            pergunta=pergunta,
-            client=client,
-            indice_faiss=indice_faiss,
-            ids=ids,
-            fetch_k=fetch_k,
-        )
-        observacao_densa["output"] = {
-            "candidatos": len(resultados_densos),
-        }
+        resultados_densos = busca_densa(pergunta=pergunta, client=client, indice_faiss=indice_faiss, ids=ids, fetch_k=fetch_k)
+        observacao_densa["output"] = {"candidatos": len(resultados_densos)}
 
     with obs.observar_etapa(
-        run_id=run_id,
-        query_id=query_id,
-        stage="retrieval_bm25",
-        input_data={"pergunta": pergunta, "fetch_k": fetch_k},
+        run_id=run_id, query_id=query_id, stage="retrieval_bm25", input_data={"pergunta": pergunta, "fetch_k": fetch_k}
     ) as observacao_bm25:
-        resultados_bm25 = busca_bm25(
-            pergunta=pergunta,
-            indice_bm25=indice_bm25,
-            ids=ids,
-            fetch_k=fetch_k,
-        )
-        observacao_bm25["output"] = {
-            "candidatos": len(resultados_bm25),
-        }
+        resultados_bm25 = busca_bm25(pergunta=pergunta, indice_bm25=indice_bm25, ids=ids, fetch_k=fetch_k)
+        observacao_bm25["output"] = {"candidatos": len(resultados_bm25)}
 
     rotas = analise.get("routes", [])
     filtros = analise.get("filters", {})
 
     with obs.observar_etapa(
-        run_id=run_id,
-        query_id=query_id,
-        stage="fusao_rrf",
-        input_data={
-            "routes": rotas,
-            "filters": filtros,
-            "top_k": top_k,
-        },
+        run_id=run_id, query_id=query_id, stage="fusao_rrf", input_data={"routes": rotas, "filters": filtros, "top_k": top_k}
     ) as observacao_fusao:
-        resultados_densos = filtrar_resultados(
-            resultados=resultados_densos,
-            chunks_por_id=chunks_por_id,
-            rotas=rotas,
-            filtros=filtros,
-            exigir_natureza=exigir_natureza,
-        )
+        resultados_densos = filtrar_resultados(resultados_densos, chunks_por_id, rotas, filtros, exigir_natureza)
+        resultados_bm25 = filtrar_resultados(resultados_bm25, chunks_por_id, rotas, filtros, exigir_natureza)
 
-        resultados_bm25 = filtrar_resultados(
-            resultados=resultados_bm25,
-            chunks_por_id=chunks_por_id,
-            rotas=rotas,
-            filtros=filtros,
-            exigir_natureza=exigir_natureza,
-        )
+        ranking_rrf = fusao_rrf(resultados_densos, resultados_bm25)
+        
+        # --- INTEGRAÇÃO DO RERANK AQUI (02/10) ---
+        # Garantir que a estrutura envia dicionários compatíveis para simular a preservação de metadados
+        candidatos_para_rerank = []
+        for item in ranking_rrf:
+            chunk = chunks_por_id.get(item["chunk_id"], {})
+            candidatos_para_rerank.append({
+                "id": item["chunk_id"],
+                "text": chunk.get("text", ""),
+                "metadata": chunk.get("metadata", {}),
+                "rrf_score_original": item["rrf_score"]
+            })
+            
+        rerank.TOP_K = top_k 
+        ranking_reranked_tuples = rerank.executar_rerank(pergunta, candidatos_para_rerank)
+        
+        # Reconstrói a lista no formato que o selecionar_resultados_multirrota espera
+        ranking_final = []
+        for doc, novo_score in ranking_reranked_tuples:
+            original_item = next((item for item in ranking_rrf if item["chunk_id"] == doc["id"]), {})
+            ranking_final.append({
+                **original_item,
+                "rerank_score": novo_score
+            })
+            
+        if not ranking_final:
+            ranking_final = ranking_rrf
+        # ----------------------------------------
 
-        ranking_rrf = fusao_rrf(
-            resultados_densos=resultados_densos,
-            resultados_bm25=resultados_bm25,
-        )
-
-        ranking_selecionado = selecionar_resultados_multirrota(
-            ranking_rrf=ranking_rrf,
-            chunks_por_id=chunks_por_id,
-            rotas=rotas,
-            top_k=top_k,
-        )
+        ranking_selecionado = selecionar_resultados_multirrota(ranking_final, chunks_por_id, rotas, top_k)
 
         evidencias = []
-
         for item in ranking_selecionado:
             chunk = chunks_por_id[item["chunk_id"]]
             metadata = chunk.get("metadata", {})
-            sensibilidade_original = metadata.get(
-                "sensitivity",
-                "publico",
-            )
-            texto_seguro, sensibilidade_saida = (
-                _sanitizar_texto_evidencia(
-                    chunk.get("text", ""),
-                    sensibilidade_original,
-                )
-            )
+            sensibilidade_original = metadata.get("sensitivity", "publico")
+            texto_seguro, sensibilidade_saida = _sanitizar_texto_evidencia(chunk.get("text", ""), sensibilidade_original)
             metadata_segura = dict(metadata)
             metadata_segura["sensitivity"] = sensibilidade_saida
 
@@ -642,6 +557,7 @@ def recuperar_evidencias(
                     "chunk_id": item["chunk_id"],
                     "text": texto_seguro,
                     "rrf_score": round(item["rrf_score"], 6),
+                    "rerank_score": item.get("rerank_score"),
                     "retrieval_sources": item["retrieval_sources"],
                     "dense_distance": item.get("dense_distance"),
                     "bm25_score": item.get("bm25_score"),
@@ -658,6 +574,7 @@ def recuperar_evidencias(
             "dense_candidates": len(resultados_densos),
             "bm25_candidates": len(resultados_bm25),
             "rrf_candidates": len(ranking_rrf),
+            "rerank_enabled": rerank.RERANK_ENABLED,
             "returned": len(evidencias),
         }
 
@@ -677,22 +594,13 @@ def recuperar_evidencias(
             "rrf_candidates": len(ranking_rrf),
             "returned": len(evidencias),
         },
-        "stage": "fusao_rrf",
-        "latencia_ms": round(
-            (time.perf_counter() - inicio) * 1000,
-            2,
-        ),
+        "stage": "rerank",
+        "latencia_ms": round((time.perf_counter() - inicio) * 1000, 2),
     }
 
     return _validar_com_retrieval_result(resultado)
 
-
 if __name__ == "__main__":
     consulta = input("Digite uma pergunta: ")
-
-    resultado = recuperar_evidencias(
-        pergunta=consulta,
-        top_k=5,
-    )
-
+    resultado = recuperar_evidencias(pergunta=consulta, top_k=5)
     print(json.dumps(resultado, ensure_ascii=False, indent=2))
