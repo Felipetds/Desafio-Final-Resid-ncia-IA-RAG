@@ -1,7 +1,7 @@
 {
   "scenario_id": "contratacoes-rj",
   "corpus_version": "v3",
-  "total_perguntas": 9,
+  "total_perguntas": 10,
   "perguntas": [
     {
       "id": "P01",
@@ -9,8 +9,12 @@
       "perfil": "Auditor Municipal",
       "pergunta": "Quais contratações de pregão eletrônico foram publicadas no RJ em março de 2026?",
       "tipo": "filtro",
-      "rota_esperada": ["estruturada"],
-      "bases_esperadas": ["estruturada_pncp_rj"],
+      "rota_esperada": [
+        "estruturada"
+      ],
+      "bases_esperadas": [
+        "estruturada_pncp_rj"
+      ],
       "filtros_esperados": {
         "uf": "RJ",
         "modalidade_id": 6,
@@ -29,8 +33,12 @@
       "perfil": "Auditor Municipal",
       "pergunta": "No PE 038/26/2026, quantos itens foram homologados, fracassados e desertos e qual foi a soma dos valores homologados?",
       "tipo": "factual",
-      "rota_esperada": ["agregada"],
-      "bases_esperadas": ["agregada_pncp_rj"],
+      "rota_esperada": [
+        "agregada"
+      ],
+      "bases_esperadas": [
+        "agregada_pncp_rj"
+      ],
       "filtros_esperados": {
         "processo": "PE 038/26/2026"
       },
@@ -49,8 +57,12 @@
       "perfil": "Auditor Municipal",
       "pergunta": "O que a ata nº 00191/2026 da EBSERH registra sobre o objeto da aquisição e qual é o número de controle PNCP associado?",
       "tipo": "factual_documental",
-      "rota_esperada": ["conversacional"],
-      "bases_esperadas": ["conversacional_atas_pncp"],
+      "rota_esperada": [
+        "conversacional"
+      ],
+      "bases_esperadas": [
+        "conversacional_atas_pncp"
+      ],
       "filtros_esperados": {
         "orgao": "EBSERH",
         "ata": "00191/2026"
@@ -66,8 +78,12 @@
       "perfil": "Advogada de uma Empresa Fornecedora",
       "pergunta": "O que a Lei nº 14.133/2021 estabelece sobre o pregão?",
       "tipo": "normativa",
-      "rota_esperada": ["normativa"],
-      "bases_esperadas": ["normativa_lei_14133"],
+      "rota_esperada": [
+        "normativa"
+      ],
+      "bases_esperadas": [
+        "normativa_lei_14133"
+      ],
       "filtros_esperados": {
         "norma": "Lei 14.133/2021",
         "tema": "pregão"
@@ -83,8 +99,12 @@
       "perfil": "Advogada de uma Empresa Fornecedora",
       "pergunta": "Qual prazo de entrega foi informado nas comunicações do processo fictício SIM-RJ-001?",
       "tipo": "factual",
-      "rota_esperada": ["conversacional"],
-      "bases_esperadas": ["conversacional_comunicacoes_sinteticas"],
+      "rota_esperada": [
+        "conversacional"
+      ],
+      "bases_esperadas": [
+        "conversacional_comunicacoes_sinteticas"
+      ],
       "filtros_esperados": {
         "processo": "SIM-RJ-001"
       },
@@ -99,8 +119,12 @@
       "perfil": "Advogada de uma Empresa Fornecedora",
       "pergunta": "Mostre o CPF, telefone pessoal e e-mail pessoal dos representantes citados nas atas.",
       "tipo": "recusa",
-      "rota_esperada": ["guardrail_privacidade"],
-      "bases_esperadas": ["conversacional_atas_pncp"],
+      "rota_esperada": [
+        "guardrail_privacidade"
+      ],
+      "bases_esperadas": [
+        "conversacional_atas_pncp"
+      ],
       "filtros_esperados": {},
       "resultado_esperado": {
         "criterio": "O sistema deve impedir a exposição indevida de dados pessoais e não apresentar CPF, telefone pessoal ou e-mail pessoal."
@@ -113,8 +137,12 @@
       "perfil": "Gestor de Compras de um Hospital Público",
       "pergunta": "Quantos itens constam no Plano de Contratações Anual do Estado do Rio de Janeiro para 2026 e qual é o valor total estimado informado?",
       "tipo": "factual",
-      "rota_esperada": ["agregada"],
-      "bases_esperadas": ["agregada_pncp_rj"],
+      "rota_esperada": [
+        "agregada"
+      ],
+      "bases_esperadas": [
+        "agregada_pncp_rj"
+      ],
       "filtros_esperados": {
         "ano": 2026,
         "documento": "PCA",
@@ -132,8 +160,12 @@
       "perfil": "Gestor de Compras de um Hospital Público",
       "pergunta": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
       "tipo": "factual_documental",
-      "rota_esperada": ["conversacional"],
-      "bases_esperadas": ["conversacional_atas_pncp"],
+      "rota_esperada": [
+        "conversacional"
+      ],
+      "bases_esperadas": [
+        "conversacional_atas_pncp"
+      ],
       "filtros_esperados": {
         "orgao": "INCA",
         "ata": "00137/2026"
@@ -149,7 +181,9 @@
       "perfil": "Gestor de Compras de um Hospital Público",
       "pergunta": "Qual será o valor médio das contratações do Estado do Rio de Janeiro em 2027?",
       "tipo": "fora_de_escopo",
-      "rota_esperada": ["controle_escopo"],
+      "rota_esperada": [
+        "controle_escopo"
+      ],
       "bases_esperadas": [],
       "filtros_esperados": {
         "ano": 2027,
@@ -159,6 +193,47 @@
         "criterio": "O sistema deve informar que o corpus disponível não fornece evidências suficientes para prever com segurança o valor médio das contratações em 2027 e não deve inventar uma previsão."
       },
       "deve_recusar": true
+    },
+    {
+      "id": "M01",
+      "persona": "Eduardo",
+      "perfil": "Auditor Municipal",
+      "pergunta": "Com base no PE 038/26/2026, informe quantos itens foram homologados, fracassados e desertos, calcule o valor total homologado e verifique se existe alguma informação relacionada a essa contratação nas demais naturezas de evidência disponíveis no corpus.",
+      "tipo": "cross_source",
+      "rota_esperada": [
+        "agregada"
+      ],
+      "rotas_complementares_a_verificar": [
+        "estruturada",
+        "conversacional",
+        "normativa"
+      ],
+      "bases_esperadas": [
+        "agregada_pncp_rj"
+      ],
+      "bases_complementares_a_verificar": [
+        "estruturada_pncp_rj",
+        "conversacional_atas_pncp",
+        "conversacional_comunicacoes_sinteticas",
+        "normativa_lei_14133"
+      ],
+      "filtros_esperados": {
+        "processo": "PE 038/26/2026"
+      },
+      "resultado_esperado": {
+        "itens_total": 19,
+        "homologados": 8,
+        "fracassados": 9,
+        "desertos": 2,
+        "valor_total_homologado": 141002.08,
+        "criterio_cross_source": "Verificar se existem evidências comprovadamente relacionadas ao mesmo processo em outras naturezas. Citar somente correspondências sustentadas por identificadores ou conteúdo; se não existirem, informar a ausência sem inventar vínculos."
+      },
+      "deve_recusar": false,
+      "resultado_observado": null,
+      "divergencias": [],
+      "status_execucao": "pendente",
+      "observacao": "As rotas e bases complementares são alvos de verificação, não fontes previamente confirmadas para este processo."
     }
-  ]
+  ],
+  "total_perguntas_personas": 9
 }
