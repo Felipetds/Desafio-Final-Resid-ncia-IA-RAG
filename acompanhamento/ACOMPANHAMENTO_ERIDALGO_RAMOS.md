@@ -146,3 +146,9 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * O sistema possui configuração de `fallback` para manter a ordenação original e suporta variáveis como URL, autenticação e *timeout*.
 * O módulo `testes/test_rerank.py` foi implementado e 4 testes simulados (lista vazia, top_k, timeout e manutenção de metadados) passaram com sucesso.
 * **Nota de dependência:** A configuração `RERANK_ENABLED` está definida como `false` por defeito. A integração real no pipeline está paralisada, pois a conexão depende exclusivamente da disponibilização do endpoint pelo professor.
+
+### Atualização (02/10/2026) - Integração do Rerank no Pipeline
+* O módulo `src/rerank.py` foi ligado com sucesso ao motor principal (`src/retrieve.py`), capturando os candidatos imediatamente após a fusão RRF.
+* A configuração e as variáveis de ambiente (`RERANK_ENABLED`, `RERANK_URL`, etc.) foram documentadas no código.
+* Os testes locais comprovam que o pipeline continua a funcionar intacto com o rerank desativado (fallback em vigor).
+* **Status de Validação:** A validação real no pipeline ponta a ponta encontra-se pendente, aguardando a disponibilização do endpoint pelo professor.
