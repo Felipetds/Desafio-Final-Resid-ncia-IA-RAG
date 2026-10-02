@@ -357,3 +357,72 @@ A equipe continuou trabalhando na reprodutibilidade, ingestão, recuperação e 
 - Validar a demonstração depois que as alterações de reprodutibilidade forem integradas.
 - Preparar um plano alternativo com resultado previamente registrado caso o endpoint compartilhado apresente lentidão.
 - Avaliar o armazenamento do histórico de feedback em local persistente para evitar perda após o encerramento do runtime do Colab.
+
+---
+
+## Encontro 9 — 02/10/2026
+
+### Minha participação
+
+- Atualizei o arquivo `docs/STATUS_DO_PROJETO.md` para organizar as informações utilizadas na apresentação do andamento do projeto.
+- Preparei um roteiro de apresentação com explicação do corpus, arquitetura, verificações técnicas, demonstração da interface e limitações conhecidas.
+- Organizei o notebook do Colab com seções identificadas para conferência dos artefatos, testes, consulta ao pipeline, logs e abertura da interface.
+- Após a reinicialização do ambiente, reinstalei as dependências necessárias e restaurei o corpus e os índices disponíveis no Google Drive.
+- Executei novamente a ingestão, concluída sem erro.
+- Testei consultas na interface com diferentes quantidades de evidências.
+- Validei uma consulta sobre contratações de tecnologia com três evidências, conferindo a correspondência entre a resposta e os registros recuperados.
+- Identifiquei desvios na resposta de uma consulta de tecnologia com cinco evidências, incluindo afirmações sem apoio suficiente nos trechos apresentados.
+- Testei consultas normativas e identifiquei uma resposta que tratou de outro artigo, apesar de o art. 4º estar presente nas evidências.
+- Repeti a pergunta específica sobre o art. 4º com uma evidência e obtive uma resposta alinhada ao trecho, mantendo como ressalva a precisão da descrição dos limites.
+- Testei consultas sobre o PCA e conferi os valores e unidades responsáveis dos registros recuperados.
+- Identifiquei evidências irrelevantes nas consultas agregadas, embora a consulta específica sobre seguros tenha apresentado corretamente os dois registros pertinentes.
+- Registrei os identificadores, latências, tokens e fontes exibidos nas consultas realizadas.
+- Recebi e organizei o feedback do professor sobre a necessidade de adequar a estratégia de consulta à intenção do usuário.
+- Preparei o planejamento de segunda-feira, com entregas individuais, dependências, critérios de validação e commits separados.
+
+### Resultados obtidos
+
+- O ambiente foi recuperado após a reinicialização do Colab e a ingestão voltou a executar com sucesso.
+- A consulta estruturada sobre tecnologia apresentou três exemplos pertinentes com citações verificáveis.
+- A consulta normativa específica com uma evidência apresentou uma resposta correspondente ao art. 4º recuperado.
+- A consulta agregada sobre seguros apresentou corretamente os valores estimados de R$ 46.903,50 e R$ 2.160,24 e as respectivas unidades responsáveis.
+- Foram identificadas limitações na relevância das evidências e na fidelidade das respostas, especialmente em consultas com múltiplos trechos.
+- O feedback do professor foi convertido em um planejamento para consulta estruturada, revisão das personas e adaptação da interface.
+
+### Dificuldades encontradas
+
+- A reinicialização do Colab exigiu reinstalação de dependências e restauração dos arquivos necessários.
+- O arquivo de chunks não estava disponível no Drive consultado, sendo necessário regenerá-lo a partir do corpus.
+- Algumas respostas apresentaram desvios ou afirmações não sustentadas pelas evidências.
+- A recuperação agregada incluiu registros que não correspondiam ao assunto solicitado.
+- O fluxo atual baseado em `top_k` apresenta exemplos recuperados, mas não permite responder com segurança a contagens ou listagens completas da base.
+- A latência variou entre as consultas, permanecendo necessária a análise do tempo por etapa.
+
+### Feedback do professor
+
+O professor orientou que o sistema considere o que o usuário realmente deseja obter, utilizando as personas para definir respostas úteis.
+
+Para consultas estruturadas, o sistema deve aplicar filtros sobre os registros disponíveis e calcular resultados, como contagens, em vez de utilizar apenas os primeiros trechos recuperados. Pedidos mais específicos devem apresentar os registros e os campos solicitados pelo usuário.
+
+Para perguntas abertas, a busca semântica ou híbrida continua pertinente. O roteador deverá identificar não apenas a base, mas também a estratégia, a operação, os filtros e os campos de saída.
+
+As respostas deverão informar o recorte consultado, evitando apresentar os dados coletados em março de 2026 como cobertura de todo o ano.
+
+### Apoio de IA
+
+Utilizei uma ferramenta de IA para apoiar a organização do roteiro, dos procedimentos de recuperação do ambiente, da análise das respostas e do planejamento das próximas atividades. A avaliação dos resultados foi realizada comparando as respostas com os trechos e metadados apresentados pelo sistema.
+
+### Atividades realizadas pela equipe
+
+As próximas entregas foram reorganizadas a partir do feedback do professor. Foram definidas responsabilidades para revisão das personas e critérios de avaliação, preparação dos dados, roteamento por estratégia, consulta estruturada, testes, observabilidade, reprodutibilidade e adaptação da interface.
+
+### Próximas atividades
+
+- Revisar com a equipe os casos prioritários das personas.
+- Definir os critérios de classificação de tecnologia e o significado dos filtros de ano e valor.
+- Integrar um fluxo de contagem e listagem sobre os registros estruturados, sem limitação por `top_k`.
+- Adaptar a interface para apresentar total, critérios, recorte e tabelas paginadas com os campos solicitados.
+- Manter a busca híbrida para consultas abertas.
+- Investigar os desvios de geração e a seleção de evidências irrelevantes.
+- Alinhar a versão do corpus utilizada pelo pipeline com a documentação e os artefatos.
+- Validar os novos fluxos com testes e resultados conhecidos.
