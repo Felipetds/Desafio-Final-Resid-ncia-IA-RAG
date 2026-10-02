@@ -357,3 +357,73 @@ As execuções e os resultados foram conferidos antes de considerar as validaç�
 - Comparar as respostas produzidas pelo sistema com as rotas, bases, filtros e resultados esperados registrados em `eval/perguntas_personas.json`.
 - Preservar o corpus v3 como referência atual e evitar alterações nos dados brutos congelados.
 - Realizar novas consultas à API somente quando necessárias, respeitando as limitações de requisição observadas.
+
+## Encontro 9 — 02/10/2026
+
+### Minha contribuição
+
+#### Auditoria e preparação do corpus v3
+
+- Dei continuidade à frente de Corpus e Avaliação, verificando a integridade do corpus processado, composto por **38.619 chunks**, distribuídos nas quatro naturezas: estruturada, normativa, conversacional e agregada.
+- Confirmei a unicidade dos identificadores dos chunks, sem duplicidades.
+- Revisei os resultados das perguntas de avaliação das personas, considerando as rotas previstas, os filtros, a rastreabilidade documental e os limites das evidências disponíveis.
+- Organizei e preservei os artefatos de auditoria no Google Drive, realizando a conferência de integridade por SHA-256.
+
+#### Diagnóstico e geração incremental de embeddings
+
+- Analisei os módulos `src/index.py` e `src/retrieve.py` para compreender a estrutura atual da indexação e da recuperação.
+- Identifiquei um cache inicial com **60 embeddings**, utilizando vetores de dimensão 1.024.
+- Executei a geração incremental de novos embeddings por lotes, ampliando o cache experimental para **140 vetores**.
+- Mantive o cache original preservado e criei um cache de trabalho separado, com checkpoints no Google Drive.
+- Distribuí a amostra experimental em 110 chunks estruturados, 10 normativos, 10 conversacionais e 10 agregados.
+
+#### Construção e validação do índice híbrido experimental
+
+- Construí um índice experimental isolado, utilizando FAISS e BM25, sem sobrescrever os índices de produção.
+- Gerei os artefatos `faiss_index.bin`, `bm25_index.pkl`, `chunk_ids.json`, `chunks_experimental_v3.json` e `manifesto_experimental.json`.
+- Validei a correspondência posicional entre os 140 chunks, seus identificadores, os 140 documentos BM25 e os 140 vetores FAISS.
+- Testei o carregamento dos artefatos por meio da função original `carregar_artefatos()` do módulo `src/retrieve.py`.
+
+#### Testes de recuperação híbrida e multirrota
+
+- Executei uma consulta normativa sobre pregão eletrônico e Lei nº 14.133/2021, utilizando busca densa, BM25, filtragem por natureza e fusão RRF.
+- Confirmei que, após a filtragem normativa, os resultados foram limitados aos dez chunks normativos disponíveis na amostra experimental.
+- Realizei um teste multirrota com as quatro naturezas documentais.
+- A seleção final apresentou oito evidências: cinco estruturadas, uma normativa, uma conversacional e uma agregada.
+- Registrei os resultados e as limitações no arquivo `eval/RELATORIO_TECNICO_INDICE_EXPERIMENTAL_2026-10-02.md`.
+
+### Uso de IA
+
+- Utilizei um assistente de IA como apoio à análise dos módulos de indexação e recuperação, à preparação dos testes incrementais e à organização dos procedimentos de validação.
+- Executei os códigos no Google Colab, conferindo os resultados de cada etapa antes de prosseguir.
+- Utilizei IA também como apoio à elaboração do relatório técnico e à consolidação das evidências, preservando a distinção entre funcionalidades testadas e etapas ainda pendentes.
+
+### Resultados
+
+- Corpus processado com 38.619 chunks e identificadores únicos confirmados.
+- Cache experimental ampliado de 60 para 140 embeddings.
+- Índice híbrido experimental FAISS + BM25 construído e validado.
+- Correspondência entre chunks, IDs, BM25 e FAISS confirmada.
+- Carregamento dos artefatos pelo módulo original `retrieve.py` aprovado.
+- Busca híbrida com filtragem normativa e fusão RRF executada com sucesso.
+- Recuperação multirrota validada na amostra experimental, contemplando as quatro naturezas documentais.
+- Relatório técnico produzido e copiado para o Google Drive.
+- Acompanhamento diário preservado com verificação de integridade SHA-256.
+
+### Dificuldades e limitações
+
+- O índice experimental contempla apenas 140 dos 38.619 chunks disponíveis; portanto, ainda não representa a indexação integral do corpus v3.
+- Permanecem 38.479 embeddings pendentes de geração.
+- A cobertura normativa parcial limita a avaliação da relevância das respostas para consultas específicas sobre a Lei nº 14.133/2021.
+- A seleção multirrota comprovou a presença das quatro naturezas, mas não demonstrou, isoladamente, uma relação factual entre todos os documentos recuperados.
+- Os testes realizados não constituem validação ponta a ponta da geração de respostas, das regras de recusa e dos guardrails.
+- O trabalho foi executado sobre uma cópia extraída do repositório, sendo necessária a sincronização posterior dos entregáveis com o GitHub oficial.
+
+### Próximos passos
+
+- Dar continuidade à geração incremental de embeddings, mantendo checkpoints e cópias de segurança.
+- Ampliar a cobertura das quatro naturezas documentais no índice.
+- Avaliar a relevância e a rastreabilidade das evidências recuperadas.
+- Integrar os testes de recuperação à suíte de avaliação das personas.
+- Validar os cenários cross-source, as recusas e os guardrails, respeitando os limites do corpus.
+- Sincronizar os relatórios e os artefatos selecionados com o repositório oficial do grupo, preservando o trabalho dos demais integrantes.
