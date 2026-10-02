@@ -1,655 +1,336 @@
 # Status do Projeto — Adaptive RAG para Contratações Públicas do RJ
 
-**Residência TIC em Trilhas — PUC-Rio / Instituto ECOA**  
-**Cenário:** Contratações Públicas do Estado do Rio de Janeiro  
-**Período do desafio:** 14/09/2026 a 23/10/2026  
-**Última atualização:** 28/09/2026
+**Grupo:** 1
+**Residência:** TIC em Trilhas — PUC-Rio / Instituto ECOA
+**Cenário:** Contratações Públicas do Estado do Rio de Janeiro
+**Última atualização:** 02/10/2026
 
----
+Este documento reúne os resultados já demonstrados pela equipe e as
+pendências informadas até esta atualização. As novas entregas em branches
+devem ser diferenciadas das funcionalidades integradas à versão utilizada
+na demonstração.
 
-## 1. Objetivo do projeto
+## 1. Objetivo
 
-O projeto desenvolve um sistema de **Adaptive RAG** para responder perguntas sobre contratações públicas do Estado do Rio de Janeiro.
+Desenvolver um sistema que responda perguntas sobre contratações públicas
+em linguagem natural, selecionando as bases necessárias e apresentando
+evidências verificáveis.
 
-Antes de recuperar documentos, o sistema analisa a pergunta e seleciona uma ou mais bases conforme o tipo de evidência necessário.
-
-O sistema trabalha com quatro naturezas de dados:
-
-| Base | Conteúdo | Finalidade |
-|---|---|---|
-| Normativa | Lei nº 14.133/2021 e documentos legais | Regras, permissões, proibições e requisitos |
-| Estruturada | Contratações publicadas no PNCP | Órgãos, municípios, modalidades, objetos, datas e valores |
-| Conversacional | Atas e comunicações sintéticas | Informações registradas em documentos e comunicações |
-| Agregada | PCA e valores homologados por item | Indicadores, itens planejados, valores e estatísticas |
-
----
-
-## 2. Arquitetura do pipeline
-
-```text
-Pergunta do usuário
-        ↓
-Análise da consulta e guardrails
-        ↓
-Roteamento para uma ou mais bases
-        ↓
-Busca densa + busca BM25
-        ↓
-Filtros por metadados
-        ↓
-Fusão RRF
-        ↓
-Geração da resposta com fontes
-        ↓
-Validação do schema
-        ↓
-Interface e logs estruturados
-```
-
-O pipeline utiliza:
-
-- `query_id` para identificar cada pergunta;
-- `run_id` para relacionar todas as etapas da mesma execução;
-- logs estruturados no formato JSONL;
-- registro de latência, tokens, modelo, entrada e saída.
-
----
-
-## 3. Estrutura do repositório
-
-| Caminho | Responsabilidade |
+| Natureza | Conteúdo utilizado |
 |---|---|
-| `corpus_manifest.yaml` | Declaração das bases e arquivos do corpus |
-| `src/fetch_corpus.py` | Coleta, atualização e inventário |
-| `src/ingest.py` | Extração, metadados e criação dos chunks |
-| `src/index.py` | Cache de embeddings e índices FAISS/BM25 |
-| `src/router.py` | Rotas, filtros e decisões de segurança |
-| `src/retrieve.py` | Recuperação densa, BM25, filtros e RRF |
-| `src/generate.py` | Geração da resposta com evidências |
-| `src/schema.py` | Validação das estruturas de entrada e saída |
-| `src/obs.py` | Observabilidade e logs JSONL |
-| `app/pipeline_adapter.py` | Integração dos módulos |
-| `app/app.py` | Interface Gradio |
-| `testes/` | Testes unitários, de contrato e integração |
-| `data/inventory/` | Inventários e diferenças entre versões |
-| `acompanhamento/` | Registros individuais dos integrantes |
-| `docs/` | Documentação técnica |
+| Estruturada | Contratações publicadas no PNCP |
+| Normativa | Lei nº 14.133/2021 |
+| Conversacional | Três atas em PDF e uma comunicação sintética |
+| Agregada | Plano de Contratações Anual e resultados por item |
 
-Os dados brutos, índices, cache e logs são produzidos localmente e não devem ser enviados ao GitHub.
+## 2. Resumo dos dados preparados
 
----
+O corpus de referência possui **8 arquivos** distribuídos nas quatro
+naturezas.
 
-## 4. Corpus utilizado
+A coleta estruturada foi concluída com:
 
-### 4.1 Arquivos disponíveis
+- **28 páginas coletadas**;
+- **1.358 registros**;
+- **1.358 identificadores PNCP preenchidos e únicos**;
+- **nenhuma duplicação de identificadores**.
 
-| Natureza | Quantidade | Conteúdo |
-|---|---:|---|
-| Estruturada | 1 | JSON de contratações publicadas no PNCP |
-| Normativa | 1 | HTML da Lei nº 14.133/2021 |
-| Conversacional | 4 | Três atas em PDF e uma comunicação sintética |
-| Agregada | 2 | PCA 2026 e itens homologados |
-| **Total** | **8** | Arquivos distribuídos nas quatro bases |
+As 28 páginas são páginas da API, e não 28 registros.
 
-### 4.2 Base estruturada
+A ingestão validada produziu:
 
-A coleta da base estruturada apresentou:
-
-- 1.358 registros;
-- 1.358 valores de `numeroControlePNCP` preenchidos;
-- 1.358 identificadores únicos;
-- nenhuma duplicação;
-- 28 páginas coletadas;
-- retentativas automáticas em falhas temporárias.
-
-Durante a coleta ocorreram timeout e respostas HTTP 502 e 503. O mecanismo de retentativas permitiu concluir a operação.
-
----
-
-## 5. Versionamento do corpus
-
-O fluxo de atualização preservou a versão anterior e criou a versão v3.
-
-### Comparação entre a v2 e a nova coleta
-
-- 1.358 registros na v2;
-- 1.358 registros na nova coleta;
-- 0 IDs adicionados;
-- 0 IDs removidos;
-- 1.314 registros idênticos;
-- 44 registros alterados.
-
-As diferenças ocorreram principalmente em campos de atualização e valores informados pelo PNCP.
-
-### Comparação dos arquivos da v2 com a v3
-
-- 7 arquivos idênticos;
-- 1 arquivo alterado;
-- 0 arquivos adicionados;
-- 0 arquivos removidos.
-
-O arquivo alterado foi:
-
-```text
-contratacoes_publicacao.json
-```
-
-### Artefatos de versionamento
-
-```text
-corpus_manifest.yaml
-CORPUS_INVENTORY.md
-data/inventory/v3.json
-data/inventory/DIFF_v2_v3.md
-```
-
-Os arquivos brutos continuam fora do GitHub porque `data/raw/` está no `.gitignore`.
-
----
-
-## 6. Ingestão e chunks
-
-A ingestão mais recente gerou **2.125 chunks**.
-
-| Natureza | Quantidade |
+| Natureza | Chunks |
 |---|---:|
 | Estruturada | 1.358 |
-| Agregada | 519 |
 | Normativa | 217 |
 | Conversacional | 31 |
+| Agregada | 519 |
 | **Total** | **2.125** |
 
-### Validações realizadas
+A base agregada processada contém uma **amostra de 500 itens do PCA**
+e **19 itens de uma contratação específica**. Essa amostra não representa
+todo o PCA nem todas as contratações do Estado.
 
-- 2.125 IDs preenchidos;
-- 2.125 IDs únicos;
-- nenhum ID duplicado;
-- nenhum chunk sem texto;
-- natureza registrada nos metadados;
-- arquivo de origem registrado;
-- tipo do documento registrado;
-- sensibilidade registrada.
+## 3. Funcionamento do pipeline
 
-### Fatiamento dos PDFs
+O fluxo implementado realiza:
 
-Inicialmente, os três PDFs conversacionais eram processados como chunks únicos muito grandes.
+1. análise da pergunta e verificação das regras de recusa;
+2. seleção das bases e extração dos filtros;
+3. busca densa por embeddings e busca lexical BM25;
+4. filtragem dos candidatos;
+5. fusão dos rankings por RRF;
+6. geração da resposta com evidências;
+7. validação da estrutura de saída;
+8. apresentação na interface e registro dos eventos.
 
-Após a correção:
+O módulo de rerank está em desenvolvimento e permanece desativado por
+padrão. Sua validação real depende do endpoint disponibilizado pelo
+professor.
 
-- os PDFs foram divididos em chunks menores;
-- o maior chunk conversacional ficou com aproximadamente 2.000 caracteres;
-- não existem chunks de PDF acima de 3.000 caracteres;
-- os metadados foram preservados.
+## 4. Funcionalidades já validadas
 
----
-
-## 7. Indexação e cache de embeddings
-
-Os índices foram reconstruídos após a correção do fatiamento.
-
-| Artefato | Quantidade |
-|---|---:|
-| Chunks | 2.125 |
-| Vetores FAISS | 2.125 |
-| Documentos BM25 | 2.125 |
-| IDs persistidos | 2.125 |
-| IDs únicos | 2.125 |
-
-### Funcionamento do cache
-
-Na reconstrução:
-
-- 1.575 embeddings válidos foram inicialmente preservados;
-- somente os chunks novos ou alterados foram enviados ao endpoint;
-- o cache foi atualizado em disco.
-
-Na execução seguinte:
-
-- 2.125 embeddings foram carregados do cache;
-- 0 chunks foram enviados novamente à API.
-
-Isso confirma que o cache evita reprocessamento desnecessário.
-
----
-
-## 8. Roteamento adaptativo
-
-O roteador seleciona a base conforme o tipo de evidência necessário.
-
-| Pergunta | Rota esperada |
+| Frente | Resultado confirmado |
 |---|---|
-| Quais contratações envolvem serviços de tecnologia? | Estruturada |
-| O que a Lei nº 14.133 estabelece sobre licitações? | Normativa |
-| O que foi registrado nas atas sobre aquisições? | Conversacional |
-| Quais itens aparecem no Plano de Contratações Anual? | Agregada |
-| Sou MEI e existe algum pregão aberto? | Normativa + estruturada |
-| Esse contrato foi uma fraude? | Recusa |
+| Coleta | Coleta estruturada concluída com retentativas e progresso salvo |
+| Versionamento | Comparação entre snapshots e preservação da versão anterior |
+| Ingestão | 2.125 chunks com IDs preenchidos e únicos, sem textos vazios |
+| PDFs | Fatiamento em blocos de aproximadamente 2.000 caracteres |
+| Indexação | FAISS, BM25 e lista de IDs persistidos |
+| Cache | Reexecução da indexação com 2.125 embeddings em cache e zero novos envios |
+| Roteamento | Seleção das quatro naturezas e tratamento de recusa |
+| Recuperação | Busca Dense, BM25 e fusão RRF |
+| Conversacional | Recuperação de três evidências sanitizadas em consulta real |
+| Geração | Resposta sobre contratações de tecnologia com referências aos chunks |
+| Interface | Resposta, rotas, filtros, evidências e informações da execução |
+| Feedback | Avaliação e comentário registrados em JSONL |
+| Observabilidade | Eventos identificados por query_id e run_id |
 
-Também foram implementados:
+A igualdade de quantidades e a correspondência dos IDs foram verificadas.
+Essas verificações não substituem a conferência da compatibilidade entre
+o conteúdo dos chunks e os índices sempre que os dados forem alterados.
 
-- normalização das rotas;
-- suporte a múltiplas rotas;
-- extração de filtros;
-- filtros por ano, modalidade, município, fornecedor e valor;
-- interpretação de valores como `R$ 500 mil`;
-- interpretação de valores como `R$ 1,5 milhão`;
-- fallback quando o modelo não responde;
-- regras de recusa.
+## 5. Correções concluídas desde o documento anterior
 
----
+### Filtro de UF
 
-## 9. Recuperação híbrida
+O roteador deixou de adicionar `uf: RJ` automaticamente a perguntas sem
+localização explícita.
 
-O recuperador combina:
+Foram confirmados os comportamentos:
 
-1. busca densa por embeddings;
-2. busca lexical BM25;
-3. filtragem por metadados;
-4. fusão por Reciprocal Rank Fusion — RRF;
-5. seleção das melhores evidências conforme o `top_k`.
+- pergunta sem localização: `uf: null`;
+- pergunta mencionando RJ ou Rio de Janeiro: `uf: RJ`;
+- preservação do filtro de ano quando informado.
 
-### Resultados confirmados
+### Ano da base agregada
 
-- recuperação estruturada com evidências estruturadas;
-- recuperação normativa com evidências normativas;
-- recuperação agregada com evidências agregadas;
-- fusão RRF sem IDs duplicados;
-- combinação de candidatos Dense e BM25;
-- respeito ao limite `top_k`;
-- filtragem das evidências pela natureza selecionada.
+A extração passou a utilizar reconhecimento de ano por regex.
 
----
+Na verificação dos 519 chunks agregados, não foram encontrados anos
+preenchidos fora do formato de quatro dígitos.
 
-## 10. Geração de respostas
+Essa verificação de formato deve ser complementada pela comparação com
+as datas e os identificadores de origem.
 
-O pipeline recebe a pergunta, recupera evidências e gera uma resposta com as fontes utilizadas.
+### Metadados conversacionais
 
-### Exemplo validado
+Os 31 chunks conversacionais passaram a apresentar UF RJ conforme o
+mapeamento implementado para os arquivos do cenário.
 
-```text
-Pergunta:
-Quais contratações envolvem serviços de tecnologia?
+### Recuperação conversacional
 
-Rota:
-estruturada
+A investigação identificou que a política de sensibilidade bloqueava
+os chunks classificados como restritos.
 
-Evidências:
-3
+Foi implementado o encaminhamento dos chunks conversacionais restritos
+para mascaramento antes da apresentação das evidências.
 
-Métodos:
-Dense + BM25 + RRF
-```
+Na consulta validada, foram obtidos:
 
-A resposta apresentou contratações relacionadas a:
+- rota `conversacional`;
+- UF não inventada;
+- 31 candidatos Dense após filtragem;
+- 31 candidatos BM25 após filtragem;
+- 31 candidatos na fusão RRF;
+- 3 evidências retornadas;
+- classificação de saída `restrito_sanitizado`.
 
-- gestão e governança de tecnologia da informação;
-- inteligência artificial e chatbots;
-- plataforma de comunicação integrada ao WhatsApp;
-- hospedagem e suporte técnico;
-- operação de infraestrutura e atendimento a usuários de TIC.
+O mascaramento possui testes para CPF, telefone e e-mail. A classificação
+de saída não garante, por si só, a remoção de todo tipo de dado pessoal.
 
-As fontes foram apresentadas por meio dos respectivos `chunk_id`.
+### Proteção contra ingestão vazia
 
----
+A ingestão passou a lançar uma exceção quando nenhum chunk é produzido,
+evitando a substituição da saída por um arquivo vazio.
 
-## 11. Interface Gradio
+O comportamento foi testado em diretório temporário sem o corpus.
 
-A interface permite:
+## 6. Interface e feedback
 
-- inserir uma pergunta;
-- escolher a quantidade de evidências;
-- executar a consulta;
-- visualizar a resposta;
-- visualizar as bases selecionadas;
-- visualizar os filtros;
-- visualizar as evidências;
-- consultar o status da execução.
+A interface Gradio apresenta:
 
-Também apresenta:
+- campo para pergunta;
+- seleção da quantidade de evidências;
+- resposta gerada;
+- bases selecionadas;
+- filtros;
+- evidências e fontes;
+- query_id e run_id;
+- latência e tokens;
+- indicador de progresso por etapas;
+- avaliação Útil ou Não útil;
+- comentário opcional;
+- botão de envio do feedback;
+- confirmação do salvamento.
 
-- confiança;
-- latência;
-- tokens;
-- `query_id`;
-- `run_id`;
-- fontes utilizadas;
-- mensagem amigável quando os índices não estão disponíveis.
+O indicador de progresso utiliza marcos das etapas do pipeline.
+Ele não representa uma estimativa exata do tempo restante.
 
----
+O feedback é armazenado, por padrão, em:
 
-## 12. Segurança e guardrails
+`data/feedback/feedback.jsonl`
 
-Foi validada a pergunta:
+O caminho pode ser configurado pela variável `FEEDBACK_PATH`.
 
-```text
-Esse contrato foi uma fraude?
-```
+Cada registro inclui:
+
+- data e hora;
+- pergunta;
+- avaliação;
+- comentário;
+- query_id;
+- run_id;
+- rota;
+- fontes.
 
-O sistema:
+Foram conferidos registros de feedback com os identificadores da consulta
+e as fontes correspondentes.
 
-- marcou a consulta para recusa;
-- não retornou evidências;
-- não realizou acusação;
-- explicou a limitação;
-- registrou a decisão nos logs;
-- não continuou normalmente pela recuperação.
+O arquivo permanece disponível após reiniciar a interface no mesmo
+ambiente. No Colab, a persistência entre runtimes depende de preservar
+o arquivo em armazenamento externo, como o Drive.
+
+O histórico completo de perguntas e respostas ainda deve ser concluído.
+O arquivo de feedback não substitui esse histórico.
+
+## 7. Versionamento do corpus
+
+A comparação entre a v2 e a nova coleta estruturada apresentou:
+
+| Resultado | Quantidade |
+|---|---:|
+| Registros na v2 | 1.358 |
+| Registros na nova coleta | 1.358 |
+| IDs adicionados | 0 |
+| IDs removidos | 0 |
+| Registros idênticos | 1.314 |
+| Registros alterados | 44 |
 
-O projeto permite responder sobre:
+A atualização isolada gerou a v3 com **8 arquivos e zero falhas**
+no inventário, preservando a v2.
 
-- valores de contratos;
-- nomes de empresas;
-- CNPJ de pessoa jurídica;
-- objetos contratados;
-- informações públicas do PNCP.
+Na comparação dos arquivos:
 
-O sistema deve mascarar ou bloquear:
+- 7 permaneceram idênticos;
+- 1 foi alterado;
+- nenhum foi adicionado ou removido.
 
-- CPF;
-- telefone pessoal;
-- e-mail pessoal;
-- dados bancários;
-- credenciais;
-- acusações automáticas de fraude ou ilegalidade.
+O arquivo alterado foi `contratacoes_publicacao.json`.
 
----
+Os inventários e o diff estão registrados no repositório.
+Os dados brutos permanecem fora do Git.
 
-## 13. Observabilidade
-
-Os eventos são registrados em:
-
-```text
-logs/pipeline-AAAA-MM-DD.jsonl
-```
-
-Cada registro contém:
-
-- timestamp;
-- `run_id`;
-- `query_id`;
-- estágio;
-- status;
-- latência;
-- entrada;
-- saída;
-- tokens;
-- modelo;
-- informações adicionais.
-
-### Etapas instrumentadas
-
-```text
-query_analysis
-roteamento
-retrieval_denso
-retrieval_bm25
-fusao_rrf
-geracao
-validacao
-```
-
-Em uma consulta de recusa, foram confirmadas as etapas:
-
-```text
-query_analysis
-roteamento
-fusao_rrf
-geracao
-validacao
-```
-
-Todas utilizaram o mesmo `run_id`.
-
----
-
-## 14. Testes realizados
-
-### Suíte offline
-
-```text
-109 passed
-```
-
-### Testes de integração
-
-```text
-7 passed in 360.83s
-```
-
-Os testes de integração cobrem:
-
-- consultas das personas;
-- recuperação normativa;
-- correspondência entre fontes e evidências;
-- limite `top_k`;
-- proteção de dados pessoais;
-- consulta sensível;
-- recusa;
-- funcionamento ponta a ponta.
-
----
-
-## 15. Limitações identificadas
-
-### 15.1 Recuperação conversacional
-
-A pergunta:
-
-```text
-O que foi registrado nas atas sobre aquisições e fornecedores?
-```
-
-selecionou corretamente a rota `conversacional`, mas retornou zero evidências.
-
-A análise indicou que o filtro `uf: RJ` foi aplicado mesmo sem a localização ter sido mencionada. Como alguns chunks conversacionais estão com UF vazia, eles foram eliminados.
-
-### 15.2 Ano da base agregada
-
-Algumas datas no formato `DD/MM/AAAA` geraram anos incorretos:
-
-```text
-01/01/2026 → 01/0
-01/12/2026 → 01/1
-09/07/2026 → 09/0
-```
-
-O resultado correto deve ser:
-
-```text
-2026
-```
-
-A correção deverá aceitar:
-
-- `DD/MM/AAAA`;
-- `AAAA-MM-DD`;
-- ano fornecido diretamente.
-
-Esses problemas foram identificados pelos testes adicionais e não anulam os resultados já aprovados nas outras rotas.
-
----
-
-## 16. Correções imediatas
-
-- corrigir a extração do ano agregado;
-- impedir a criação de filtro de UF não mencionado;
-- corrigir a recuperação conversacional;
-- adicionar testes de regressão;
-- concluir a auditoria do manifesto;
-- regenerar os chunks;
-- reconstruir os índices utilizando o cache;
-- executar novamente os testes offline;
-- executar novamente os testes de integração;
-- validar as quatro bases na interface.
-
----
-
-## 17. Próximas sprints
-
-Após a estabilização atual, ainda serão desenvolvidos:
-
-- rerank por cross-encoder;
-- estágio `rerank` nos logs;
-- ablação da recuperação;
-- comparação entre BM25, Dense, RRF e RRF + rerank;
-- feedback do usuário;
-- histórico persistido;
-- estágio `feedback` nos logs;
-- avaliação das nove perguntas das personas;
-- métricas de qualidade;
-- teste de regressão entre versões do corpus;
-- revisão final da documentação;
-- preparação da apresentação final.
-
-O rerank depende do endpoint que será disponibilizado no Sprint 2.
-
----
-
-## 18. Como executar
-
-### Instalar as dependências
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-### Executar a ingestão
-
-```bash
-python -m src.ingest
-```
-
-### Construir os índices
-
-```bash
-python -m src.index
-```
-
-### Executar os testes offline
-
-```bash
-PYTHONPATH=. pytest -q --ignore=testes/teste_integracao.py
-```
-
-### Executar os testes de integração
-
-```bash
-PYTHONPATH=. pytest -q testes/teste_integracao.py
-```
-
-### Abrir a interface
-
-```bash
-python -m app.app
-```
-
-No Google Colab, os comandos de terminal devem utilizar `!`:
-
-```python
-!PYTHONPATH=. pytest -q --ignore=testes/teste_integracao.py
-```
-
----
-
-## 19. Roteiro para demonstração
-
-### 1. Apresentar o objetivo
-
-Explicar que o sistema permite consultar contratações públicas em linguagem natural e seleciona automaticamente as bases necessárias.
-
-### 2. Mostrar o manifesto
-
-Abrir:
-
-```text
-corpus_manifest.yaml
-```
-
-Explicar que o arquivo registra as quatro bases, origens, caminhos, hashes e critérios de seleção.
-
-### 3. Mostrar os inventários
-
-Abrir:
-
-```text
-CORPUS_INVENTORY.md
-data/inventory/v3.json
-data/inventory/DIFF_v2_v3.md
-```
-
-Explicar o versionamento e a preservação dos snapshots.
-
-### 4. Mostrar os módulos
-
-Abrir:
-
-```text
-src/fetch_corpus.py
-src/ingest.py
-src/index.py
-src/router.py
-src/retrieve.py
-src/generate.py
-src/obs.py
-```
-
-Explicar resumidamente a responsabilidade de cada módulo.
-
-### 5. Mostrar os testes
-
-Abrir:
-
-```text
-testes/
-```
-
-Informar:
-
-```text
-109 testes offline aprovados
-7 testes de integração aprovados
-```
-
-### 6. Mostrar a interface
-
-Executar:
-
-```bash
-python -m app.app
-```
-
-Demonstrar uma pergunta normal e uma pergunta de recusa.
-
-### 7. Mostrar as limitações
-
-Explicar que a equipe identificou:
-
-- recuperação conversacional vazia;
-- erro na extração do ano agregado.
-
-Apresentar esses pontos como resultados da validação, com correções planejadas.
-
----
-
-## 20. Resumo do estado atual
-
-Atualmente, o projeto possui:
-
-- quatro bases de naturezas diferentes;
-- coleta automatizada e versionada;
-- 1.358 registros estruturados;
-- 2.125 chunks;
-- cache de embeddings;
-- índice FAISS;
-- índice BM25;
-- roteamento adaptativo;
-- recuperação híbrida;
-- fusão RRF;
-- geração de respostas com fontes;
-- guardrails;
-- interface Gradio;
-- logs estruturados;
-- schemas;
-- testes offline;
-- testes de integração.
-
-As próximas ações imediatas são corrigir a recuperação conversacional e a extração do ano agregado. Depois dessas correções, os chunks e índices serão regenerados e o pipeline será validado novamente.
+**Atenção à versão utilizada:** os testes de ingestão e recuperação
+descritos neste documento foram realizados com o corpus restaurado em
+`data/raw/v2`. A existência da v3 não significa que ela já esteja sendo
+utilizada pela ingestão e pelos índices da demonstração.
+
+## 8. Testes e evidências de validação
+
+Os resultados abaixo pertencem a momentos e versões de trabalho
+diferentes. Eles não devem ser somados.
+
+| Validação | Resultado informado |
+|---|---|
+| Correção do filtro de UF | 4 testes específicos aprovados |
+| Sanitização, recuperação e geração | 51 testes aprovados |
+| Suíte offline após a sanitização | 118 testes aprovados |
+| Suíte offline após feedback e progresso | 132 testes aprovados |
+| Integração executada por Felipe em 30/09 | 9 testes aprovados |
+| Suíte completa informada por Felipe em 30/09 | 139 testes aprovados |
+| Módulo de rerank com testes simulados | 4 testes aprovados |
+
+Os números representam os resultados registrados pela equipe.
+Antes de apresentar um total como resultado da versão atual, é necessário
+associar a execução ao commit e ao ambiente utilizados.
+
+Testes aprovados não substituem a avaliação da qualidade das respostas,
+da relevância das evidências e da correção das fontes.
+
+## 9. Entregas recentes e situação
+
+| Responsável | Entrega | Situação registrada |
+|---|---|---|
+| Eduarda | Feedback persistido e progresso na interface | Integrado pelo PR #9 e validado na suíte offline |
+| Janice | Personas revisadas e nove perguntas de avaliação | Arquivos disponibilizados no repositório |
+| Luiz | Ajustes do fallback e seleção de evidências multirrota | Implementação e testes informados; confirmar integração e validação real na versão atual |
+| Eridalgo | Estrutura configurável de rerank | Módulo e testes simulados informados; integração e endpoint real pendentes de confirmação |
+| Felipe | Testes de integração e complementação dos logs | Testes executados; campos adicionais e testes de observabilidade em andamento |
+| Calvin | Reprodutibilidade | Verificações iniciadas; execução completa do guia ainda não comprovada |
+
+## 10. Limitações e próximas atividades
+
+- Confirmar e validar a recuperação multirrota na versão integrada.
+- Concluir a integração do rerank e testar o endpoint real quando disponível.
+- Complementar os logs Dense e BM25 com rotas, bases, candidatos e IDs.
+- Executar e registrar os resultados das nove perguntas das personas.
+- Comparar métodos de recuperação por meio de avaliação e ablação.
+- Concluir o histórico persistido de consultas.
+- Validar a execução em ambiente limpo seguindo somente o guia existente.
+- Alinhar manifesto, versão do corpus, ingestão e índices.
+- Medir a latência por etapa antes de definir otimizações.
+- Revisar relevância, fidelidade e correspondência das fontes nas respostas.
+- Concluir a documentação e a preparação da entrega final.
+
+A latência varia entre consultas e depende das chamadas aos serviços de
+modelos. O indicador de progresso melhora a visualização das etapas,
+mas não comprova redução do tempo de execução.
+
+## 11. Demonstração de atualização
+
+### Pergunta principal
+
+> Quais contratações envolvem serviços de tecnologia?
+
+Conferir e mostrar:
+
+- resposta baseada nas evidências;
+- rota estruturada;
+- filtros;
+- pelo menos uma fonte;
+- chunk_id da evidência;
+- query_id e run_id;
+- latência e tokens;
+- envio e confirmação do feedback.
+
+### Pergunta alternativa
+
+> O que a Lei nº 14.133 estabelece sobre licitações?
+
+Conferir a rota normativa e a correspondência entre as afirmações
+da resposta e os trechos da lei recuperados.
+
+### Controle de escopo
+
+> Esse contrato foi uma fraude?
+
+O comportamento já validado é a recusa da acusação, acompanhada da
+explicação da limitação e de uma lista vazia de evidências.
+
+Se o endpoint estiver indisponível, utilizar um resultado previamente
+salvo e identificá-lo como execução anterior. Não apresentar uma saída
+salva como se fosse uma consulta ao vivo.
+
+## 12. Arquivos de referência
+
+| Arquivo | Responsabilidade |
+|---|---|
+| corpus_manifest.yaml | Fontes, arquivos, hashes e critérios do corpus |
+| src/fetch_corpus.py | Coleta, inventário e atualização |
+| src/ingest.py | Extração, metadados e chunks |
+| src/index.py | Cache e índices FAISS/BM25 |
+| src/router.py | Rotas, filtros e recusas |
+| src/retrieve.py | Recuperação, filtragem e RRF |
+| src/generate.py | Geração com evidências |
+| src/schema.py | Validação das estruturas |
+| src/obs.py | Logs estruturados |
+| app/app.py | Interface |
+| app/pipeline_adapter.py | Integração do pipeline com a interface |
+| app/feedback_store.py | Registro persistido de feedback |
+| eval/perguntas_personas.json | Casos de avaliação |
+| docs/GUIA_DO_PIPELINE.md | Preparação e execução do projeto |
+
+Para a atualização ao professor, utilizar o objetivo, os dados preparados,
+as funcionalidades validadas, uma consulta na interface e as pendências.
+Os arquivos técnicos ficam disponíveis para perguntas específicas.
