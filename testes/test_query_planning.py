@@ -313,3 +313,71 @@ def test_publicacao_com_intervalo_nao_suportado_exige_esclarecimento():
     )
 
     assert plano["necessita_esclarecimento"] is True
+
+
+def test_planejamento_pagina_e_tamanho_explicitos():
+    plano = planejar_consulta(
+        "Liste as contratações de 2026; página 2; "
+        "10 registros por página; mostre apenas objeto.",
+        analise=analise(),
+    )
+
+    assert plano["operacao"] == "listar"
+    assert plano["pagina"] == 2
+    assert plano["tamanho_pagina"] == 10
+    assert plano["campos"] == ["objeto"]
+
+
+def test_planejamento_segunda_pagina_por_extenso():
+    plano = planejar_consulta(
+        "Liste as contratações de 2026 na segunda página.",
+        analise=analise(),
+    )
+
+    assert plano["pagina"] == 2
+    assert plano["tamanho_pagina"] == 20
+
+
+@pytest.mark.parametrize("pedido", [
+    "página 0",
+    "página 2 e 3",
+    "próxima página",
+    "200 registros por página",
+    "página dois",
+])
+def test_paginacao_invalida_exige_esclarecimento(pedido):
+    resultado = executar_consulta(
+        f"Liste as contratações de 2026; {pedido}.",
+        analise=analise(),
+    )
+
+    assert resultado["executado"] is False
+    assert resultado["plano"]["necessita_esclarecimento"] is True
+
+
+def test_executor_aplica_segunda_pagina_planejada():
+    base = [
+        {
+            "id_pncp": str(i),
+            "ano_compra": "2026",
+            "objeto": f"Objeto {i}",
+            "fonte_original": "teste.json",
+        }
+        for i in range(1, 6)
+    ]
+
+    resultado = executar_consulta(
+        "Liste as contratações de 2026; página 2; "
+        "2 registros por página; mostre apenas objeto.",
+        base=base,
+        analise=analise(),
+        top_k=1,
+    )
+
+    assert resultado["total"] == 5
+    assert resultado["pagina"] == 2
+    assert resultado["total_paginas"] == 3
+    assert resultado["registros"] == [
+        {"objeto": "Objeto 3"},
+        {"objeto": "Objeto 4"},
+    ]

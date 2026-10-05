@@ -720,6 +720,81 @@ def _extrair_mes_publicacao(texto):
     }
 
 
+
+def _extrair_paginacao_explicita(texto):
+    """Extrai paginação explícita de texto previamente normalizado."""
+    ordinais = {
+        "primeira": 1,
+        "segunda": 2,
+        "terceira": 3,
+        "quarta": 4,
+        "quinta": 5,
+    }
+
+    if re.search(r"\b(?:proxima|anterior|ultima)\s+pagina\b", texto):
+        raise ValueError(
+            "Informe o número da página. Navegação relativa "
+            "ainda não está implementada."
+        )
+
+    if re.search(r"\bpagina\s+\d+\s*(?:e|a|ate|-)\s*\d+", texto):
+        raise ValueError("Solicite uma página por vez.")
+
+    tamanhos = re.findall(
+        r"\b(-?\d+)\s+(?:registros?|resultados?|itens?)\s+por\s+pagina\b",
+        texto,
+    )
+
+    # Remove a indicação de tamanho antes de procurar a página solicitada.
+    texto_paginas = re.sub(
+        r"\b-?\d+\s+(?:registros?|resultados?|itens?)\s+por\s+pagina\b",
+        "",
+        texto,
+    )
+
+    paginas_numericas = re.findall(
+        r"\bpagina\s+(-?\d+)\b",
+        texto_paginas,
+    )
+
+    paginas_ordinais = [
+        ordinais[palavra]
+        for palavra in re.findall(
+            r"\b(" + "|".join(ordinais) + r")\s+pagina\b",
+            texto_paginas,
+        )
+    ]
+
+    paginas = [int(p) for p in paginas_numericas] + paginas_ordinais
+
+    if len(paginas) > 1 or len(tamanhos) > 1:
+        raise ValueError("Informe apenas uma página e um tamanho.")
+
+    restante = re.sub(r"\bpagina\s+-?\d+\b", "", texto_paginas)
+    restante = re.sub(
+        r"\b(" + "|".join(ordinais) + r")\s+pagina\b",
+        "",
+        restante,
+    )
+
+    if re.search(r"\bpagina\b", restante):
+        raise ValueError(
+            "Não consegui interpretar a paginação. "
+            "Use 'página 2' e '10 registros por página'."
+        )
+
+    pagina = paginas[0] if paginas else 1
+    tamanho = int(tamanhos[0]) if tamanhos else 20
+
+    if pagina < 1:
+        raise ValueError("A página deve ser maior ou igual a 1.")
+
+    if not 1 <= tamanho <= 100:
+        raise ValueError("Solicite entre 1 e 100 registros por página.")
+
+    return {"pagina": pagina, "tamanho_pagina": tamanho}
+
+
 def planejar_consulta(
     pergunta,
     client=None,
@@ -1045,12 +1120,22 @@ def planejar_consulta(
                     "Quais campos você deseja exibir na listagem?"
                 )
 
+    paginacao = {"pagina": 1, "tamanho_pagina": 20}
+
+    if listar:
+        try:
+            paginacao = _extrair_paginacao_explicita(texto)
+        except ValueError as erro:
+            return esclarecer(str(erro))
+
     plano.update(
         bases=["estruturada"],
         estrategia="consulta_estruturada",
         operacao="listar" if listar else "contar",
         filtros=filtros,
         campos=campos,
+        pagina=paginacao["pagina"],
+        tamanho_pagina=paginacao["tamanho_pagina"],
         campo_valor=campo_valor,
         criterio_objeto=criterio_objeto,
         minimo_inclusivo=not bool(
