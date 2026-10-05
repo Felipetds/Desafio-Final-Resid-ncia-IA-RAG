@@ -671,6 +671,288 @@ def analisar_consulta(
     return resultado
 
 
+
+def planejar_consulta(
+    pergunta,
+    client=None,
+    run_id=None,
+    criterio_tecnologia=None,
+    analise=None,
+):
+    """Planeja consultas simples; ambiguidades exigem esclarecimento."""
+    from src.structured_query import normalizar_texto
+
+    if not isinstance(pergunta, str) or not pergunta.strip():
+        raise ValueError("A pergunta não pode estar vazia.")
+
+    if analise is None:
+        analise = analisar_consulta(
+            pergunta,
+            client=client,
+            run_id=run_id,
+        )
+
+    texto = normalizar_texto(pergunta)
+    rotas = list(analise.get("routes", []))
+
+    plano = {
+        "bases": rotas,
+        "estrategia": "recuperacao_hibrida",
+        "operacao": "buscar",
+        "filtros": {},
+        "campos": None,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": analise.get("query_id"),
+        "is_refusal": bool(analise.get("is_refusal")),
+        "refusal_reason": analise.get("refusal_reason"),
+        "necessita_esclarecimento": False,
+        "pergunta_esclarecimento": None,
+    }
+
+    if plano["is_refusal"]:
+        plano.update(
+            bases=[],
+            estrategia="recusa",
+            operacao="recusar",
+        )
+        return plano
+
+    def esclarecer(mensagem):
+        plano.update(
+            estrategia="esclarecimento",
+            operacao="esclarecer",
+            necessita_esclarecimento=True,
+            pergunta_esclarecimento=mensagem,
+        )
+        return plano
+
+    # Preserva perguntas normativas, conversacionais, PCA e multirrota.
+    if (
+        any(r in {"normativa", "conversacional"} for r in rotas)
+        or re.search(r"\bpca\b", texto)
+        or "plano de contratacoes anual" in texto
+    ):
+        return plano
+
+    menciona_contratacao = bool(
+        re.search(r"\b(?:contratos?|contratacoes|contratacao)\b", texto)
+    )
+
+    contar = bool(
+        re.search(r"\bquant[oa]s?\b", texto)
+        or re.search(r"\b(?:total|numero|quantidade) de\b", texto)
+    )
+
+    listar = bool(
+        re.search(r"\b(?:liste|listar|listagem|relacione)\b", texto)
+    )
+
+    # Caso geral acordado a partir do feedback do professor.
+    geral_tecnologia = texto.rstrip(" ?.!") == (
+        "quais contratacoes envolvem servicos de tecnologia"
+    )
+
+    if not menciona_contratacao or not (contar or listar or geral_tecnologia):
+        return plano
+
+    if contar and listar:
+        return esclarecer(
+            "Você quer apenas o total ou também uma listagem paginada?"
+        )
+
+    if re.search(
+        r"\b(?:media|soma|percentual|agrupad[oa]s?)\b|por modalidade",
+        texto,
+    ):
+        return esclarecer(
+            "Este executor ainda oferece contagem e listagem simples. "
+            "Qual dessas operações você deseja?"
+        )
+
+    if re.search(
+        r"\b(?:publicad[oa]s?|publicacao|atualizacao|assinad[oa]s?|assinatura)\b",
+        texto,
+    ):
+        return esclarecer(
+            "A filtragem por publicação, atualização ou assinatura "
+            "ainda não está validada. Você deseja filtrar pelo ano da compra?"
+        )
+
+    if re.search(r"\b(?:orgao|cnpj|situacao|vigencia)\b", texto):
+        return esclarecer(
+            "Esse critério ainda precisa ser conectado ao planejamento. "
+            "Informe uma consulta com município, UF, ano da compra "
+            "ou valor estimado/homologado."
+        )
+
+    filtros_router = analise.get("filters") or {}
+    filtros = {}
+
+    for campo in ("uf", "municipio", "modalidade", "fornecedor"):
+        valor = filtros_router.get(campo)
+        if valor not in (None, ""):
+            filtros[campo] = valor
+
+    # Campos solicitados para exibição não são filtros.
+    texto_criterios = re.split(
+        r"\b(?:apenas|somente)\b",
+        texto,
+        maxsplit=1,
+    )[0]
+
+    # Não executar uma consulta mais ampla se o modelo omitir filtros.
+    if (
+        re.search(
+            r"\bmunicipio\s+(?:de|do|da)\s+\S+",
+            texto_criterios,
+        )
+        and not filtros.get("municipio")
+    ):
+        return esclarecer(
+            "Qual município deve ser utilizado? "
+            "Não consegui identificar esse filtro com segurança."
+        )
+
+    menciona_limite = bool(
+        re.search(
+            r"acima de|abaixo de|mais de|menos de|"
+            r"superior|inferior|no minimo|no maximo|"
+            r"pelo menos|ate\s+r\$",
+            texto,
+        )
+    )
+
+    if menciona_limite and not any(
+        filtros_router.get(campo) is not None
+        for campo in ("valor_minimo", "valor_maximo")
+    ):
+        return esclarecer(
+            "Qual limite de valor deve ser aplicado? "
+            "Não consegui extrair esse critério com segurança."
+        )
+
+    anos = re.findall(r"\b20\d{2}\b", texto)
+
+    if len(set(anos)) > 1:
+        return esclarecer(
+            "Você deseja consultar qual ano da compra? "
+            "Intervalos de anos ainda não estão implementados."
+        )
+
+    if anos:
+        filtros["ano_compra"] = int(anos[0])
+
+    for campo in ("valor_minimo", "valor_maximo"):
+        valor = filtros_router.get(campo)
+        if valor is not None:
+            filtros[campo] = valor
+
+    tem_limite_valor = any(
+        campo in filtros
+        for campo in ("valor_minimo", "valor_maximo")
+    )
+
+    campo_valor = None
+    if tem_limite_valor:
+        estimado = "estimado" in texto
+        homologado = "homologado" in texto
+
+        if estimado == homologado:
+            return esclarecer(
+                "O limite deve ser aplicado ao valor estimado "
+                "ou ao valor homologado?"
+            )
+
+        campo_valor = (
+            "valor_estimado" if estimado else "valor_homologado"
+        )
+
+    criterio_objeto = None
+    if "tecnologia" in texto:
+        if not isinstance(criterio_tecnologia, dict):
+            return esclarecer(
+                "Qual critério documentado deve identificar "
+                "as contratações de tecnologia?"
+            )
+
+        termos = criterio_tecnologia.get("termos")
+        descricao = criterio_tecnologia.get("descricao")
+
+        if (
+            not isinstance(termos, list)
+            or not termos
+            or not all(isinstance(t, str) and t.strip() for t in termos)
+            or not isinstance(descricao, str)
+            or not descricao.strip()
+        ):
+            raise ValueError("Critério de tecnologia inválido.")
+
+        filtros["objeto_termos"] = termos
+        criterio_objeto = descricao
+
+    elif re.search(
+        r"\b(?:de|sobre|envolvem|relacionad[oa]s? a)\s+"
+        r"(?:servicos? de|software|informatica|material|reparo)",
+        texto,
+    ):
+        return esclarecer(
+            "Informe o critério textual documentado para filtrar "
+            "o objeto da contratação."
+        )
+
+    campos = None
+    if listar:
+        # Seleção explícita: "mostre apenas objeto e valor estimado".
+        selecao = re.search(
+            r"\b(?:apenas|somente)\s+(.+?)(?:[.;?]|$)",
+            texto,
+        )
+
+        if selecao:
+            aliases = {
+                "id_pncp": ("id", "identificador"),
+                "objeto": ("objeto",),
+                "municipio": ("municipio",),
+                "uf": ("uf",),
+                "ano_compra": ("ano",),
+                "valor_estimado": ("valor estimado",),
+                "valor_homologado": ("valor homologado",),
+                "fornecedor": ("fornecedor",),
+            }
+
+            campos = [
+                campo
+                for campo, nomes in aliases.items()
+                if any(
+                    re.search(r"\b" + re.escape(nome) + r"\b", selecao[1])
+                    for nome in nomes
+                )
+            ]
+
+            if not campos:
+                return esclarecer(
+                    "Quais campos você deseja exibir na listagem?"
+                )
+
+    plano.update(
+        bases=["estruturada"],
+        estrategia="consulta_estruturada",
+        operacao="listar" if listar else "contar",
+        filtros=filtros,
+        campos=campos,
+        campo_valor=campo_valor,
+        criterio_objeto=criterio_objeto,
+        minimo_inclusivo=not bool(
+            re.search(r"acima de|mais de|superior", texto)
+        ),
+        maximo_inclusivo=not bool(
+            re.search(r"abaixo de|menos de|inferior", texto)
+        ),
+    )
+
+    return plano
+
 if __name__ == "__main__":
     consulta = input("Digite uma pergunta: ")
     saida = analisar_consulta(consulta)
