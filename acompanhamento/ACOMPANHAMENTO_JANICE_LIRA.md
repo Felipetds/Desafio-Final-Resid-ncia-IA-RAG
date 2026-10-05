@@ -222,6 +222,7 @@
 * Acompanhar os testes de recuperação, geração e integração das quatro naturezas de evidência.
 * Preservar a rastreabilidade das versões do corpus durante as próximas etapas do projeto.
 
+---
 ## Encontro 7 — 28/09/2026
 
 ### Minha contribuição
@@ -358,6 +359,7 @@ As execuções e os resultados foram conferidos antes de considerar as validaç�
 - Preservar o corpus v3 como referência atual e evitar alterações nos dados brutos congelados.
 - Realizar novas consultas à API somente quando necessárias, respeitando as limitações de requisição observadas.
 
+---
 ## Encontro 9 — 02/10/2026
 
 ### Minha contribuição
@@ -427,3 +429,92 @@ As execuções e os resultados foram conferidos antes de considerar as validaç�
 - Integrar os testes de recuperação à suíte de avaliação das personas.
 - Validar os cenários cross-source, as recusas e os guardrails, respeitando os limites do corpus.
 - Sincronizar os relatórios e os artefatos selecionados com o repositório oficial do grupo, preservando o trabalho dos demais integrantes.
+--- 
+## Encontro 10 — 05/10/2026
+
+### Minha contribuição
+
+#### Consolidação dos casos de avaliação das personas
+
+- Dei continuidade à frente de Corpus e Avaliação, revisando os nove casos P01–P09 definidos para as personas Eduardo (Auditor), Renata (Advogada) e Lucas (Gestor Hospitalar).
+- Para cada caso, consolidei o objetivo da pergunta, o tipo de resposta esperada, os filtros aplicáveis, os campos necessários, as fontes do corpus e a resposta esperada verificável.
+- Registrei a cobertura da base estruturada do PNCP utilizada na avaliação: Estado do Rio de Janeiro, modalidade Pregão Eletrônico (código 6), período de 01/03/2026 a 31/03/2026 e 1.358 registros.
+- Defini o critério para classificação de contratações relacionadas à Tecnologia/TIC, priorizando evidências presentes no objeto, descrição do item, serviço e especificação, evitando classificar automaticamente casos apenas pela presença de termos genéricos como “digital”, “eletrônico”, “sistema” ou “tecnologia”.
+- Consolidei essas informações no arquivo `eval/CASOS_AVALIACAO_PERSONAS_V3.json`.
+
+#### Preparação do ambiente experimental
+
+- Utilizei uma cópia do repositório em ambiente isolado no Google Colab para evitar alterações indevidas no repositório oficial durante os testes.
+- Preparei um subconjunto experimental com 47 chunks diretamente relacionados aos casos de avaliação que dependem de recuperação documental.
+- O subconjunto contém 19 chunks agregados, 23 conversacionais, 2 estruturados e 3 normativos.
+- Foram gerados 47 embeddings com dimensão 1.024 e construídos os índices FAISS e BM25 correspondentes.
+- Validei a integridade entre os 47 chunks, 47 identificadores, 47 embeddings e 47 vetores registrados no índice FAISS.
+
+#### Validação dos casos P03 e P08
+
+- Executei o caso P03, referente à ata 00191/2026 da EBSERH, e o caso P08, referente à ata 00137/2026 do INCA.
+- Identifiquei que os chunks conversacionais das duas atas eram aceitos pela rota esperada, porém eram eliminados pela aplicação do filtro temporal `ano=2026`.
+- No P03, os 12 chunks da ata 00191 atendiam à rota, mas nenhum atendia ao filtro.
+- No P08, os 10 chunks da ata 00137 atendiam à rota, mas nenhum atendia ao filtro.
+- O diagnóstico mostrou que esses chunks possuem o metadado `ano=''`. A string vazia era considerada presente e sua conversão para inteiro falhava, fazendo com que o chunk fosse rejeitado.
+- Realizei uma simulação exclusivamente em memória, tratando `ano=''` como metadado ausente, sem modificar os arquivos ou índices originais.
+- Após a normalização simulada, o P03 passou de 0/12 para 12/12 chunks elegíveis e o P08 passou de 0/10 para 10/10.
+
+#### Teste do retrieval após a correção simulada
+
+- Executei novamente o retrieval utilizando a correção temporária apenas em memória.
+- No P08, o sistema passou a recuperar cinco evidências da ata 00137/2026. Entre as evidências recuperadas estavam informações sobre o item A50372, rodízio com freio, fabricante TENTE, quantidade de 1.028 unidades, valor unitário de R$ 311,00 e valor total de R$ 319.708,00.
+- No P03, o sistema recuperou corretamente o `contratacoes_publicacao.json_chunk_400`, relacionado à EBSERH e ao controle PNCP esperado.
+- Entretanto, no P03 também foram recuperados chunks pertencentes à ata 00137/2026, evidenciando uma limitação adicional de precisão documental no ranking.
+- A partir desse resultado, registrei como recomendação o uso de identificadores como número da ata, processo, número da compra, órgão/entidade e identificador PNCP como filtros ou sinais adicionais de reranqueamento.
+
+#### Documentação e publicação
+
+- Produzi o arquivo `eval/RELATORIO_FINAL_AVALIACAO_PERSONAS_JANICE.md`, consolidando os casos P01–P09, os resultados esperados, a cobertura do corpus, o critério Tecnologia/TIC, os testes realizados, as falhas identificadas e as recomendações técnicas.
+- Mantive os arquivos originais preservados durante os testes.
+- Publiquei `CASOS_AVALIACAO_PERSONAS_V3.json` no repositório oficial.
+- Publiquei `RELATORIO_FINAL_AVALIACAO_PERSONAS_JANICE.md` na pasta `eval/` da branch `main`.
+- O relatório final foi registrado no commit `543d18d`, com a mensagem `docs: adiciona relatório final`.
+- Compartilhei com a equipe os dois arquivos principais da entrega e os pontos técnicos que precisam ser considerados na continuidade da integração.
+
+### Uso de IA
+
+- Utilizei um assistente de IA como apoio à organização e revisão dos casos P01–P09, à análise dos módulos de recuperação, à preparação dos testes controlados e à interpretação das saídas obtidas.
+- Utilizei IA para apoiar o diagnóstico do comportamento do filtro temporal e a preparação da simulação em memória.
+- Os comandos foram executados no Google Colab e os resultados foram conferidos antes do registro das conclusões.
+- A correção de `ano=''` foi apenas simulada em memória; não foi aplicada ao código oficial do pipeline.
+- Utilizei IA também como apoio à consolidação do relatório técnico final e à preparação da comunicação dos resultados para a equipe.
+
+### Resultados
+
+- Nove casos de avaliação P01–P09 consolidados com objetivos, tipos de resposta, filtros, campos, fontes e respostas esperadas verificáveis.
+- Critério de classificação Tecnologia/TIC definido e documentado.
+- Cobertura temporal da base estruturada documentada.
+- Subconjunto experimental de 47 chunks preparado e indexado.
+- 47 embeddings de dimensão 1.024 gerados e validados.
+- Índices FAISS e BM25 do subconjunto experimental construídos e validados.
+- Falha sistemática relacionada ao metadado `ano=''` comprovada nos casos P03 e P08.
+- Simulação de normalização validada: P03 passou de 0/12 para 12/12 e P08 de 0/10 para 10/10 chunks elegíveis.
+- Retrieval do P08 recuperado após a simulação.
+- Evidência estruturada correta do P03 recuperada, porém com mistura de chunks de outra ata.
+- Necessidade de melhoria da precisão documental registrada.
+- `CASOS_AVALIACAO_PERSONAS_V3.json` publicado no repositório.
+- `RELATORIO_FINAL_AVALIACAO_PERSONAS_JANICE.md` publicado no repositório.
+- Entregável individual de Corpus e Personas concluído e comunicado à equipe.
+
+### Dificuldades e limitações
+
+- Os metadados dos documentos conversacionais apresentam o campo `ano` como string vazia em alguns casos, causando rejeição indevida quando o filtro temporal é aplicado.
+- A correção desse comportamento foi validada apenas em memória e ainda precisa ser avaliada pela equipe antes de eventual alteração no código oficial.
+- No P03, o retrieval recuperou a evidência estruturada correta, mas também retornou chunks pertencentes a outra ata, indicando necessidade de melhorar a precisão documental.
+- O subconjunto de 47 chunks foi utilizado especificamente para os testes de avaliação e não representa a indexação integral dos 38.619 chunks do corpus v3.
+- Os testes realizados tiveram como objetivo validar a recuperação e diagnosticar falhas; não representam, isoladamente, a validação completa de todo o pipeline em produção.
+
+### Próximos passos
+
+- Compartilhar com a equipe os resultados da avaliação e os dois arquivos produzidos.
+- Avaliar em conjunto a correção do tratamento de metadados vazios no filtro temporal.
+- Avaliar o uso de número da ata, processo, número da compra, órgão e identificador PNCP para melhorar a precisão da recuperação e do reranqueamento.
+- Reexecutar P03 e P08 caso a equipe incorpore as correções ao pipeline oficial.
+- Acompanhar a integração dos resultados da avaliação com as demais etapas do Adaptive RAG.
+- Manter os casos P01–P09 como referência para os testes finais e para a preparação da apresentação do projeto.
