@@ -55,6 +55,30 @@ def test_multirrota_normativa_permanece_hibrida():
     assert plano["estrategia"] == "recuperacao_hibrida"
 
 
+def test_multirrota_com_contagem_vira_combinada():
+    plano = planejar_consulta(
+        "Quantas contratações existem e o que a legislação diz sobre MEI?",
+        analise=analise(["normativa", "estruturada"]),
+    )
+
+    assert plano["bases"] == ["normativa", "estruturada"]
+    assert plano["estrategia"] == "combinada"
+    assert plano["operacao"] == "contar"
+    assert plano["rotas_recuperacao"] == ["normativa"]
+
+
+def test_multirrota_conversacional_com_listagem_vira_combinada():
+    plano = planejar_consulta(
+        "Liste as contratações e informe o que foi discutido nas atas.",
+        analise=analise(["conversacional", "estruturada"]),
+    )
+
+    assert plano["bases"] == ["conversacional", "estruturada"]
+    assert plano["estrategia"] == "combinada"
+    assert plano["operacao"] == "listar"
+    assert plano["rotas_recuperacao"] == ["conversacional"]
+
+
 def test_pca_permanece_na_base_agregada():
     plano = planejar_consulta(
         "Quais itens aparecem no PCA?",
@@ -113,7 +137,7 @@ def test_tecnologia_com_criterio_documentado():
         },
     )
 
-    assert plano["operacao"] == "contar"
+    assert plano["operacao"] == "listar"
     assert plano["filtros"]["objeto_termos"] == [
         "software", "informática"
     ]
@@ -212,6 +236,47 @@ def test_executor_hibrido_roteia_uma_vez(monkeypatch):
     assert chamadas == ["run_unico"]
     assert resultado["query_id"] == "q_unico"
     assert resultado["run_id"] == "run_unico"
+
+
+def test_executor_combinado_executa_estruturada_e_hibrida():
+    pergunta = (
+        "Quantas contratações existem e o que a legislação diz sobre MEI?"
+    )
+    base = [
+        {
+            "id_pncp": "1",
+            "objeto": "Serviço A",
+            "fonte_original": "teste.json",
+        },
+        {
+            "id_pncp": "2",
+            "objeto": "Serviço B",
+            "fonte_original": "teste.json",
+        },
+    ]
+
+    def recuperar(**kwargs):
+        assert kwargs["run_id"] == "run_combinado"
+        assert kwargs["analise_pronta"]["routes"] == ["normativa"]
+        return {
+            "query_id": "q_planejamento",
+            "routes": ["normativa"],
+            "evidences": [{"chunk_id": "norma_1"}],
+        }
+
+    resultado = executar_consulta(
+        pergunta,
+        base=base,
+        analise=analise(["normativa", "estruturada"]),
+        recuperador=recuperar,
+        run_id="run_combinado",
+    )
+
+    assert resultado["executado"] is True
+    assert resultado["estrategia"] == "combinada"
+    assert resultado["total"] == 2
+    assert resultado["evidences"] == [{"chunk_id": "norma_1"}]
+    assert resultado["plano"]["rotas_recuperacao"] == ["normativa"]
 
 
 def test_retrieve_reutiliza_analise_sem_rotear(monkeypatch):

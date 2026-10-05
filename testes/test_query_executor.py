@@ -92,6 +92,122 @@ def test_pergunta_aberta_segue_para_recuperacao():
     assert resultado["estrategia"] == "recuperacao_hibrida"
 
 
+def test_combinada_executa_estruturada_e_hibrida(base):
+    chamadas = []
+
+    def recuperador(**kwargs):
+        chamadas.append(kwargs)
+        return {
+            "query_id": "q_combinada",
+            "routes": ["normativa"],
+            "evidences": [{"chunk_id": "norma_1"}],
+        }
+
+    plano = {
+        "bases": ["normativa", "estruturada"],
+        "estrategia": "combinada",
+        "operacao": "contar",
+        "filtros": {"ano_compra": 2026},
+        "rotas_recuperacao": ["normativa"],
+        "query_id": "q_combinada",
+    }
+
+    resultado = executar_plano(
+        "Quantas contratações existem e o que a norma diz sobre elas?",
+        plano,
+        base=base,
+        top_k=2,
+        fetch_k=10,
+        recuperador=recuperador,
+        analise_pronta={
+            "query_id": "q_combinada",
+            "routes": ["normativa", "estruturada"],
+            "filters": {},
+            "is_refusal": False,
+        },
+        run_id="run_combinada",
+    )
+
+    assert len(chamadas) == 1
+    assert chamadas[0]["top_k"] == 2
+    assert chamadas[0]["fetch_k"] == 10
+    assert chamadas[0]["run_id"] == "run_combinada"
+    assert chamadas[0]["analise_pronta"]["routes"] == ["normativa"]
+
+    assert resultado["estrategia"] == "combinada"
+    assert resultado["operacao"] == "contar"
+    assert resultado["total"] == 5
+    assert resultado["registros"] == []
+    assert resultado["evidences"] == [{"chunk_id": "norma_1"}]
+    assert resultado["evidencias"] == [{"chunk_id": "norma_1"}]
+    assert resultado["estruturada"]["total"] == 5
+    assert resultado["hibrida"]["estrategia"] == "recuperacao_hibrida"
+    assert resultado["query_id"] == "q_combinada"
+    assert resultado["run_id"] == "run_combinada"
+
+
+def test_combinada_listagem_preserva_paginacao_e_evidencias(base):
+    def recuperador(**kwargs):
+        return {
+            "routes": ["conversacional"],
+            "evidences": [{"chunk_id": "ata_1"}],
+        }
+
+    resultado = executar_plano(
+        "Liste as contratações e mostre o que foi discutido nas atas.",
+        {
+            "bases": ["conversacional", "estruturada"],
+            "estrategia": "combinada",
+            "operacao": "listar",
+            "filtros": {"ano_compra": 2026},
+            "campos": ["objeto"],
+            "pagina": 2,
+            "tamanho_pagina": 2,
+            "rotas_recuperacao": ["conversacional"],
+        },
+        base=base,
+        recuperador=recuperador,
+    )
+
+    assert resultado["total"] == 5
+    assert resultado["registros"] == [
+        {"objeto": "Serviço de teste"},
+        {"objeto": "Serviço de teste"},
+    ]
+    assert resultado["evidences"] == [{"chunk_id": "ata_1"}]
+    assert resultado["estruturada"]["pagina"] == 2
+    assert resultado["estruturada"]["total_paginas"] == 3
+
+
+def test_combinada_exige_base_estruturada(base):
+    with pytest.raises(ValueError, match="exige a base estruturada"):
+        executar_plano(
+            "Quantas existem e o que diz a norma?",
+            {
+                "bases": ["normativa"],
+                "estrategia": "combinada",
+                "operacao": "contar",
+                "rotas_recuperacao": ["normativa"],
+            },
+            base=base,
+            recuperador=lambda **kwargs: {},
+        )
+
+
+def test_combinada_exige_rota_de_recuperacao(base):
+    with pytest.raises(ValueError, match="rota de recuperação"):
+        executar_plano(
+            "Quantas contratações existem?",
+            {
+                "bases": ["estruturada"],
+                "estrategia": "combinada",
+                "operacao": "contar",
+            },
+            base=base,
+            recuperador=lambda **kwargs: {},
+        )
+
+
 def test_rejeita_estrategia_desconhecida():
     with pytest.raises(ValueError):
         executar_plano(

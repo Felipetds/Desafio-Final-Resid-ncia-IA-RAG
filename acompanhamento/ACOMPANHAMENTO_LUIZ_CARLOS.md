@@ -351,60 +351,42 @@ Utilizei uma ferramenta de IA para revisar o fluxo existente de roteamento e rec
 
 ### Minha participação
 
-- Adaptei o planejamento da consulta para identificar base, estratégia, operação, filtros e campos solicitados.
-- Implementei os módulos `structured_query.py` e `query_executor.py`.
-- Implementei contagem e listagem sobre o conjunto completo de registros, sem limitar a consulta pelo `top_k`.
-- Adicionei seleção de campos, ordenação estável por ID PNCP e paginação.
-- Implementei filtros por ano da compra, município, UF, modalidade e valores estimado ou homologado.
-- Diferenciei limites monetários inclusivos e estritos, preservando a distinção entre zero e ausência de valor.
-- Mantive a recuperação híbrida para perguntas abertas.
-- Reutilizei a análise do roteador na recuperação, evitando uma segunda chamada de roteamento e preservando os identificadores da consulta.
-- Adicionei pedidos de esclarecimento para critérios ambíguos ou não suportados.
-- Acrescentei proteções para pedidos de exposição de dados pessoais e previsões sem suporte no corpus.
-- Implementei filtros de publicação original e modalidade por ID para o caso P01 das personas.
-- Adicionei interpretação de página e quantidade de registros por página.
-- Registrei a etapa `consulta_estruturada` na observabilidade, com operação, filtros, totais, paginação e latência, sem incluir os textos dos registros no evento.
-- Corrigi a indicação da etapa de saída da recuperação quando o rerank está desativado.
-- Enviei as alterações técnicas na branch `feat/consulta-estruturada-luiz`.
+- Revisei o feedback do professor sobre consultas estruturadas e adaptei o sistema para decidir não apenas qual base utilizar, mas também qual estratégia de consulta executar.
+- Implementei consultas estruturadas sobre o conjunto completo de registros, permitindo contagem e listagem sem dependência do `top_k`.
+- Mantive a recuperação híbrida para perguntas abertas e semânticas.
+- Implementei filtros por ano, município, UF, modalidade, valores e período de publicação, além de paginação e seleção de campos.
+- Ajustei o roteador para interpretar corretamente operações de contagem e listagem.
+- Corrigi consultas do tipo “quais contratações...” para serem tratadas como listagem.
+- Implementei a estratégia `combinada`, permitindo utilizar consulta estruturada e recuperação híbrida na mesma pergunta quando necessário.
+- Refatorei o `router.py` e o `query_executor.py`, separando responsabilidades e reduzindo funções muito extensas sem alterar suas interfaces principais.
+- O `query_executor.py` passou a separar a execução em consulta estruturada, recuperação híbrida e execução combinada.
+- Mantive a reutilização da análise do roteador, evitando roteamento duplicado.
+- Mantive os mecanismos de esclarecimento, recusa e observabilidade já implementados.
+- Atualizei os testes de planejamento e execução para validar as novas estratégias.
+- As alterações foram limitadas aos arquivos sob minha responsabilidade, evitando mudanças em módulos desenvolvidos por outros integrantes.
 
 ### Resultados obtidos
 
-- A base estruturada utilizada nos testes contém 1.358 registros com IDs únicos.
-- A contagem por ano da compra 2026 retornou 1.234 registros.
-- A listagem por município Rio de Janeiro e ano da compra 2026 retornou 665 correspondências.
-- A listagem de 2026 com valor estimado superior a R$ 500 mil retornou 560 correspondências, apresentando somente os campos solicitados.
-- Contagem e listagem mantiveram os mesmos resultados ao variar `top_k` entre 1, 3 e 5.
-- A paginação permitiu percorrer os 1.358 registros sem duplicação de IDs.
-- O caso P01 retornou 1.358 registros para RJ, pregão eletrônico e publicação original em março de 2026.
-- A data utilizada em P01 foi extraída de `texto_integral.dataPublicacaoPncp`, sem utilizar a data de atualização.
-- A segunda página de P01 apresentou 10 registros, sem sobreposição com a primeira.
-- Um critério textual inicial de tecnologia encontrou 48 correspondências. Esse total representa correspondências textuais, não uma classificação validada de serviços de tecnologia.
-- Os 53 testes específicos dos novos módulos, planejamento, publicação e observabilidade foram aprovados.
-- A suíte offline completa apresentou 185 testes aprovados em 4,02 segundos, excluindo `testes/teste_integracao.py`.
-- Confirmei a persistência de um evento real em `logs/pipeline-2026-10-05.jsonl`, com `run_id`, `query_id`, filtros e total.
-- A contagem com análise previamente fornecida levou aproximadamente 103 ms, sem incluir o tempo do modelo para realizar o roteamento.
-
-### Dificuldades encontradas
-
-A ingestão estava preenchendo a data de publicação com a data de atualização em parte dos registros. Para validar os filtros de publicação, utilizei o campo original preservado em `texto_integral`, mantendo a correção definitiva da ingestão como pendência.
-
-Na pergunta aberta sobre reparo de vidraça, a busca densa colocou dois registros pertinentes nas primeiras posições, mas a fusão RRF os deslocou para as posições 11 e 12. As três evidências finais não atenderam adequadamente à intenção da pergunta.
-
-Experimentos com pesos diferentes na fusão melhoraram parcialmente essas posições, mas não demonstraram qualidade suficiente para alterar a configuração de produção.
-
-Também identifiquei que o rerank atual ainda é simulado e que seu fallback limita candidatos antes da seleção multirrota, ponto que precisa ser revisado.
+- Contagem e listagem passaram a considerar toda a base estruturada, independentemente do `top_k`.
+- A base utilizada possui 1.358 registros com IDs únicos.
+- A consulta por ano de compra 2026 retornou 1.234 registros.
+- A consulta por município do Rio de Janeiro e ano 2026 retornou 665 registros.
+- A consulta de valor estimado superior a R$ 500 mil retornou 560 registros.
+- A paginação funcionou sem duplicação de registros.
+- O sistema passou a trabalhar com três estratégias explícitas:
+  - `consulta_estruturada`;
+  - `recuperacao_hibrida`;
+  - `combinada`.
+- Os testes adicionados para o `query_executor.py` foram executados com sucesso.
+- O Pull Request da consulta estruturada foi incorporado à `main`.
 
 ### Apoio de IA
 
-Utilizei uma ferramenta de IA para apoiar a implementação dos módulos, a elaboração dos testes, a conferência independente dos resultados e a investigação da recuperação por vidraça. As alterações foram verificadas com testes automatizados, consultas sobre a base real e inspeção dos logs persistidos.
+Utilizei ferramentas de IA como apoio na análise do feedback do professor, refatoração do código e elaboração dos testes. As alterações foram revisadas e mantidas somente dentro do escopo da minha responsabilidade no projeto.
 
 ### Próximas atividades
 
-- Abrir e revisar o Pull Request da branch de consulta estruturada.
-- Documentar os critérios, os resultados e as limitações da implementação.
-- Alinhar com a responsável pelas personas o critério de classificação de serviços de tecnologia.
-- Melhorar e avaliar a relevância da recuperação híbrida para a pergunta sobre vidraça.
-- Apoiar a integração do novo executor com a interface e a apresentação dos resultados estruturados.
-- Revalidar os casos das personas após a integração.
-- Executar os testes de integração na versão final.
-- Acompanhar a correção da data de publicação na ingestão e a revisão do fallback do rerank.
+- Validar a estratégia combinada no ambiente completo do projeto.
+- Reexecutar a suíte completa após integração com a versão mais recente da `main`.
+- Apoiar a integração do executor com a interface junto à integrante responsável.
+- Acompanhar com os responsáveis pela recuperação a melhoria da relevância de perguntas abertas, como o caso de reparo de vidraça.
