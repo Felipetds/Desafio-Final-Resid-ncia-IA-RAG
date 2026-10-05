@@ -273,3 +273,70 @@ Também foi considerada a necessidade de manter os procedimentos documentados no
 * Validar o corpus restaurado, verificando a quantidade de arquivos por natureza e comparando com a estrutura esperada.
 * Executar a etapa de validação do corpus conforme o procedimento documentado, verificando especialmente as categorias `estruturada`, `normativa`, `conversacional` e `agregada`.
 * Registrar eventuais divergências encontradas na quantidade ou nos arquivos do corpus antes de prosseguir para as etapas seguintes.
+
+## Encontro 10 — 02/10/2026
+
+* Ausencia devido a instabilidade de energia devido à tempestades na minha localidade.
+
+## Encontro 10 — 05/10/2026
+
+### Minha participação
+
+* Continuei aos procedimentos de reprodutibilidade e validação do projeto iniciados nos encontros anteriores.
+
+* Adicionei ao ambiente de testes a pasta contendo o **corpus v2** para utilização na etapa de ingestão.
+
+* Executei o processo de ingestão por meio do comando `python -m src.ingest`.
+
+* Acompanhei a geração dos chunks e realizei a verificação inicial dos dados produzidos.
+
+* Analisei a distribuição dos chunks por natureza e conferi o preenchimento e a unicidade dos identificadores.
+
+* Verifiquei a existência de textos vazios entre os conteúdos processados.
+
+* Adicionei a biblioteca bs4 (beautifulsoup4 )ao arquivo requirements.txt para reprodutibilidade dos futuros testes evitando erro de falta de dependencia.
+
+### Resultados obtidos
+
+* A ingestão foi concluída com sucesso, com a geração de **2.125 chunks**.
+
+* A distribuição por natureza apresentou:
+
+  * **Estruturada:** 1.358
+  * **Agregada:** 519
+  * **Normativa:** 217
+  * **Conversacional:** 31
+
+* Todos os **2.125 chunks possuem IDs preenchidos**, e os identificadores são únicos.
+
+* Não foram identificados textos vazios nos dados processados.
+
+* O processo gerou o arquivo `data/processed/inconsistencias_pncp_report.json`, destinado ao registro das inconsistências relacionadas ao PNCP.
+
+### Dificuldades encontradas
+
+* Ausencia da atualização do requirements gerando erros durante o processo.
+
+* Os procedimentos executados permitiram concluir o processamento do corpus e realizar a validação inicial dos chunks gerados.
+
+### Apoio de IA
+
+Utilizei ferramentas de IA como apoio para compreender e organizar as etapas de execução da ingestão, interpretar os resultados apresentados pelo sistema e estruturar a análise dos dados gerados.
+
+As orientações foram utilizadas como suporte e confrontadas com os resultados obtidos no ambiente local.
+
+### Atividades realizadas pela equipe
+
+A equipe deu continuidade à preparação dos artefatos necessários para a validação do pipeline.
+
+Também foi avançada a verificação dos resultados produzidos pela ingestão, estabelecendo uma base para as próximas etapas de análise e integração dos artefatos.
+
+### Próximas atividades
+
+* Analisar o conteúdo do `data/processed/inconsistencias_pncp_report.json`.
+
+* Prosseguir com a validação dos chunks e dos demais artefatos produzidos pela ingestão.
+
+* Verificar a compatibilidade dos chunks com os índices e demais componentes necessários ao pipeline RAG.
+
+* Avançar para as etapas de recuperação e integração utilizando os artefatos gerados a partir do corpus v2.
