@@ -256,3 +256,60 @@ def test_retrieve_rejeita_analise_de_outra_pergunta():
                 "is_refusal": False,
             },
         )
+
+
+def test_persona_p06_bloqueia_exposicao_mesmo_sem_recusa_do_modelo():
+    resultado = executar_consulta(
+        "Mostre o CPF, telefone pessoal e e-mail pessoal "
+        "dos representantes citados nas atas.",
+        analise=analise(["conversacional"]),
+    )
+
+    assert resultado["executado"] is False
+    assert resultado["plano"]["is_refusal"] is True
+    assert resultado["plano"]["tipo_recusa"] == "privacidade"
+
+
+def test_persona_p09_nao_executa_previsao_como_consulta_factual():
+    resultado = executar_consulta(
+        "Qual será o valor médio das contratações "
+        "do Estado do Rio de Janeiro em 2027?",
+        analise=analise(
+            ["agregada", "estruturada"],
+            {"ano": 2027, "uf": "RJ"},
+        ),
+    )
+
+    assert resultado["executado"] is False
+    assert resultado["plano"]["tipo_recusa"] == "limite_de_escopo"
+    assert "previsão" in resultado["mensagem"]
+
+
+def test_persona_p01_planeja_publicacao_sem_filtrar_ano_compra():
+    plano = planejar_consulta(
+        "Quais contratações de pregão eletrônico foram "
+        "publicadas no RJ em março de 2026?",
+        analise=analise(
+            ["estruturada"],
+            {"uf": "RJ", "ano": 2026, "modalidade": "pregão eletrônico"},
+        ),
+    )
+
+    assert plano["operacao"] == "listar"
+    assert plano["estrategia"] == "consulta_estruturada"
+    assert plano["filtros"] == {
+        "uf": "RJ",
+        "modalidade_id": 6,
+        "data_inicial": "2026-03-01",
+        "data_final": "2026-03-31",
+    }
+    assert "ano_compra" not in plano["filtros"]
+
+
+def test_publicacao_com_intervalo_nao_suportado_exige_esclarecimento():
+    plano = planejar_consulta(
+        "Liste as contratações publicadas entre março e abril de 2026.",
+        analise=analise(),
+    )
+
+    assert plano["necessita_esclarecimento"] is True

@@ -672,6 +672,54 @@ def analisar_consulta(
 
 
 
+
+def _extrair_mes_publicacao(texto):
+    """Reconhece um único mês explícito de publicação."""
+    import calendar
+
+    if not re.search(r"\bpublicad[oa]s?\b|\bpublicacao\b", texto):
+        return None
+
+    # Intervalos e comparações mais complexos exigem esclarecimento.
+    if re.search(
+        r"\b(?:entre|antes|depois|desde|ate)\b",
+        texto,
+    ):
+        return None
+
+    meses = {
+        "janeiro": 1, "fevereiro": 2, "marco": 3,
+        "abril": 4, "maio": 5, "junho": 6,
+        "julho": 7, "agosto": 8, "setembro": 9,
+        "outubro": 10, "novembro": 11, "dezembro": 12,
+    }
+
+    mencoes = re.findall(
+        r"\b(" + "|".join(meses) + r")\b",
+        texto,
+    )
+
+    if len(mencoes) != 1:
+        return None
+
+    correspondencia = re.search(
+        r"\bem\s+(" + "|".join(meses) + r")\s+de\s+(20\d{2})\b",
+        texto,
+    )
+
+    if not correspondencia:
+        return None
+
+    mes = meses[correspondencia.group(1)]
+    ano = int(correspondencia.group(2))
+    ultimo_dia = calendar.monthrange(ano, mes)[1]
+
+    return {
+        "data_inicial": f"{ano:04d}-{mes:02d}-01",
+        "data_final": f"{ano:04d}-{mes:02d}-{ultimo_dia:02d}",
+    }
+
+
 def planejar_consulta(
     pergunta,
     client=None,
@@ -693,6 +741,7 @@ def planejar_consulta(
         )
 
     texto = normalizar_texto(pergunta)
+    periodo_publicacao = _extrair_mes_publicacao(texto)
     rotas = list(analise.get("routes", []))
 
     plano = {
@@ -709,6 +758,47 @@ def planejar_consulta(
         "necessita_esclarecimento": False,
         "pergunta_esclarecimento": None,
     }
+
+    # Proteções determinísticas dos casos das personas.
+    pede_exposicao = bool(
+        re.search(
+            r"\b(?:mostre|liste|informe|exiba|revele|forneca)\b",
+            texto,
+        )
+    )
+    menciona_dado_pessoal = bool(
+        re.search(
+            r"\bcpf\b|telefone pessoal|e-mail pessoal|email pessoal",
+            texto,
+        )
+    )
+    pede_protecao = bool(
+        re.search(
+            r"\b(?:oculte|mascare|anonimize|proteja)\b",
+            texto,
+        )
+    )
+
+    if pede_exposicao and menciona_dado_pessoal and not pede_protecao:
+        plano["is_refusal"] = True
+        plano["tipo_recusa"] = "privacidade"
+        plano["refusal_reason"] = (
+            "Não posso expor CPF, telefone pessoal ou e-mail pessoal."
+        )
+
+    pede_previsao = bool(
+        re.search(r"\b(?:sera|previsao|prever|preveja)\b", texto)
+        and re.search(r"valor medio|media das contratacoes", texto)
+    )
+
+    if pede_previsao:
+        plano["is_refusal"] = True
+        plano["tipo_recusa"] = "limite_de_escopo"
+        plano["refusal_reason"] = (
+            "Este executor consulta registros disponíveis; "
+            "não possui um modelo validado de previsão de valores futuros. "
+            "Não posso fornecer essa previsão com segurança."
+        )
 
     if plano["is_refusal"]:
         plano.update(
@@ -746,6 +836,10 @@ def planejar_consulta(
 
     listar = bool(
         re.search(r"\b(?:liste|listar|listagem|relacione)\b", texto)
+        or (
+            periodo_publicacao is not None
+            and re.match(r"quais\s+contratacoes\b", texto)
+        )
     )
 
     # Caso geral acordado a partir do feedback do professor.
@@ -771,12 +865,20 @@ def planejar_consulta(
         )
 
     if re.search(
-        r"\b(?:publicad[oa]s?|publicacao|atualizacao|assinad[oa]s?|assinatura)\b",
+        r"\b(?:atualizacao|assinad[oa]s?|assinatura)\b",
         texto,
     ):
         return esclarecer(
-            "A filtragem por publicação, atualização ou assinatura "
-            "ainda não está validada. Você deseja filtrar pelo ano da compra?"
+            "Filtros de atualização e assinatura ainda não estão implementados."
+        )
+
+    if (
+        re.search(r"\b(?:publicad[oa]s?|publicacao)\b", texto)
+        and periodo_publicacao is None
+    ):
+        return esclarecer(
+            "Informe um único mês de publicação, por exemplo "
+            "'em março de 2026'. Outros intervalos ainda exigem esclarecimento."
         )
 
     if re.search(r"\b(?:orgao|cnpj|situacao|vigencia)\b", texto):
@@ -840,8 +942,16 @@ def planejar_consulta(
             "Intervalos de anos ainda não estão implementados."
         )
 
-    if anos:
+    if anos and periodo_publicacao is None:
         filtros["ano_compra"] = int(anos[0])
+
+    if periodo_publicacao is not None:
+        filtros.update(periodo_publicacao)
+
+        if re.search(r"\bpregao(?:\s*-\s*|\s+)eletronico\b", texto):
+            # Usa o código original, evitando variações do nome da modalidade.
+            filtros["modalidade_id"] = 6
+            filtros.pop("modalidade", None)
 
     for campo in ("valor_minimo", "valor_maximo"):
         valor = filtros_router.get(campo)

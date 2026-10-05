@@ -78,6 +78,49 @@ def validar_base(base):
         raise ValueError("A base possui IDs PNCP duplicados.")
 
 
+
+def _validar_data_filtro(valor, campo):
+    from datetime import date
+    import re
+
+    if valor is None:
+        return None
+
+    if not isinstance(valor, str) or not re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}", valor
+    ):
+        raise ValueError(f"{campo} deve usar YYYY-MM-DD.")
+
+    try:
+        return date.fromisoformat(valor)
+    except ValueError as erro:
+        raise ValueError(f"Data inválida: {campo}.") from erro
+
+
+def _ler_original_pncp(registro):
+    original = registro.get("texto_integral")
+
+    if not isinstance(original, str):
+        raise ValueError(
+            "Filtros de publicação e modalidade_id exigem "
+            "texto_integral com o registro original do PNCP."
+        )
+
+    try:
+        dados = json.loads(original)
+    except json.JSONDecodeError as erro:
+        raise ValueError("JSON original do PNCP inválido.") from erro
+
+    if not isinstance(dados, dict):
+        raise ValueError("O registro original deve ser um objeto JSON.")
+
+    return dados
+
+
+FILTROS.update({"data_inicial", "data_final", "modalidade_id"})
+CAMPOS.add("modalidade_id")
+
+
 def consultar_registros(
     base,
     operacao="contar",
@@ -164,9 +207,62 @@ def consultar_registros(
         if len(texto_ano) != 4 or not texto_ano.isdigit():
             raise ValueError("Ano da compra deve possuir quatro dígitos.")
 
+    data_inicial = _validar_data_filtro(
+        filtros.get("data_inicial"), "data_inicial"
+    )
+    data_final = _validar_data_filtro(
+        filtros.get("data_final"), "data_final"
+    )
+
+    if data_inicial and data_final and data_inicial > data_final:
+        raise ValueError("Data inicial posterior à data final.")
+
+    modalidade_id = filtros.get("modalidade_id")
+    if modalidade_id is not None:
+        if type(modalidade_id) is not int or modalidade_id <= 0:
+            raise ValueError("modalidade_id deve ser inteiro positivo.")
+
+    filtrar_publicacao = data_inicial is not None or data_final is not None
+    registros_sem_publicacao = 0
     selecionados = []
 
     for registro in base:
+        if filtrar_publicacao or modalidade_id is not None:
+            original = _ler_original_pncp(registro)
+
+            if modalidade_id is not None:
+                if original.get("modalidadeId") != modalidade_id:
+                    continue
+
+            if filtrar_publicacao:
+                publicacao = original.get("dataPublicacaoPncp")
+
+                if publicacao in (None, ""):
+                    registros_sem_publicacao += 1
+                    continue
+
+                from datetime import datetime
+
+                try:
+                    data_publicacao = datetime.fromisoformat(
+                        str(publicacao).replace("Z", "+00:00")
+                    ).date()
+                except ValueError as erro:
+                    raise ValueError(
+                        "dataPublicacaoPncp inválida no registro "
+                        f"{registro['id_pncp']}."
+                    ) from erro
+
+                if data_inicial and data_publicacao < data_inicial:
+                    continue
+                if data_final and data_publicacao > data_final:
+                    continue
+
+            # Corrige a projeção local sem modificar a base recebida.
+            registro = dict(registro)
+            registro["data_publicacao"] = original.get("dataPublicacaoPncp")
+            registro["modalidade_id"] = original.get("modalidadeId")
+
         atende = True
 
         for campo in (
@@ -229,6 +325,11 @@ def consultar_registros(
         "minimo_inclusivo": minimo_inclusivo,
         "maximo_inclusivo": maximo_inclusivo,
         "criterio_objeto": criterio_objeto,
+        "registros_sem_publicacao": registros_sem_publicacao,
+        "fonte_data_publicacao": (
+            "texto_integral.dataPublicacaoPncp"
+            if filtrar_publicacao else None
+        ),
         "total_base": len(base),
         "total": total,
         "campos": campos if operacao == "listar" else [],
