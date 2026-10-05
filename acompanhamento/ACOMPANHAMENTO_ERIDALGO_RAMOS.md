@@ -152,3 +152,10 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * A configuração e as variáveis de ambiente (`RERANK_ENABLED`, `RERANK_URL`, etc.) foram documentadas no código.
 * Os testes locais comprovam que o pipeline continua a funcionar intacto com o rerank desativado (fallback em vigor).
 * **Status de Validação:** A validação real no pipeline ponta a ponta encontra-se pendente, aguardando a disponibilização do endpoint pelo professor.
+
+### Atualização (05/10/2026) - Preparação de Dados Estruturados
+* Revistos os 1.358 registos do PNCP e implementada a normalização no `src/ingest.py` para suportar consultas estruturadas puras.
+* **Mapeamento:** Adicionado suporte para `id_pncp` e `objeto`.
+* **Tratamento de Datas e Valores:** Implementada a distinção entre ano da compra e data de publicação. Os valores ausentes foram tratados como nulos (`None`) em vez de convertidos para zero.
+* **Integridade:** Foram mantidos os 2.125 chunks originais intactos. Não foi necessário reconstruir os embeddings.
+* **Artefatos:** Gerada a base limpa `base_estruturada_normalizada.json` e o relatório de inconsistências `inconsistencias_pncp_report.json`.
