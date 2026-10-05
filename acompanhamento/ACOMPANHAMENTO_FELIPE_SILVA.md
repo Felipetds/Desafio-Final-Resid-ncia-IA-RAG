@@ -206,3 +206,30 @@ Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar
 
 * Analisar os novos logs e atualizar o arquivo de acompanhamento com os resultados obtidos.
 
+## Encontro 9 — 05/10/2026
+
+### Minha contribuição
+
+* Continuo trabalhando nessa etapa: Analisei o retrieve.py para iniciar minha atividade de observabilidade da recuperação. Identifiquei que os eventos retrieval_denso e retrieval_bm25 já são registrados separadamente, mas ainda precisam ser complementados com informações como rota/base e IDs dos primeiros resultados. Já iniciei a inclusão das outras informações.
+
+### Uso de IA
+
+* Utilizei apenas pra estruturar as atividades que foram executadas hoje de acordo com as demandas enviadar pela gerente Maria Eduarda.
+
+### Resumo da equipe
+
+* Testes de integração: executei 9 testes, e todos foram aprovados, incluindo os cenários de recuperação conversacional e multirrota.
+
+* Suíte completa: executei todos os testes do projeto e obtive 139 testes aprovados, sem falhas, em aproximadamente 5 minutos.
+
+* Esses resultados indicam que o pipeline está funcionando de forma consistente e que as alterações atuais não causaram regressões nos testes existentes.
+
+### Próximos passos
+
+* Verificar se os logs passam a registrar rota/base, quantidade de candidatos e IDs dos primeiros resultados, sem expor o conteúdo das evidências.
+
+* Implementar os testes de observabilidade em teste_retrieve.py, cobrindo os eventos Dense/BM25, campos obrigatórios, consistência do run_id, busca sem resultados e falha controlada.
+
+* Executar novamente os testes específicos e, depois, a suíte completa, comparando com o baseline atual de 139 testes aprovados.
+
+* Analisar os novos logs e atualizar o arquivo de acompanhamento com os resultados obtidos.
