@@ -27,6 +27,9 @@ STAGES_VALIDOS = {
     "feedback",
 }
 
+# Etapa de execução sobre a base estruturada completa.
+STAGES_VALIDOS.add("consulta_estruturada")
+
 _lock_escrita = threading.Lock()
 
 

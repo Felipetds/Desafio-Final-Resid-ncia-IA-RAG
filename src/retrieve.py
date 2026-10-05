@@ -495,7 +495,7 @@ def recuperar_evidencias(
             "is_refusal": True,
             "refusal_reason": analise.get("refusal_reason"),
             "evidences": [],
-            "stage": "rerank",
+            "stage": "fusao_rrf",
             "latencia_ms": round((time.perf_counter() - inicio) * 1000, 2),
         }
         return _validar_com_retrieval_result(resultado)
@@ -612,7 +612,7 @@ def recuperar_evidencias(
             "rrf_candidates": len(ranking_rrf),
             "returned": len(evidencias),
         },
-        "stage": "rerank",
+        "stage": "rerank" if rerank.RERANK_ENABLED else "fusao_rrf",
         "latencia_ms": round((time.perf_counter() - inicio) * 1000, 2),
     }
 

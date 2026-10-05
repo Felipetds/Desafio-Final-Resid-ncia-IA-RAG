@@ -39,25 +39,75 @@ def executar_plano(
         if operacao not in {"contar", "listar"}:
             raise ValueError("Operação estruturada inválida.")
 
-        registros = carregar_base() if base is None else base
+        import time
+        import uuid
+        from src import obs
 
-        resultado = consultar_registros(
-            registros,
-            operacao=operacao,
-            filtros=plano.get("filtros", {}),
-            campos=plano.get("campos"),
-            pagina=plano.get("pagina", 1),
-            tamanho_pagina=plano.get("tamanho_pagina", 20),
-            campo_valor=plano.get("campo_valor"),
-            minimo_inclusivo=plano.get("minimo_inclusivo", True),
-            maximo_inclusivo=plano.get("maximo_inclusivo", True),
-            criterio_objeto=plano.get("criterio_objeto"),
+        run_id = run_id or obs.novo_run_id()
+        query_id = (
+            (analise_pronta or {}).get("query_id")
+            or plano.get("query_id")
+            or f"q_{uuid.uuid4().hex[:8]}"
         )
+
+        inicio_execucao = time.perf_counter()
+
+        with obs.observar_etapa(
+            run_id=run_id,
+            query_id=query_id,
+            stage="consulta_estruturada",
+            input_data={
+                "operacao": operacao,
+                "filtros": plano.get("filtros", {}),
+                "campos": plano.get("campos"),
+                "pagina": plano.get("pagina", 1),
+                "tamanho_pagina": plano.get("tamanho_pagina", 20),
+                "campo_valor": plano.get("campo_valor"),
+                "minimo_inclusivo": plano.get("minimo_inclusivo", True),
+                "maximo_inclusivo": plano.get("maximo_inclusivo", True),
+                "criterio_objeto": plano.get("criterio_objeto"),
+            },
+        ) as observacao:
+            registros = carregar_base() if base is None else base
+
+            resultado = consultar_registros(
+                registros,
+                operacao=operacao,
+                filtros=plano.get("filtros", {}),
+                campos=plano.get("campos"),
+                pagina=plano.get("pagina", 1),
+                tamanho_pagina=plano.get("tamanho_pagina", 20),
+                campo_valor=plano.get("campo_valor"),
+                minimo_inclusivo=plano.get("minimo_inclusivo", True),
+                maximo_inclusivo=plano.get("maximo_inclusivo", True),
+                criterio_objeto=plano.get("criterio_objeto"),
+            )
+
+            observacao["output"] = {
+                "operacao": resultado["operacao"],
+                "filtros_aplicados": resultado["filtros_aplicados"],
+                "total_base": resultado["total_base"],
+                "total": resultado["total"],
+                "pagina": resultado["pagina"],
+                "tamanho_pagina": resultado["tamanho_pagina"],
+                "total_paginas": resultado["total_paginas"],
+                "quantidade_retornada": len(resultado["registros"]),
+                "campos": resultado["campos"],
+                "registros_sem_publicacao": resultado.get(
+                    "registros_sem_publicacao", 0
+                ),
+            }
 
         return {
             **resultado,
             "query": pergunta.strip(),
+            "query_id": query_id,
+            "run_id": run_id,
             "routes": ["estruturada"],
+            "latencia_ms": round(
+                (time.perf_counter() - inicio_execucao) * 1000,
+                2,
+            ),
         }
 
     if estrategia == "recuperacao_hibrida":
@@ -157,7 +207,7 @@ def executar_consulta(
     )
 
     if plano["estrategia"] == "consulta_estruturada":
-        resultado["query_id"] = plano.get("query_id")
+        plano["query_id"] = resultado["query_id"]
 
     return {
         **resultado,
