@@ -5,6 +5,14 @@ import re
 from bs4 import BeautifulSoup
 import pypdf
 
+# Dicionário global para rastrear inconsistências da base estruturada (05/10)
+inconsistencias_report = {
+    "sem_valor": 0,
+    "sem_ano_compra": 0,
+    "sem_data_publicacao": 0,
+    "sem_id_pncp": 0
+}
+
 def criar_chunk_base(texto, source_file, doc_type, chunk_idx, base_id, sensitivity, extras):
     metadata = {
         "chunk_id": f"{source_file}_chunk_{chunk_idx}",
@@ -32,6 +40,8 @@ def extrair_ano(data_str):
     return ""
 
 def extrair_metadados_especificos(natureza, dados=None):
+    global inconsistencias_report
+    
     meta = {
         "natureza": natureza, "uf": "", "ano": "", "modalidade": "",
         "orgao": "", "municipio": "", "valor": "", "fornecedor": "", "vigencia": ""
@@ -42,15 +52,52 @@ def extrair_metadados_especificos(natureza, dados=None):
     if natureza == "estruturada":
         unidade_orgao = dados.get("unidadeOrgao", {}) or {}
         orgao_entidade = dados.get("orgaoEntidade", {}) or {}
+        
+        # Mapeamento estendido para Consultas Estruturadas (05/10)
+        id_pncp = dados.get("numeroControlePNCP") or dados.get("id")
+        if not id_pncp: inconsistencias_report["sem_id_pncp"] += 1
+            
+        meta["id_pncp"] = id_pncp
         meta["uf"] = unidade_orgao.get("ufSigla", "")
         meta["municipio"] = unidade_orgao.get("municipioNome", "")
         meta["orgao"] = orgao_entidade.get("razaoSocial", "")
-        meta["ano"] = str(dados.get("anoCompra", ""))
+        meta["objeto"] = dados.get("objetoCompra", "")
         meta["modalidade"] = dados.get("modalidadeNome", "")
+        
+        # Distinguir Ano da Compra de Data de Publicação
+        ano_compra = dados.get("anoCompra")
+        data_publicacao = dados.get("dataAtualizacao") or dados.get("dataPublicacaoPncp")
+        
+        if not ano_compra: inconsistencias_report["sem_ano_compra"] += 1
+        if not data_publicacao: inconsistencias_report["sem_data_publicacao"] += 1
+            
+        meta["ano_compra"] = str(ano_compra) if ano_compra else ""
+        meta["data_publicacao"] = str(data_publicacao) if data_publicacao else ""
+        
+        # O campo 'ano' legado usa o ano da compra para manter compatibilidade híbrida
+        meta["ano"] = meta["ano_compra"] 
+
+        # Distinção e preservação do Valor (Nulo != Zero)
         valor_homologado = dados.get("valorTotalHomologado")
         valor_estimado = dados.get("valorTotalEstimado")
-        meta["valor"] = valor_homologado if valor_homologado is not None else (valor_estimado if valor_estimado is not None else "")
         
+        if valor_homologado is not None:
+            meta["valor_homologado"] = valor_homologado
+            meta["valor"] = valor_homologado # Legado
+        else:
+            meta["valor_homologado"] = None # Ausência explícita
+            
+        if valor_estimado is not None:
+            meta["valor_estimado"] = valor_estimado
+            if valor_homologado is None: 
+                meta["valor"] = valor_estimado
+        else:
+            meta["valor_estimado"] = None
+            
+        if valor_homologado is None and valor_estimado is None:
+            inconsistencias_report["sem_valor"] += 1
+            meta["valor"] = ""
+            
     elif natureza == "agregada":
         meta["orgao"] = dados.get("Órgão", dados.get("Unidade Responsável", dados.get("orgao", "")))
         vigencia = dados.get("Data Desejada", dados.get("data_homologacao", ""))
@@ -76,7 +123,6 @@ def extrair_metadados_especificos(natureza, dados=None):
     elif natureza == "conversacional":
         if isinstance(dados, str):
             caminho_lower = dados.lower()
-            # Mapeia todas as origens conversacionais conhecidas do projeto para RJ
             if any(termo in caminho_lower for termo in ["fiocruz", "ebserh", "ministerio_saude", "comunicacoes_sinteticas"]):
                 meta["uf"] = "RJ"
 
@@ -107,10 +153,27 @@ def processar_estruturada(caminho):
     with open(caminho, "r", encoding="utf-8") as f:
         dados = json.load(f)
     registros = dados if isinstance(dados, list) else [dados]
+    
+    # Criamos também uma base 'limpa' puramente JSON estruturado para o Luiz usar
+    base_estruturada_pura = []
+    
     for idx, reg in enumerate(registros, 1):
         texto = json.dumps(reg, ensure_ascii=False)
         extras = extrair_metadados_especificos("estruturada", reg)
+        
+        # 1. Chunk Híbrido (legado intocado para não quebrar índices Faiss)
         chunks.append(criar_chunk_base(texto, os.path.basename(caminho), "contrato", idx, "base_estruturada", "publico", extras))
+        
+        # 2. Objeto limpo para o roteador de listagem e paginação estruturada
+        registro_limpo = dict(extras)
+        registro_limpo["fonte_original"] = caminho
+        registro_limpo["texto_integral"] = texto
+        base_estruturada_pura.append(registro_limpo)
+        
+    os.makedirs("data/processed", exist_ok=True)
+    with open("data/processed/base_estruturada_normalizada.json", "w", encoding="utf-8") as f:
+        json.dump(base_estruturada_pura, f, ensure_ascii=False, indent=4)
+        
     return chunks
 
 def processar_normativa(caminho):
@@ -173,7 +236,8 @@ def processar_conversacional(caminho):
     return chunks
 
 def rodar_ingestao_hibrida():
-    print("Iniciando ingestão (Fix: Mapeamento completo de UF e Exceção para Chunks Vazios)...")
+    global inconsistencias_report
+    print("Iniciando ingestão (Fix: Mapeamento PNCP e Relatório de Inconsistências)...")
     todos_chunks = []
     caminho_est = "data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
     todos_chunks.extend(processar_estruturada(caminho_est))
@@ -194,7 +258,6 @@ def rodar_ingestao_hibrida():
     for c in caminhos_conv:
         todos_chunks.extend(processar_conversacional(c))
 
-    # A trava agora lança um RuntimeError, falhando a execução e retornando código != 0
     if not todos_chunks:
         raise RuntimeError("Nenhum chunk foi gerado! Verifique a presença e o caminho dos arquivos originais. Operação abortada para não corromper o índice.")
 
@@ -202,7 +265,13 @@ def rodar_ingestao_hibrida():
     caminho_saida = "data/processed/chunks_teste.json"
     with open(caminho_saida, "w", encoding="utf-8") as f:
         json.dump(todos_chunks, f, ensure_ascii=False, indent=4)
+        
+    # Grava o relatório de inconsistências
+    with open("data/processed/inconsistencias_pncp_report.json", "w", encoding="utf-8") as f:
+        json.dump(inconsistencias_report, f, ensure_ascii=False, indent=4)
+        
     print(f"✅ Ingestão concluída! Total gerado: {len(todos_chunks)} chunks.")
+    print("📊 Relatório de Inconsistências PNCP gerado em data/processed/inconsistencias_pncp_report.json")
 
 if __name__ == "__main__":
     rodar_ingestao_hibrida()
