@@ -426,3 +426,72 @@ As próximas entregas foram reorganizadas a partir do feedback do professor. For
 - Investigar os desvios de geração e a seleção de evidências irrelevantes.
 - Alinhar a versão do corpus utilizada pelo pipeline com a documentação e os artefatos.
 - Validar os novos fluxos com testes e resultados conhecidos.
+
+---
+
+## Encontro 10 — 05/10/2026
+
+### Minha participação
+
+- Adaptei a interface às orientações do professor, distinguindo contagens, listagens e consultas documentais.
+- Integrei o adaptador ao executor de consultas implementado por Luiz.
+- Implementei a apresentação de contagens com total calculado, filtros, recorte da base e fonte.
+- Implementei tabelas com somente os campos solicitados e controles de paginação, mantendo o total visível durante a navegação.
+- Mantive a quantidade de evidências restrita à recuperação documental, sem limitar contagens ou listagens.
+- Integrei à minha branch as atualizações de Luiz e os novos casos de avaliação de Janice, preservando minha implementação.
+- Adaptei a interface à estratégia combinada, separando o resultado estruturado calculado da resposta documental.
+- Corrigi a apresentação das fontes, distinguindo fontes estruturadas, recuperadas e citadas.
+- Preservei os identificadores de consulta e execução e as referências dos registros apresentados.
+- Validei o feedback persistido e seu vínculo com a resposta exibida, mesmo após editar a pergunta sem executar outra consulta.
+- Criei testes automatizados para apresentação, paginação, preservação dos resultados e feedback.
+- Atualizei `docs/STATUS_DO_PROJETO.md` com os resultados e as pendências identificadas.
+- Enviei os commits de implementação e documentação em uma branch própria.
+
+### Resultados obtidos
+
+- Os 12 testes específicos da interface foram aprovados.
+- A suíte offline foi concluída com 204 testes aprovados, excluindo os testes de integração dessa execução.
+- A verificação de sintaxe e o `git diff --check` foram concluídos sem erros.
+- A contagem de contratações com ano da compra 2026 apresentou 1.234 registros.
+- A listagem com ano da compra 2026 e valor estimado estritamente acima de R$ 500 mil apresentou 560 correspondências.
+- A tabela exibiu somente objeto e valor estimado, com 20 registros por página e 28 páginas.
+- A navegação até a página 3 preservou o total, os filtros, os campos e as referências PNCP.
+- A consulta documental sobre o art. 4º da Lei nº 14.133 recuperou o trecho pertinente e apresentou fontes recuperadas e citadas com uma evidência.
+- O envio de feedback e a limpeza dos campos da interface foram verificados.
+- O JSONL confirmou que o feedback permaneceu associado à pergunta original após a edição da caixa de pergunta, preservando `query_id`, `run_id` e fonte.
+- Os testes simulados da apresentação combinada verificaram a preservação dos cálculos, das fontes e da resposta documental durante a paginação.
+- Na consulta combinada real, a interface preservou o total de 1.234 e informou a ausência de evidências documentais, sem inventar uma explicação normativa.
+
+### Dificuldades encontradas
+
+A inicialização da tabela apresentou incompatibilidade entre os cabeçalhos vazios e a quantidade padrão de colunas do Gradio. Corrigi a configuração e validei a exibição dos campos solicitados.
+
+Também identifiquei que o adaptador não preenchia o campo de fontes documentais. Corrigi a apresentação para distinguir as fontes recuperadas das fontes efetivamente citadas na resposta.
+
+Durante a validação da consulta combinada, os logs mostraram que o filtro de ano das contratações também foi enviado à recuperação normativa. As buscas encontraram candidatos, mas nenhum permaneceu após os filtros. A separação dos filtros por estratégia ficou registrada como pendência para alinhamento com Luiz.
+
+Na consulta normativa com três evidências, a geração desviou do tema solicitado, apesar de recuperar o art. 4º em primeiro lugar. Com uma evidência, respondeu ao tema, mas simplificou a distinção entre valor do item e valor da licitação. Essas limitações foram registradas e não foram corrigidas nesta implementação da interface.
+
+As consultas iniciais também apresentaram latência elevada. Na execução combinada analisada, o roteamento consumiu aproximadamente 17,94 segundos, enquanto o cálculo estruturado levou cerca de 90 milissegundos.
+
+### Apoio de IA
+
+Utilizei uma ferramenta de IA para apoiar a adaptação da interface, a análise do formato dos resultados do executor, a elaboração dos testes e a interpretação dos logs. As alterações foram verificadas por testes automatizados, inspeção do diff e consultas reais na interface. Diferenciei os resultados comprovados das etapas ainda pendentes.
+
+### Atividades realizadas pela equipe
+
+Luiz disponibilizou a estratégia combinada de consulta estruturada e recuperação híbrida, que integrei à interface.
+
+Janice acrescentou os casos de avaliação das personas para o corpus v3, com filtros, campos, respostas esperadas, cobertura temporal e critério contextual para Tecnologia/TIC.
+
+Minha validação foi realizada com o corpus v2 restaurado, contendo 1.358 registros estruturados e artefatos de recuperação com 2.125 chunks. Portanto, os resultados não representam aprovação integral dos casos de avaliação do corpus v3.
+
+### Próximas atividades
+
+- Concluir a revisão e o merge da branch da interface.
+- Alinhar com Luiz a separação dos filtros estruturados e documentais nas consultas combinadas.
+- Repetir a validação real da estratégia combinada após a correção do executor.
+- Encaminhar as falhas de fidelidade da resposta normativa para revisão da geração e da recuperação.
+- Executar os casos das personas com o corpus e os artefatos correspondentes à versão v3.
+- Validar a integração do critério contextual de Tecnologia/TIC definido por Janice.
+- Manter o status do projeto atualizado com resultados, limitações e pendências.

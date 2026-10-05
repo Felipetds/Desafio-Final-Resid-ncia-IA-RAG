@@ -334,3 +334,44 @@ salva como se fosse uma consulta ao vivo.
 Para a atualização ao professor, utilizar o objetivo, os dados preparados,
 as funcionalidades validadas, uma consulta na interface e as pendências.
 Os arquivos técnicos ficam disponíveis para perguntas específicas.
+
+## Validação da interface — 05/10/2026
+
+### Implementação
+
+- Interface integrada ao executor de consultas estruturadas e documentais.
+- Contagens apresentam total calculado, filtros, recorte e fonte.
+- Listagens apresentam somente os campos solicitados e permitem paginação.
+- O total permanece visível durante a navegação.
+- A quantidade de evidências limita somente a recuperação documental.
+- Consultas combinadas apresentam separadamente o cálculo estruturado e a resposta documental.
+- Fontes estruturadas, recuperadas e citadas são identificadas separadamente.
+- Feedback persistido permanece associado à resposta exibida, mesmo após editar a pergunta sem executar outra consulta.
+
+### Validação realizada
+
+Ambiente: Colab, com corpus v2 restaurado, 1.358 registros estruturados
+e artefatos de recuperação com 2.125 chunks.
+
+- 12 testes específicos da interface aprovados.
+- 204 testes offline aprovados; testes de integração excluídos dessa execução.
+- Verificação de sintaxe e `git diff --check` sem erros.
+- Contagem por ano da compra 2026: 1.234 registros.
+- Listagem por ano da compra 2026 e valor estimado estritamente acima de R$ 500 mil: 560 correspondências.
+- Tabela com apenas objeto e valor estimado, 20 registros por página e 28 páginas.
+- Navegação até a página 3 preservou total, filtros e campos.
+- Consulta documental do art. 4º recuperou o chunk pertinente e exibiu fontes recuperadas e citadas com uma evidência.
+- Envio de feedback e limpeza da interface verificados.
+- Vínculo do feedback após editar a pergunta confirmado no JSONL:
+  query_id q_98f92df4 e run_id 0a353c48.
+
+### Pendências e limitações
+
+- Consulta combinada preservou o total de 1.234, mas não recuperou evidências normativas.
+- Os logs da execução 96d4e6c9 mostram o filtro ano 2026 aplicado à recuperação normativa. A separação dos filtros por estratégia precisa ser corrigida e validada com Luiz.
+- A apresentação combinada e sua paginação foram verificadas por testes simulados; a validação real completa com evidências documentais permanece pendente.
+- Com três evidências, a geração da resposta sobre o art. 4º desviou do tema, apesar de recuperar o trecho pertinente.
+- Com uma evidência, a resposta apresentou uma simplificação sobre valor do item versus valor da licitação.
+- Essas falhas de conteúdo permanecem pendentes de revisão da geração e da recuperação.
+- Os casos de avaliação da Janice se referem ao corpus v3. Esta execução com v2 não representa aprovação integral desses casos.
+- O critério textual anterior de tecnologia não equivale à classificação contextual de TIC definida na avaliação.
