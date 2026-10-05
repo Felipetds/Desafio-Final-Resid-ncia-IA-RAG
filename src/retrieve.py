@@ -450,6 +450,7 @@ def recuperar_evidencias(
     client: OpenAI | None = None,
     exigir_natureza: bool = False,
     run_id: str | None = None,
+    analise_pronta: Dict[str, Any] | None = None,
 ) -> Dict[str, Any]:
     inicio = time.perf_counter()
     run_id = run_id or obs.novo_run_id()
@@ -460,11 +461,28 @@ def recuperar_evidencias(
             api_key="ollama",
         )
 
-    analise = analisar_consulta(
-        pergunta=pergunta,
-        client=client,
-        run_id=run_id,
-    )
+    if analise_pronta is None:
+        analise = analisar_consulta(
+            pergunta=pergunta,
+            client=client,
+            run_id=run_id,
+        )
+    else:
+        if not isinstance(analise_pronta, dict):
+            raise ValueError("A análise pronta deve ser um dicionário.")
+
+        obrigatorios = {"query_id", "routes", "filters", "is_refusal"}
+        if not obrigatorios.issubset(analise_pronta):
+            raise ValueError("A análise pronta está incompleta.")
+
+        consulta_original = analise_pronta.get("query")
+        if (
+            consulta_original is not None
+            and consulta_original.strip() != pergunta.strip()
+        ):
+            raise ValueError("A análise pertence a outra pergunta.")
+
+        analise = dict(analise_pronta)
 
     query_id = analise["query_id"]
 
@@ -477,7 +495,7 @@ def recuperar_evidencias(
             "is_refusal": True,
             "refusal_reason": analise.get("refusal_reason"),
             "evidences": [],
-            "stage": "rerank",
+            "stage": "fusao_rrf",
             "latencia_ms": round((time.perf_counter() - inicio) * 1000, 2),
         }
         return _validar_com_retrieval_result(resultado)
@@ -594,7 +612,7 @@ def recuperar_evidencias(
             "rrf_candidates": len(ranking_rrf),
             "returned": len(evidencias),
         },
-        "stage": "rerank",
+        "stage": "rerank" if rerank.RERANK_ENABLED else "fusao_rrf",
         "latencia_ms": round((time.perf_counter() - inicio) * 1000, 2),
     }
 
