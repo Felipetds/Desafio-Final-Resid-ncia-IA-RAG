@@ -508,16 +508,64 @@ def recuperar_evidencias(
         indice_bm25,
     ) = carregar_artefatos()
 
+    rotas = analise.get("routes", [])
+    filtros = analise.get("filters", {})
+
+    usar_busca_contextual = (
+        bool(rotas)
+        and set(rotas).issubset({"estruturada", "normativa"})
+    )
+
+    candidatos_contextuais = []
+    if usar_busca_contextual:
+        candidatos_contextuais = filtrar_resultados(
+            [{"chunk_id": identificador} for identificador in ids],
+            chunks_por_id,
+            rotas,
+            filtros,
+            exigir_natureza,
+        )
+
     with obs.observar_etapa(
         run_id=run_id, query_id=query_id, stage="retrieval_denso", input_data={"pergunta": pergunta, "fetch_k": fetch_k}
     ) as observacao_densa:
-        resultados_densos = busca_densa(pergunta=pergunta, client=client, indice_faiss=indice_faiss, ids=ids, fetch_k=fetch_k)
+        resultados_densos = busca_densa(
+            pergunta=pergunta,
+            client=client,
+            indice_faiss=indice_faiss,
+            ids=ids,
+            fetch_k=len(ids) if usar_busca_contextual else fetch_k,
+        )
+        if usar_busca_contextual:
+            resultados_densos = filtrar_resultados(
+                resultados_densos,
+                chunks_por_id,
+                rotas,
+                filtros,
+                exigir_natureza,
+            )[:fetch_k]
         observacao_densa["output"] = {"candidatos": len(resultados_densos)}
 
     with obs.observar_etapa(
         run_id=run_id, query_id=query_id, stage="retrieval_bm25", input_data={"pergunta": pergunta, "fetch_k": fetch_k}
     ) as observacao_bm25:
-        resultados_bm25 = busca_bm25(pergunta=pergunta, indice_bm25=indice_bm25, ids=ids, fetch_k=fetch_k)
+        if usar_busca_contextual:
+            from src.retrieval_lexical import buscar_contexto
+
+            resultados_bm25 = buscar_contexto(
+                pergunta=pergunta,
+                candidatos=candidatos_contextuais,
+                chunks_por_id=chunks_por_id,
+                identificar_natureza=identificar_natureza,
+                fetch_k=fetch_k,
+            )
+        else:
+            resultados_bm25 = busca_bm25(
+                pergunta=pergunta,
+                indice_bm25=indice_bm25,
+                ids=ids,
+                fetch_k=fetch_k,
+            )
         observacao_bm25["output"] = {"candidatos": len(resultados_bm25)}
 
     rotas = analise.get("routes", [])

@@ -584,6 +584,32 @@ def test_recuperar_evidencias_fluxo_normal(monkeypatch, chunks_teste):
         ],
     )
 
+    import src.retrieval_lexical as lexical
+
+    def buscar_contexto_simulado(
+        pergunta,
+        candidatos,
+        chunks_por_id,
+        identificar_natureza,
+        fetch_k=50,
+    ):
+        # Os filtros devem ser aplicados antes da busca contextual.
+        assert [
+            item["chunk_id"] for item in candidatos
+        ] == ["chunk_1"]
+        assert fetch_k == 10
+
+        return [{
+            "chunk_id": "chunk_1",
+            "bm25_score": 4.0,
+        }]
+
+    monkeypatch.setattr(
+        lexical,
+        "buscar_contexto",
+        buscar_contexto_simulado,
+    )
+
     resultado = retrieve.recuperar_evidencias(
         pergunta="Quais contratos de tecnologia "
         "no RJ em 2025 acima de R$ 500 mil?",
