@@ -5,7 +5,6 @@ import re
 from bs4 import BeautifulSoup
 import pypdf
 
-# Dicionário global para rastrear inconsistências da base estruturada (05/10)
 inconsistencias_report = {
     "sem_valor": 0,
     "sem_ano_compra": 0,
@@ -53,7 +52,6 @@ def extrair_metadados_especificos(natureza, dados=None):
         unidade_orgao = dados.get("unidadeOrgao", {}) or {}
         orgao_entidade = dados.get("orgaoEntidade", {}) or {}
         
-        # Mapeamento estendido para Consultas Estruturadas (05/10)
         id_pncp = dados.get("numeroControlePNCP") or dados.get("id")
         if not id_pncp: inconsistencias_report["sem_id_pncp"] += 1
             
@@ -64,28 +62,31 @@ def extrair_metadados_especificos(natureza, dados=None):
         meta["objeto"] = dados.get("objetoCompra", "")
         meta["modalidade"] = dados.get("modalidadeNome", "")
         
-        # Distinguir Ano da Compra de Data de Publicação
+        # --- CORREÇÃO DE DATAS: 07/10 ---
+        # 1. Manter o ano_compra independente
         ano_compra = dados.get("anoCompra")
-        data_publicacao = dados.get("dataAtualizacao") or dados.get("dataPublicacaoPncp")
-        
         if not ano_compra: inconsistencias_report["sem_ano_compra"] += 1
-        if not data_publicacao: inconsistencias_report["sem_data_publicacao"] += 1
-            
         meta["ano_compra"] = str(ano_compra) if ano_compra else ""
-        meta["data_publicacao"] = str(data_publicacao) if data_publicacao else ""
-        
-        # O campo 'ano' legado usa o ano da compra para manter compatibilidade híbrida
         meta["ano"] = meta["ano_compra"] 
 
-        # Distinção e preservação do Valor (Nulo != Zero)
+        # 2. Corrigir data_publicacao e preservar dataAtualizacao separadamente
+        data_publicacao = dados.get("dataPublicacaoPncp")
+        data_atualizacao = dados.get("dataAtualizacao")
+        
+        if not data_publicacao: inconsistencias_report["sem_data_publicacao"] += 1
+            
+        meta["data_publicacao"] = str(data_publicacao) if data_publicacao else ""
+        meta["data_atualizacao"] = str(data_atualizacao) if data_atualizacao else ""
+        # --------------------------------
+
         valor_homologado = dados.get("valorTotalHomologado")
         valor_estimado = dados.get("valorTotalEstimado")
         
         if valor_homologado is not None:
             meta["valor_homologado"] = valor_homologado
-            meta["valor"] = valor_homologado # Legado
+            meta["valor"] = valor_homologado
         else:
-            meta["valor_homologado"] = None # Ausência explícita
+            meta["valor_homologado"] = None 
             
         if valor_estimado is not None:
             meta["valor_estimado"] = valor_estimado
@@ -154,17 +155,13 @@ def processar_estruturada(caminho):
         dados = json.load(f)
     registros = dados if isinstance(dados, list) else [dados]
     
-    # Criamos também uma base 'limpa' puramente JSON estruturado para o Luiz usar
     base_estruturada_pura = []
     
     for idx, reg in enumerate(registros, 1):
         texto = json.dumps(reg, ensure_ascii=False)
         extras = extrair_metadados_especificos("estruturada", reg)
-        
-        # 1. Chunk Híbrido (legado intocado para não quebrar índices Faiss)
         chunks.append(criar_chunk_base(texto, os.path.basename(caminho), "contrato", idx, "base_estruturada", "publico", extras))
         
-        # 2. Objeto limpo para o roteador de listagem e paginação estruturada
         registro_limpo = dict(extras)
         registro_limpo["fonte_original"] = caminho
         registro_limpo["texto_integral"] = texto
@@ -237,7 +234,7 @@ def processar_conversacional(caminho):
 
 def rodar_ingestao_hibrida():
     global inconsistencias_report
-    print("Iniciando ingestão (Fix: Mapeamento PNCP e Relatório de Inconsistências)...")
+    print("Iniciando ingestão (Fix 07/10: Separação de Datas PNCP)...")
     todos_chunks = []
     caminho_est = "data/raw/v2/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
     todos_chunks.extend(processar_estruturada(caminho_est))
@@ -259,19 +256,18 @@ def rodar_ingestao_hibrida():
         todos_chunks.extend(processar_conversacional(c))
 
     if not todos_chunks:
-        raise RuntimeError("Nenhum chunk foi gerado! Verifique a presença e o caminho dos arquivos originais. Operação abortada para não corromper o índice.")
+        raise RuntimeError("Nenhum chunk gerado!")
 
     os.makedirs("data/processed", exist_ok=True)
     caminho_saida = "data/processed/chunks_teste.json"
     with open(caminho_saida, "w", encoding="utf-8") as f:
         json.dump(todos_chunks, f, ensure_ascii=False, indent=4)
         
-    # Grava o relatório de inconsistências
     with open("data/processed/inconsistencias_pncp_report.json", "w", encoding="utf-8") as f:
         json.dump(inconsistencias_report, f, ensure_ascii=False, indent=4)
         
     print(f"✅ Ingestão concluída! Total gerado: {len(todos_chunks)} chunks.")
-    print("📊 Relatório de Inconsistências PNCP gerado em data/processed/inconsistencias_pncp_report.json")
+    print("📊 Relatório de Inconsistências PNCP gerado.")
 
 if __name__ == "__main__":
     rodar_ingestao_hibrida()

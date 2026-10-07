@@ -159,3 +159,9 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * **Tratamento de Datas e Valores:** Implementada a distinção entre ano da compra e data de publicação. Os valores ausentes foram tratados como nulos (`None`) em vez de convertidos para zero.
 * **Integridade:** Foram mantidos os 2.125 chunks originais intactos. Não foi necessário reconstruir os embeddings.
 * **Artefatos:** Gerada a base limpa `base_estruturada_normalizada.json` e o relatório de inconsistências `inconsistencias_pncp_report.json`.
+
+### Atualização (07/10/2026) - Correção de Datas e Validação
+* **Datas:** O campo `data_publicacao` foi corrigido para utilizar estritamente `dataPublicacaoPncp`. O campo `dataAtualizacao` foi preservado num campo separado. O `ano_compra` foi mantido independente.
+* **Validação:** Os 1.358 registos estruturados do PNCP foram revalidados. A publicação original, os valores numéricos e a distinção entre zero e ausência foram preservados, tal como o vínculo com a fonte original. As 517 divergências decorrentes da sobreposição de datas foram resolvidas. A base normalizada afetada foi regenerada mantendo os IDs únicos (2.125 chunks no total).
+* **Mapeamento:** O mapeamento dos campos normalizados e as inconsistências encontradas foram analisados e devidamente documentados.
+* **Rerank:** Foi verificada a disponibilidade do endpoint de rerank do professor. Como continua indisponível, a limitação explícita e o fallback seguro no pipeline foram mantidos.
