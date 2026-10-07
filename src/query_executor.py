@@ -123,12 +123,7 @@ def _montar_analise_recuperacao(
     plano: dict[str, Any],
     analise_pronta: dict[str, Any] | None,
 ) -> dict[str, Any] | None:
-    """Restringe a recuperação híbrida às rotas documentais do plano.
-
-    Em consulta combinada, evita que o recuperador volte a tratar a base
-    estruturada como evidência vetorial quando ela já foi consultada de forma
-    determinística.
-    """
+    """Separa rotas e filtros documentais da consulta estruturada."""
     rotas = plano.get("rotas_recuperacao")
     if not rotas:
         rotas = [
@@ -144,7 +139,35 @@ def _montar_analise_recuperacao(
     if rotas:
         analise_recuperacao["routes"] = list(dict.fromkeys(rotas))
 
+    filtros = dict(analise_pronta.get("filters") or {})
+
+    if plano.get("estrategia") == "combinada":
+        if "filtros_recuperacao" in plano:
+            filtros_documentais = plano["filtros_recuperacao"]
+            if not isinstance(filtros_documentais, dict):
+                raise ValueError(
+                    "filtros_recuperacao deve ser um dicionário."
+                )
+            filtros = dict(filtros_documentais)
+
+        elif set(rotas) == {"normativa"}:
+            # Estes filtros descrevem as contratações, não a norma.
+            filtros_estruturados = {
+                "uf", "municipio", "ano", "ano_compra",
+                "valor_minimo", "valor_maximo",
+                "modalidade", "modalidade_id",
+                "fornecedor", "orgao", "objeto_termos",
+                "data_inicial", "data_final",
+            }
+            filtros = {
+                campo: valor
+                for campo, valor in filtros.items()
+                if campo not in filtros_estruturados
+            }
+
+    analise_recuperacao["filters"] = filtros
     return analise_recuperacao
+
 
 
 def _executar_hibrida(
