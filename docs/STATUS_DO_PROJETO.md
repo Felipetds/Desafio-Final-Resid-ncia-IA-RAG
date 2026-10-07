@@ -375,3 +375,109 @@ e artefatos de recuperação com 2.125 chunks.
 - Essas falhas de conteúdo permanecem pendentes de revisão da geração e da recuperação.
 - Os casos de avaliação da Janice se referem ao corpus v3. Esta execução com v2 não representa aprovação integral desses casos.
 - O critério textual anterior de tecnologia não equivale à classificação contextual de TIC definida na avaliação.
+
+## Validação da interface integrada — 07/10/2026
+
+### Escopo e ambiente
+
+Validação realizada por Maria Eduarda em Google Colab, na branch
+`feat/interface-integrada-eduarda`, criada a partir do commit
+`98b3f8b20363157c26de0a082b5b1485ee67f338`.
+
+Os dados utilizados pertencem ao corpus v2: 1.358 registros estruturados
+e 2.125 chunks. Esta validação não comprova integração ou indexação
+completa do corpus v3.
+
+### Alterações realizadas
+
+- Apresentação dos resultados agregados diretamente na interface,
+  sem geração documental ou recálculo por LLM.
+- Tabelas de indicadores para contagens, situações e somas.
+- Preservação da precisão decimal dos valores agregados.
+- Exibição das fontes, recortes, referências e limitações de vínculos.
+- Paginação disponível apenas para listagens.
+- Controle de evidências desabilitado nos resultados exclusivamente
+  estruturados ou agregados.
+- Disponibilização dos detalhes de classificação TIC e de vínculos.
+- Delimitação da entrada de geração da consulta combinada.
+- Decomposição da forma explícita "Quantas contratações têm ano da
+  compra AAAA e o que a Lei..." para encaminhar somente o pedido
+  documental ao gerador.
+- Reutilização do run_id da consulta na chamada de geração.
+
+### Resultados comprovados
+
+| Cenário | Resultado |
+|---|---|
+| Contagem por ano da compra 2026 | 1.234 correspondências |
+| Listagem de 2026 com valor estimado acima de R$ 500 mil | 560 correspondências; somente objeto e valor estimado |
+| Avanço da página 1 para a página 2 | Total de 560 preservado, 28 páginas e mesmo query_id |
+| Feedback após paginação e edição sem executar | Pergunta original, fontes e IDs da página exibida preservados |
+| P02 — resumo dos itens | 19 itens: 8 homologados, 9 fracassados, 2 desertos; soma R$ 141.002,08 |
+| P07 — resumo do arquivo PCA | 36.994 linhas; soma dos valores estimados informados de R$ 55.968.524.178,3319 |
+| M01 — cálculo e vínculos | 2.125 chunks verificados; 19 correspondências agregadas por identificador e zero nas demais naturezas |
+| Consulta documental | Execução concluída, com fontes e citações; identificada falha de fidelidade em uma resposta |
+| Consulta combinada após correção | 1.234 correspondências e resposta documental separada, citando o chunk do art. 29 |
+
+P02, P07 e M01 também foram executados com arquivos reais e análise
+fornecida, sem chamada ao modelo do roteador. Os cálculos foram iguais
+para top_k 1 e 3.
+
+A execução combinada final utilizou query_id `q_0f1cef09` e
+run_id `1a95196b`.
+
+### Testes automatizados
+
+Na execução anterior à substituição final da instrução pela decomposição
+limitada da pergunta:
+
+- 21 testes específicos de interface aprovados.
+- 305 testes aprovados com `testes/teste_integracao.py` excluído.
+- `git diff --check` sem problemas.
+
+A verificação final da alteração de decomposição deve ser registrada
+após sua execução. A suíte acima não equivale à aprovação de todos
+os testes externos ou de todas as perguntas das personas.
+
+### Limitações e próximos ajustes
+
+- Foram observadas esperas prolongadas e timeout no roteamento.
+  Os clientes foram configurados temporariamente na sessão do Colab
+  com timeout de 60 segundos e max_retries=0. Essa configuração
+  não foi incorporada aos arquivos do projeto.
+- O modo de roteamento da execução M01 de aproximadamente 60 segundos
+  ainda deve ser confirmado nos logs antes de classificá-lo como fallback.
+- A soma do PCA representa os valores informados no arquivo carregado;
+  não constitui validação do orçamento estadual. Origem, recorte e
+  possíveis inconsistências do total ainda precisam ser conferidos.
+- Ausência de vínculos por identificador não comprova inexistência
+  de documentos relacionados.
+- A decomposição documental implementada cobre uma forma explícita
+  de pergunta. Outras formulações combinadas precisam de validação.
+- Uma resposta documental incluiu obras indevidamente na aplicação
+  do pregão e associou uma regra ao artigo incorreto. Registrar a
+  revisão de fidelidade e citações em generate.py e definir seu
+  responsável com a equipe.
+- Permanecem pendentes a confirmação manual do retorno à página
+  anterior e a confirmação da configuração permanente dos timeouts.
+- A validação com artefatos completos do corpus v3 depende da
+  confirmação e disponibilização desses artefatos pela equipe.
+
+### Responsabilidade pela geração — 07/10/2026
+
+Maria Eduarda assumirá os ajustes de fidelidade e citações em src/generate.py, em uma alteração separada da interface. O apoio de Felipe na validação será alinhado com a equipe.
+
+### Verificação final da interface
+
+Após a alteração final de decomposição, a suíte executada com testes/teste_integracao.py excluído passou:
+
+```text
+........................................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 70%]
+........................................................................ [ 94%]
+.................                                                        [100%]
+305 passed in 5.88s
+```
+
+git diff --check concluído sem problemas.

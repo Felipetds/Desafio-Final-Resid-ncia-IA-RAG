@@ -23,14 +23,22 @@ DESCRICAO = (
 
 
 def apresentar(resultado):
+    executado = resultado.get("executado", False)
+    estrategia = resultado.get("estrategia")
+
     lista = (
         resultado.get("operacao") == "listar"
-        and resultado.get("executado", False)
+        and executado
     )
+    agregada = (
+        estrategia == "consulta_agregada"
+        and executado
+    )
+    mostrar_tabela = lista or agregada
 
-    estruturada = (
-        resultado.get("estrategia") == "consulta_estruturada"
-    )
+    deterministica = estrategia in {
+        "consulta_estruturada", "consulta_agregada"
+    }
 
     pagina = resultado.get("pagina") or 1
     paginas = resultado.get("total_paginas", 0)
@@ -39,6 +47,7 @@ def apresentar(resultado):
         "plano": resultado.get("plano", {}),
         "fontes": resultado.get("fontes", []),
         "fontes_estruturadas": resultado.get("fontes_estruturadas", []),
+        "fontes_agregadas": resultado.get("fontes_agregadas", []),
         "fontes_recuperadas": resultado.get("fontes_recuperadas", []),
         "fontes_citadas": resultado.get("fontes_citadas", []),
         "documental_query_id": resultado.get("documental_query_id"),
@@ -46,13 +55,22 @@ def apresentar(resultado):
         "paginacao_run_id": resultado.get("paginacao_run_id"),
         "referencias": resultado.get("referencias", []),
         "evidencias": resultado.get("evidences", []),
+        "criterio_tecnologia": resultado.get("criterio_tecnologia"),
+        "resumo_tecnologia": resultado.get("resumo_tecnologia"),
+        "classificacoes_tecnologia": resultado.get(
+            "classificacoes_tecnologia", []
+        ),
+        "verificacao_vinculos": resultado.get("verificacao_vinculos"),
+        "total_chunks_verificados": resultado.get(
+            "total_chunks_verificados"
+        ),
     }
 
     return (
         resultado.get("answer", ""),
         gr.update(
             value=tabela_consulta(resultado),
-            visible=lista,
+            visible=mostrar_tabela,
         ),
         gr.update(visible=lista),
         gr.update(interactive=lista and pagina > 1),
@@ -65,7 +83,7 @@ def apresentar(resultado):
         None,
         "",
         "",
-        gr.update(interactive=not estruturada),
+        gr.update(interactive=not deterministica),
     )
 
 
