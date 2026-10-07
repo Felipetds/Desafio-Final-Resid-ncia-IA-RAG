@@ -506,3 +506,72 @@ def test_logs_nao_expoem_conteudo_das_evidencias(
         "OUTRO_CONTEUDO_SENSIVEL_TESTE"
         not in serializado
     )
+
+def test_eventos_retrieval_registram_rotas_filtros_ids_e_bases(
+    monkeypatch,
+    ambiente_retrieval,
+):
+    """Valida os novos campos dos eventos Dense e BM25."""
+
+    monkeypatch.setattr(
+        retrieve,
+        "busca_densa",
+        lambda **kwargs: [
+            {"chunk_id": "chunk_1", "dense_distance": 0.10},
+            {"chunk_id": "chunk_2", "dense_distance": 0.20},
+        ],
+    )
+
+    monkeypatch.setattr(
+        retrieve,
+        "busca_bm25",
+        lambda **kwargs: [
+            {"chunk_id": "chunk_2", "bm25_score": 3.0},
+            {"chunk_id": "chunk_1", "bm25_score": 2.0},
+        ],
+    )
+
+    retrieve.recuperar_evidencias(
+        pergunta="Quais contratos de tecnologia existem no RJ em 2025?",
+        client=FakeClient(),
+        run_id="run_campos_observabilidade",
+    )
+
+    eventos = ler_eventos(ambiente_retrieval["tmp_path"])
+    dense = buscar_evento(eventos, "retrieval_denso")
+    bm25 = buscar_evento(eventos, "retrieval_bm25")
+
+    filtros_esperados = {
+        "uf": "RJ",
+        "ano": 2025,
+    }
+
+    assert dense["output"]["routes"] == ["estruturada"]
+    assert dense["output"]["filters"] == filtros_esperados
+    assert dense["output"]["candidatos"] == 2
+    assert dense["output"]["top_chunk_ids"] == [
+        "chunk_1",
+        "chunk_2",
+    ]
+    assert dense["output"]["bases"] == [
+        "estruturada_pncp_rj"
+    ]
+
+    assert bm25["output"]["routes"] == ["estruturada"]
+    assert bm25["output"]["filters"] == filtros_esperados
+    assert bm25["output"]["candidatos"] == 2
+    assert bm25["output"]["top_chunk_ids"] == [
+        "chunk_2",
+        "chunk_1",
+    ]
+    assert bm25["output"]["bases"] == [
+        "estruturada_pncp_rj"
+    ]
+
+    serializado = json.dumps(
+        [dense, bm25],
+        ensure_ascii=False,
+    )
+
+    assert "CONTEUDO_SENSIVEL_TESTE" not in serializado
+    assert "OUTRO_CONTEUDO_SENSIVEL_TESTE" not in serializado
