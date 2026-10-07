@@ -179,7 +179,7 @@ e revisar a documentação. As orientações foram verificadas no ambiente local
 
 ### Minha participação
 
-* Dei continuidade à validação realizada no encontro anterior, partindo do resultado dos testes offline para analisar os requisitos necessários à execução da integração do pipeline.
+* Continuei à validação realizada no encontro anterior, partindo do resultado dos testes offline para analisar os requisitos necessários à execução da integração do pipeline.
 
 * Analisei quais componentes e artefatos são necessários para que os testes de integração possam ser executados, considerando especialmente o corpus, os chunks, os índices e os modelos utilizados pelo projeto.
 
@@ -340,3 +340,62 @@ Também foi avançada a verificação dos resultados produzidos pela ingestão, 
 * Verificar a compatibilidade dos chunks com os índices e demais componentes necessários ao pipeline RAG.
 
 * Avançar para as etapas de recuperação e integração utilizando os artefatos gerados a partir do corpus v2.
+
+## Encontro 11 — 07/10/2026
+
+### Minha participação
+
+* Dei continuidade à etapa de restauração e validação dos índices do projeto.
+
+* Reiniciei o ambiente virtual de execução para garantir que as dependências e configurações utilizadas pelo projeto estivessem carregadas corretamente.
+
+* Realizei novamente o download dos arquivos de cache e dos índices disponibilizados para o ambiente de testes.
+
+* Executei a verificação de consistência entre os chunks processados e os índices FAISS, BM25 e seus respectivos identificadores.
+
+* Analisei os resultados apresentados pelo procedimento de validação para confirmar a compatibilidade entre os artefatos utilizados pelo pipeline.
+
+### Resultados obtidos
+
+* O arquivo de chunks utilizado na validação contém **2.125 registros**.
+
+* O índice FAISS possui **2.125 vetores**.
+
+* O índice BM25 possui **2.125 documentos indexados**.
+
+* O arquivo de identificadores contém **2.125 IDs**.
+
+* A comparação entre os quatro componentes foi concluída com sucesso:
+
+```text
+Chunks: 2125
+FAISS: 2125
+BM25: 2125
+IDs: 2125
+Índices consistentes: APROVADO
+```
+
+* A quantidade de registros dos chunks, vetores, documentos BM25 e identificadores é equivalente, confirmando a consistência estrutural dos índices restaurados.
+
+### Dificuldades encontradas
+
+* Foi necessário reiniciar o ambiente virtual e realizar novamente o download dos arquivos de cache para que os artefatos fossem reconhecidos corretamente no ambiente de execução.
+
+* Após a atualização dos artefatos, a validação pôde ser concluída sem divergências entre os componentes analisados.
+
+### Apoio de IA
+
+Utilizei ferramentas de IA como apoio para interpretar os procedimentos de restauração dos índices, analisar os resultados apresentados pelos comandos e compreender a relação entre os chunks, o índice FAISS, o índice BM25 e os identificadores.
+
+As orientações foram utilizadas como suporte à análise e verificadas a partir dos resultados obtidos no ambiente local.
+
+### Atividades realizadas pela equipe
+
+
+### Próximas atividades
+
+* Prosseguir para os testes de recuperação utilizando os índices restaurados.
+
+* Validar consultas sobre o corpus e verificar se os resultados recuperados correspondem aos chunks esperados.
+
+* Avançar para a validação integrada do pipeline RAG, observando recuperação, roteamento e geração de respostas com evidências reais.
