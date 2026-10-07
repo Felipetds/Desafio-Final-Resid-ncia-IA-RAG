@@ -518,3 +518,82 @@ As execuções e os resultados foram conferidos antes de considerar as validaç�
 - Reexecutar P03 e P08 caso a equipe incorpore as correções ao pipeline oficial.
 - Acompanhar a integração dos resultados da avaliação com as demais etapas do Adaptive RAG.
 - Manter os casos P01–P09 como referência para os testes finais e para a preparação da apresentação do projeto.
+--- 
+## Encontro 11 — 07/10/2026
+
+### Minha contribuição
+
+#### Revisão dos critérios das personas e do corpus v3
+
+- Dei continuidade às atividades da frente de Corpus e Avaliação do Grande Desafio RAG — Cenário 1: Contratações Públicas do Estado do Rio de Janeiro.
+- Revisei e consolidei os critérios de avaliação das nove perguntas P01–P09, considerando as evidências disponíveis no corpus v2 e v3.
+- Documentei os critérios de classificação de contratações relacionadas à Tecnologia/TIC, distinguindo aquisição de produtos tecnológicos, contratação de serviços de tecnologia e situações ambíguas.
+- Registrei regras de inclusão, exclusão e prevenção de falsos positivos.
+- Analisei a comparação entre as versões v2 e v3 do corpus, identificando sete arquivos idênticos e um arquivo alterado, correspondente à base estruturada do PNCP.
+- Organizei a classificação dos casos de avaliação conforme suas dependências documentais, incluindo situações de recusa e ausência de evidências suficientes.
+
+#### Ampliação e auditoria dos embeddings
+
+- Dei continuidade à geração incremental de embeddings do corpus v3, preservando o cache experimental anterior.
+- Gerei 228 novos embeddings, ampliando o cache de trabalho de 140 para 368 vetores.
+- Mantive a dimensão de 1.024 posições por vetor.
+- Concluí a cobertura das naturezas conversacional e normativa no cache experimental:
+  - Conversacional: 31 de 31 chunks (100%).
+  - Normativa: 217 de 217 chunks (100%).
+- Registrei a cobertura parcial das demais naturezas:
+  - Estruturada: 110 de 1.358 chunks (8,10%).
+  - Agregada: 10 de 37.013 chunks (0,03%).
+- A cobertura global do cache experimental alcançou 368 de 38.619 chunks (0,95%).
+- A auditoria não identificou vetores inválidos nem identificadores externos ao corpus.
+- Mantive os arquivos anteriores preservados e utilizei um cache separado para os novos embeddings.
+
+#### Documentação técnica e publicação no GitHub
+
+- Produzi o documento `CRITERIOS_PERSONAS_RECORTE_CORPUS_2026-10-07.md`, consolidando os critérios de avaliação das personas e os recortes documentais das versões v2 e v3.
+- Produzi o documento `COBERTURA_EMBEDDINGS_V3_2026-10-07.md`, registrando os quantitativos, percentuais de cobertura, validações e limitações dos embeddings.
+- Organizei os documentos no Google Drive, na pasta `RAG_Grande_Desafio/avaliacao_v3`.
+- Publiquei os dois documentos na pasta `eval/` do repositório oficial, utilizando a branch `docs/personas-avaliacao-janice`.
+- Registrei as alterações em commits separados, preservando a branch `main`.
+- Abri o Pull Request nº 20 para revisão e futura integração pela equipe.
+- Registrei um comentário no PR solicitando a validação dos critérios de Tecnologia/TIC, a confirmação dos embeddings agregados pendentes e o alinhamento dos testes finais.
+
+### Uso de IA
+
+- Utilizei um assistente de IA como apoio à organização dos critérios de classificação das personas, à análise comparativa do corpus v2/v3 e à elaboração da documentação técnica.
+- Utilizei IA para auxiliar na preparação dos procedimentos de geração incremental, interpretação dos resultados de auditoria e cálculo dos indicadores de cobertura.
+- Conferi os resultados obtidos antes de registrá-los nos documentos.
+- Utilizei IA como apoio à organização dos commits, à abertura do Pull Request e à comunicação das pendências para revisão pela equipe.
+
+### Resultados
+
+- Critérios de avaliação das nove perguntas P01–P09 consolidados.
+- Regras de classificação de Tecnologia/TIC, inclusão, exclusão e falsos positivos documentadas.
+- Dependências dos casos entre corpus v2 e v3 registradas.
+- 228 novos embeddings gerados.
+- Cache experimental ampliado para 368 embeddings de 1.024 dimensões.
+- Cobertura normativa e conversacional de 100% no cache experimental.
+- Auditoria concluída sem vetores inválidos ou identificadores externos ao corpus.
+- Dois documentos técnicos produzidos e publicados na pasta `eval/` da branch de trabalho.
+- Pull Request nº 20 aberto para revisão.
+- Comentário de alinhamento e solicitação de validação registrado no GitHub.
+
+### Dificuldades e limitações
+
+- A cobertura global de embeddings ainda é parcial e não representa a indexação integral dos 38.619 chunks do corpus v3.
+- As naturezas estruturada e agregada ainda apresentam cobertura reduzida no cache experimental.
+- A classificação de contratações relacionadas à Tecnologia/TIC exige cuidados com termos genéricos e situações ambíguas, para evitar falsos positivos.
+- A integração dos caches e a confirmação dos 19 embeddings agregados atribuídos ao integrante Eridalgo permanecem pendentes de validação.
+- A documentação foi encaminhada para revisão pelo Pull Request nº 20, mas ainda não há confirmação de integração à branch `main`.
+- A geração dos embeddings e a documentação produzida não comprovam, isoladamente, a validação ponta a ponta do pipeline Adaptive RAG.
+
+### Próximos passos
+
+- Acompanhar a revisão do Pull Request nº 20 pela equipe.
+- Confirmar com Luiz os critérios de classificação de Tecnologia/TIC e os casos ambíguos.
+- Confirmar com Eridalgo a situação dos 19 embeddings agregados e a integração dos caches.
+- Acompanhar a ampliação da cobertura das naturezas estruturada e agregada.
+- Apoiar a execução dos testes das perguntas P01–P09, incluindo recuperação cross-source, recusas e guardrails.
+- Registrar os resultados dos testes finais e eventuais correções necessárias.
+- Manter a rastreabilidade das evidências e preservar as versões congeladas do corpus.
+
+**Situação da atividade:** Entrega individual de documentação e expansão de embeddings concluída e encaminhada à equipe pelo PR nº 20. Revisão, integração e testes finais pendentes.

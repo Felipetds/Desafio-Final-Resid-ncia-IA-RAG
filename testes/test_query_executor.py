@@ -145,6 +145,62 @@ def test_combinada_executa_estruturada_e_hibrida(base):
     assert resultado["query_id"] == "q_combinada"
     assert resultado["run_id"] == "run_combinada"
 
+def test_combinada_separa_filtros_estruturados_da_recuperacao(base):
+    chamadas = []
+
+    def recuperador(**kwargs):
+        chamadas.append(kwargs)
+        return {
+            "query_id": "q_filtros_separados",
+            "routes": ["normativa"],
+            "evidences": [{"chunk_id": "norma_mei_1"}],
+        }
+
+    plano = {
+        "bases": ["normativa", "estruturada"],
+        "estrategia": "combinada",
+        "operacao": "contar",
+        "filtros": {"ano_compra": 2026},
+        "rotas_recuperacao": ["normativa"],
+        "query_id": "q_filtros_separados",
+    }
+
+    analise_pronta = {
+        "query_id": "q_filtros_separados",
+        "routes": ["normativa", "estruturada"],
+        "filters": {},
+        "is_refusal": False,
+    }
+
+    resultado = executar_plano(
+        "Quantas contratações existem em 2026 "
+        "e o que a legislação diz sobre MEI?",
+        plano,
+        base=base,
+        recuperador=recuperador,
+        analise_pronta=analise_pronta,
+        run_id="run_filtros_separados",
+    )
+
+    assert resultado["estruturada"]["total"] == 5
+    assert resultado["estruturada"]["filtros_aplicados"] == {
+        "ano_compra": 2026
+    }
+
+    assert len(chamadas) == 1
+
+    analise_recuperacao = chamadas[0]["analise_pronta"]
+
+    assert analise_recuperacao["routes"] == ["normativa"]
+    assert analise_recuperacao["filters"] == {}
+    assert "ano_compra" not in analise_recuperacao["filters"]
+
+    assert resultado["evidences"] == [
+        {"chunk_id": "norma_mei_1"}
+    ]
+    assert resultado["query_id"] == "q_filtros_separados"
+    assert resultado["run_id"] == "run_filtros_separados"
+
 
 def test_combinada_listagem_preserva_paginacao_e_evidencias(base):
     def recuperador(**kwargs):

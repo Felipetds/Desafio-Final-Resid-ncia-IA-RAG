@@ -132,6 +132,7 @@ def consultar_registros(
     minimo_inclusivo=True,
     maximo_inclusivo=True,
     criterio_objeto=None,
+    criterio_tecnologia=None,
 ):
     """
     Consulta toda a base e pagina apenas a apresentação.
@@ -224,6 +225,48 @@ def consultar_registros(
 
     filtrar_publicacao = data_inicial is not None or data_final is not None
     registros_sem_publicacao = 0
+    classificacoes_tic = {}
+    resumo_tic = None
+
+    if criterio_tecnologia is not None:
+        from src.technology_classifier import (
+            VERSAO_CRITERIO,
+            classificar_registro,
+        )
+
+        if (
+            not isinstance(criterio_tecnologia, dict)
+            or criterio_tecnologia.get("implementacao") != VERSAO_CRITERIO
+        ):
+            raise ValueError("Implementação do critério TIC inválida.")
+
+        if not criterio_tecnologia.get("descricao"):
+            raise ValueError("Descrição do critério TIC ausente.")
+
+        tipo_tic = criterio_tecnologia.get("tipo", "todos")
+        if tipo_tic not in {
+            "todos", "bem_proposto", "servico_proposto"
+        }:
+            raise ValueError("Tipo de TIC inválido.")
+
+        if termos:
+            raise ValueError(
+                "Não combine classificação contextual "
+                "com objeto_termos na mesma consulta."
+            )
+
+        criterio_objeto = criterio_tecnologia["descricao"]
+        resumo_tic = {
+            "implementacao": VERSAO_CRITERIO,
+            "tipo_solicitado": tipo_tic,
+            "registros_no_recorte": 0,
+            "tic_proposto": 0,
+            "revisao": 0,
+            "sem_indicio": 0,
+            "tipo_indeterminado": 0,
+            "classificacao_humana_validada": False,
+        }
+
     selecionados = []
 
     for registro in base:
@@ -302,6 +345,25 @@ def consultar_registros(
                 ):
                     continue
 
+        if resumo_tic is not None:
+            classificacao = classificar_registro(registro)
+            resumo_tic["registros_no_recorte"] += 1
+            resumo_tic[classificacao["status"]] += 1
+
+            if classificacao["status"] != "tic_proposto":
+                continue
+
+            if classificacao["tipo"] == "indeterminado":
+                resumo_tic["tipo_indeterminado"] += 1
+
+            if (
+                tipo_tic != "todos"
+                and classificacao["tipo"] != tipo_tic
+            ):
+                continue
+
+            classificacoes_tic[registro["id_pncp"]] = classificacao
+
         selecionados.append(registro)
 
     selecionados.sort(key=lambda r: r["id_pncp"])
@@ -325,6 +387,17 @@ def consultar_registros(
         "minimo_inclusivo": minimo_inclusivo,
         "maximo_inclusivo": maximo_inclusivo,
         "criterio_objeto": criterio_objeto,
+        "criterio_tecnologia": criterio_tecnologia,
+        "resumo_tecnologia": resumo_tic,
+        "classificacoes_tecnologia": (
+            [
+                classificacoes_tic[r["id_pncp"]]
+                for r in (
+                    apresentados if operacao == "listar" else selecionados
+                )
+            ]
+            if resumo_tic is not None else []
+        ),
         "registros_sem_publicacao": registros_sem_publicacao,
         "fonte_data_publicacao": (
             "texto_integral.dataPublicacaoPncp"
@@ -352,7 +425,13 @@ def consultar_registros(
         "tamanho_pagina": tamanho_pagina if operacao == "listar" else None,
         "total_paginas": total_paginas,
         "observacao": (
-            "Resultado restrito aos registros fornecidos. "
+            (
+                "Total operacional de propostas de TIC; "
+                "não representa classificação humana validada. "
+                "Casos ambíguos e tipos indeterminados exigem revisão. "
+                if resumo_tic is not None else ""
+            )
+            + "Resultado restrito aos registros fornecidos. "
             "Ano da compra não representa ano de publicação."
         ),
     }

@@ -233,3 +233,25 @@ Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar
 * Executar novamente os testes específicos e, depois, a suíte completa, comparando com o baseline atual de 139 testes aprovados.
 
 * Analisar os novos logs e atualizar o arquivo de acompanhamento com os resultados obtidos.
+
+## Encontro 10 — 07/10/2026
+
+### Minha contribuição
+
+* Finalizei a observabilidade da recuperação, complementando os eventos retrieval_denso e retrieval_bm25 com rotas, filtros, quantidade de candidatos, IDs dos primeiros resultados e bases.
+* Adicionei e validei os testes específicos de observabilidade.
+
+### Uso de IA
+
+* Utilizei IA para auxiliar na análise dos logs, estruturação dos testes e organização das atividades realizadas.
+
+### Resumo da equipe
+
+* Executei os testes offline, obtendo 212 testes aprovados, sem falhas.
+* Executei os testes de integração com endpoint, obtendo 7 testes aprovados.
+* Validei nos logs o fluxo completo entre roteamento, recuperação, filtragem, fusão RRF e geração.
+
+### Próximos passos
+
+* Avançar nos testes de qualidade ainda pendentes, principalmente relacionados às consultas e operações agregadas.
+* Continuar a validação integrada e registrar separadamente eventuais falhas de execução e de qualidade.
