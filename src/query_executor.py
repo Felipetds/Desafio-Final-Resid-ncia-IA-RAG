@@ -14,9 +14,10 @@ from src.structured_query import carregar_base, consultar_registros
 
 
 _ESTRATEGIAS_VALIDAS = {
-    "consulta_estruturada",
-    "recuperacao_hibrida",
-    "combinada",
+    'combinada',
+    'consulta_agregada',
+    'consulta_estruturada',
+    'recuperacao_hibrida',
 }
 
 _OPERACOES_ESTRUTURADAS = {"contar", "listar"}
@@ -55,6 +56,7 @@ def _argumentos_consulta_estruturada(
         "minimo_inclusivo": plano.get("minimo_inclusivo", True),
         "maximo_inclusivo": plano.get("maximo_inclusivo", True),
         "criterio_objeto": plano.get("criterio_objeto"),
+        "criterio_tecnologia": plano.get("criterio_tecnologia"),
     }
 
 
@@ -100,6 +102,7 @@ def _executar_estruturada(
             "total_paginas": resultado["total_paginas"],
             "quantidade_retornada": len(resultado["registros"]),
             "campos": resultado["campos"],
+            "resumo_tecnologia": resultado.get("resumo_tecnologia"),
             "registros_sem_publicacao": resultado.get(
                 "registros_sem_publicacao", 0
             ),
@@ -123,12 +126,7 @@ def _montar_analise_recuperacao(
     plano: dict[str, Any],
     analise_pronta: dict[str, Any] | None,
 ) -> dict[str, Any] | None:
-    """Restringe a recuperação híbrida às rotas documentais do plano.
-
-    Em consulta combinada, evita que o recuperador volte a tratar a base
-    estruturada como evidência vetorial quando ela já foi consultada de forma
-    determinística.
-    """
+    """Separa rotas e filtros documentais da consulta estruturada."""
     rotas = plano.get("rotas_recuperacao")
     if not rotas:
         rotas = [
@@ -144,7 +142,35 @@ def _montar_analise_recuperacao(
     if rotas:
         analise_recuperacao["routes"] = list(dict.fromkeys(rotas))
 
+    filtros = dict(analise_pronta.get("filters") or {})
+
+    if plano.get("estrategia") == "combinada":
+        if "filtros_recuperacao" in plano:
+            filtros_documentais = plano["filtros_recuperacao"]
+            if not isinstance(filtros_documentais, dict):
+                raise ValueError(
+                    "filtros_recuperacao deve ser um dicionário."
+                )
+            filtros = dict(filtros_documentais)
+
+        elif set(rotas) == {"normativa"}:
+            # Estes filtros descrevem as contratações, não a norma.
+            filtros_estruturados = {
+                "uf", "municipio", "ano", "ano_compra",
+                "valor_minimo", "valor_maximo",
+                "modalidade", "modalidade_id",
+                "fornecedor", "orgao", "objeto_termos",
+                "data_inicial", "data_final",
+            }
+            filtros = {
+                campo: valor
+                for campo, valor in filtros.items()
+                if campo not in filtros_estruturados
+            }
+
+    analise_recuperacao["filters"] = filtros
     return analise_recuperacao
+
 
 
 def _executar_hibrida(
@@ -312,8 +338,54 @@ def executar_plano(
     if estrategia not in _ESTRATEGIAS_VALIDAS:
         raise ValueError(
             "Estratégia inválida. Use consulta_estruturada, "
-            "recuperacao_hibrida ou combinada."
+            "recuperacao_hibrida, combinada ou consulta_agregada."
         )
+
+    if estrategia == "consulta_agregada":
+        from src import obs
+        from src.aggregate_query import executar_agregada
+
+        inicio_agregada = time.perf_counter()
+        run_id = run_id or obs.novo_run_id()
+        query_id = _obter_query_id(plano, analise_pronta)
+
+        with obs.observar_etapa(
+            run_id=run_id,
+            query_id=query_id,
+            stage="consulta_agregada",
+            input_data={
+                "operacao": plano.get("operacao"),
+                "filtros": plano.get("filtros", {}),
+                "recorte_fonte": plano.get("recorte_fonte"),
+            },
+        ) as observacao:
+            resultado = executar_agregada(plano)
+            observacao["output"] = {
+                campo: resultado[campo]
+                for campo in (
+                    "operacao", "filtros_aplicados", "total_base",
+                    "itens_total", "homologados", "fracassados",
+                    "desertos", "valor_total_homologado",
+                    "homologados_sem_valor", "total_itens",
+                    "valor_total_estimado", "itens_sem_valor",
+                    "soma_completa", "fontes",
+                    "total_chunks_verificados",
+                    "total_vinculos_complementares",
+                    "fonte_corpus_verificado",
+                )
+                if campo in resultado
+            }
+
+        return {
+            **resultado,
+            "query": pergunta.strip(),
+            "query_id": query_id,
+            "run_id": run_id,
+            "routes": ["agregada"],
+            "latencia_ms": round(
+                (time.perf_counter() - inicio_agregada) * 1000, 2
+            ),
+        }
 
     if estrategia == "consulta_estruturada":
         return _executar_estruturada(

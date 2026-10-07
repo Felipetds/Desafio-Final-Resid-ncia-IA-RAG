@@ -984,6 +984,12 @@ def planejar_consulta(
             operacao="recusar",
         )
         return plano
+    from src.aggregate_planning import planejar_agregada
+
+    plano_agregado = planejar_agregada(texto, plano)
+    if plano_agregado is not None:
+        return plano_agregado
+
     def esclarecer(mensagem):
         plano.update(
             estrategia="esclarecimento",
@@ -1125,18 +1131,72 @@ def planejar_consulta(
                 "Qual critério documentado deve identificar "
                 "as contratações de tecnologia?"
             )
-        termos = criterio_tecnologia.get("termos")
-        descricao = criterio_tecnologia.get("descricao")
-        if (
-            not isinstance(termos, list)
-            or not termos
-            or not all(isinstance(t, str) and t.strip() for t in termos)
-            or not isinstance(descricao, str)
-            or not descricao.strip()
-        ):
-            raise ValueError("Critério de tecnologia inválido.")
-        filtros["objeto_termos"] = termos
-        criterio_objeto = descricao
+        from src.technology_classifier import VERSAO_CRITERIO
+
+        if criterio_tecnologia.get("implementacao") == VERSAO_CRITERIO:
+            descricao_contextual = criterio_tecnologia.get(
+                "regra_principal"
+            )
+            if (
+                not isinstance(descricao_contextual, str)
+                or not descricao_contextual.strip()
+            ):
+                raise ValueError(
+                    "Informe a regra principal do critério contextual."
+                )
+
+            tipo_tic = (
+                "servico_proposto"
+                if re.search(r"\bservicos? de tecnologia\b", texto)
+                else "todos"
+            )
+
+            criterio_objeto = (
+                descricao_contextual.strip()
+                + " Aplicação operacional: "
+                + VERSAO_CRITERIO
+                + ". Total de classificações propostas; "
+                "casos ambíguos permanecem para revisão."
+            )
+
+            plano["criterio_tecnologia"] = {
+                "implementacao": VERSAO_CRITERIO,
+                "descricao": criterio_objeto,
+                "tipo": tipo_tic,
+            }
+        else:
+            # O critério contextual exige decisões rastreáveis;
+            # termos indicativos não equivalem a classificação validada.
+            criterio_contextual = any(
+                campo in criterio_tecnologia
+                for campo in (
+                    "regra_principal",
+                    "termos_indicativos",
+                    "termos_ambiguos",
+                    "regras",
+                )
+            )
+            if criterio_contextual:
+                return esclarecer(
+                    "O critério contextual de TIC exige classificação "
+                    "rastreável dos registros. A classificação disponível "
+                    "ainda é preliminar e não permite informar um total "
+                    "validado. Você deseja utilizar um critério textual "
+                    "explicitamente documentado ou revisar a classificação?"
+                )
+
+            termos = criterio_tecnologia.get("termos")
+            descricao = criterio_tecnologia.get("descricao")
+            if (
+                not isinstance(termos, list)
+                or not termos
+                or not all(isinstance(t, str) and t.strip() for t in termos)
+                or not isinstance(descricao, str)
+                or not descricao.strip()
+            ):
+                raise ValueError("Critério de tecnologia inválido.")
+            filtros["objeto_termos"] = termos
+            criterio_objeto = descricao
     elif re.search(
         r"\b(?:de|sobre|envolvem|relacionad[oa]s? a)\s+"
         r"(?:servicos? de|software|informatica|material|reparo)",

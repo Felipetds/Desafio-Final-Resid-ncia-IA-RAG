@@ -238,6 +238,8 @@ def test_eventos_retrieval_possuem_campos_obrigatorios(
         ],
     )
 
+    monkeypatch.setattr(__import__('src.retrieval_lexical', fromlist=['buscar_contexto']), 'buscar_contexto', lambda **kwargs: [{'chunk_id': 'chunk_1', 'bm25_score': 3.0}])
+
     retrieve.recuperar_evidencias(
         pergunta="Contratos de tecnologia",
         client=FakeClient(),
@@ -409,6 +411,8 @@ def test_falha_controlada_bm25_e_registrada(
         busca_bm25_com_erro,
     )
 
+    monkeypatch.setattr(__import__('src.retrieval_lexical', fromlist=['buscar_contexto']), 'buscar_contexto', busca_bm25_com_erro)
+
     with pytest.raises(
         RuntimeError,
         match="Falha simulada BM25",
@@ -530,6 +534,8 @@ def test_eventos_retrieval_registram_rotas_filtros_ids_e_bases(
             {"chunk_id": "chunk_1", "bm25_score": 2.0},
         ],
     )
+
+    monkeypatch.setattr(__import__('src.retrieval_lexical', fromlist=['buscar_contexto']), 'buscar_contexto', lambda **kwargs: [{'chunk_id': 'chunk_2', 'bm25_score': 3.0}, {'chunk_id': 'chunk_1', 'bm25_score': 2.0}])
 
     retrieve.recuperar_evidencias(
         pergunta="Quais contratos de tecnologia existem no RJ em 2025?",
