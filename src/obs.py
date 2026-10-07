@@ -16,15 +16,16 @@ PASTA_LOGS = Path(
 )
 
 STAGES_VALIDOS = {
-    "query_analysis",
-    "roteamento",
-    "retrieval_denso",
-    "retrieval_bm25",
-    "fusao_rrf",
-    "rerank",
-    "geracao",
-    "validacao",
-    "feedback",
+    'consulta_agregada',
+    'feedback',
+    'fusao_rrf',
+    'geracao',
+    'query_analysis',
+    'rerank',
+    'retrieval_bm25',
+    'retrieval_denso',
+    'roteamento',
+    'validacao',
 }
 
 # Etapa de execução sobre a base estruturada completa.
