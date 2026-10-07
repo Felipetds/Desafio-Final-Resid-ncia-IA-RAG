@@ -92,6 +92,8 @@ def status_consulta(resultado):
         modo = "Consulta recusada"
     elif resultado.get("necessita_esclarecimento"):
         modo = "Esclarecimento necessário"
+    elif resultado.get("estrategia") == "consulta_agregada":
+        modo = "Consulta agregada calculada sobre o arquivo"
     elif resultado.get("estrategia") == "combinada":
         modo = "Consulta combinada: cálculo estruturado e documentos"
     elif resultado.get("estrategia") == "consulta_estruturada":
@@ -292,4 +294,168 @@ def preparar_combinado(consulta, documental):
         + "\n\n**Resposta baseada nos documentos recuperados**\n\n"
         + documental.get("answer", "")
     )
+    return saida
+
+
+def _formatar_valor_agregado(valor):
+    """Formata valores decimais sem converter para float."""
+    from decimal import Decimal
+
+    numero = Decimal(str(valor))
+    if not numero.is_finite():
+        raise ValueError("Valor agregado não finito.")
+
+    texto = format(numero, "f")
+    inteiro, separador, fracao = texto.partition(".")
+    sinal = "-" if inteiro.startswith("-") else ""
+    inteiro = inteiro.lstrip("-")
+    grupos = []
+
+    while inteiro:
+        grupos.insert(0, inteiro[-3:])
+        inteiro = inteiro[:-3]
+
+    fracao = fracao.ljust(2, "0")
+    return sinal + ".".join(grupos) + "," + fracao
+
+
+def preparar_agregado(resultado, *, latencia_ms=None):
+    """Apresenta cálculos do executor sem geração ou recálculo por LLM."""
+    saida = deepcopy(resultado)
+    operacao = resultado.get("operacao")
+
+    if operacao not in {
+        "resumir_itens", "resumir_pca", "resumir_itens_vinculos"
+    }:
+        raise ValueError("Operação agregada não suportada na interface.")
+
+    saida.update({
+        "estrategia": "consulta_agregada",
+        "routes": resultado.get("routes") or ["agregada"],
+        "filters": deepcopy(resultado.get("filtros_aplicados", {})),
+        "fontes_agregadas": list(resultado.get("fontes", [])),
+        "evidences": [],
+        "tokens": {},
+        "executado": True,
+        "latency_ms": (
+            latencia_ms
+            if latencia_ms is not None
+            else resultado.get("latencia_ms", 0)
+        ),
+    })
+
+    partes = ["**Resultado calculado sobre o arquivo agregado**"]
+    linhas = []
+
+    def adicionar(indicador, valor):
+        linhas.append({"indicador": indicador, "resultado": valor})
+
+    if operacao == "resumir_pca":
+        adicionar("Itens no arquivo", resultado["total_itens"])
+        adicionar(
+            "Valor total estimado informado (R$)",
+            _formatar_valor_agregado(resultado["valor_total_estimado"]),
+        )
+        partes.extend([
+            f"**Itens no arquivo:** {resultado['total_itens']:,}".replace(
+                ",", "."
+            ),
+            "**Valor total estimado informado:** R$ "
+            + _formatar_valor_agregado(resultado["valor_total_estimado"]),
+        ])
+    else:
+        for rotulo, campo in (
+            ("Total de itens", "itens_total"),
+            ("Homologados", "homologados"),
+            ("Fracassados", "fracassados"),
+            ("Desertos", "desertos"),
+        ):
+            adicionar(rotulo, resultado[campo])
+            partes.append(f"**{rotulo}:** {resultado[campo]}")
+
+        adicionar(
+            "Soma dos valores homologados informados (R$)",
+            _formatar_valor_agregado(resultado["valor_total_homologado"]),
+        )
+        partes.append(
+            "**Soma dos valores homologados informados:** R$ "
+            + _formatar_valor_agregado(
+                resultado["valor_total_homologado"]
+            )
+        )
+
+    partes.append(
+        "**Filtros aplicados:** `"
+        + json.dumps(saida["filters"], ensure_ascii=False)
+        + "`"
+    )
+
+    plano = resultado.get("plano") or {}
+    processo = plano.get("processo_informado")
+    if processo:
+        partes.append(f"**Processo informado:** {processo}")
+
+    recorte = plano.get("recorte_fonte")
+    if recorte:
+        partes.append(
+            "**Recorte associado à fonte:** `"
+            + json.dumps(recorte, ensure_ascii=False)
+            + "`"
+        )
+
+    if resultado.get("soma_completa") is False:
+        partes.append(
+            "**Atenção:** soma incompleta; há registros sem valor. "
+            "O valor exibido corresponde aos valores disponíveis."
+        )
+
+    for campo, rotulo in (
+        ("itens_sem_valor", "Itens sem valor"),
+        ("homologados_sem_valor", "Homologados sem valor"),
+    ):
+        if campo in resultado:
+            partes.append(f"**{rotulo}:** {resultado[campo]}")
+
+    verificacao = resultado.get("verificacao_vinculos")
+    if verificacao is not None:
+        partes.append("**Verificação de vínculos no corpus carregado**")
+        quantidade = resultado.get(
+            "total_chunks_verificados",
+            verificacao.get("total_chunks_verificados"),
+        )
+        partes.append(f"**Chunks verificados:** {quantidade}")
+
+        for natureza, correspondencias in verificacao.get(
+            "correspondencias", {}
+        ).items():
+            adicionar(
+                f"Vínculos por identificador — {natureza}",
+                len(correspondencias),
+            )
+            partes.append(
+                f"**{natureza}:** {len(correspondencias)} "
+                "correspondências por identificador."
+            )
+
+        if verificacao.get("observacao"):
+            partes.append(verificacao["observacao"])
+
+    fontes = resultado.get("fontes", [])
+    partes.append(
+        "**Fontes do cálculo:** "
+        + ("; ".join(fontes) if fontes else "Não informadas.")
+    )
+
+    if resultado.get("referencias"):
+        partes.append(
+            "**Referências:** "
+            + "; ".join(str(ref) for ref in resultado["referencias"])
+        )
+
+    if resultado.get("observacao"):
+        partes.append(resultado["observacao"])
+
+    saida["campos"] = ["indicador", "resultado"]
+    saida["registros"] = linhas
+    saida["answer"] = "\n\n".join(partes)
     return saida

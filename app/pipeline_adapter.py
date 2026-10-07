@@ -14,6 +14,7 @@ from src.schema import RAGResponse
 
 from app.interface_results import (
     preparar_estruturado,
+    preparar_agregado,
     preparar_combinado,
     status_consulta,
 )
@@ -68,6 +69,42 @@ def _obter_fetch_k() -> int:
 def _notificar_progresso(callback, percentual, descricao):
     if callback is not None:
         callback(percentual, descricao)
+
+
+def _preparar_entrada_geracao(recuperacao, *, combinada):
+    """Prepara a tarefa documental sem alterar o contexto original."""
+    from copy import deepcopy
+    import re
+
+    entrada = deepcopy(recuperacao)
+
+    if not combinada:
+        return entrada
+
+    pergunta_original = entrada.get("query", "")
+
+    # Decomposição limitada a uma forma explícita e conhecida.
+    # Não divide perguntas arbitrariamente pela palavra "e".
+    correspondencia = re.fullmatch(
+        r"\s*Quantas\s+contratações\s+têm\s+ano\s+da\s+compra"
+        r"\s+\d{4}\s+e\s+"
+        r"(?P<documental>o\s+que\s+a\s+Lei\b.+)",
+        pergunta_original,
+        flags=re.IGNORECASE,
+    )
+
+    if correspondencia:
+        entrada["query"] = correspondencia.group("documental").strip()
+    else:
+        entrada["query"] = (
+            "Responda exclusivamente ao pedido documental. "
+            "A operação estruturada será apresentada separadamente. "
+            "Não responda novamente à contagem ou listagem.\n\n"
+            + pergunta_original
+        )
+
+    return entrada
+
 
 
 def executar_pipeline(
@@ -154,8 +191,27 @@ def executar_pipeline(
             ),
         )
 
+    if consulta.get("estrategia") == "consulta_agregada":
+        _notificar_progresso(
+            on_progress,
+            1.0,
+            "Consulta agregada concluída.",
+        )
+        return preparar_agregado(
+            consulta,
+            latencia_ms=round(
+                (time.perf_counter() - inicio) * 1000,
+                2,
+            ),
+        )
+
     combinada = consulta.get("estrategia") == "combinada"
     recuperacao = consulta["hibrida"] if combinada else consulta
+
+    entrada_geracao = _preparar_entrada_geracao(
+        recuperacao,
+        combinada=combinada,
+    )
 
     _notificar_progresso(
         on_progress,
@@ -182,7 +238,8 @@ def executar_pipeline(
     ) as observacao:
         resposta_dict = _converter_dict(
             gerar_resposta(
-                resultado_recuperacao=recuperacao,
+                resultado_recuperacao=entrada_geracao,
+                run_id=run_id,
             )
         )
 
