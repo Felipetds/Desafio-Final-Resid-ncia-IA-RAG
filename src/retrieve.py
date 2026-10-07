@@ -544,7 +544,29 @@ def recuperar_evidencias(
                 filtros,
                 exigir_natureza,
             )[:fetch_k]
-        observacao_densa["output"] = {"candidatos": len(resultados_densos)}
+        top_chunk_ids_denso = [
+            item["chunk_id"]
+            for item in resultados_densos[:top_k]
+            if item.get("chunk_id")
+        ]
+        bases_densas = sorted({
+            chunks_por_id.get(item.get("chunk_id"), {})
+            .get("metadata", {})
+            .get("base_id")
+            for item in resultados_densos
+            if item.get("chunk_id")
+            and chunks_por_id.get(item.get("chunk_id"), {})
+            .get("metadata", {})
+            .get("base_id")
+        })
+
+        observacao_densa["output"] = {
+            "routes": rotas,
+            "filters": filtros,
+            "candidatos": len(resultados_densos),
+            "top_chunk_ids": top_chunk_ids_denso,
+            "bases": bases_densas,
+        }
 
     with obs.observar_etapa(
         run_id=run_id, query_id=query_id, stage="retrieval_bm25", input_data={"pergunta": pergunta, "fetch_k": fetch_k}
@@ -566,10 +588,30 @@ def recuperar_evidencias(
                 ids=ids,
                 fetch_k=fetch_k,
             )
-        observacao_bm25["output"] = {"candidatos": len(resultados_bm25)}
 
-    rotas = analise.get("routes", [])
-    filtros = analise.get("filters", {})
+        top_chunk_ids_bm25 = [
+            item["chunk_id"]
+            for item in resultados_bm25[:top_k]
+            if item.get("chunk_id")
+        ]
+        bases_bm25 = sorted({
+            chunks_por_id.get(item.get("chunk_id"), {})
+            .get("metadata", {})
+            .get("base_id")
+            for item in resultados_bm25
+            if item.get("chunk_id")
+            and chunks_por_id.get(item.get("chunk_id"), {})
+            .get("metadata", {})
+            .get("base_id")
+        })
+
+        observacao_bm25["output"] = {
+            "routes": rotas,
+            "filters": filtros,
+            "candidatos": len(resultados_bm25),
+            "top_chunk_ids": top_chunk_ids_bm25,
+            "bases": bases_bm25,
+        }
 
     with obs.observar_etapa(
         run_id=run_id, query_id=query_id, stage="fusao_rrf", input_data={"routes": rotas, "filters": filtros, "top_k": top_k}
