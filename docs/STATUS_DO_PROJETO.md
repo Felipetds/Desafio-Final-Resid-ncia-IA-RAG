@@ -481,3 +481,48 @@ Após a alteração final de decomposição, a suíte executada com testes/teste
 ```
 
 git diff --check concluído sem problemas.
+
+### Geração: fidelidade e citações — 07/10/2026
+
+**Responsável:** Maria Eduarda Ribeiro da Silva.
+
+#### Alterações implementadas
+
+- Reforço das instruções para preservar condições, exceções e referências.
+- Validação das citações contra os arquivos e chunks recuperados.
+- Bloqueio da resposta quando as citações estão ausentes ou não são reconhecidas.
+- Preservação dos tokens utilizados quando a resposta é bloqueada.
+- Registro da validação com os identificadores da execução.
+- Seleção das evidências citadas no resultado da geração.
+
+#### Validação realizada
+
+- 27 testes de geração e citações aprovados.
+- 314 testes locais aprovados, excluindo o teste de integração.
+- `git diff --check` sem erros.
+- Consulta documental executada na interface:
+  - Run ID: `7c7dc793`.
+  - Query ID: `q_f4e813c8`.
+  - Recuperação dos artigos 28 e 29 confirmada.
+
+Após o último reforço do prompt, a suíte local foi reexecutada:
+314 testes aprovados em 8,14 segundos, excluindo o teste de integração.
+`git diff --check` permaneceu sem erros.
+
+#### Limitação identificada na execução real
+
+A resposta reuniu, na mesma frase, a definição da modalidade do artigo 28
+e as condições de aplicação do artigo 29, mas citou somente o chunk 28.
+
+A validação implementada verifica a existência da referência entre as
+evidências recuperadas. Ela não verifica automaticamente se cada
+afirmação é sustentada pelo trecho citado.
+
+O reforço do prompt não resolveu esse caso na última execução.
+A fidelidade das citações permanece parcialmente validada.
+
+#### Próxima atividade
+
+Implementar e avaliar a verificação da correspondência entre afirmações
+e trechos citados. Preservar as melhorias já testadas e registrar os casos
+que exigem revisão.

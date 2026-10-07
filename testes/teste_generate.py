@@ -419,7 +419,7 @@ def test_guardrail_na_resposta_do_llm(
                 message=SimpleNamespace(
                     content=(
                         "Responsável: 123.456.789-10, "
-                        "e-mail pessoa@email.com."
+                        "e-mail pessoa@email.com. [Fonte: contratos_2025.csv]"
                     )
                 )
             )
