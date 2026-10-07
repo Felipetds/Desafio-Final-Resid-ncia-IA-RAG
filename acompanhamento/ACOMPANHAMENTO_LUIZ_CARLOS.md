@@ -390,3 +390,54 @@ Utilizei ferramentas de IA como apoio na análise do feedback do professor, refa
 - Reexecutar a suíte completa após integração com a versão mais recente da `main`.
 - Apoiar a integração do executor com a interface junto à integrante responsável.
 - Acompanhar com os responsáveis pela recuperação a melhoria da relevância de perguntas abertas, como o caso de reparo de vidraça.
+
+## Encontro 10 — 07/10/2026
+
+### Minha participação
+
+- Corrigi a separação dos filtros estruturados e documentais nas consultas combinadas, evitando aplicar o ano da compra à recuperação normativa.
+- Validei a consulta combinada, preservando a contagem calculada e recuperando evidências normativas.
+- Implementei consultas determinísticas à base agregada para contagem de itens, agrupamento por situação e soma de valores.
+- Conectei as consultas agregadas ao roteador e ao executor, mantendo os cálculos independentes do `top_k`.
+- Adicionei suporte a reformulações dos pedidos agregados e esclarecimento para filtros ou operações não suportados.
+- Implementei a verificação de vínculos entre naturezas por ID PNCP completo ou URL específica do edital.
+- Apliquei o critério contextual de TIC documentado por Janice, preservando descrição, versão e evidências utilizadas na classificação.
+- Diferenciei propostas de bens, serviços e casos indeterminados, mantendo os registros ambíguos para revisão.
+- Preservei paginação, filtros e campos solicitados nas consultas de tecnologia.
+- Avaliei a recuperação de vidraçaria junto com perguntas sobre pregão, artigo 4º e manutenção de elevadores.
+- Integrei a busca lexical contextual e a seleção de candidatos dentro das rotas e filtros estruturados e normativos, sem alterar os pesos do RRF.
+- Adicionei observabilidade às consultas agregadas e garanti a consistência dos identificadores entre resultados e logs.
+- Integrei as atualizações da `main`, resolvendo o conflito em `retrieve.py` e preservando os campos de observabilidade implementados por Felipe.
+- Atualizei a documentação em `docs/CONSULTAS_AGREGADAS.md`.
+- Realizei as atividades com apoio de Maria Eduarda na execução, conferência dos resultados e integração das alterações.
+
+### Resultados obtidos
+
+- A consulta combinada preservou a contagem de 1.234 contratações com ano da compra 2026 e retornou evidências normativas.
+- P02 retornou 19 itens: 8 homologados, 9 fracassados e 2 desertos, com soma homologada de R$ 141.002,08.
+- P07 retornou 36.994 linhas de itens, com soma estimada de `55968524178.3319`, calculada com `Decimal`.
+- M01 verificou 2.125 chunks e encontrou 19 correspondências agregadas, sem vínculos complementares pelos identificadores pesquisados.
+- A ausência desses vínculos não comprova inexistência de documentos relacionados por conteúdo ou outros números de processo.
+- A classificação operacional de TIC identificou 51 propostas, 217 registros para revisão e 1.090 sem indicadores reconhecidos.
+- Entre as propostas, 12 foram classificadas como serviços e 17 permaneceram com tipo indeterminado. Esses números ainda não representam classificação humana validada.
+- Na comparação experimental, o serviço de vidraçaria e o artigo 29 sobre pregão passaram para primeiro lugar; o artigo 4º permaneceu em primeiro e os resultados de elevadores melhoraram.
+- A validação posterior pelo recuperador atualizado foi bloqueada por timeout no endpoint de embeddings, em tentativas de 30 e 60 segundos.
+- A execução de M01 com tentativa de roteamento pelo endpoint utilizou fallback após timeout; o cálculo e a verificação local foram concluídos.
+- Após integrar as alterações de Felipe, foram aprovados 41 testes específicos e 296 testes na suíte com exclusão de `testes/teste_integracao.py`.
+- Os logs de Dense e BM25 mantiveram rotas, filtros, quantidade de candidatos, IDs dos primeiros resultados e bases.
+- As alterações foram publicadas na branch `fix/consultas-personas-luiz`.
+
+### Apoio de IA
+
+Utilizei ferramentas de IA como apoio na análise do código, implementação das consultas, elaboração dos testes, comparação da recuperação e resolução de conflitos. As orientações foram conferidas com os resultados obtidos no ambiente de execução, mantendo registradas as limitações e etapas não concluídas.
+
+### Próximas atividades
+
+- Repetir a validação do recuperador atualizado quando o endpoint de embeddings responder.
+- Validar os filtros documentais nas outras rotas e combinações, garantindo que nenhum critério solicitado seja ignorado.
+- Registrar a avaliação da separação das perguntas combinadas, cuja recuperação ainda utiliza a pergunta completa.
+- Concluir com Janice a revisão humana das propostas de classificação TIC.
+- Ampliar a avaliação da relevância, pois ainda existem resultados secundários inadequados.
+- Apoiar Maria Eduarda na validação dos resultados agregados na interface.
+- Executar os testes de integração na versão final.
+- Concluir a revisão do PR e sua integração à `main`.
