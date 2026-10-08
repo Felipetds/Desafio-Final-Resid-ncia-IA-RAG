@@ -165,3 +165,9 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * **Validação:** Os 1.358 registos estruturados do PNCP foram revalidados. A publicação original, os valores numéricos e a distinção entre zero e ausência foram preservados, tal como o vínculo com a fonte original. As 517 divergências decorrentes da sobreposição de datas foram resolvidas. A base normalizada afetada foi regenerada mantendo os IDs únicos (2.125 chunks no total).
 * **Mapeamento:** O mapeamento dos campos normalizados e as inconsistências encontradas foram analisados e devidamente documentados.
 * **Rerank:** Foi verificada a disponibilidade do endpoint de rerank do professor. Como continua indisponível, a limitação explícita e o fallback seguro no pipeline foram mantidos.
+
+### Atualização (09/10/2026) - Alinhamento de Caches e Índices v3
+* **Análise dos 19 embeddings (Base Agregada):** Foi verificado no manifesto (`DIFF_v2_v3.md`) que os arquivos CSV da base agregada são 100% idênticos entre o v2 e o v3. O cache gerado no v2 é compatível, e os 19 embeddings pendentes da Janice não decorrem de mudança no corpus.
+* **Artefatos da Demonstração:** Os índices FAISS e BM25 do v2 (2.125 chunks) continuam perfeitamente alinhados com o texto do v3. O único ficheiro alterado (`contratacoes_publicacao.json`) já teve os seus dados estruturados corrigidos.
+* **Decisão:** O conjunto aprovado para a demonstração é a junção dos índices originais com a base estruturada corrigida (`base_estruturada_normalizada.json`). O pacote `artefatos_v3.zip` foi partilhado com a equipa.
+* **Rerank:** O endpoint do professor foi consultado novamente e continua indisponível. Mantém-se o bloqueio registado, sem ativação de uma integração não validada.
