@@ -599,6 +599,168 @@ def analisar_consulta(
         observacao_analise["output"] = {
             "tamanho_pergunta": len(pergunta_limpa),
         }
+    # Guardrail P06: impedir exposicao de dados pessoais.
+    texto_privacidade = _normalizar_texto_para_comparacao(
+        pergunta_limpa
+    )
+
+    import unicodedata
+
+    texto_privacidade = "".join(
+        c for c in unicodedata.normalize(
+            "NFKD", texto_privacidade
+        )
+        if not unicodedata.combining(c)
+    )
+
+    pede_exposicao = bool(
+        re.search(
+            r"\b(?:mostre|liste|informe|exiba|revele|forneca)\b",
+            texto_privacidade
+        )
+    )
+    menciona_dado_pessoal = bool(
+        re.search(
+            r"\bcpf\b|telefone pessoal|e-mail pessoal|email pessoal",
+            texto_privacidade
+        )
+    )
+    pede_protecao = bool(
+        re.search(
+            r"\b(?:oculte|mascare|anonimize|proteja)\b",
+            texto_privacidade
+        )
+    )
+
+    if pede_exposicao and menciona_dado_pessoal and not pede_protecao:
+        with obs.observar_etapa(
+            run_id=run_id,
+            query_id=query_id,
+            stage="roteamento",
+            input_data={"pergunta": pergunta_limpa},
+            modelo=GENERATION_MODEL,
+        ) as observacao_recusa:
+            observacao_recusa["output"] = {
+                "routes": [],
+                "filters": {},
+                "is_refusal": True,
+                "tipo_recusa": "privacidade",
+            }
+            observacao_recusa["tokens"] = {
+                "prompt": 0,
+                "completion": 0,
+                "total": 0,
+            }
+
+        return {
+            "routes": [],
+            "filters": {
+                "uf": None,
+                "ano": None,
+                "valor_minimo": None,
+                "valor_maximo": None,
+                "modalidade": None,
+                "municipio": None,
+                "fornecedor": None,
+            },
+            "is_refusal": True,
+            "refusal_reason": (
+                "Nao posso expor CPF, telefone pessoal "
+                "ou e-mail pessoal."
+            ),
+            "justification": (
+                "Recusa por protecao de dados pessoais."
+            ),
+            "router_fallback": False,
+            "query": pergunta_limpa,
+            "query_id": query_id,
+            "stage": "roteamento",
+            "latencia_ms": round(
+                (time.perf_counter() - inicio) * 1000, 2
+            ),
+            "tokens": {
+                "prompt": 0,
+                "completion": 0,
+                "total": 0,
+            },
+            "modelo": GENERATION_MODEL,
+        }
+
+    # Guardrail P09: previsao de valores sem modelo validado.
+    import unicodedata
+
+    texto_previsao = _normalizar_texto_para_comparacao(pergunta_limpa)
+    texto_previsao = "".join(
+        caractere
+        for caractere in unicodedata.normalize("NFKD", texto_previsao)
+        if not unicodedata.combining(caractere)
+    )
+    pede_previsao = bool(
+        re.search(
+            r"\b(?:sera|previsao|prever|preveja)\b",
+            texto_previsao
+        )
+        and re.search(
+            r"valor medio|media das contratacoes",
+            texto_previsao
+        )
+    )
+    if pede_previsao:
+        resultado = {
+            "routes": [],
+            "filters": {
+                "uf": None,
+                "ano": None,
+                "valor_minimo": None,
+                "valor_maximo": None,
+                "modalidade": None,
+                "municipio": None,
+                "fornecedor": None,
+            },
+            "is_refusal": True,
+            "refusal_reason": (
+                "O sistema nao possui modelo validado para "
+                "prever valores futuros de contratacoes."
+            ),
+            "justification": (
+                "Recusa por limite de escopo e ausencia "
+                "de evidencia preditiva validada."
+            ),
+            "router_fallback": False,
+            "query": pergunta_limpa,
+            "query_id": query_id,
+            "stage": "roteamento",
+            "latencia_ms": round(
+                (time.perf_counter() - inicio) * 1000, 2
+            ),
+            "tokens": {
+                "prompt": 0,
+                "completion": 0,
+                "total": 0,
+            },
+            "modelo": GENERATION_MODEL,
+        }
+        with obs.observar_etapa(
+            run_id=run_id,
+            query_id=query_id,
+            stage="roteamento",
+            input_data={"pergunta": pergunta_limpa},
+            modelo=GENERATION_MODEL,
+        ) as observacao_recusa:
+            observacao_recusa["output"] = {
+                "routes": [],
+                "filters": {},
+                "is_refusal": True,
+                "tipo_recusa": "limite_de_escopo",
+            }
+            observacao_recusa["tokens"] = {
+                "prompt": 0,
+                "completion": 0,
+                "total": 0,
+            }
+
+        return resultado
+
     if client is None:
         client = OpenAI(
             base_url=OLLAMA_URL,
