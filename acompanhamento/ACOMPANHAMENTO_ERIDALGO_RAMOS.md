@@ -166,13 +166,8 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * **Mapeamento:** O mapeamento dos campos normalizados e as inconsistências encontradas foram analisados e devidamente documentados.
 * **Rerank:** Foi verificada a disponibilidade do endpoint de rerank do professor. Como continua indisponível, a limitação explícita e o fallback seguro no pipeline foram mantidos.
 
-### Atualização (09/10/2026) - Alinhamento de Caches e Índices v3
-* **Análise dos 19 embeddings (Base Agregada):** Foi verificado no manifesto (`DIFF_v2_v3.md`) que os arquivos CSV da base agregada são 100% idênticos entre o v2 e o v3. O cache gerado no v2 é compatível, e os 19 embeddings pendentes da Janice não decorrem de mudança no corpus.
-* **Artefatos da Demonstração:** Os índices FAISS e BM25 do v2 (2.125 chunks) continuam perfeitamente alinhados com o texto do v3. O único ficheiro alterado (`contratacoes_publicacao.json`) já teve os seus dados estruturados corrigidos.
-* **Decisão:** O conjunto aprovado para a demonstração é a junção dos índices originais com a base estruturada corrigida (`base_estruturada_normalizada.json`). O pacote `artefatos_v3.zip` foi partilhado com a equipa.
-* **Rerank:** O endpoint do professor foi consultado novamente e continua indisponível. Mantém-se o bloqueio registado, sem ativação de uma integração não validada.
 
-### Atualização (08/10/2026) - Alinhamento de Caches e Índices (v3)
+### Atualização (09/10/2026) - Alinhamento de Caches e Índices (v3)
 * **19 Embeddings Pendentes:** Pertencem à base agregada do corpus v2 (arquivo `itens_pe_038_26_2026.csv`). Como não houve alterações estruturais para o v3 (confirmado via `DIFF_v2_v3.md`), o cache é compatível. Os embeddings permanecem pendentes por falha local. **IDs envolvidos:** `itens_pe_038_chunk_482` até `itens_pe_038_chunk_500`.
 * **Validação de Cache:** Testes garantem que os IDs pertencem ao corpus, os vetores têm dimensão consistente (valores finitos), sem conflitos e correspondem ao texto.
 * **Conjunto Aprovado:** Índices v2 originais + nova base estruturada normalizada.
