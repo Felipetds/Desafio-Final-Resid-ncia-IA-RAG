@@ -208,6 +208,23 @@ def executar_pipeline(
     combinada = consulta.get("estrategia") == "combinada"
     recuperacao = consulta["hibrida"] if combinada else consulta
 
+    rotas_documentais = recuperacao.get("routes") or []
+    evidencias_documentais = recuperacao.get("evidences") or []
+
+    # Ativa somente quando a recuperação é exclusivamente normativa
+    # e todas as evidências possuem essa natureza explicitamente.
+    extrativa_normativa = (
+        set(rotas_documentais) == {"normativa"}
+        and bool(evidencias_documentais)
+        and all(
+            evidencia.get("natureza") == "normativa"
+            for evidencia in evidencias_documentais
+        )
+    )
+    opcoes_normativas = (
+        {"modo_extrativo": True} if extrativa_normativa else {}
+    )
+
     entrada_geracao = _preparar_entrada_geracao(
         recuperacao,
         combinada=combinada,
@@ -240,6 +257,7 @@ def executar_pipeline(
             gerar_resposta(
                 resultado_recuperacao=entrada_geracao,
                 run_id=run_id,
+                **opcoes_normativas,
             )
         )
 

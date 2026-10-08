@@ -526,3 +526,47 @@ A fidelidade das citações permanece parcialmente validada.
 Implementar e avaliar a verificação da correspondência entre afirmações
 e trechos citados. Preservar as melhorias já testadas e registrar os casos
 que exigem revisão.
+
+### Respostas normativas por seleção de chunks — 07/10/2026
+
+Responsável: Maria Eduarda Ribeiro da Silva.
+
+#### Implementação
+
+Nas recuperações exclusivamente normativas, com evidências explicitamente
+identificadas como normativas, o modelo seleciona IDs de chunks.
+O sistema apresenta o texto original das evidências selecionadas,
+aplicando os mecanismos existentes de proteção de dados pessoais.
+
+IDs desconhecidos, formatos inválidos e seleções vazias são bloqueados.
+As demais consultas documentais mantêm o formato anterior.
+
+A correspondência entre texto e chunk é verificada. A seleção por IDs
+não garante automaticamente relevância ou completude da resposta.
+
+#### Validação
+
+- 329 testes locais aprovados, excluindo o teste de integração.
+- `git diff --check` sem erros.
+- Consulta combinada com total de 1.234 preservado:
+  - Uma evidência: Run ID `c7d3bc3e`, Query ID `q_9afb9dad`.
+  - Três evidências: Run ID `cf789d38`, Query ID `q_07c22ef9`.
+- Filtro `ano_compra: 2026` e fonte estruturada preservados nas duas execuções.
+- Artigo 29 apresentado com condições, exceções e citação do chunk correspondente.
+- Navegação de retorno à página anterior confirmada pela responsável,
+  preservando total, filtros e campos.
+
+#### Pendência de integração de TIC
+
+O adaptador da interface não fornece `criterio_tecnologia` ao executor.
+A apresentação combinada também não copia os campos de classificação TIC
+para o resultado principal.
+
+A aplicação do critério na interface depende da configuração explícita
+do critério acordado e da preservação desses campos na apresentação.
+Essa integração ainda não foi validada.
+
+#### Escopo da validação
+
+Os resultados correspondem aos arquivos carregados no ambiente de teste.
+Não confirmam a conclusão da integração dos artefatos do corpus v3.

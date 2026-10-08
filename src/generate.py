@@ -274,6 +274,7 @@ def chamar_llm(
     pergunta: str,
     contexto: str,
     client: OpenAI,
+    modo_extrativo: bool = False,
 ):
     """
     Executa a chamada ao modelo de geração.
@@ -291,13 +292,33 @@ CONTEXTO RECUPERADO:
 Produza a resposta final utilizando somente o contexto acima.
 """
 
+    prompt = PROMPT_GERADOR
+    if modo_extrativo:
+        prompt += """
+
+Para esta consulta, selecione somente os chunks pertinentes à pergunta.
+Retorne somente JSON válido, sem cercas Markdown, neste formato:
+{"chunk_ids": ["ID EXATO DO CHUNK"]}
+
+Selecione entre um e cinco IDs presentes no contexto.
+Não copie, resuma ou reescreva o conteúdo dos chunks.
+O sistema apresentará o texto original de cada chunk selecionado.
+Selecione evidências que respondam ao pedido, incluindo condições
+e exceções relevantes. Não selecione chunks apenas por serem da mesma fonte.
+Não acrescente explicações ou campos adicionais.
+Se nenhum chunk responder ao pedido, retorne {"chunk_ids": []}.
+"""
+        mensagem_usuario += (
+            "\nRetorne somente o JSON com chunk_ids solicitado."
+        )
+
     return client.chat.completions.create(
         model=GENERATION_MODEL,
         temperature=0,
         messages=[
             {
                 "role": "system",
-                "content": PROMPT_GERADOR,
+                "content": prompt,
             },
             {
                 "role": "user",
@@ -392,6 +413,7 @@ def gerar_resposta(
     resultado_recuperacao,
     client: OpenAI | None = None,
     run_id: str | None = None,
+    modo_extrativo: bool = False,
 ) -> RAGResponse:
     """
     Executa a etapa completa de geração.
@@ -499,10 +521,14 @@ def gerar_resposta(
             modelo=GENERATION_MODEL,
         ) as observacao_geracao:
 
+            opcoes_geracao = (
+                {"modo_extrativo": True} if modo_extrativo else {}
+            )
             resposta_llm = chamar_llm(
                 pergunta=resultado.query,
                 contexto=contexto,
                 client=client,
+                **opcoes_geracao,
             )
 
             conteudo = (
@@ -559,6 +585,45 @@ def gerar_resposta(
     # --------------------------------------------------------
     # Guardrail final
     # --------------------------------------------------------
+
+    if modo_extrativo:
+        from src.grounded_quotes import preparar_selecao_extrativa
+
+        try:
+            with obs.observar_etapa(
+                run_id=run_id,
+                query_id=resultado.query_id,
+                stage="validacao",
+                input_data={"tipo": "trechos_literais"},
+            ) as observacao_trechos:
+                conteudo, _ = preparar_selecao_extrativa(
+                    conteudo,
+                    resultado.evidences,
+                )
+                observacao_trechos["output"] = {
+                    "trechos_validos": True,
+                }
+        except ValueError:
+            return RAGResponse(
+                query=resultado.query,
+                query_id=resultado.query_id,
+                answer=(
+                    "Não foi possível apresentar uma resposta com "
+                    "trechos literais verificados nesta execução. "
+                    "As evidências recuperadas continuam disponíveis "
+                    "para consulta."
+                ),
+                confidence_level="baixa",
+                sources_used=[],
+                is_refusal=False,
+                refusal_reason=None,
+                tokens=tokens,
+                modelo=GENERATION_MODEL,
+                latencia_ms=round(
+                    (time.perf_counter() - inicio) * 1000, 2
+                ),
+                stage="validacao",
+            )
 
     resposta_segura = mascarar_dados_pessoais(
         conteudo.strip()
