@@ -43,6 +43,22 @@ def preparar_estruturado(resultado, *, latencia_ms=None):
             f"**Critério do objeto:** {resultado['criterio_objeto']}"
         )
 
+    resumo_tic = resultado.get("resumo_tecnologia")
+    if resumo_tic is not None:
+        partes.extend([
+            "**Classificação TIC:** proposta, sujeita a revisão.",
+            (
+                "**Validação humana:** não confirmada."
+                if not resumo_tic.get("classificacao_humana_validada")
+                else "**Validação humana:** indicada pelo executor."
+            ),
+            (
+                "**Resumo da classificação no recorte:** `"
+                + json.dumps(resumo_tic, ensure_ascii=False)
+                + "`"
+            ),
+        ])
+
     if resultado.get("campo_valor"):
         minimo = (
             "inclusivo"
@@ -268,6 +284,8 @@ def preparar_combinado(consulta, documental):
         "filtros_aplicados", "campo_valor", "minimo_inclusivo",
         "maximo_inclusivo", "criterio_objeto", "fonte_data_publicacao",
         "observacao",
+        "criterio_tecnologia", "resumo_tecnologia",
+        "classificacoes_tecnologia",
     ):
         if campo in estruturado:
             saida[campo] = deepcopy(estruturado[campo])

@@ -2,42 +2,46 @@
 
 **Grupo:** 1
 **Residência:** TIC em Trilhas — PUC-Rio / Instituto ECOA
-**Cenário:** Contratações Públicas do Estado do Rio de Janeiro
-**Última atualização:** 02/10/2026
+**Atualização:** 07/10/2026
+**Consolidação:** Maria Eduarda Ribeiro da Silva
 
-Este documento reúne os resultados já demonstrados pela equipe e as
-pendências informadas até esta atualização. As novas entregas em branches
-devem ser diferenciadas das funcionalidades integradas à versão utilizada
-na demonstração.
+## 1. Resumo
 
-## 1. Objetivo
+O fluxo mínimo foi demonstrado na interface:
 
-Desenvolver um sistema que responda perguntas sobre contratações públicas
-em linguagem natural, selecionando as bases necessárias e apresentando
-evidências verificáveis.
+**pergunta → análise e planejamento → consulta → resposta → logs.**
 
-| Natureza | Conteúdo utilizado |
+Foram executadas consultas estruturadas, agregadas, documentais e combinadas.
+Resultados apresentam filtros, recortes, fontes e identificadores.
+Feedback e navegação entre páginas foram validados.
+
+A integração TIC foi implementada e validada na branch de trabalho.
+Ainda falta publicar essa alteração, confirmar sua integração na main
+e registrar a versão definitiva da demonstração.
+
+Esta validação não representa aprovação integral das personas ou do corpus v3.
+
+## 2. Integração e versões
+
+| Entrega | Situação |
 |---|---|
-| Estruturada | Contratações publicadas no PNCP |
-| Normativa | Lei nº 14.133/2021 |
-| Conversacional | Três atas em PDF e uma comunicação sintética |
-| Agregada | Plano de Contratações Anual e resultados por item |
+| Documentação de critérios e cobertura da Janice | PR #20 integrado |
+| Interface com agregados e delimitação documental | PR #21 integrado |
+| Validação de referências na geração | PR #22 integrado |
+| Respostas normativas por seleção de chunks | PR #23 integrado |
+| Critério e apresentação TIC na interface | Validado na branch; publicação pendente |
 
-## 2. Resumo dos dados preparados
+**Main remota consultada:** `5514484ba9a67aa7ef679b2d917fc9887848a053`.
+**Branch atual:** `feat/criterio-tic-interface-eduarda`.
+**Commit base local:** `ff13a86cd55dfea669ddda133606a035623252da`.
 
-O corpus de referência possui **8 arquivos** distribuídos nas quatro
-naturezas.
+Registrar o commit definitivo após integrar as alterações escolhidas.
+As execuções abaixo ocorreram em diferentes etapas de desenvolvimento;
+seus IDs não devem ser atribuídos automaticamente ao commit final.
 
-A coleta estruturada foi concluída com:
+## 3. Dados e artefatos usados
 
-- **28 páginas coletadas**;
-- **1.358 registros**;
-- **1.358 identificadores PNCP preenchidos e únicos**;
-- **nenhuma duplicação de identificadores**.
-
-As 28 páginas são páginas da API, e não 28 registros.
-
-A ingestão validada produziu:
+As validações da interface utilizaram o corpus v2 restaurado no Colab.
 
 | Natureza | Chunks |
 |---|---:|
@@ -47,526 +51,258 @@ A ingestão validada produziu:
 | Agregada | 519 |
 | **Total** | **2.125** |
 
-A base agregada processada contém uma **amostra de 500 itens do PCA**
-e **19 itens de uma contratação específica**. Essa amostra não representa
-todo o PCA nem todas as contratações do Estado.
+A coleta estruturada registrou 28 páginas da API, 1.358 registros
+e 1.358 IDs PNCP preenchidos e únicos.
 
-## 3. Funcionamento do pipeline
+Os chunks agregados incluem uma amostra de 500 itens do PCA e 19 itens
+da contratação selecionada. Os cálculos determinísticos consultam
+os arquivos completos, independentemente dessa amostra de recuperação.
 
-O fluxo implementado realiza:
+FAISS, BM25, lista de IDs e cache foram anteriormente validados como
+persistidos. Uma reexecução registrou 2.125 embeddings em cache e zero
+novos envios naquele ambiente.
 
-1. análise da pergunta e verificação das regras de recusa;
-2. seleção das bases e extração dos filtros;
-3. busca densa por embeddings e busca lexical BM25;
-4. filtragem dos candidatos;
-5. fusão dos rankings por RRF;
-6. geração da resposta com evidências;
-7. validação da estrutura de saída;
-8. apresentação na interface e registro dos eventos.
+Igualdade de quantidades e IDs não substitui a conferência de compatibilidade
+de conteúdo quando o corpus é alterado.
 
-O módulo de rerank está em desenvolvimento e permanece desativado por
-padrão. Sua validação real depende do endpoint disponibilizado pelo
-professor.
+### Corpus v3
 
-## 4. Funcionalidades já validadas
+O inventário registra oito arquivos e zero falhas de integridade.
+Na comparação estruturada, ambas as versões possuem 1.358 registros:
+1.314 idênticos e 44 alterados, sem IDs adicionados ou removidos.
 
-| Frente | Resultado confirmado |
-|---|---|
-| Coleta | Coleta estruturada concluída com retentativas e progresso salvo |
-| Versionamento | Comparação entre snapshots e preservação da versão anterior |
-| Ingestão | 2.125 chunks com IDs preenchidos e únicos, sem textos vazios |
-| PDFs | Fatiamento em blocos de aproximadamente 2.000 caracteres |
-| Indexação | FAISS, BM25 e lista de IDs persistidos |
-| Cache | Reexecução da indexação com 2.125 embeddings em cache e zero novos envios |
-| Roteamento | Seleção das quatro naturezas e tratamento de recusa |
-| Recuperação | Busca Dense, BM25 e fusão RRF |
-| Conversacional | Recuperação de três evidências sanitizadas em consulta real |
-| Geração | Resposta sobre contratações de tecnologia com referências aos chunks |
-| Interface | Resposta, rotas, filtros, evidências e informações da execução |
-| Feedback | Avaliação e comentário registrados em JSONL |
-| Observabilidade | Eventos identificados por query_id e run_id |
+Sete arquivos permaneceram idênticos e um foi alterado:
+`contratacoes_publicacao.json`. Dados brutos permanecem fora do Git.
 
-A igualdade de quantidades e a correspondência dos IDs foram verificadas.
-Essas verificações não substituem a conferência da compatibilidade entre
-o conteúdo dos chunks e os índices sempre que os dados forem alterados.
+A documentação da Janice registra 228 novos embeddings, cache de 368
+vetores de 1.024 dimensões e cobertura normativa e conversacional de 100%
+no recorte documentado.
 
-## 5. Correções concluídas desde o documento anterior
+Isso não comprova índices completos de todas as naturezas do v3.
+Permanecem por confirmar:
+- integração dos caches e situação dos 19 embeddings agregados;
+- alinhamento entre manifesto v3 e caminhos da ingestão;
+- disponibilidade de chunks, base normalizada e índices compatíveis com v3.
 
-### Filtro de UF
+## 4. Fluxo e módulos
 
-O roteador deixou de adicionar `uf: RJ` automaticamente a perguntas sem
-localização explícita.
-
-Foram confirmados os comportamentos:
-
-- pergunta sem localização: `uf: null`;
-- pergunta mencionando RJ ou Rio de Janeiro: `uf: RJ`;
-- preservação do filtro de ano quando informado.
-
-### Ano da base agregada
-
-A extração passou a utilizar reconhecimento de ano por regex.
-
-Na verificação dos 519 chunks agregados, não foram encontrados anos
-preenchidos fora do formato de quatro dígitos.
-
-Essa verificação de formato deve ser complementada pela comparação com
-as datas e os identificadores de origem.
-
-### Metadados conversacionais
-
-Os 31 chunks conversacionais passaram a apresentar UF RJ conforme o
-mapeamento implementado para os arquivos do cenário.
-
-### Recuperação conversacional
-
-A investigação identificou que a política de sensibilidade bloqueava
-os chunks classificados como restritos.
-
-Foi implementado o encaminhamento dos chunks conversacionais restritos
-para mascaramento antes da apresentação das evidências.
-
-Na consulta validada, foram obtidos:
-
-- rota `conversacional`;
-- UF não inventada;
-- 31 candidatos Dense após filtragem;
-- 31 candidatos BM25 após filtragem;
-- 31 candidatos na fusão RRF;
-- 3 evidências retornadas;
-- classificação de saída `restrito_sanitizado`.
-
-O mascaramento possui testes para CPF, telefone e e-mail. A classificação
-de saída não garante, por si só, a remoção de todo tipo de dado pessoal.
-
-### Proteção contra ingestão vazia
-
-A ingestão passou a lançar uma exceção quando nenhum chunk é produzido,
-evitando a substituição da saída por um arquivo vazio.
-
-O comportamento foi testado em diretório temporário sem o corpus.
-
-## 6. Interface e feedback
-
-A interface Gradio apresenta:
-
-- campo para pergunta;
-- seleção da quantidade de evidências;
-- resposta gerada;
-- bases selecionadas;
-- filtros;
-- evidências e fontes;
-- query_id e run_id;
-- latência e tokens;
-- indicador de progresso por etapas;
-- avaliação Útil ou Não útil;
-- comentário opcional;
-- botão de envio do feedback;
-- confirmação do salvamento.
-
-O indicador de progresso utiliza marcos das etapas do pipeline.
-Ele não representa uma estimativa exata do tempo restante.
-
-O feedback é armazenado, por padrão, em:
-
-`data/feedback/feedback.jsonl`
-
-O caminho pode ser configurado pela variável `FEEDBACK_PATH`.
-
-Cada registro inclui:
-
-- data e hora;
-- pergunta;
-- avaliação;
-- comentário;
-- query_id;
-- run_id;
-- rota;
-- fontes.
-
-Foram conferidos registros de feedback com os identificadores da consulta
-e as fontes correspondentes.
-
-O arquivo permanece disponível após reiniciar a interface no mesmo
-ambiente. No Colab, a persistência entre runtimes depende de preservar
-o arquivo em armazenamento externo, como o Drive.
-
-O histórico completo de perguntas e respostas ainda deve ser concluído.
-O arquivo de feedback não substitui esse histórico.
-
-## 7. Versionamento do corpus
-
-A comparação entre a v2 e a nova coleta estruturada apresentou:
-
-| Resultado | Quantidade |
-|---|---:|
-| Registros na v2 | 1.358 |
-| Registros na nova coleta | 1.358 |
-| IDs adicionados | 0 |
-| IDs removidos | 0 |
-| Registros idênticos | 1.314 |
-| Registros alterados | 44 |
-
-A atualização isolada gerou a v3 com **8 arquivos e zero falhas**
-no inventário, preservando a v2.
-
-Na comparação dos arquivos:
-
-- 7 permaneceram idênticos;
-- 1 foi alterado;
-- nenhum foi adicionado ou removido.
-
-O arquivo alterado foi `contratacoes_publicacao.json`.
-
-Os inventários e o diff estão registrados no repositório.
-Os dados brutos permanecem fora do Git.
-
-**Atenção à versão utilizada:** os testes de ingestão e recuperação
-descritos neste documento foram realizados com o corpus restaurado em
-`data/raw/v2`. A existência da v3 não significa que ela já esteja sendo
-utilizada pela ingestão e pelos índices da demonstração.
-
-## 8. Testes e evidências de validação
-
-Os resultados abaixo pertencem a momentos e versões de trabalho
-diferentes. Eles não devem ser somados.
-
-| Validação | Resultado informado |
-|---|---|
-| Correção do filtro de UF | 4 testes específicos aprovados |
-| Sanitização, recuperação e geração | 51 testes aprovados |
-| Suíte offline após a sanitização | 118 testes aprovados |
-| Suíte offline após feedback e progresso | 132 testes aprovados |
-| Integração executada por Felipe em 30/09 | 9 testes aprovados |
-| Suíte completa informada por Felipe em 30/09 | 139 testes aprovados |
-| Módulo de rerank com testes simulados | 4 testes aprovados |
-
-Os números representam os resultados registrados pela equipe.
-Antes de apresentar um total como resultado da versão atual, é necessário
-associar a execução ao commit e ao ambiente utilizados.
-
-Testes aprovados não substituem a avaliação da qualidade das respostas,
-da relevância das evidências e da correção das fontes.
-
-## 9. Entregas recentes e situação
-
-| Responsável | Entrega | Situação registrada |
+| Etapa | Módulos | Saída |
 |---|---|---|
-| Eduarda | Feedback persistido e progresso na interface | Integrado pelo PR #9 e validado na suíte offline |
-| Janice | Personas revisadas e nove perguntas de avaliação | Arquivos disponibilizados no repositório |
-| Luiz | Ajustes do fallback e seleção de evidências multirrota | Implementação e testes informados; confirmar integração e validação real na versão atual |
-| Eridalgo | Estrutura configurável de rerank | Módulo e testes simulados informados; integração e endpoint real pendentes de confirmação |
-| Felipe | Testes de integração e complementação dos logs | Testes executados; campos adicionais e testes de observabilidade em andamento |
-| Calvin | Reprodutibilidade | Verificações iniciadas; execução completa do guia ainda não comprovada |
+| Entrada | app/app.py | Pergunta e quantidade de evidências |
+| Planejamento | router.py e aggregate_planning.py | Bases, estratégia, operação, filtros e paginação |
+| Estruturada | query_executor.py e structured_query.py | Contagem ou listagem sobre o recorte |
+| Agregada | aggregate_query.py e cross_source.py | Contagens, situações, somas e vínculos |
+| Recuperação | retrieve.py e retrieval_lexical.py | Evidências e metadados |
+| Geração | generate.py e grounded_quotes.py | Resposta e fontes citadas |
+| Apresentação | pipeline_adapter.py e interface_results.py | Resultados, tabelas e contexto |
+| Registro | obs.py e feedback_store.py | Eventos e avaliações persistidos |
 
-## 10. Limitações e próximas atividades
+Estratégias: consulta_estruturada, consulta_agregada,
+recuperacao_hibrida e combinada. Recusas e esclarecimentos interrompem
+a execução quando pertinentes.
 
-- Confirmar e validar a recuperação multirrota na versão integrada.
-- Concluir a integração do rerank e testar o endpoint real quando disponível.
-- Complementar os logs Dense e BM25 com rotas, bases, candidatos e IDs.
-- Executar e registrar os resultados das nove perguntas das personas.
-- Comparar métodos de recuperação por meio de avaliação e ablação.
-- Concluir o histórico persistido de consultas.
-- Validar a execução em ambiente limpo seguindo somente o guia existente.
-- Alinhar manifesto, versão do corpus, ingestão e índices.
-- Medir a latência por etapa antes de definir otimizações.
-- Revisar relevância, fidelidade e correspondência das fontes nas respostas.
-- Concluir a documentação e a preparação da entrega final.
+Cálculos estruturados e agregados não são limitados pelo top_k.
+A combinada separa os filtros estruturados dos documentais.
 
-A latência varia entre consultas e depende das chamadas aos serviços de
-modelos. O indicador de progresso melhora a visualização das etapas,
-mas não comprova redução do tempo de execução.
+A decomposição da pergunta enviada à geração cobre uma forma explícita:
+“Quantas contratações têm ano da compra AAAA e o que a Lei...”.
+Outras formulações ainda exigem avaliação.
 
-## 11. Demonstração de atualização
+## 5. Resultados validados na interface
 
-### Pergunta principal
-
-> Quais contratações envolvem serviços de tecnologia?
-
-Conferir e mostrar:
-
-- resposta baseada nas evidências;
-- rota estruturada;
-- filtros;
-- pelo menos uma fonte;
-- chunk_id da evidência;
-- query_id e run_id;
-- latência e tokens;
-- envio e confirmação do feedback.
-
-### Pergunta alternativa
-
-> O que a Lei nº 14.133 estabelece sobre licitações?
-
-Conferir a rota normativa e a correspondência entre as afirmações
-da resposta e os trechos da lei recuperados.
-
-### Controle de escopo
-
-> Esse contrato foi uma fraude?
-
-O comportamento já validado é a recusa da acusação, acompanhada da
-explicação da limitação e de uma lista vazia de evidências.
-
-Se o endpoint estiver indisponível, utilizar um resultado previamente
-salvo e identificá-lo como execução anterior. Não apresentar uma saída
-salva como se fosse uma consulta ao vivo.
-
-## 12. Arquivos de referência
-
-| Arquivo | Responsabilidade |
+| Caso | Resultado |
 |---|---|
-| corpus_manifest.yaml | Fontes, arquivos, hashes e critérios do corpus |
-| src/fetch_corpus.py | Coleta, inventário e atualização |
-| src/ingest.py | Extração, metadados e chunks |
-| src/index.py | Cache e índices FAISS/BM25 |
-| src/router.py | Rotas, filtros e recusas |
-| src/retrieve.py | Recuperação, filtragem e RRF |
-| src/generate.py | Geração com evidências |
-| src/schema.py | Validação das estruturas |
-| src/obs.py | Logs estruturados |
-| app/app.py | Interface |
-| app/pipeline_adapter.py | Integração do pipeline com a interface |
-| app/feedback_store.py | Registro persistido de feedback |
-| eval/perguntas_personas.json | Casos de avaliação |
-| docs/GUIA_DO_PIPELINE.md | Preparação e execução do projeto |
+| Contagem por ano da compra 2026 | 1.234 em 1.358 registros |
+| Listagem de 2026 acima de R$ 500 mil estimados | 560; apenas objeto e valor estimado |
+| Paginação | 20 por página, 28 páginas; total, filtros e campos preservados |
+| Retorno à página anterior | Confirmado pela responsável |
+| P02 | 19 itens: 8 homologados, 9 fracassados, 2 desertos; R$ 141.002,08 |
+| P07 | 36.994 linhas; soma estimada informada de R$ 55.968.524.178,3319 |
+| M01 | 2.125 chunks verificados; 19 vínculos agregados por identificador; zero nas demais naturezas |
+| Documental | Texto normativo com citação do chunk correspondente |
+| Combinada | 1.234 e artigo 29 apresentado separadamente |
+| Controle de evidências | Com top_k 1 e 3, cálculo, filtro e fonte estruturada preservados |
+| TIC | 51 propostas com critério, versão e aviso de ausência de validação humana |
+| Feedback | Pergunta original, fontes e IDs preservados após paginação e edição |
 
-Para a atualização ao professor, utilizar o objetivo, os dados preparados,
-as funcionalidades validadas, uma consulta na interface e as pendências.
-Os arquivos técnicos ficam disponíveis para perguntas específicas.
+P02, P07 e M01 também tiveram cálculos reais iguais com top_k 1 e 3,
+usando análise fornecida, sem chamada ao modelo do roteador.
 
-## Validação da interface — 05/10/2026
+P02 usa o ID PNCP `42498600000171-1-000757/2026`.
 
-### Implementação
+A soma do PCA representa os valores informados no arquivo.
+Não valida o orçamento estadual. Origem, recorte, duplicações e possíveis
+inconsistências exigem conferência própria.
 
-- Interface integrada ao executor de consultas estruturadas e documentais.
-- Contagens apresentam total calculado, filtros, recorte e fonte.
-- Listagens apresentam somente os campos solicitados e permitem paginação.
-- O total permanece visível durante a navegação.
-- A quantidade de evidências limita somente a recuperação documental.
-- Consultas combinadas apresentam separadamente o cálculo estruturado e a resposta documental.
-- Fontes estruturadas, recuperadas e citadas são identificadas separadamente.
-- Feedback persistido permanece associado à resposta exibida, mesmo após editar a pergunta sem executar outra consulta.
+M01 procura ID PNCP completo ou URL específica do edital.
+Ausência de vínculo não comprova ausência de documentos relacionados.
+Não verifica vínculos exclusivamente por conteúdo ou outros processos.
 
-### Validação realizada
+## 6. Tecnologia/TIC
 
-Ambiente: Colab, com corpus v2 restaurado, 1.358 registros estruturados
-e artefatos de recuperação com 2.125 chunks.
+O adaptador fornece o critério contextual ao executor.
+A interface apresenta descrição, versão e classificação proposta.
+Os campos TIC são preservados no resultado principal da combinada.
 
-- 12 testes específicos da interface aprovados.
-- 204 testes offline aprovados; testes de integração excluídos dessa execução.
-- Verificação de sintaxe e `git diff --check` sem erros.
-- Contagem por ano da compra 2026: 1.234 registros.
-- Listagem por ano da compra 2026 e valor estimado estritamente acima de R$ 500 mil: 560 correspondências.
-- Tabela com apenas objeto e valor estimado, 20 registros por página e 28 páginas.
-- Navegação até a página 3 preservou total, filtros e campos.
-- Consulta documental do art. 4º recuperou o chunk pertinente e exibiu fontes recuperadas e citadas com uma evidência.
-- Envio de feedback e limpeza da interface verificados.
-- Vínculo do feedback após editar a pergunta confirmado no JSONL:
-  query_id q_98f92df4 e run_id 0a353c48.
+| Indicador | Quantidade |
+|---|---:|
+| Registros no recorte | 1.358 |
+| TIC proposto | 51 |
+| Revisão | 217 |
+| Sem indício reconhecido | 1.090 |
+| Tipo indeterminado entre as propostas | 17 |
 
-### Pendências e limitações
+Versão: `tic-contextual-v3`. Validação humana: não confirmada.
 
-- Consulta combinada preservou o total de 1.234, mas não recuperou evidências normativas.
-- Os logs da execução 96d4e6c9 mostram o filtro ano 2026 aplicado à recuperação normativa. A separação dos filtros por estratégia precisa ser corrigida e validada com Luiz.
-- A apresentação combinada e sua paginação foram verificadas por testes simulados; a validação real completa com evidências documentais permanece pendente.
-- Com três evidências, a geração da resposta sobre o art. 4º desviou do tema, apesar de recuperar o trecho pertinente.
-- Com uma evidência, a resposta apresentou uma simplificação sobre valor do item versus valor da licitação.
-- Essas falhas de conteúdo permanecem pendentes de revisão da geração e da recuperação.
-- Os casos de avaliação da Janice se referem ao corpus v3. Esta execução com v2 não representa aprovação integral desses casos.
-- O critério textual anterior de tecnologia não equivale à classificação contextual de TIC definida na avaliação.
+Os 17 tipos indeterminados integram as propostas e não devem ser somados
+às três categorias principais. “Sem indício” não comprova ausência de TIC.
 
-## Validação da interface integrada — 07/10/2026
+A contagem TIC passou em execução real na interface.
+A preservação dos campos na combinada foi testada automaticamente;
+uma combinada TIC real não foi apresentada nesta sessão.
 
-### Escopo e ambiente
+## 7. Recuperação, geração e proteção
 
-Validação realizada por Maria Eduarda em Google Colab, na branch
-`feat/interface-integrada-eduarda`, criada a partir do commit
-`98b3f8b20363157c26de0a082b5b1485ee67f338`.
+A recuperação utiliza busca densa, lexical, filtros e RRF.
+Busca lexical contextual foi integrada para os recortes suportados.
+Não foi comprovada nesta sessão melhoria geral de ranking ou avaliação
+comparativa completa de vidraçaria.
 
-Os dados utilizados pertencem ao corpus v2: 1.358 registros estruturados
-e 2.125 chunks. Esta validação não comprova integração ou indexação
-completa do corpus v3.
+A validação de referências rejeita citações ausentes ou desconhecidas.
+Uma referência existente não garante suporte semântico à afirmação.
 
-### Alterações realizadas
+Em recuperações exclusivamente normativas, com natureza explícita,
+o modelo seleciona IDs e o código apresenta o texto original dos chunks.
+Seleções vazias, IDs desconhecidos e formatos inválidos são bloqueados.
+Relevância e completude da seleção ainda exigem avaliação.
 
-- Apresentação dos resultados agregados diretamente na interface,
-  sem geração documental ou recálculo por LLM.
-- Tabelas de indicadores para contagens, situações e somas.
-- Preservação da precisão decimal dos valores agregados.
-- Exibição das fontes, recortes, referências e limitações de vínculos.
-- Paginação disponível apenas para listagens.
-- Controle de evidências desabilitado nos resultados exclusivamente
-  estruturados ou agregados.
-- Disponibilização dos detalhes de classificação TIC e de vínculos.
-- Delimitação da entrada de geração da consulta combinada.
-- Decomposição da forma explícita "Quantas contratações têm ano da
-  compra AAAA e o que a Lei..." para encaminhar somente o pedido
-  documental ao gerador.
-- Reutilização do run_id da consulta na chamada de geração.
+As demais consultas documentais mantêm a geração textual anterior.
+A proteção de dados pessoais continua aplicada.
 
-### Resultados comprovados
+Há testes de mascaramento de CPF, telefone e e-mail.
+A indicação restrito_sanitizado não garante remoção de todo dado pessoal.
 
-| Cenário | Resultado |
+O rerank possui implementação configurável e testes simulados registrados.
+Endpoint, ativação e validação real atuais permanecem por confirmar.
+
+## 8. Logs, feedback e histórico
+
+Eventos JSONL possuem query_id e run_id.
+Complementos de recuperação com rotas, filtros, candidatos, IDs e bases,
+além de testes de falha controlada, foram integrados.
+
+Reunir os eventos completos das demonstrações escolhidas, conferindo
+os mesmos IDs da interface e as bases efetivamente consultadas.
+
+Feedback: `data/feedback/feedback.jsonl`, configurável por FEEDBACK_PATH.
+Contém pergunta, avaliação, comentário, IDs, rota e fontes.
+
+O vínculo com a resposta exibida foi conferido após paginação e edição
+da pergunta sem executar outra consulta.
+
+**Histórico completo de perguntas e respostas:** implementação própria
+não identificada na inspeção; pendência registrada separadamente.
+Logs e feedback não substituem esse histórico.
+
+No Colab, preservar arquivos externamente para sobreviver à troca de runtime.
+Persistência no mesmo ambiente não comprova persistência entre runtimes.
+
+## 9. Identificadores de referência
+
+| Caso | Query ID | Run ID |
+|---|---|---|
+| Contagem | q_b1c77195 | ce23bd37 |
+| Listagem — página 1 | q_53ce9203 | 32845cc8 |
+| Página 2 e feedback | q_53ce9203 | ade86df8 |
+| P02 | q_b4e468ff | aafe7ef9 |
+| P07 | q_5e3a735e | 2d6f170a |
+| M01 | q_7d655c86 | a2438202 |
+| Documental — formato literal anterior | q_c307e951 | 0109ff2d |
+| Combinada — seleção de IDs | q_3a4f419f | a4f02cb7 |
+| Combinada — top_k 1 | q_9afb9dad | c7d3bc3e |
+| Combinada — top_k 3 | q_07c22ef9 | cf789d38 |
+| TIC | q_74f95bea | a3b8c79b |
+
+## 10. Testes e avaliação
+
+Última suíte local: **332 aprovados em 7,32 segundos**, na branch TIC.
+
+Comando: `python -m pytest -q --ignore=testes/teste_integracao.py`.
+
+A execução específica de interface TIC, consultas TIC, interface estruturada
+e combinada teve 20 testes aprovados. Git diff --check sem erros.
+
+Após o merge, conferir a versão integrada.
+Totais de versões anteriores não devem ser somados.
+
+Há documentação e relatório v2 em eval/.
+Sua existência não comprova aprovação integral das personas.
+Confirmar a avaliação consolidada de P01–P09, M01 e reformulações,
+com esperado, observado, fonte, IDs e situação.
+
+## 11. Responsabilidades conhecidas
+
+| Frente | Responsáveis | Situação |
+|---|---|---|
+| Interface e coordenação | Maria Eduarda | Casos validados; publicação TIC e preparação da demonstração pendentes |
+| Fidelidade e citações | Maria Eduarda, com apoio a alinhar | PRs #22 e #23 integrados; avaliação mais ampla permanece |
+| Planejamento e consultas | Luiz | Estruturadas, agregadas e combinadas implementadas |
+| Personas e critérios | Janice | Documentação integrada; avaliação completa por confirmar |
+| Ingestão, índices e caches | Eridalgo e responsáveis da frente | Integração completa v3 por confirmar |
+| Observabilidade e integração | Felipe | Complementos integrados; reunir logs finais |
+| Reprodutibilidade | Calvin | Confirmar execução completa em ambiente limpo |
+
+Esta tabela registra a divisão conhecida, sem atribuir novas tarefas.
+
+## 12. Pendências
+
+| Frente | Critério de conclusão |
 |---|---|
-| Contagem por ano da compra 2026 | 1.234 correspondências |
-| Listagem de 2026 com valor estimado acima de R$ 500 mil | 560 correspondências; somente objeto e valor estimado |
-| Avanço da página 1 para a página 2 | Total de 560 preservado, 28 páginas e mesmo query_id |
-| Feedback após paginação e edição sem executar | Pergunta original, fontes e IDs da página exibida preservados |
-| P02 — resumo dos itens | 19 itens: 8 homologados, 9 fracassados, 2 desertos; soma R$ 141.002,08 |
-| P07 — resumo do arquivo PCA | 36.994 linhas; soma dos valores estimados informados de R$ 55.968.524.178,3319 |
-| M01 — cálculo e vínculos | 2.125 chunks verificados; 19 correspondências agregadas por identificador e zero nas demais naturezas |
-| Consulta documental | Execução concluída, com fontes e citações; identificada falha de fidelidade em uma resposta |
-| Consulta combinada após correção | 1.234 correspondências e resposta documental separada, citando o chunk do art. 29 |
+| Publicação TIC | PR integrado e verificação na main |
+| Versão da demonstração | Commit e versão dos dados/artefatos registrados |
+| Logs da demonstração | Percurso verificável com os mesmos IDs da interface |
+| Roteiro e capturas | Sequência ensaiada e arquivos disponíveis |
+| Personas | Casos avaliados com fontes, IDs e situação |
+| Corpus v3 | Manifesto, ingestão, caches e índices compatíveis |
+| Reprodutibilidade | Guia executado em ambiente limpo |
+| Histórico | Persistência e recuperação de perguntas e respostas |
+| Qualidade | Avaliação de relevância e completude, incluindo vidraçaria |
+| Infraestrutura | Rerank real e configuração permanente de timeouts confirmados |
 
-P02, P07 e M01 também foram executados com arquivos reais e análise
-fornecida, sem chamada ao modelo do roteador. Os cálculos foram iguais
-para top_k 1 e 3.
+Timeout de 60 segundos e max_retries=0 foram configurados temporariamente
+na sessão do Colab, sem alteração permanente dos arquivos.
 
-A execução combinada final utilizou query_id `q_0f1cef09` e
-run_id `1a95196b`.
+Houve latências variáveis e timeouts. Medir etapas antes de otimizar.
+O progresso da interface não estima tempo restante nem comprova aceleração.
 
-### Testes automatizados
+## 13. Roteiro proposto — sexta-feira, 09/10/2026
 
-Na execução anterior à substituição final da instrução pela decomposição
-limitada da pergunta:
+1. Explicar fluxo, módulos e entradas/saídas.
+2. Mostrar contagem estruturada, plano, recorte e fonte.
+3. Mostrar consulta documental e chunk citado.
+4. Mostrar combinada, separando cálculo e documento.
+5. Apresentar P02 como cálculo sobre arquivo completo.
+6. Apresentar TIC como classificação proposta.
+7. Enviar feedback e conferir o registro.
+8. Abrir logs pelos mesmos IDs da interface.
+9. Declarar versão do corpus e limitações.
 
-- 21 testes específicos de interface aprovados.
-- 305 testes aprovados com `testes/teste_integracao.py` excluído.
-- `git diff --check` sem problemas.
+P07 e M01 podem ser exemplos adicionais ou capturas de reserva.
+Preparar capturas de P02, P07, M01, combinada, TIC e feedback.
+Salvamento das capturas e ensaio ainda não foram confirmados.
 
-A verificação final da alteração de decomposição deve ser registrada
-após sua execução. A suíte acima não equivale à aprovação de todos
-os testes externos ou de todas as perguntas das personas.
+Se o endpoint falhar, identificar a saída como execução anterior.
+Não apresentar captura salva como consulta ao vivo.
 
-### Limitações e próximos ajustes
+## 14. Referências
 
-- Foram observadas esperas prolongadas e timeout no roteamento.
-  Os clientes foram configurados temporariamente na sessão do Colab
-  com timeout de 60 segundos e max_retries=0. Essa configuração
-  não foi incorporada aos arquivos do projeto.
-- O modo de roteamento da execução M01 de aproximadamente 60 segundos
-  ainda deve ser confirmado nos logs antes de classificá-lo como fallback.
-- A soma do PCA representa os valores informados no arquivo carregado;
-  não constitui validação do orçamento estadual. Origem, recorte e
-  possíveis inconsistências do total ainda precisam ser conferidos.
-- Ausência de vínculos por identificador não comprova inexistência
-  de documentos relacionados.
-- A decomposição documental implementada cobre uma forma explícita
-  de pergunta. Outras formulações combinadas precisam de validação.
-- Uma resposta documental incluiu obras indevidamente na aplicação
-  do pregão e associou uma regra ao artigo incorreto. Registrar a
-  revisão de fidelidade e citações em generate.py e definir seu
-  responsável com a equipe.
-- Permanecem pendentes a confirmação manual do retorno à página
-  anterior e a confirmação da configuração permanente dos timeouts.
-- A validação com artefatos completos do corpus v3 depende da
-  confirmação e disponibilização desses artefatos pela equipe.
+- corpus_manifest.yaml
+- docs/GUIA_DO_PIPELINE.md
+- docs/CONSULTAS_AGREGADAS.md
+- eval/CRITERIOS_PERSONAS_RECORTE_CORPUS_2026-10-07.md
+- eval/COBERTURA_EMBEDDINGS_V3_2026-10-07.md
+- eval/relatorio_avaliacao_personas_v2.md
+- docs/historico/STATUS_DO_PROJETO_ANTES_CONSOLIDACAO_2026-10-07.md
 
-### Responsabilidade pela geração — 07/10/2026
-
-Maria Eduarda assumirá os ajustes de fidelidade e citações em src/generate.py, em uma alteração separada da interface. O apoio de Felipe na validação será alinhado com a equipe.
-
-### Verificação final da interface
-
-Após a alteração final de decomposição, a suíte executada com testes/teste_integracao.py excluído passou:
-
-```text
-........................................................................ [ 23%]
-........................................................................ [ 47%]
-........................................................................ [ 70%]
-........................................................................ [ 94%]
-.................                                                        [100%]
-305 passed in 5.88s
-```
-
-git diff --check concluído sem problemas.
-
-### Geração: fidelidade e citações — 07/10/2026
-
-**Responsável:** Maria Eduarda Ribeiro da Silva.
-
-#### Alterações implementadas
-
-- Reforço das instruções para preservar condições, exceções e referências.
-- Validação das citações contra os arquivos e chunks recuperados.
-- Bloqueio da resposta quando as citações estão ausentes ou não são reconhecidas.
-- Preservação dos tokens utilizados quando a resposta é bloqueada.
-- Registro da validação com os identificadores da execução.
-- Seleção das evidências citadas no resultado da geração.
-
-#### Validação realizada
-
-- 27 testes de geração e citações aprovados.
-- 314 testes locais aprovados, excluindo o teste de integração.
-- `git diff --check` sem erros.
-- Consulta documental executada na interface:
-  - Run ID: `7c7dc793`.
-  - Query ID: `q_f4e813c8`.
-  - Recuperação dos artigos 28 e 29 confirmada.
-
-Após o último reforço do prompt, a suíte local foi reexecutada:
-314 testes aprovados em 8,14 segundos, excluindo o teste de integração.
-`git diff --check` permaneceu sem erros.
-
-#### Limitação identificada na execução real
-
-A resposta reuniu, na mesma frase, a definição da modalidade do artigo 28
-e as condições de aplicação do artigo 29, mas citou somente o chunk 28.
-
-A validação implementada verifica a existência da referência entre as
-evidências recuperadas. Ela não verifica automaticamente se cada
-afirmação é sustentada pelo trecho citado.
-
-O reforço do prompt não resolveu esse caso na última execução.
-A fidelidade das citações permanece parcialmente validada.
-
-#### Próxima atividade
-
-Implementar e avaliar a verificação da correspondência entre afirmações
-e trechos citados. Preservar as melhorias já testadas e registrar os casos
-que exigem revisão.
-
-### Respostas normativas por seleção de chunks — 07/10/2026
-
-Responsável: Maria Eduarda Ribeiro da Silva.
-
-#### Implementação
-
-Nas recuperações exclusivamente normativas, com evidências explicitamente
-identificadas como normativas, o modelo seleciona IDs de chunks.
-O sistema apresenta o texto original das evidências selecionadas,
-aplicando os mecanismos existentes de proteção de dados pessoais.
-
-IDs desconhecidos, formatos inválidos e seleções vazias são bloqueados.
-As demais consultas documentais mantêm o formato anterior.
-
-A correspondência entre texto e chunk é verificada. A seleção por IDs
-não garante automaticamente relevância ou completude da resposta.
-
-#### Validação
-
-- 329 testes locais aprovados, excluindo o teste de integração.
-- `git diff --check` sem erros.
-- Consulta combinada com total de 1.234 preservado:
-  - Uma evidência: Run ID `c7d3bc3e`, Query ID `q_9afb9dad`.
-  - Três evidências: Run ID `cf789d38`, Query ID `q_07c22ef9`.
-- Filtro `ano_compra: 2026` e fonte estruturada preservados nas duas execuções.
-- Artigo 29 apresentado com condições, exceções e citação do chunk correspondente.
-- Navegação de retorno à página anterior confirmada pela responsável,
-  preservando total, filtros e campos.
-
-#### Pendência de integração de TIC
-
-O adaptador da interface não fornece `criterio_tecnologia` ao executor.
-A apresentação combinada também não copia os campos de classificação TIC
-para o resultado principal.
-
-A aplicação do critério na interface depende da configuração explícita
-do critério acordado e da preservação desses campos na apresentação.
-Essa integração ainda não foi validada.
-
-#### Escopo da validação
-
-Os resultados correspondem aos arquivos carregados no ambiente de teste.
-Não confirmam a conclusão da integração dos artefatos do corpus v3.
+Os registros anteriores foram preservados no histórico.
+Este documento não declara conclusão integral do projeto.

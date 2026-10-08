@@ -107,6 +107,22 @@ def _preparar_entrada_geracao(recuperacao, *, combinada):
 
 
 
+
+def criterio_tic_interface():
+    """Critério contextual operacional; não equivale a validação humana."""
+    from src.technology_classifier import VERSAO_CRITERIO
+
+    return {
+        "implementacao": VERSAO_CRITERIO,
+        "regra_principal": (
+            "Uma contratação será classificada como relacionada à "
+            "Tecnologia da Informação e Comunicação (TIC) quando houver "
+            "evidência textual suficiente no corpus indicando aquisição "
+            "ou contratação de bem ou serviço de TIC."
+        ),
+    }
+
+
 def executar_pipeline(
     pergunta: str,
     top_k: int = 3,
@@ -135,6 +151,7 @@ def executar_pipeline(
 
     consulta = executar_consulta(
         pergunta=pergunta,
+        criterio_tecnologia=criterio_tic_interface(),
         top_k=top_k,
         fetch_k=fetch_k,
         run_id=run_id,
