@@ -596,4 +596,77 @@ As execuções e os resultados foram conferidos antes de considerar as validaç�
 - Registrar os resultados dos testes finais e eventuais correções necessárias.
 - Manter a rastreabilidade das evidências e preservar as versões congeladas do corpus.
 
-**Situação da atividade:** Entrega individual de documentação e expansão de embeddings concluída e encaminhada à equipe pelo PR nº 20. Revisão, integração e testes finais pendentes.
+**Situação da atividade:** Entrega individual de documentação e expansão de embeddings concluída e encaminhada à equipe pelo PR nº 20. Revisão, integração e testes finais pendentes.  
+
+---  
+## Encontro 12 — 09/10/2026
+
+### Minha contribuição
+
+#### Validação dos casos de avaliação do Adaptive RAG v3
+
+- Dei continuidade às atividades da frente de Corpus e Avaliação do Grande Desafio RAG — Cenário 1: Contratações Públicas do Estado do Rio de Janeiro.
+- Executei e consolidei os testes dos nove casos de avaliação P01–P09, contemplando consultas estruturadas, normativas, conversacionais e agregadas, além de situações de recusa por privacidade e insuficiência de evidências.
+- Verifiquei a correspondência entre as respostas produzidas, as fontes documentais utilizadas e os resultados esperados para cada cenário.
+- Diferenciei os testes executados de ponta a ponta daqueles realizados por integração controlada, evitando classificar como totalmente automatizadas funcionalidades que ainda dependem de intervenções experimentais.
+
+#### Validação da recuperação e geração fundamentada
+
+- Validei a consulta estruturada P01 com base nos 1.358 registros de pregões eletrônicos do PNCP referentes ao Estado do Rio de Janeiro, no período de março de 2026.
+- Confirmei os resultados agregados da P02 para o Pregão Eletrônico 038/26/2026: 19 itens, sendo 8 homologados, 9 fracassados e 2 desertos, com valor homologado de R$ 141.002,08.
+- Avaliei a P03 mediante integração controlada de evidências da Ata 00191/2026 da EBSERH com o registro estruturado correspondente do PNCP, verificando a fundamentação documental e as citações.
+- Validei a P04, referente à Lei nº 14.133/2021 e ao pregão eletrônico, utilizando evidências normativas citadas na resposta.
+- Na P05, testei a recuperação filtrada por identificador de processo e a geração de resposta fundamentada em documento conversacional.
+- Na P07, validei o cálculo agregado do Plano de Contratações Anual (PCA) do Estado do Rio de Janeiro, com 36.994 registros e soma de R$ 55.968.524.178,3319, utilizando integração controlada com o módulo oficial de geração.
+- Na P08, validei a resposta referente à Ata 00137/2026 do INCA, utilizando evidências documentais e seleção controlada.
+- Confirmei o comportamento de recusa nos cenários P06 e P09, relacionados, respectivamente, à solicitação de dados pessoais e à ausência de fundamentos para estimativas futuras.
+
+#### Investigação do cenário multifonte M01
+
+- Investiguei a possibilidade de relacionar a base agregada do Pregão Eletrônico 038/26/2026 com um registro correspondente na base estruturada do PNCP.
+- Examinei os 2.125 chunks disponíveis no índice experimental, distribuídos entre as quatro naturezas documentais.
+- Identifiquei que os 19 registros associados à contratação estavam presentes na natureza agregada, mas não havia correspondência estruturada para o identificador PNCP `42498600000171-1-000757/2026`.
+- Verifiquei os campos dos registros estruturados e evitei associações indevidas baseadas apenas em coincidência de CNPJ ou numeração.
+- Localizei o arquivo original `contratacoes_publicacao.json`, com 3.145.581 bytes, e realizei a busca exata do identificador.
+- Confirmei que o arquivo original contém 1.358 registros estruturados, mas não contém a contratação pesquisada.
+- Classifiquei a M01 como pendente por limitação de cobertura documental, sem atribuir indevidamente o resultado a uma falha do modelo de geração.
+
+### Uso de IA
+
+- Utilizei um assistente de IA como apoio à elaboração e revisão dos procedimentos de teste, à interpretação das saídas do Google Colab e à investigação da recuperação multifonte.
+- Utilizei IA para auxiliar na análise dos módulos de recuperação e geração, na verificação dos identificadores documentais e na consolidação dos resultados.
+- Executei os comandos no ambiente experimental e conferi os resultados apresentados antes de registrar as conclusões.
+- Mantive a distinção entre evidências efetivamente recuperadas, resultados obtidos por integração controlada e funcionalidades ainda não comprovadas de ponta a ponta.
+
+### Resultados
+
+- Nove casos de avaliação, P01–P09, concluídos com resultados aprovados nos respectivos procedimentos de teste.
+- Consultas estruturadas, normativas, conversacionais e agregadas avaliadas.
+- Cálculos agregados e respostas fundamentadas em fontes documentais verificados.
+- Comportamentos de recusa por privacidade e insuficiência de evidências validados.
+- Integrações controladas identificadas e documentadas, sem apresentá-las como execução integralmente autônoma.
+- Cenário M01 investigado, com ausência do identificador correspondente confirmada no corpus estruturado original.
+- Integridade da correspondência entre os 1.358 registros estruturados originais e os 1.358 chunks estruturados indexados verificada quanto à contagem.
+- Dez cenários contabilizados: nove aprovados, incluindo os aprovados com ressalvas, e um pendente.
+- Repositório oficial do GitHub preservado, sem alterações durante esta etapa.
+
+### Dificuldades e limitações
+
+- Alguns testes exigiram seleção de evidências, filtros ou integração controlada para validar a geração fundamentada.
+- Os resultados não comprovam que todas as quatro naturezas documentais estejam integradas automaticamente em um único fluxo ponta a ponta.
+- A M01 não pôde ser concluída como teste multifonte porque a contratação analisada não consta da base estruturada original disponível.
+- A ausência do registro no corpus local não comprova sua inexistência no PNCP em outros períodos ou consultas.
+- O percentual de cenários aprovados não deve ser interpretado como medida de acurácia geral do Adaptive RAG em produção.
+- Os resultados permanecem no ambiente de testes, aguardando consolidação documental e eventual publicação no repositório oficial.
+
+### Próximos passos
+
+- Elaborar o relatório técnico consolidado dos testes P01–P09 e M01.
+- Registrar as evidências, os resultados, as ressalvas e as limitações de cada cenário.
+- Organizar os arquivos de avaliação na pasta `eval/` e a documentação complementar em `docs/`.
+- Atualizar o `README.md` com um resumo fiel das funcionalidades validadas e das pendências.
+- Submeter os arquivos à revisão da equipe antes de sua integração ao repositório oficial.
+- Preparar os resultados para a apresentação técnica do Demo Day, destacando decisões de arquitetura, fundamentação documental, recusas e limitações observadas.
+
+**Situação da atividade:** Validação dos nove casos P01–P09 concluída, com ressalvas documentadas para os testes de integração controlada. Investigação da M01 concluída, permanecendo pendente a validação multifonte dessa contratação por ausência de cobertura na base estruturada disponível. Consolidação e publicação dos resultados no GitHub ainda pendentes.
+
