@@ -523,3 +523,65 @@ Utilizei ferramentas de IA como apoio na organização do feedback, revisão das
 - Validar as perguntas das personas na versão integrada, conferindo números, fontes, evidências e feedback.
 - Atualizar o status do projeto com os resultados e as limitações.
 - Organizar com a equipe a demonstração do fluxo e dos logs para sexta-feira.
+
+## Encontro 11 — 09/10/2026
+
+### Minha participação
+
+- Adiantei as atividades previstas de validação da interface e preparação da demonstração integrada.
+- Conferi os artefatos recebidos e identifiquei que o conjunto inicialmente apresentado como v3 ainda correspondia aos registros estruturados da v2.
+- Localizei a coleta v3 no Drive e conferi os oito arquivos do corpus pelos hashes registrados no inventário.
+- Apoiei a frente de ingestão e indexação, preparando os artefatos v3 em ambiente isolado e preservando os arquivos anteriores.
+- Corrigi a associação dos chunks estruturados por identificador PNCP, distinguindo mudanças de ordenação das alterações reais nos registros.
+- Reutilizei os vetores dos textos inalterados e gerei os embeddings dos 44 registros alterados.
+- Conferi a consistência entre chunks, IDs, FAISS, BM25 e cache, incluindo os 19 embeddings dos itens do PE.
+- Organizei a pasta corpus_v3_para_equipe e o ZIP correspondente no Drive.
+- Instalei os artefatos v3 no ambiente de teste com backup dos arquivos anteriores.
+- Atualizei as referências das consultas agregadas para os arquivos v3 e ajustei os testes de compatibilidade aos caminhos utilizados pela aplicação.
+- Executei consultas estruturadas, agregadas, documentais e combinadas pela interface, conferindo resultados, fontes, recortes e identificadores.
+- Analisei as respostas das personas e diferenciei resultados corretos, parciais e consultas ainda bloqueadas.
+- Investiguei as falhas de P03 e P08, identificando a eliminação das atas por metadados de ano vazio.
+- Ajustei o tratamento do ano vazio e implementei a identificação da ata pelo número e ano, com vínculo estruturado por processo exato.
+- Investiguei falhas da geração relacionadas a citações ausentes e à confusão entre fabricante e contratada.
+- Ativei a apresentação extrativa para consultas a atas explicitamente identificadas, preservando a sanitização e a validação das referências.
+- Preparei o roteiro da apresentação e a explicação do fluxo pergunta → decisão → consulta → resposta → log.
+- Organizei três consultas de estratégias diferentes para alinhamento com Felipe e Janice.
+
+### Resultados obtidos
+
+- Os oito arquivos do corpus v3 foram conferidos por SHA-256.
+- A base estruturada manteve 1.358 registros: 1.314 inalterados e 44 realmente alterados em relação à v2.
+- O conjunto preparado contém 2.125 chunks, com 2.081 vetores reutilizados e 44 embeddings atualizados.
+- Os 19 embeddings dos itens do PE foram conferidos quanto à presença, validade, igualdade com o cache e hashes dos textos.
+- A origem e o modelo dos vetores reutilizados não foram integralmente comprovados; a consistência dos artefatos não equivale à validação completa da qualidade do RAG.
+- A consulta estruturada por ano da compra 2026 retornou 1.234 correspondências, com fonte v3.
+- P01 retornou 1.358 pregões publicados no RJ em março de 2026, com 20 registros na primeira página de 68. Essa execução não comprova, sozinha, toda a navegação.
+- P02 retornou 19 itens: 8 homologados, 9 fracassados e 2 desertos, com soma homologada de R$ 141.002,08.
+- P07 retornou 36.994 linhas e soma estimada informada de R$ 55.968.524.178,3319 sobre o CSV completo.
+- A consulta documental sobre pregão apresentou trechos dos artigos 28 e 29 com citações; esse exemplo não representa validação de todos os critérios da pergunta oficial P04.
+- A consulta combinada preservou a contagem de 1.234 registros e apresentou a resposta normativa com fontes separadas.
+- P05 informou os prazos corretos e reconheceu a simulação, mas não explicitou as entregas parciais.
+- P06 recusou a exposição de dados pessoais e P09 recusou a previsão futura sem modelo validado.
+- Após os ajustes, P08 apresentou o objeto e a AGIMED COMERCIO DE EQUIPAMENTOS LTDA como contratada, por trechos citados. A apresentação permanece extensa.
+- P03 recuperou a ata correta e o PNCP 15126437000305-1-000676/2026 por processo exato, mas a resposta final permaneceu bloqueada pela validação extrativa.
+- Uma execução de P03 retornou posições numéricas em vez dos Chunk IDs exigidos. A causa da última rejeição ainda precisa ser conferida.
+- O ajuste das fontes agregadas foi validado com 334 testes aprovados.
+- O ajuste de escopo das atas foi validado com 13 testes direcionados e 347 testes na suíte, excluindo testes/teste_integracao.py. Esses resultados não certificam automaticamente as alterações posteriores de geração.
+- O log documental conferido manteve pergunta, rota, bases, candidatos, geração e validações associados aos mesmos run_id e query_id da interface.
+- O fluxo mínimo integrado foi demonstrado nos casos funcionais, sem declarar aprovação completa de P01–P09 e M01.
+
+### Apoio de IA
+
+Utilizei ferramentas de IA como apoio na análise dos artefatos, comparação das versões do corpus, preparação dos índices, investigação das falhas, implementação dos ajustes, elaboração dos testes e organização do roteiro da apresentação. As orientações foram conferidas com as saídas do ambiente de execução, mantendo registradas as limitações e as consultas ainda não concluídas.
+
+### Próximas atividades
+
+- Conferir o último erro da seleção extrativa e resolver o bloqueio da P03.
+- Revalidar P08 após o último ajuste do prompt.
+- Adicionar teste da ativação automática do modo extrativo para atas e concluir a revisão das alterações.
+- Consolidar com Janice a avaliação das personas na versão integrada v3.
+- Conferir com Felipe os logs das consultas agregada, documental e combinada escolhidas.
+- Validar feedback e persistência do histórico na versão final.
+- Incorporar ao pipeline reproduzível os ajustes utilizados na preparação v3, incluindo identidade dos chunks e reutilização de embeddings por conteúdo.
+- Executar os testes de integração e conferir regressões.
+- Atualizar o status, concluir a revisão dos PRs e registrar o commit exato da demonstração.
