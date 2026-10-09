@@ -221,10 +221,21 @@ def chunk_atende_filtros(
             return False
 
     ano = filtros.get("ano")
+    ano_metadata = metadata.get("ano")
 
-    if ano and metadata.get("ano") is not None:
+    # Ano vazio equivale a metadado ausente.
+    # A recuperação não confirma o ano de documentos sem esse metadado.
+    ano_metadata_ausente = (
+        ano_metadata is None
+        or (
+            isinstance(ano_metadata, str)
+            and not ano_metadata.strip()
+        )
+    )
+
+    if ano and not ano_metadata_ausente:
         try:
-            if int(metadata["ano"]) != int(ano):
+            if int(ano_metadata) != int(ano):
                 return False
         except (TypeError, ValueError):
             return False
@@ -511,9 +522,20 @@ def recuperar_evidencias(
     rotas = analise.get("routes", [])
     filtros = analise.get("filters", {})
 
+    from src.document_scope import escopar_ata
+
+    escopo_ata = (
+        escopar_ata(pergunta, chunks_por_id, identificar_natureza)
+        if "conversacional" in rotas
+        else None
+    )
+
     usar_busca_contextual = (
-        bool(rotas)
-        and set(rotas).issubset({"estruturada", "normativa"})
+        escopo_ata is not None
+        or (
+            bool(rotas)
+            and set(rotas).issubset({"estruturada", "normativa"})
+        )
     )
 
     candidatos_contextuais = []
@@ -526,6 +548,31 @@ def recuperar_evidencias(
             exigir_natureza,
         )
 
+    if escopo_ata is not None:
+        candidatos_contextuais = [
+            item for item in candidatos_contextuais
+            if item["chunk_id"] in escopo_ata["ids"]
+        ]
+
+        with obs.observar_etapa(
+            run_id=run_id,
+            query_id=query_id,
+            stage="validacao",
+            input_data={
+                "tipo": "escopo_documental",
+                "pergunta": pergunta,
+            },
+        ) as observacao_escopo:
+            observacao_escopo["output"] = {
+                "fontes": escopo_ata["fontes"],
+                "processos": escopo_ata["processos"],
+                "motivo": escopo_ata["motivo"],
+                "candidatos_elegiveis": len(candidatos_contextuais),
+                "chunk_ids": [
+                    item["chunk_id"] for item in candidatos_contextuais
+                ],
+            }
+
     with obs.observar_etapa(
         run_id=run_id, query_id=query_id, stage="retrieval_denso", input_data={"pergunta": pergunta, "fetch_k": fetch_k}
     ) as observacao_densa:
@@ -536,6 +583,12 @@ def recuperar_evidencias(
             ids=ids,
             fetch_k=len(ids) if usar_busca_contextual else fetch_k,
         )
+        if escopo_ata is not None:
+            resultados_densos = [
+                item for item in resultados_densos
+                if item["chunk_id"] in escopo_ata["ids"]
+            ]
+
         if usar_busca_contextual:
             resultados_densos = filtrar_resultados(
                 resultados_densos,
