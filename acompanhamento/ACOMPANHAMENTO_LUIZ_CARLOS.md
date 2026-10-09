@@ -441,3 +441,33 @@ Utilizei ferramentas de IA como apoio na análise do código, implementação da
 - Apoiar Maria Eduarda na validação dos resultados agregados na interface.
 - Executar os testes de integração na versão final.
 - Concluir a revisão do PR e sua integração à `main`.
+
+## Encontro 11 — 09/10/2026
+
+### Minha participação
+- Atualizei o ambiente com os artefatos finais do corpus v3 e organizei os índices em data/indices.
+- Executei os testes específicos de planejamento/roteamento, com 32 testes aprovados.
+- Executei os testes do query_executor, incluindo a estratégia combinada, com 10 testes aprovados.
+- Executei os testes relacionados à classificação de Tecnologia/TIC, com 36 testes aprovados.
+- Rodei a suíte offline completa do projeto, excluindo apenas o teste de integração, obtendo 334 testes aprovados, sem falhas.
+- Validei os casos P02, P07 e M01, todos com os resultados esperados.
+- Validei a consulta combinada, confirmando o funcionamento conjunto da consulta estruturada com a recuperação documental.
+- Executei as consultas de vidraçaria e normativa, deixando apenas a conferência manual da relevância dos trechos retornados.
+- Revisei os critérios de Tecnologia/TIC documentados por Janice e confirmei o alinhamento com a implementação atual, incluindo distinção entre contratação de tecnologia, serviço de tecnologia, casos ambíguos e falsos positivos.
+
+### Resultados obtidos
+- P02: aprovado.
+- P07: aprovado.
+- M01: aprovado.
+- Consulta combinada: aprovada.
+- Vidraçaria: executada com sucesso, pendente apenas de inspeção manual.
+- Normativa: executada com sucesso, pendente apenas de inspeção manual.
+- 334 testes offline aprovados.
+- 36 testes de Tecnologia/TIC aprovados.
+- Critérios de TIC considerados alinhados à documentação consolidada da equipe.
+
+### Apoio de IA
+Utilizei ferramentas de IA como apoio na organização da validação, conferência dos resultados e análise dos critérios de Tecnologia/TIC. As verificações foram confirmadas por testes executados diretamente no ambiente do projeto.
+Próximas atividades
+- Conferir manualmente a relevância dos trechos retornados nas consultas de vidraçaria e normativa.
+- Apoiar a equipe na integração e validação final do pipeline completo.
