@@ -165,3 +165,10 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * **Validação:** Os 1.358 registos estruturados do PNCP foram revalidados. A publicação original, os valores numéricos e a distinção entre zero e ausência foram preservados, tal como o vínculo com a fonte original. As 517 divergências decorrentes da sobreposição de datas foram resolvidas. A base normalizada afetada foi regenerada mantendo os IDs únicos (2.125 chunks no total).
 * **Mapeamento:** O mapeamento dos campos normalizados e as inconsistências encontradas foram analisados e devidamente documentados.
 * **Rerank:** Foi verificada a disponibilidade do endpoint de rerank do professor. Como continua indisponível, a limitação explícita e o fallback seguro no pipeline foram mantidos.
+
+
+### Atualização (09/10/2026) - Alinhamento de Caches e Índices (v3)
+* **19 Embeddings Pendentes:** Pertencem à base agregada do corpus v2 (arquivo `itens_pe_038_26_2026.csv`). Como não houve alterações estruturais para o v3 (confirmado via `DIFF_v2_v3.md`), o cache é compatível. Os embeddings permanecem pendentes por falha local. **IDs envolvidos:** `itens_pe_038_chunk_482` até `itens_pe_038_chunk_500`.
+* **Validação de Cache:** Testes garantem que os IDs pertencem ao corpus, os vetores têm dimensão consistente (valores finitos), sem conflitos e correspondem ao texto.
+* **Conjunto Aprovado:** Índices v2 originais + nova base estruturada normalizada.
+* **Rerank:** Endpoint indisponível. Integração bloqueada e fallback ativo.
