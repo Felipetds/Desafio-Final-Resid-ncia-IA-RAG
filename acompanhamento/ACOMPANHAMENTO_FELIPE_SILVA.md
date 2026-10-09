@@ -255,3 +255,39 @@ Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar
 
 * Avançar nos testes de qualidade ainda pendentes, principalmente relacionados às consultas e operações agregadas.
 * Continuar a validação integrada e registrar separadamente eventuais falhas de execução e de qualidade.
+
+## Encontro 11 — 09/10/2026
+
+### Minha contribuição
+
+* Executei os testes offline e de integração na versão atualizada do projeto.
+
+* Analisei as falhas de integração nos arquivos generate.py e teste_integracao.py.
+
+* Investiguei os logs de observabilidade e identifiquei falhas na validação de citações das respostas geradas.
+
+* Atualizei o módulo de geração para incluir diagnósticos da saída do LLM e executei um teste específico de consulta normativa.
+
+### Uso de IA
+
+* Utilizei IA para auxiliar na investigação das falhas, interpretação dos logs, análise do código e implementação de diagnósticos para a geração de respostas.
+
+### Resumo da equipe
+
+* Executei os testes offline, obtendo 347 testes aprovados, sem falhas.
+
+* Executei os testes de integração com LLM, obtendo 2 testes aprovados e 5 falhas.
+
+* Identifiquei que as cinco falhas estavam relacionadas à ausência de citações no formato [Fonte: ...].
+
+* Confirmei que, no teste de consulta normativa, o modelo recebeu 5 evidências e gerou uma resposta de 1.494 caracteres, porém sem citações reconhecidas pelo validador.
+
+### Próximos passos
+
+* Investigar por que o LLM não está incluindo as citações exigidas nas respostas.
+
+* Ajustar o processo de geração, preservando os mecanismos de validação e proteção de dados.
+
+* Executar novamente os testes de integração após as correções.
+
+* Concluir a avaliação integrada e consolidar os resultados no relatório de testes e observabilidade.
