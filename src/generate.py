@@ -301,6 +301,11 @@ Retorne somente JSON válido, sem cercas Markdown, neste formato:
 {"chunk_ids": ["ID EXATO DO CHUNK"]}
 
 Selecione entre um e cinco IDs presentes no contexto.
+Cada ID deve ser uma string copiada exatamente do campo "Chunk ID".
+Os números de "EVIDÊNCIA 1", "EVIDÊNCIA 2" etc. NÃO são Chunk IDs.
+Nunca retorne números, posições, nomes abreviados ou IDs inventados.
+Exemplo de formato: {"chunk_ids": ["arquivo.pdf_chunk_1"]}.
+O exemplo ilustra o formato; use somente IDs existentes no contexto.
 Não copie, resuma ou reescreva o conteúdo dos chunks.
 O sistema apresentará o texto original de cada chunk selecionado.
 Selecione evidências que respondam ao pedido, incluindo condições
@@ -451,6 +456,15 @@ def gerar_resposta(
     # Recusa definida anteriormente pelo pipeline
     # --------------------------------------------------------
 
+    # Atas explicitamente identificadas usam trechos originais citados.
+    from src.document_scope import PADRAO_ATA, normalizar
+
+    if (
+        "conversacional" in resultado.routes
+        and PADRAO_ATA.search(normalizar(resultado.query))
+    ):
+        modo_extrativo = True
+
     if resultado.is_refusal:
         resposta = gerar_resposta_recusa(
             resultado
@@ -554,6 +568,12 @@ def gerar_resposta(
                 "resposta_gerada": True,
                 "quantidade_fontes": len(
                     resultado.evidences
+                ),
+                "modo_extrativo": modo_extrativo,
+                "finish_reason": getattr(
+                    resposta_llm.choices[0],
+                    "finish_reason",
+                    None,
                 ),
             }
 
