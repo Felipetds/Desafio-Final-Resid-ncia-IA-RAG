@@ -213,7 +213,7 @@ def executar_agregada(plano):
         caminho = plano.get("arquivo")
         if caminho is None:
             caminho = raiz_projeto / (
-                "data/raw/v2/agregada/itens_pe_038_26_2026.csv"
+                "data/raw/v3/agregada/itens_pe_038_26_2026.csv"
             )
 
         return resumir_itens(
@@ -231,7 +231,7 @@ def executar_agregada(plano):
         caminho = plano.get("arquivo")
         if caminho is None:
             caminho = raiz_projeto / (
-                "data/raw/v2/agregada/pca_2026_estado_rj.csv"
+                "data/raw/v3/agregada/pca_2026_estado_rj.csv"
             )
 
         return resumir_pca(caminho)

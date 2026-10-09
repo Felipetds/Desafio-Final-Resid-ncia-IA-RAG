@@ -1,39 +1,56 @@
 import json
+from pathlib import Path
+
 import faiss
 import numpy as np
-import pytest
-import pickle
+
+
+RAIZ = Path(__file__).resolve().parents[1]
+PASTA_INDICES = RAIZ / "data/indices"
+CAMINHO_CHUNKS = RAIZ / "data/processed/chunks_teste.json"
+
 
 def test_alinhamento_e_unicidade():
-    with open('data/v3_definitivo/chunk_ids.json', 'r') as f:
-        chunk_ids = json.load(f)
-    with open('data/v3_definitivo/chunks_teste.json', 'r') as f:
-        chunks = json.load(f)
-        
-    index = faiss.read_index('data/v3_definitivo/faiss_index.bin')
-    
-    # Regra do plano: "Quantidade igual, sozinha, não comprova alinhamento"
-    # Por isso, verificamos a quantidade E a ordem posicional
-    assert len(chunk_ids) == len(chunks), "Erro: Quantidade de IDs difere dos chunks."
-    assert len(chunk_ids) == index.ntotal, "Erro: Quantidade de IDs difere do índice FAISS."
-    
-    # Regra do plano: "não há conflitos entre vetores associados ao mesmo ID" (Unicidade)
-    assert len(set(chunk_ids)) == len(chunk_ids), "Conflito: IDs duplicados encontrados!"
-    
-    # Regra do plano: correspondência da ordem
-    assert chunks[0]["metadata"]["chunk_id"] == chunk_ids[0], "Desalinhamento na ordem dos metadados!"
-    assert chunks[-1]["metadata"]["chunk_id"] == chunk_ids[-1], "Desalinhamento no final do índice!"
+    with (PASTA_INDICES / "chunk_ids.json").open(
+        encoding="utf-8"
+    ) as arquivo:
+        chunk_ids = json.load(arquivo)
+
+    with CAMINHO_CHUNKS.open(encoding="utf-8") as arquivo:
+        chunks = json.load(arquivo)
+
+    indice = faiss.read_index(
+        str(PASTA_INDICES / "faiss_index.bin")
+    )
+
+    assert chunk_ids, "O conjunto de IDs está vazio."
+    assert len(chunk_ids) == len(chunks) == indice.ntotal, (
+        "Quantidades de IDs, chunks e vetores não correspondem."
+    )
+    assert len(set(chunk_ids)) == len(chunk_ids), (
+        "IDs duplicados encontrados."
+    )
+    assert [
+        chunk["metadata"]["chunk_id"] for chunk in chunks
+    ] == chunk_ids, "A ordem dos IDs não corresponde aos chunks."
+
 
 def test_vetores_dimensao_e_valores_finitos():
-    index = faiss.read_index('data/v3_definitivo/faiss_index.bin')
-    
-    # Regra do plano: "vetores têm dimensão consistente e valores finitos"
-    dimensao = index.d
-    assert dimensao > 0, f"Dimensão inválida: {dimensao}"
-    
-    # Extrai os vetores originais armazenados no índice Flat
-    # (reconstruct_n funciona em índices FlatL2)
-    vetores = index.reconstruct_n(0, index.ntotal)
-    
-    # Verifica se existe algum Not-a-Number (NaN) ou Infinito (Inf)
-    assert np.all(np.isfinite(vetores)), "Erro: Vetores contêm valores não finitos (NaN ou Inf)!"
+    indice = faiss.read_index(
+        str(PASTA_INDICES / "faiss_index.bin")
+    )
+
+    assert indice.ntotal > 0, "O índice está vazio."
+    assert indice.d == 1024, (
+        f"Dimensão diferente da esperada: {indice.d}"
+    )
+
+    vetores = indice.reconstruct_n(0, indice.ntotal)
+
+    assert vetores.shape == (indice.ntotal, indice.d)
+    assert np.isfinite(vetores).all(), (
+        "Vetores contêm NaN ou infinito."
+    )
+    assert (np.linalg.norm(vetores, axis=1) > 0).all(), (
+        "Há vetores zerados."
+    )

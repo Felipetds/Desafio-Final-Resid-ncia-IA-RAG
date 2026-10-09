@@ -94,7 +94,7 @@ def planejar_agregada(texto, plano):
             },
             "processo_informado": "PE 038/26/2026",
             "referencia_mapeamento": (
-                "data/raw/v2/agregada/itens_pe_038_26_2026.csv"
+                "data/raw/v3/agregada/itens_pe_038_26_2026.csv"
             ),
         }
 
