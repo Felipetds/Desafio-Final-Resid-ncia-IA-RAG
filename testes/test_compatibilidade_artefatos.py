@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 
 import faiss
@@ -6,8 +7,13 @@ import numpy as np
 
 
 RAIZ = Path(__file__).resolve().parents[1]
-PASTA_INDICES = RAIZ / "data/indices"
-CAMINHO_CHUNKS = RAIZ / "data/processed/chunks_teste.json"
+PASTA_INDICES = Path(os.environ.get(
+    "RAG_TEST_PASTA_INDICES", str(RAIZ / "data/indices")
+))
+CAMINHO_CHUNKS = Path(os.environ.get(
+    "RAG_TEST_CAMINHO_CHUNKS",
+    str(RAIZ / "data/processed/chunks_teste.json"),
+))
 
 
 def test_alinhamento_e_unicidade():
