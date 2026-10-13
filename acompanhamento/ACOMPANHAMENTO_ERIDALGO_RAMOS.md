@@ -172,3 +172,13 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * **Validação de Cache:** Testes garantem que os IDs pertencem ao corpus, os vetores têm dimensão consistente (valores finitos), sem conflitos e correspondem ao texto.
 * **Conjunto Aprovado:** Índices v2 originais + nova base estruturada normalizada.
 * **Rerank:** Endpoint indisponível. Integração bloqueada e fallback ativo.
+
+
+### Atualização (14/10/2026) - Migração, ingestão e otimização v3 
+* **Objetivo:** Migração, otimização e validação completa do corpus RAG para a versão v3 (reprodutibilidade, hashes SHA-256, testes e CI/CD).
+* **Fluxo de Ingestão e Hashes:** Atualização do `src/ingest.py` para utilizar o corpus v3, eliminando dependências dos caminhos v2 e conferindo os arquivos brutos com os hashes oficiais do inventário.
+* **Correspondência e Metadados:** Garantida a correspondência rigorosa entre contratação, ID PNCP e ID dos chunks. Concluída a auditoria de metadados sem inconsistências nos campos obrigatórios (`docs/REVISAO_METADADOS_E_RECORTE_V3.md`).
+* **Cache de Embeddings (SHA-256):** Refatoração do `src/index.py` implementando chaves fortes combinando ID, conteúdo e modelo, garantindo reutilização e atualização dinâmica.
+* **Recorte Indexado e Alinhamento:** Validação do recorte controlado de 2.125 chunks (incluindo os 19 itens de referência do PE e a base agregada).
+* **Testes Automatizados (Pytest):** Criação e aprovação da suíte de testes unitários para a lógica de cache (`testes/test_index_cache.py`, 3/3 testes aprovados).
+* **Artefatos e Empacotamento:** Documentação de geração/carregamento (`docs/INSTRUCOES_ARTEFATOS.md`) e empacotamento final gerado no arquivo `artefatos_v3_final.zip` com o código de integridade **SHA-256: `5acfb7e0a6bca0965dd3caa12f6758e31d21ed91d4f5b7ba80ae6ec1e76f47c0`**.
