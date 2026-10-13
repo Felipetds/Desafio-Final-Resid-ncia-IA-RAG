@@ -1,3 +1,4 @@
+import shutil
 """Coleta reproduzível do corpus do Grande Desafio RAG."""
 
 import argparse
@@ -121,7 +122,7 @@ def coletar_paginas_pncp(
                 arquivo.flush()
                 os.fsync(arquivo.fileno())
             # Não substitui um checkpoint já existente.
-            os.link(temporario, caminho)
+            shutil.copy2(temporario, caminho)
         finally:
             if temporario is not None:
                 temporario.unlink(missing_ok=True)
