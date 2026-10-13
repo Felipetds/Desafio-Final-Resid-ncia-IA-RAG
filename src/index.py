@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import hashlib
 import faiss
 import numpy as np
 import pickle
@@ -11,15 +12,18 @@ OLLAMA_URL = "http://ecoa-llm.duckdns.org:11434/v1"
 EMBEDDING_MODEL = "xagi/qwen3-embedding:0.6b-q4_k_m"
 CACHE_FILE = "data/indices/cache_embeddings.json"
 
+def gerar_chave_cache(chunk_id, texto, modelo):
+    """Gera uma chave SHA-256 única baseada no ID, conteúdo e modelo."""
+    conteudo_str = f"{chunk_id}|{texto}|{modelo}"
+    return hashlib.sha256(conteudo_str.encode('utf-8')).hexdigest()
+
 def carregar_cache():
-    """Carrega o cache do disco, se existir."""
     if os.path.exists(CACHE_FILE):
         with open(CACHE_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     return {}
 
 def salvar_cache(cache):
-    """Salva o dicionário de cache no disco."""
     os.makedirs(os.path.dirname(CACHE_FILE), exist_ok=True)
     with open(CACHE_FILE, "w", encoding="utf-8") as f:
         json.dump(cache, f)
@@ -37,12 +41,12 @@ def gerar_indices():
         
     print(f"Total de chunks para processar: {len(chunks)}")
     
-    # 1. Gerenciamento do Cache
     cache_embeddings = carregar_cache()
     
     textos = []
     ids_lista = []
     chunks_para_api = []
+    chaves_atuais_necessarias = []
     
     for c in chunks:
         chunk_id = c["metadata"]["chunk_id"]
@@ -50,14 +54,17 @@ def gerar_indices():
         textos.append(texto)
         ids_lista.append(chunk_id)
         
-        # Filtra: Só enviamos para a API se não estiver no cache em disco
-        if chunk_id not in cache_embeddings:
-            chunks_para_api.append({"id": chunk_id, "text": texto})
+        # Gera a chave forte baseada no texto e modelo atual
+        chave_forte = gerar_chave_cache(chunk_id, texto, EMBEDDING_MODEL)
+        chaves_atuais_necessarias.append(chave_forte)
+        
+        # Se a chave exata não existir no cache, manda para a API gerar de novo
+        if chave_forte not in cache_embeddings:
+            chunks_para_api.append({"chave": chave_forte, "text": texto, "id": chunk_id})
             
-    print(f"Chunks já carregados do cache local: {len(chunks) - len(chunks_para_api)}")
-    print(f"Chunks novos enviados para a API: {len(chunks_para_api)}")
+    print(f"Chunks validados e puxados do cache local: {len(chunks) - len(chunks_para_api)}")
+    print(f"Chunks que precisam ser (re)gerados na API: {len(chunks_para_api)}")
     
-    # 2. Processar na API apenas os chunks novos (Batching + Rate Limiting)
     if chunks_para_api:
         client = OpenAI(base_url=OLLAMA_URL, api_key="ollama")
         tamanho_lote = 50
@@ -73,30 +80,26 @@ def gerar_indices():
                     model=EMBEDDING_MODEL
                 )
                 for j, data in enumerate(response.data):
-                    # Grava no dicionário usando o chunk_id como chave única
-                    cache_embeddings[lote[j]["id"]] = data.embedding
+                    # Agora salva no dicionário usando a chave forte
+                    cache_embeddings[lote[j]["chave"]] = data.embedding
             except Exception as e:
                 print(f"❌ Erro ao consultar a API: {e}")
                 
-            # Rate limiting respeitado conforme o checklist
             if i + tamanho_lote < len(chunks_para_api):
                 print("🛑 Aguardando 10 segundos (Rate Limiting)...")
                 time.sleep(10)
                 
-        # Persiste o cache atualizado no Drive
         salvar_cache(cache_embeddings)
         print("💾 Arquivo de cache em disco atualizado com sucesso!")
         
-    # 3. Reconstruir a matriz final garantindo a ordem dos IDs originais
     embeddings_finais = []
-    for chunk_id in ids_lista:
-        if chunk_id in cache_embeddings:
-            embeddings_finais.append(cache_embeddings[chunk_id])
+    for chave in chaves_atuais_necessarias:
+        if chave in cache_embeddings:
+            embeddings_finais.append(cache_embeddings[chave])
         else:
-            print(f"⚠️ Erro fatal: Embedding de {chunk_id} sumiu!")
+            print(f"⚠️ Erro fatal: Falha ao recuperar embedding do cache!")
             return
             
-    # 4. Construção e Persistência do Índice FAISS e BM25
     print("\nConstruindo os índices finais...")
     dimensao = len(embeddings_finais[0])
     matriz_vetores = np.array(embeddings_finais).astype('float32')
@@ -108,15 +111,12 @@ def gerar_indices():
     indice_bm25 = BM25Okapi(corpus_tokenizado)
     
     pasta_indices = "data/indices"
-    caminho_faiss = os.path.join(pasta_indices, "faiss_index.bin")
-    caminho_bm25 = os.path.join(pasta_indices, "bm25_index.pkl")
-    caminho_ids = os.path.join(pasta_indices, "chunk_ids.json")
+    os.makedirs(pasta_indices, exist_ok=True)
+    faiss.write_index(indice_faiss, os.path.join(pasta_indices, "faiss_index.bin"))
+    with open(os.path.join(pasta_indices, "bm25_index.pkl"), "wb") as f: pickle.dump(indice_bm25, f)
+    with open(os.path.join(pasta_indices, "chunk_ids.json"), "w", encoding="utf-8") as f: json.dump(ids_lista, f, indent=4)
     
-    faiss.write_index(indice_faiss, caminho_faiss)
-    with open(caminho_bm25, "wb") as f: pickle.dump(indice_bm25, f)
-    with open(caminho_ids, "w", encoding="utf-8") as f: json.dump(ids_lista, f, indent=4)
-        
-    print(f"✅ Pipeline otimizado finalizado com sucesso!")
+    print(f"✅ Pipeline otimizado finalizado com sucesso! (Tarefa 4 Concluída)")
 
 if __name__ == "__main__":
     gerar_indices()
