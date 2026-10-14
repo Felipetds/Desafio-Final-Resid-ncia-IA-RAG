@@ -701,6 +701,18 @@ def recuperar_evidencias(
             ranking_final = ranking_rrf
         # ----------------------------------------
 
+        from src.normative_selection import cobrir_definicao
+
+        ids_antes_cobertura = [
+            item["chunk_id"] for item in ranking_final[:top_k]
+        ]
+        ranking_final = cobrir_definicao(
+            pergunta, ranking_final, chunks_por_id, rotas, top_k,
+        )
+        ids_apos_cobertura = [
+            item["chunk_id"] for item in ranking_final[:top_k]
+        ]
+
         ranking_selecionado = selecionar_resultados_multirrota(ranking_final, chunks_por_id, rotas, top_k)
 
         evidencias = []
@@ -734,6 +746,12 @@ def recuperar_evidencias(
             "dense_candidates": len(resultados_densos),
             "bm25_candidates": len(resultados_bm25),
             "rrf_candidates": len(ranking_rrf),
+            "politica_selecao": "cobertura_definicao_normativa_v1",
+            "cobertura_definicao_aplicada": (
+                ids_antes_cobertura != ids_apos_cobertura
+            ),
+            "top_ids_antes_cobertura": ids_antes_cobertura,
+            "top_ids_apos_cobertura": ids_apos_cobertura,
             "rerank_enabled": rerank.RERANK_ENABLED,
             "rerank_applied": False,
             "rerank_status": (
