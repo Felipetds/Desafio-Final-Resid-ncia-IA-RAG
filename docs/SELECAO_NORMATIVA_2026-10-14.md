@@ -34,3 +34,16 @@ Não equivale a rerank semântico nem garante completude.
   apresentam problemas de relevância não resolvidos pela política.
 - Experiências com janelas, unidades normativas, b=0 e
   expansão manual não foram incorporadas ao código.
+
+## Conferência do contexto de P04
+
+- Artigo 29: 585 caracteres.
+- Artigo 28: 467 caracteres.
+- Artigo 6º: 23.026 caracteres.
+- Contexto montado: 24.418 caracteres e 3.379 palavras.
+- Textos completos e IDs preservados.
+- Nenhuma chamada ao modelo realizada.
+- Caracteres e palavras não equivalem aos tokens do modelo.
+- Aceitação pelo servidor e qualidade da resposta ainda pendentes.
+- O modo extrativo atual apresenta chunks inteiros;
+  concisão da resposta ainda precisa ser avaliada.
