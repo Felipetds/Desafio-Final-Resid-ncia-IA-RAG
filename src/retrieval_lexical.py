@@ -67,7 +67,7 @@ def buscar_contexto(
     """Calcula BM25 apenas sobre os candidatos previamente filtrados.
 
     Não modifica chunks, não grava índices e não usa IDs de respostas
-    esperadas. Scores sem correspondência lexical positiva são omitidos.
+    esperadas. Scores não positivos são omitidos, exceto no conjunto de um único candidato com termos compartilhados. A pontuação original é preservada.
     """
     if fetch_k <= 0 or not candidatos:
         return []
@@ -102,5 +102,11 @@ def buscar_contexto(
             "bm25_score": float(scores[posicao]),
         }
         for posicao in posicoes
-        if float(scores[posicao]) > 0
+        if (
+            float(scores[posicao]) > 0
+            or (
+                len(candidatos) == 1
+                and bool(set(tokens_pergunta) & set(corpus[posicao]))
+            )
+        )
     ][:fetch_k]

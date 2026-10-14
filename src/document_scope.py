@@ -106,3 +106,83 @@ def escopar_ata(pergunta, chunks_por_id, identificar_natureza):
         "processos": sorted(processos),
         "motivo": "Ata identificada por número/ano; vínculo por processo exato.",
     }
+
+
+PADRAO_PROCESSO_ALFANUMERICO = re.compile(
+    r"\bprocesso\s+(?:ficticio\s*)?[: ]*"
+    r"([a-z][a-z0-9]*(?:-[a-z0-9]+)+)(?![\w-])"
+)
+
+
+def escopar_processo_alfanumerico(
+    pergunta, chunks_por_id, identificar_natureza,
+):
+    """Limita fontes conversacionais por identificador explícito exato."""
+    pedidos = {
+        achado.group(1)
+        for achado in PADRAO_PROCESSO_ALFANUMERICO.finditer(
+            normalizar(pergunta)
+        )
+    }
+    if not pedidos:
+        return None
+
+    if len(pedidos) != 1:
+        return {
+            "ids": set(),
+            "fontes": [],
+            "processos": sorted(pedidos),
+            "motivo": "Mais de um processo informado; escopo não definido.",
+        }
+
+    processo = next(iter(pedidos))
+    padrao = re.compile(
+        r"(?<![\w-])" + re.escape(processo) + r"(?![\w-])"
+    )
+
+    documentos = {}
+    for identificador, chunk in chunks_por_id.items():
+        if identificar_natureza(chunk) != "conversacional":
+            continue
+        fonte = (chunk.get("metadata") or {}).get("source_file")
+        if fonte:
+            documentos.setdefault(fonte, []).append(
+                (identificador, chunk)
+            )
+
+    fontes = [
+        fonte
+        for fonte, partes in documentos.items()
+        if any(
+            padrao.search(normalizar(chunk.get("text", "")))
+            for _, chunk in partes
+        )
+    ]
+
+    if len(fontes) != 1:
+        return {
+            "ids": set(),
+            "fontes": sorted(fontes),
+            "processos": [processo],
+            "motivo": "Processo não localizado de forma unívoca.",
+        }
+
+    fonte = fontes[0]
+    return {
+        "ids": {
+            identificador for identificador, _ in documentos[fonte]
+        },
+        "fontes": [fonte],
+        "processos": [processo],
+        "motivo": "Documento identificado por processo alfanumérico exato.",
+    }
+
+
+def escopar_documento(pergunta, chunks_por_id, identificar_natureza):
+    """Preserva o escopo de atas e reconhece processos alfanuméricos."""
+    ata = escopar_ata(pergunta, chunks_por_id, identificar_natureza)
+    if ata is not None:
+        return ata
+    return escopar_processo_alfanumerico(
+        pergunta, chunks_por_id, identificar_natureza,
+    )

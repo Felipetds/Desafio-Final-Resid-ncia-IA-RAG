@@ -522,10 +522,10 @@ def recuperar_evidencias(
     rotas = analise.get("routes", [])
     filtros = analise.get("filters", {})
 
-    from src.document_scope import escopar_ata
+    from src.document_scope import escopar_documento
 
     escopo_ata = (
-        escopar_ata(pergunta, chunks_por_id, identificar_natureza)
+        escopar_documento(pergunta, chunks_por_id, identificar_natureza)
         if "conversacional" in rotas
         else None
     )
