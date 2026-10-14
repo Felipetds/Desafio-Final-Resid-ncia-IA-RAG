@@ -1,3 +1,5 @@
+
+
 """
 generate.py
 
@@ -13,6 +15,7 @@ Responsabilidades:
 - Validar a resposta final utilizando RAGResponse.
 """
 
+import json
 import re
 import time
 from typing import List
@@ -161,7 +164,136 @@ def montar_contexto(
 
     return "\n\n---\n\n".join(blocos)
 
+def selecionar_chunks_por_campos(
+    pergunta: str,
+    evidencias: List[SourceEvidence],
+) -> list[str]:
+    """
+    Seleciona deterministicamente evidências para campos factuais
+    explícitos em consultas de atas.
 
+    O LLM continua sendo usado para consultas gerais, mas campos como
+    objeto, PNCP e fornecedor não dependem apenas da interpretação
+    do modelo.
+    """
+
+    consulta = pergunta.casefold()
+    selecionados: list[str] = []
+
+    def escolher_melhor(pontuador):
+        melhor_id = None
+        melhor_score = 0
+
+        for evidencia in evidencias:
+            texto = evidencia.text.casefold()
+            score = pontuador(texto)
+
+            if score > melhor_score:
+                melhor_score = score
+                melhor_id = evidencia.chunk_id
+
+        return melhor_id if melhor_score > 0 else None
+
+    # --------------------------------------------------------
+    # Objeto
+    # --------------------------------------------------------
+    if "objeto" in consulta:
+
+        def pontuar_objeto(texto):
+            score = 0
+
+            if "tem por objeto" in texto:
+                score += 120
+
+            if "do objeto" in texto:
+                score += 40
+
+            if "objetocompra" in texto:
+                score += 100
+
+            if "aquisição de" in texto:
+                score += 20
+
+            return score
+
+        chunk = escolher_melhor(pontuar_objeto)
+
+        if chunk and chunk not in selecionados:
+            selecionados.append(chunk)
+
+    # --------------------------------------------------------
+    # Número de controle PNCP
+    # --------------------------------------------------------
+    if "pncp" in consulta:
+
+        def pontuar_pncp(texto):
+            score = 0
+
+            if "numerocontrolepncp" in texto:
+                score += 150
+
+            if "número de controle pncp" in texto:
+                score += 120
+
+            if "numero de controle pncp" in texto:
+                score += 120
+
+            if "pncp" in texto:
+                score += 10
+
+            return score
+
+        chunk = escolher_melhor(pontuar_pncp)
+
+        if chunk and chunk not in selecionados:
+            selecionados.append(chunk)
+
+    # --------------------------------------------------------
+    # Fornecedor / contratada
+    # --------------------------------------------------------
+    if (
+        "fornecedor" in consulta
+        or "contratada" in consulta
+        or "contratado" in consulta
+    ):
+
+        def pontuar_fornecedor(texto):
+            score = 0
+
+            if "doravante denominada contratada" in texto:
+                score += 180
+
+            elif "denominada contratada" in texto:
+                score += 160
+
+            elif "contratada" in texto:
+                score += 100
+
+            if "registrar os preços da empresa" in texto:
+                score += 90
+
+            if "fornecedor registrado" in texto:
+                score += 30
+
+            elif "fornecedor" in texto:
+                score += 10
+
+            # Evita confundir fabricante/marca com fornecedor.
+            if (
+                "fabricante" in texto
+                and "contratada" not in texto
+                and "registrar os preços da empresa" not in texto
+            ):
+                score -= 100
+
+            return score
+
+        chunk = escolher_melhor(pontuar_fornecedor)
+
+        if chunk and chunk not in selecionados:
+            selecionados.append(chunk)
+
+    return selecionados[:5]
 # ============================================================
 # Confiança
 # ============================================================
@@ -643,6 +775,18 @@ def gerar_resposta(
 
     if modo_extrativo:
         from src.grounded_quotes import preparar_selecao_extrativa
+
+        # Para campos factuais explícitos, prioriza seleção determinística.
+        ids_deterministicos = selecionar_chunks_por_campos(
+            resultado.query,
+            resultado.evidences,
+        )
+
+        if ids_deterministicos:
+            conteudo = json.dumps(
+                {"chunk_ids": ids_deterministicos},
+                ensure_ascii=False,
+            )
 
         try:
             with obs.observar_etapa(
