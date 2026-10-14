@@ -44,6 +44,10 @@ def apresentar(resultado):
     paginas = resultado.get("total_paginas", 0)
 
     detalhes = {
+        "modo_demonstracao": resultado.get("modo_demonstracao"),
+        "roteamento_demonstracao": resultado.get("roteamento_demonstracao"),
+        "commit_demonstracao": resultado.get("commit_demonstracao"),
+        "versao_artefatos": resultado.get("versao_artefatos"),
         "plano": resultado.get("plano", {}),
         "fontes": resultado.get("fontes", []),
         "fontes_estruturadas": resultado.get("fontes_estruturadas", []),
@@ -78,7 +82,11 @@ def apresentar(resultado):
         ", ".join(resultado.get("routes", [])),
         resultado.get("filters", {}),
         detalhes,
-        status_consulta(resultado),
+        (
+            "**Demonstração offline — plano local predefinido; "
+            "sem roteador LLM ou geração.**\n\n"
+            if resultado.get("modo_demonstracao") == "offline" else ""
+        ) + status_consulta(resultado),
         resultado,
         None,
         "",
@@ -134,6 +142,18 @@ def criar_interface():
         gr.Markdown(f"# {TITULO}")
         gr.Markdown(DESCRICAO)
 
+        if os.getenv("RAG_DEMO_OFFLINE", "false").lower() == "true":
+            from app.offline_demo import PERGUNTAS
+            gr.Markdown(
+                "**Modo de demonstração offline:** cálculos reais sobre "
+                "arquivos locais, com planos predefinidos. "
+                "Não avalia o roteador LLM nem a geração documental."
+            )
+            gr.Markdown(
+                "**Commit da demonstração:** `"
+                + os.getenv("RAG_DEMO_COMMIT", "não informado") + "`"
+            )
+
         gr.Markdown(
             "A quantidade de evidências vale apenas para "
             "consultas documentais. Não limita contagens "
@@ -147,9 +167,18 @@ def criar_interface():
             label="Pergunta",
             lines=3,
             placeholder=(
-                "Quantas contratações têm ano da compra 2026?"
+                "Selecione uma das perguntas da demonstração abaixo."
+                if os.getenv("RAG_DEMO_OFFLINE", "false").lower() == "true"
+                else "Quantas contratações têm ano da compra 2026?"
             ),
         )
+
+        if os.getenv("RAG_DEMO_OFFLINE", "false").lower() == "true":
+            gr.Examples(
+                examples=[[texto] for texto in PERGUNTAS.values()],
+                inputs=[pergunta],
+                label="Perguntas da demonstração",
+            )
 
         top_k = gr.Slider(
             minimum=1,
