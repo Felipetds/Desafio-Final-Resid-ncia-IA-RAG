@@ -275,8 +275,14 @@ def _executar_combinada(
         run_id=run_id,
     )
 
+    from src.query_decomposition import extrair_pedido_documental
+
+    pergunta_documental = extrair_pedido_documental(pergunta) or pergunta
+    if analise_recuperacao is not None:
+        analise_recuperacao["query"] = pergunta_documental
+
     resultado_hibrido = _executar_hibrida(
-        pergunta,
+        pergunta_documental,
         plano,
         top_k=top_k,
         fetch_k=fetch_k,
@@ -286,6 +292,9 @@ def _executar_combinada(
         run_id=run_id,
         validar_operacao=False,
     )
+
+    resultado_hibrido["query_original"] = pergunta.strip()
+    resultado_hibrido["query_documental"] = pergunta_documental.strip()
 
     evidencias = resultado_hibrido.get(
         "evidences",

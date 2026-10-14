@@ -72,37 +72,26 @@ def _notificar_progresso(callback, percentual, descricao):
 
 
 def _preparar_entrada_geracao(recuperacao, *, combinada):
-    """Prepara a tarefa documental sem alterar o contexto original."""
+    """Prepara somente a tarefa documental, preservando a recuperação."""
     from copy import deepcopy
-    import re
+    from src.query_decomposition import extrair_pedido_documental
 
     entrada = deepcopy(recuperacao)
-
     if not combinada:
         return entrada
 
-    pergunta_original = entrada.get("query", "")
+    original = entrada.get("query_original") or entrada.get("query", "")
+    documental = extrair_pedido_documental(original)
 
-    # Decomposição limitada a uma forma explícita e conhecida.
-    # Não divide perguntas arbitrariamente pela palavra "e".
-    correspondencia = re.fullmatch(
-        r"\s*Quantas\s+contratações\s+têm\s+ano\s+da\s+compra"
-        r"\s+\d{4}\s+e\s+"
-        r"(?P<documental>o\s+que\s+a\s+Lei\b.+)",
-        pergunta_original,
-        flags=re.IGNORECASE,
-    )
-
-    if correspondencia:
-        entrada["query"] = correspondencia.group("documental").strip()
+    if documental:
+        entrada["query"] = documental
     else:
         entrada["query"] = (
             "Responda exclusivamente ao pedido documental. "
             "A operação estruturada será apresentada separadamente. "
             "Não responda novamente à contagem ou listagem.\n\n"
-            + pergunta_original
+            + original
         )
-
     return entrada
 
 
@@ -286,7 +275,13 @@ def executar_pipeline(
         )
 
         observacao["output"] = {
-            "resposta_gerada": bool(resposta_dict.get("answer")),
+            "tipo_evento": "resumo_geracao",
+            "resposta_gerada": bool(
+                resposta_dict.get("answer")
+                and resposta_dict.get("sources_used")
+                and not resposta_dict.get("is_refusal", False)
+            ),
+            "mensagem_disponivel": bool(resposta_dict.get("answer")),
             "nivel_confianca": resposta_dict.get(
                 "confidence_level"
             ),
@@ -295,7 +290,8 @@ def executar_pipeline(
             ),
             "recusa": resposta_dict.get("is_refusal", False),
         }
-        observacao["tokens"] = resposta_dict.get("tokens", {})
+        # Os tokens já constam no evento da chamada em src.generate.
+        observacao["tokens"] = {"prompt": 0, "completion": 0, "total": 0}
 
     _notificar_progresso(
         on_progress,

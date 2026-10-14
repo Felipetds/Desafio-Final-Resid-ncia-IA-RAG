@@ -527,9 +527,15 @@ def gerar_resposta(
     # --------------------------------------------------------
 
     if client is None:
+        import httpx
+
         client = OpenAI(
             base_url=OLLAMA_URL,
             api_key="ollama",
+            timeout=httpx.Timeout(
+                connect=10.0, read=120.0, write=30.0, pool=10.0
+            ),
+            max_retries=0,
         )
 
     # --------------------------------------------------------

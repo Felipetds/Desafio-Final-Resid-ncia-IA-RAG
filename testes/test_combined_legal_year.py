@@ -58,7 +58,10 @@ def test_execucao_preserva_pergunta_e_separa_filtros():
 
     def recuperar(**kwargs):
         chamadas.append(kwargs)
-        assert kwargs["pergunta"] == pergunta
+        assert kwargs["pergunta"] == (
+            "o que a Lei nº 14.133/2021 estabelece sobre o pregão?"
+        )
+        assert kwargs["analise_pronta"]["query"] == kwargs["pergunta"]
         assert kwargs["analise_pronta"]["filters"] == {}
         assert kwargs["analise_pronta"]["routes"] == ["normativa"]
         return {
@@ -87,3 +90,6 @@ def test_execucao_preserva_pergunta_e_separa_filtros():
     assert resultado["query_id"] == "q_ano_legal"
     assert resultado["run_id"] == "run_ano_legal"
     assert len(chamadas) == 1
+
+    assert resultado["query"] == pergunta
+    assert resultado["hibrida"]["query_original"] == pergunta
