@@ -458,6 +458,26 @@ def executar_consulta(
     )
 
     if plano["is_refusal"] or plano["necessita_esclarecimento"]:
+        motivo_encerramento = (
+            plano.get("refusal_reason")
+            if plano["is_refusal"]
+            else plano.get("pergunta_esclarecimento")
+        )
+        with obs.observar_etapa(
+            run_id=run_id,
+            query_id=plano.get("query_id"),
+            stage="validacao",
+            input_data={"tipo": "encerramento_consulta"},
+        ) as observacao:
+            observacao["output"] = {
+                "estrategia": plano.get("estrategia"),
+                "operacao": plano.get("operacao"),
+                "is_refusal": plano["is_refusal"],
+                "tipo_recusa": plano.get("tipo_recusa"),
+                "necessita_esclarecimento": plano["necessita_esclarecimento"],
+                "motivo": motivo_encerramento,
+                "consulta_bases_executada": False,
+            }
         return {
             "query": pergunta,
             "query_id": plano.get("query_id"),
