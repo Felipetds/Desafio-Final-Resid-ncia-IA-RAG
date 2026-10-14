@@ -19,7 +19,7 @@ def planejar_agregada(texto, plano):
         re.search(r"\bpe\s*038/26/2026\b", texto)
     )
     pede_calculo = bool(
-        re.search(r"\b(?:quantos|quantas|soma|total|calcule|media)\b", texto)
+        re.search(r"\b(?:quantos|quantas|soma|total|calcule|media|resuma|resumo)\b", texto)
     )
 
     if not pede_calculo or not (menciona_pca or menciona_pe):
@@ -120,6 +120,23 @@ def _normalizar_reformulacao(texto):
     Não remove filtros adicionais nem pedidos não suportados.
     """
     texto = re.sub(r"\s+", " ", texto).strip()
+
+
+    # Resumo completo com vínculos, sem critérios adicionais.
+    if re.fullmatch(
+        r"resuma (?:o )?pe\s*038/26/2026 e "
+        r"(?:verifique|confira) (?:os )?vinculos "
+        r"(?:nas|com as) demais naturezas "
+        r"(?:de evidencia )?do corpus[?. ]*",
+        texto,
+    ):
+        return (
+            "com base no pe 038/26/2026, informe quantos itens foram "
+            "homologados, fracassados e desertos, calcule o valor total "
+            "homologado e verifique se existe alguma informacao "
+            "relacionada a essa contratacao nas demais naturezas "
+            "de evidencia disponiveis no corpus"
+        )
 
     alternativas = (
         (

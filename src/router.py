@@ -1085,7 +1085,8 @@ def planejar_consulta(
             client=client,
             run_id=run_id,
         )
-    texto = normalizar_texto(pergunta)
+    texto_completo = normalizar_texto(pergunta)
+    texto = _separar_campos_de_exibicao(texto_completo)
     periodo_publicacao = _extrair_mes_publicacao(texto)
     rotas = list(analise.get("routes", []))
     plano = {
@@ -1370,7 +1371,7 @@ def planejar_consulta(
         )
     campos = None
     if listar:
-        campos = _extrair_campos_saida(texto)
+        campos = _extrair_campos_saida(texto_completo)
         if re.search(r"\b(?:apenas|somente)\b", texto) and not campos:
             return esclarecer(
                 "Quais campos você deseja exibir na listagem?"
@@ -1411,6 +1412,46 @@ def planejar_consulta(
         ),
     )
     return plano
+
+
+# Campos de apresentação não definem contagem ou filtros.
+CAMPOS_SAIDA_ALIASES.update({
+    "id_pncp": (
+        "id", "identificador", "numero de controle pncp",
+        "numero pncp", "id pncp",
+    ),
+    "orgao": ("orgao",),
+    "modalidade": ("modalidade",),
+    "data_publicacao": ("data de publicacao", "data_publicacao"),
+})
+
+
+def _separar_campos_de_exibicao(texto):
+    """Remove da intenção somente cláusulas explícitas de campos conhecidos."""
+    nomes = {
+        nome
+        for aliases in CAMPOS_SAIDA_ALIASES.values()
+        for nome in aliases
+    }
+
+    def substituir(achado):
+        campos = [
+            parte.strip()
+            for parte in re.split(r",|\s+e\s+", achado.group(1))
+            if parte.strip()
+        ]
+        if campos and all(campo in nomes for campo in campos):
+            return ""
+        # Preserva termos desconhecidos e critérios adicionais.
+        return achado.group(0)
+
+    return re.sub(
+        r"\b(?:mostre|exiba|apresente)\s+(?:apenas|somente)\s+"
+        r"([^.;?]+)(?:[.;?]|$)",
+        substituir,
+        texto,
+    ).strip()
+
 if __name__ == "__main__":
     consulta = input("Digite uma pergunta: ")
     saida = analisar_consulta(consulta)
