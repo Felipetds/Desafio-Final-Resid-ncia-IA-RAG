@@ -116,22 +116,39 @@ def extrair_metadados_especificos(natureza, dados=None):
     return meta
 
 def fatiar_texto(texto, max_chars=2000, overlap=200):
+    """Divide todo o texto, com sobreposição e avanço garantido."""
+    if (
+        not isinstance(max_chars, int)
+        or not isinstance(overlap, int)
+        or max_chars <= 0
+        or not 0 <= overlap < max_chars
+    ):
+        raise ValueError(
+            "Use max_chars positivo e 0 <= overlap < max_chars."
+        )
+
     chunks_text = []
     start = 0
     text_len = len(texto)
+
     while start < text_len:
-        end = start + max_chars
+        end = min(start + max_chars, text_len)
         bloco = texto[start:end]
+
         if end < text_len:
-            last_space = bloco.rfind(' ')
-            if last_space != -1 and last_space > max_chars // 2:
-                bloco = texto[start:start+last_space]
+            last_space = bloco.rfind(" ")
+            if last_space > max_chars // 2:
                 end = start + last_space
-        if len(bloco.strip()) > 10:
+                bloco = texto[start:end]
+
+        if bloco.strip():
             chunks_text.append(bloco.strip())
-        start = end - overlap
-        if start >= text_len or overlap >= (end - start):
+
+        if end >= text_len:
             break
+
+        start = max(start + 1, end - overlap)
+
     return chunks_text
 
 def processar_estruturada(caminho, pasta_saida):
