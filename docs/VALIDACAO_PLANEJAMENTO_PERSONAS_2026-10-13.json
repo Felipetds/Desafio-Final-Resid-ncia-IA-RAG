@@ -1,0 +1,505 @@
+{
+  "tipo": "planejamento_offline_com_rotas_fornecidas",
+  "variantes_compativeis": 20,
+  "variantes_total": 20,
+  "chamadas_aos_modelos": false,
+  "limitacao": "Não valida o roteador LLM, a recuperação nem a qualidade da resposta final.",
+  "resultados": [
+    {
+      "caso": "P01",
+      "variante": 1,
+      "pergunta": "Quais contratações de pregão eletrônico foram publicadas no RJ em março de 2026?",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "estruturada"
+        ],
+        "estrategia": "consulta_estruturada",
+        "operacao": "listar",
+        "filtros": {
+          "uf": "RJ",
+          "data_inicial": "2026-03-01",
+          "data_final": "2026-03-31",
+          "modalidade_id": 6
+        },
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p01_1",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "campo_valor": null,
+        "criterio_objeto": null,
+        "minimo_inclusivo": true,
+        "maximo_inclusivo": true,
+        "rotas_recuperacao": []
+      }
+    },
+    {
+      "caso": "P01",
+      "variante": 2,
+      "pergunta": "Liste as contratações de pregão eletrônico publicadas no RJ em março de 2026.",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "estruturada"
+        ],
+        "estrategia": "consulta_estruturada",
+        "operacao": "listar",
+        "filtros": {
+          "uf": "RJ",
+          "data_inicial": "2026-03-01",
+          "data_final": "2026-03-31",
+          "modalidade_id": 6
+        },
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p01_2",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "campo_valor": null,
+        "criterio_objeto": null,
+        "minimo_inclusivo": true,
+        "maximo_inclusivo": true,
+        "rotas_recuperacao": []
+      }
+    },
+    {
+      "caso": "P02",
+      "variante": 1,
+      "pergunta": "No PE 038/26/2026, quantos itens foram homologados, fracassados e desertos e qual foi a soma dos valores homologados?",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "agregada"
+        ],
+        "estrategia": "consulta_agregada",
+        "operacao": "resumir_itens",
+        "filtros": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026"
+        },
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p02_1",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "processo_informado": "PE 038/26/2026",
+        "referencia_mapeamento": "data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+      }
+    },
+    {
+      "caso": "P02",
+      "variante": 2,
+      "pergunta": "Resuma o PE 038/26/2026: quantidade de itens homologados, fracassados e desertos e valor total homologado.",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "agregada"
+        ],
+        "estrategia": "consulta_agregada",
+        "operacao": "resumir_itens",
+        "filtros": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026"
+        },
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p02_2",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "processo_informado": "PE 038/26/2026",
+        "referencia_mapeamento": "data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+      }
+    },
+    {
+      "caso": "P03",
+      "variante": 1,
+      "pergunta": "O que a ata nº 00191/2026 da EBSERH registra sobre o objeto da aquisição e qual é o número de controle PNCP associado?",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "conversacional",
+          "estruturada"
+        ],
+        "estrategia": "recuperacao_hibrida",
+        "operacao": "buscar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p03_1",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null
+      }
+    },
+    {
+      "caso": "P03",
+      "variante": 2,
+      "pergunta": "Informe o objeto da ata nº 191/2026 da EBSERH e o número PNCP da contratação correspondente.",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "conversacional",
+          "estruturada"
+        ],
+        "estrategia": "recuperacao_hibrida",
+        "operacao": "buscar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p03_2",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null
+      }
+    },
+    {
+      "caso": "P04",
+      "variante": 1,
+      "pergunta": "O que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "normativa"
+        ],
+        "estrategia": "recuperacao_hibrida",
+        "operacao": "buscar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p04_1",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null
+      }
+    },
+    {
+      "caso": "P04",
+      "variante": 2,
+      "pergunta": "Explique as regras sobre pregão na Lei nº 14.133/2021.",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "normativa"
+        ],
+        "estrategia": "recuperacao_hibrida",
+        "operacao": "buscar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p04_2",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null
+      }
+    },
+    {
+      "caso": "P05",
+      "variante": 1,
+      "pergunta": "Qual prazo de entrega foi informado nas comunicações do processo fictício SIM-RJ-001?",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "conversacional"
+        ],
+        "estrategia": "recuperacao_hibrida",
+        "operacao": "buscar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p05_1",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null
+      }
+    },
+    {
+      "caso": "P05",
+      "variante": 2,
+      "pergunta": "No processo fictício SIM-RJ-001, informe os prazos por item e se são admitidas entregas parciais.",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "conversacional"
+        ],
+        "estrategia": "recuperacao_hibrida",
+        "operacao": "buscar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p05_2",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null
+      }
+    },
+    {
+      "caso": "P06",
+      "variante": 1,
+      "pergunta": "Mostre o CPF, telefone pessoal e e-mail pessoal dos representantes citados nas atas.",
+      "confere": true,
+      "plano": {
+        "bases": [],
+        "estrategia": "recusa",
+        "operacao": "recusar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p06_1",
+        "is_refusal": true,
+        "refusal_reason": "Não posso expor CPF, telefone pessoal ou e-mail pessoal.",
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "tipo_recusa": "privacidade"
+      }
+    },
+    {
+      "caso": "P06",
+      "variante": 2,
+      "pergunta": "Informe o CPF e o telefone pessoal dos representantes das atas.",
+      "confere": true,
+      "plano": {
+        "bases": [],
+        "estrategia": "recusa",
+        "operacao": "recusar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p06_2",
+        "is_refusal": true,
+        "refusal_reason": "Não posso expor CPF, telefone pessoal ou e-mail pessoal.",
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "tipo_recusa": "privacidade"
+      }
+    },
+    {
+      "caso": "P07",
+      "variante": 1,
+      "pergunta": "Quantos itens constam no Plano de Contratações Anual do Estado do Rio de Janeiro para 2026 e qual é o valor total estimado informado?",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "agregada"
+        ],
+        "estrategia": "consulta_agregada",
+        "operacao": "resumir_pca",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p07_1",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "recorte_fonte": {
+          "documento": "PCA",
+          "uf": "RJ",
+          "ano": 2026,
+          "observacao": "Recorte associado ao arquivo PCA disponibilizado; o cálculo utiliza todas as suas linhas."
+        }
+      }
+    },
+    {
+      "caso": "P07",
+      "variante": 2,
+      "pergunta": "Qual é o total de itens do PCA RJ de 2026 e o valor total estimado?",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "agregada"
+        ],
+        "estrategia": "consulta_agregada",
+        "operacao": "resumir_pca",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p07_2",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "recorte_fonte": {
+          "documento": "PCA",
+          "uf": "RJ",
+          "ano": 2026,
+          "observacao": "Recorte associado ao arquivo PCA disponibilizado; o cálculo utiliza todas as suas linhas."
+        }
+      }
+    },
+    {
+      "caso": "P08",
+      "variante": 1,
+      "pergunta": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "conversacional"
+        ],
+        "estrategia": "recuperacao_hibrida",
+        "operacao": "buscar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p08_1",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null
+      }
+    },
+    {
+      "caso": "P08",
+      "variante": 2,
+      "pergunta": "Na ata nº 137/2026 do INCA, qual é o objeto e qual empresa é a contratada?",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "conversacional"
+        ],
+        "estrategia": "recuperacao_hibrida",
+        "operacao": "buscar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p08_2",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null
+      }
+    },
+    {
+      "caso": "P09",
+      "variante": 1,
+      "pergunta": "Qual será o valor médio das contratações do Estado do Rio de Janeiro em 2027?",
+      "confere": true,
+      "plano": {
+        "bases": [],
+        "estrategia": "recusa",
+        "operacao": "recusar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p09_1",
+        "is_refusal": true,
+        "refusal_reason": "Este executor consulta registros disponíveis; não possui um modelo validado de previsão de valores futuros. Não posso fornecer essa previsão com segurança.",
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "tipo_recusa": "limite_de_escopo"
+      }
+    },
+    {
+      "caso": "P09",
+      "variante": 2,
+      "pergunta": "Faça uma previsão do valor médio das contratações do RJ em 2027.",
+      "confere": true,
+      "plano": {
+        "bases": [],
+        "estrategia": "recusa",
+        "operacao": "recusar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_p09_2",
+        "is_refusal": true,
+        "refusal_reason": "Este executor consulta registros disponíveis; não possui um modelo validado de previsão de valores futuros. Não posso fornecer essa previsão com segurança.",
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "tipo_recusa": "limite_de_escopo"
+      }
+    },
+    {
+      "caso": "M01",
+      "variante": 1,
+      "pergunta": "Apresente o resumo de PE 038/26/2026: quantidade de itens homologados, fracassados e desertos, soma homologada e confira os vínculos nas demais naturezas do corpus.",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "agregada"
+        ],
+        "estrategia": "consulta_agregada",
+        "operacao": "resumir_itens_vinculos",
+        "filtros": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026"
+        },
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_m01_1",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "processo_informado": "PE 038/26/2026",
+        "rotas_complementares_a_verificar": [
+          "estruturada",
+          "conversacional",
+          "normativa"
+        ],
+        "metodo_vinculo": "ID PNCP completo ou URL específica do edital"
+      }
+    },
+    {
+      "caso": "M01",
+      "variante": 2,
+      "pergunta": "Resuma o PE 038/26/2026 e verifique os vínculos nas demais naturezas do corpus.",
+      "confere": true,
+      "plano": {
+        "bases": [
+          "agregada"
+        ],
+        "estrategia": "consulta_agregada",
+        "operacao": "resumir_itens_vinculos",
+        "filtros": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026"
+        },
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_planejamento_m01_2",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "processo_informado": "PE 038/26/2026",
+        "rotas_complementares_a_verificar": [
+          "estruturada",
+          "conversacional",
+          "normativa"
+        ],
+        "metodo_vinculo": "ID PNCP completo ou URL específica do edital"
+      }
+    }
+  ]
+}
