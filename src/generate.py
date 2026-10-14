@@ -314,6 +314,43 @@ def chamar_llm(
             "Produza a resposta final utilizando somente o contexto acima."
         )
 
+    opcoes = {}
+    if modo_extrativo:
+        import re
+
+        ids_disponiveis = list(dict.fromkeys(
+            identificador.strip()
+            for identificador in re.findall(
+                r"^Chunk ID:\s*([^\r\n]+)",
+                contexto,
+                flags=re.MULTILINE,
+            )
+        ))
+        tipo_id = {"type": "string"}
+        if ids_disponiveis:
+            tipo_id["enum"] = ids_disponiveis
+
+        opcoes["response_format"] = {
+            "type": "json_schema",
+            "json_schema": {
+                "name": "selecao_evidencias",
+                "strict": True,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "chunk_ids": {
+                            "type": "array",
+                            "items": tipo_id,
+                            "minItems": 0,
+                            "maxItems": 5,
+                        }
+                    },
+                    "required": ["chunk_ids"],
+                    "additionalProperties": False,
+                },
+            },
+        }
+
     return client.chat.completions.create(
         model=GENERATION_MODEL,
         temperature=0,
@@ -321,6 +358,7 @@ def chamar_llm(
             {"role": "system", "content": prompt},
             {"role": "user", "content": mensagem_usuario},
         ],
+        **opcoes,
     )
 
 
@@ -607,12 +645,23 @@ def gerar_resposta(
                 stage="validacao",
                 input_data={"tipo": "trechos_literais"},
             ) as observacao_trechos:
+                from src.normative_selection import cobrir_selecao_definicao
+
+                selecao_original = conteudo
+                conteudo = cobrir_selecao_definicao(
+                    resultado.query,
+                    conteudo,
+                    resultado.evidences,
+                    resultado.routes,
+                )
+                cobertura_aplicada = conteudo != selecao_original
                 conteudo, _ = preparar_selecao_extrativa(
                     conteudo,
                     resultado.evidences,
                 )
                 observacao_trechos["output"] = {
                     "trechos_validos": True,
+                    "cobertura_definicao_aplicada": cobertura_aplicada,
                 }
         except ValueError:
             return RAGResponse(
