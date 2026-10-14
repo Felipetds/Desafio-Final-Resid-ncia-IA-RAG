@@ -422,9 +422,31 @@ def chamar_llm(
             "Não retorne posições numéricas, nomes de arquivos no lugar "
             "dos IDs, identificadores abreviados ou inventados.\n\n"
             "Selecione de um a cinco chunks pertinentes ao pedido. "
-            "Quando a pergunta exigir mais de uma informação, selecione "
-            "os chunks que sustentam essas informações, inclusive "
-            "condições, exceções e limites relevantes. "
+            "Quando a pergunta exigir mais de uma informação, garanta que "
+            "cada informação solicitada esteja sustentada por pelo menos "
+            "um dos chunks selecionados. Não considere a pergunta respondida "
+            "se algum dos campos pedidos ficar sem evidência explícita.\n\n"
+
+            "REGRAS DE RELEVÂNCIA:\n"
+            "- Se a pergunta pedir o OBJETO da contratação ou aquisição, "
+            "priorize o chunk que contenha expressões como 'tem por objeto', "
+            "'DO OBJETO', 'objetoCompra' ou uma descrição explícita do que "
+            "está sendo adquirido.\n"
+            "- Se a pergunta pedir NÚMERO DE CONTROLE PNCP, selecione "
+            "obrigatoriamente um chunk que contenha o próprio número ou o campo "
+            "'numeroControlePNCP'. Uma simples menção à palavra PNCP não é suficiente.\n"
+            "- Se a pergunta pedir FORNECEDOR, CONTRATADA ou empresa fornecedora, "
+            "priorize o chunk que identifique explicitamente a empresa como "
+            "'CONTRATADA', 'fornecedor registrado', 'empresa registrada' ou equivalente.\n"
+            "- FABRICANTE ou MARCA do produto não deve ser tratado como fornecedor "
+            "quando o documento apresentar outra empresa como contratada.\n"
+            "- Trechos de assinatura, vigência, condições gerais, sanções, "
+            "procedimentos administrativos ou referências genéricas não devem ser "
+            "selecionados quando existir outro chunk que responda diretamente ao campo pedido.\n"
+            "- Em perguntas com múltiplos campos, as informações podem estar em "
+            "chunks diferentes e até em bases diferentes. Se necessário, selecione "
+            "todos os chunks indispensáveis para cobrir o pedido completo.\n\n"
+
             "A presença na mesma fonte não torna um trecho pertinente.\n\n"
             "Não copie nem reescreva os textos: o sistema apresentará "
             "os trechos originais dos IDs selecionados. "
@@ -777,16 +799,6 @@ def gerar_resposta(
         from src.grounded_quotes import preparar_selecao_extrativa
 
         # Para campos factuais explícitos, prioriza seleção determinística.
-        ids_deterministicos = selecionar_chunks_por_campos(
-            resultado.query,
-            resultado.evidences,
-        )
-
-        if ids_deterministicos:
-            conteudo = json.dumps(
-                {"chunk_ids": ids_deterministicos},
-                ensure_ascii=False,
-            )
 
         try:
             with obs.observar_etapa(
