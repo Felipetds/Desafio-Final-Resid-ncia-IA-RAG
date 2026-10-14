@@ -686,7 +686,6 @@ def recuperar_evidencias(
                 "rrf_score_original": item["rrf_score"]
             })
             
-        rerank.TOP_K = top_k 
         ranking_reranked_tuples = rerank.executar_rerank(pergunta, candidatos_para_rerank)
         
         # Reconstrói a lista no formato que o selecionar_resultados_multirrota espera
@@ -736,6 +735,12 @@ def recuperar_evidencias(
             "bm25_candidates": len(resultados_bm25),
             "rrf_candidates": len(ranking_rrf),
             "rerank_enabled": rerank.RERANK_ENABLED,
+            "rerank_applied": False,
+            "rerank_status": (
+                "not_implemented_fallback_rrf"
+                if rerank.RERANK_ENABLED
+                else "disabled_fallback_rrf"
+            ),
             "returned": len(evidencias),
         }
 
@@ -755,7 +760,7 @@ def recuperar_evidencias(
             "rrf_candidates": len(ranking_rrf),
             "returned": len(evidencias),
         },
-        "stage": "rerank" if rerank.RERANK_ENABLED else "fusao_rrf",
+        "stage": "fusao_rrf",
         "latencia_ms": round((time.perf_counter() - inicio) * 1000, 2),
     }
 

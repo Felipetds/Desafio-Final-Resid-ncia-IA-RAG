@@ -1,49 +1,62 @@
-import sys
-import os
-from unittest import mock
+import logging
+
 import pytest
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
-import rerank
+from src import rerank
+
 
 @pytest.fixture
-def mock_candidatos():
+def candidatos():
     return [
-        {"id": "doc1", "text": "texto A", "metadata": {"natureza": "normativa"}},
-        {"id": "doc2", "text": "texto B", "metadata": {"natureza": "estruturada"}},
-        {"id": "doc3", "text": "texto C", "metadata": {"natureza": "conversacional"}},
-        {"id": "doc4", "text": "texto D", "metadata": {"natureza": "agregada"}},
+        {
+            "id": f"doc{i}",
+            "text": f"Texto {i}",
+            "metadata": {"natureza": "normativa"},
+            "rrf_score_original": 0.03 / (i + 1),
+        }
+        for i in range(30)
     ]
 
-def test_rerank_disabled_fallback_rrf_e_top_k(mock_candidatos):
-    rerank.RERANK_ENABLED = False
-    rerank.TOP_K = 2
-    resultado = rerank.executar_rerank("teste", mock_candidatos)
-    
-    assert len(resultado) == 2  # Respeita o Top K
-    assert resultado[0][0]["id"] == "doc1"  # Fallback: Mantém ordem do RRF
-    assert "metadata" in resultado[0][0]  # Manutenção de metadados
 
-def test_rerank_lista_vazia():
-    assert rerank.executar_rerank("teste", []) == []
+@pytest.mark.parametrize("habilitado", [False, True])
+def test_fallback_preserva_ordem_metadados_e_todos_candidatos(
+    monkeypatch, candidatos, habilitado
+):
+    monkeypatch.setattr(rerank, "RERANK_ENABLED", habilitado)
+    monkeypatch.setattr(rerank, "TOP_K", 3)
+    monkeypatch.setattr(rerank, "MAX_CANDIDATES", 20)
 
-@mock.patch("rerank.RERANK_ENABLED", True)
-def test_rerank_reordenacao_simulada(mock_candidatos):
-    rerank.TOP_K = 3
-    resultado = rerank.executar_rerank("teste", mock_candidatos)
-    
-    # Nossa simulação inverte a lista. O doc4 passa para primeiro.
-    assert resultado[0][0]["id"] == "doc4"
-    assert resultado[1][0]["id"] == "doc3"
+    resultado = rerank.executar_rerank("Pergunta", candidatos)
 
-@mock.patch("rerank.RERANK_ENABLED", True)
-@mock.patch("logging.Logger.warning")
-def test_rerank_timeout_resposta_invalida_com_fallback(mock_logger, mock_candidatos):
-    # Força uma falha simulando Timeout/Resposta Inválida
-    with mock.patch("builtins.list", side_effect=TimeoutError("Conexao perdida")):
-        rerank.TOP_K = 3
-        resultado = rerank.executar_rerank("teste", mock_candidatos)
-        
-        # Em caso de erro, deve logar o problema e acionar o fallback do RRF
-        assert mock_logger.called
-        assert resultado[0][0]["id"] == "doc1"
+    assert len(resultado) == 30
+    assert [doc for doc, _ in resultado] == candidatos
+    assert all(doc is original for (doc, _), original in zip(
+        resultado, candidatos
+    ))
+    assert all(score is None for _, score in resultado)
+
+
+def test_lista_vazia():
+    assert rerank.executar_rerank("Pergunta", []) == []
+
+
+def test_ativacao_sem_integracao_nao_registra_sucesso(
+    monkeypatch, caplog, candidatos
+):
+    monkeypatch.setattr(rerank, "RERANK_ENABLED", True)
+
+    with caplog.at_level(logging.WARNING, logger=rerank.__name__):
+        rerank.executar_rerank("Pergunta", candidatos)
+
+    assert "not_implemented_fallback_rrf" in caplog.text
+    assert "'applied': False" in caplog.text
+    assert "'status': 'success'" not in caplog.text
+
+
+def test_fallback_nao_altera_lista_recebida(monkeypatch, candidatos):
+    monkeypatch.setattr(rerank, "RERANK_ENABLED", True)
+    ordem = [doc["id"] for doc in candidatos]
+
+    rerank.executar_rerank("Pergunta", candidatos)
+
+    assert [doc["id"] for doc in candidatos] == ordem
