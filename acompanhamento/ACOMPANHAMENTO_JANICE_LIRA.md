@@ -670,3 +670,70 @@ As execuções e os resultados foram conferidos antes de considerar as validaç�
 
 **Situação da atividade:** Validação dos nove casos P01–P09 concluída, com ressalvas documentadas para os testes de integração controlada. Investigação da M01 concluída, permanecendo pendente a validação multifonte dessa contratação por ausência de cobertura na base estruturada disponível. Consolidação e publicação dos resultados no GitHub ainda pendentes.
 
+--- 
+## Encontro 13 — 14/10/2026
+
+### Minha contribuição
+
+#### Consolidação e revisão da avaliação P01–P09
+
+- Dei continuidade às atividades da frente de Corpus e Avaliação do Grande Desafio RAG — Cenário 1: Contratações Públicas do Estado do Rio de Janeiro.
+- Revisei a matriz de avaliação dos nove casos P01–P09, mantendo os resultados esperados, os resultados observados, as fontes, as versões, os identificadores e a situação de cada caso.
+- Atualizei a documentação de avaliação para distinguir os resultados validados localmente, os testes históricos, as integrações controladas e as funcionalidades que ainda dependem de validação ponta a ponta.
+- Corrigi a referência das fontes na matriz de avaliação `MATRIZ_AVALIACAO_P01_P09_2026-10-14.csv`.
+- Completei a matriz de qualidade `MATRIZ_QUALIDADE_P01_P09_2026-10-14.csv`, registrando os aspectos de factualidade, pertinência, cobertura documental, rastreabilidade das citações, privacidade e limitações da geração.
+- Mantive os casos P01–P09 alinhados às evidências disponíveis no corpus v3, sem classificar como integralmente concluídas as funcionalidades cuja execução autônoma ainda não foi comprovada.
+
+#### Verificação técnica do repositório e preparação dos testes
+
+- Utilizei uma cópia do repositório `repositorio1` no Google Colab, carregada por meio de um arquivo ZIP, para inspecionar os módulos e os testes disponíveis.
+- Confirmei a presença dos diretórios `src/`, `testes/`, `data/`, `eval/`, `docs/` e `logs/` na cópia extraída.
+- Investiguei as referências aos caminhos dos chunks e dos índices nos módulos de recuperação e indexação, identificando diferenças entre os caminhos esperados pelo código e a estrutura de artefatos encontrada na cópia do projeto.
+- Examinei os trechos de `src/retrieve.py` relacionados às fontes utilizadas nas respostas, aos casos de recusa, à ausência de evidências e à validação das citações.
+- Consultei os testes relacionados à geração, à recuperação, às citações e aos cenários de recusa, com o objetivo de verificar os critérios utilizados para avaliar a rastreabilidade e a segurança das respostas.
+- Registrei que a execução da suíte completa ainda precisa de confirmação por meio dos resultados efetivos dos testes.
+
+#### Publicação das atualizações no GitHub
+
+- Publiquei a atualização da matriz de qualidade P01–P09, registrada no commit `e27e42c`, com a mensagem `Completa matriz de qualidade P01-P09`.
+- Publiquei a correção da referência das fontes na matriz de avaliação P01–P09, registrada no commit `6692095`, com a mensagem `Corrige fonte da matriz de avaliação P01-P09`.
+- Confirmei a presença dos dois arquivos na pasta `eval/` do repositório `repositorio1`.
+- Mantive os registros de avaliação separados da implementação do pipeline, preservando a distinção entre documentação consolidada e testes técnicos ainda em verificação.
+
+### Uso de IA
+
+- Utilizei um assistente de IA como apoio à revisão das matrizes de avaliação e qualidade, à organização das evidências e à preparação dos registros de acompanhamento.
+- Utilizei IA para auxiliar na análise dos caminhos dos artefatos, na interpretação dos trechos de código e na identificação dos testes relacionados à geração e à validação das citações.
+- Realizei verificações no Google Colab e consultei a estrutura do repositório e os registros de commits apresentados no GitHub.
+- Mantive a distinção entre inspeção de código, preparação dos testes e resultados efetivamente comprovados, sem considerar uma execução aprovada apenas pela presença dos arquivos ou pela coleta dos testes.
+
+### Resultados
+
+- Matriz de avaliação P01–P09 atualizada e publicada no GitHub.
+- Matriz de qualidade P01–P09 completada e publicada no GitHub.
+- Referências às fontes revisadas para melhorar a rastreabilidade documental.
+- Situação dos nove casos mantida com as ressalvas relativas à integração, à geração autônoma e à interface.
+- Estrutura do repositório examinada no Google Colab.
+- Caminhos dos artefatos de recuperação identificados para investigação técnica.
+- Testes de geração, citações, recuperação e recusa examinados para orientar a continuidade da validação.
+- Commits `e27e42c` e `6692095` registrados nas atualizações apresentadas do repositório.
+
+### Dificuldades e limitações
+
+- A cópia do repositório no Google Colab apresentou diferenças entre os caminhos esperados pelo código e os diretórios de artefatos existentes.
+- A tentativa inicial de localizar testes por um caminho inexistente não encontrou os arquivos solicitados, sendo necessário conferir a estrutura real da cópia extraída.
+- A inspeção de código e dos testes não comprova, isoladamente, que toda a suíte foi executada com sucesso.
+- Os casos P01–P09 ainda possuem ressalvas quanto à execução autônoma e à validação ponta a ponta de determinadas rotas, da geração e da interface.
+- A publicação das matrizes de avaliação e qualidade não elimina a necessidade de validar o comportamento real do pipeline com as evidências do corpus v3.
+
+### Próximos passos
+
+- Executar a suíte de testes a partir da raiz correta do repositório e registrar o resultado completo.
+- Investigar e resolver, quando necessário, as diferenças entre os caminhos esperados e os artefatos disponíveis para recuperação e indexação.
+- Reexecutar os testes relacionados à geração, às citações, às recusas e à rastreabilidade das fontes.
+- Validar os casos P01–P09 no fluxo integrado, registrando separadamente os resultados aprovados, reprovados e pendentes.
+- Atualizar as matrizes e os relatórios somente quando houver novas evidências verificáveis.
+- Consolidar as evidências técnicas e documentais para a preparação da apresentação final do Grande Desafio RAG.
+
+**Situação da atividade:** Matrizes de avaliação e qualidade P01–P09 atualizadas e publicadas no GitHub. Inspeção técnica da cópia do repositório realizada no Google Colab. Execução completa dos testes e validação ponta a ponta permanecem pendentes de confirmação.
+
