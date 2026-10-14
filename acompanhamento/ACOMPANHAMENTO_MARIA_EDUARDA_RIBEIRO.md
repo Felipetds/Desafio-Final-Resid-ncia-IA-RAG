@@ -585,3 +585,66 @@ Utilizei ferramentas de IA como apoio na análise dos artefatos, comparação da
 - Incorporar ao pipeline reproduzível os ajustes utilizados na preparação v3, incluindo identidade dos chunks e reutilização de embeddings por conteúdo.
 - Executar os testes de integração e conferir regressões.
 - Atualizar o status, concluir a revisão dos PRs e registrar o commit exato da demonstração.
+
+## Encontro 12 — 14/10/2026
+
+### Minha participação
+
+- Apoiei Luiz na conferência das correções de planejamento, filtros, recuperação e cálculos, distinguindo testes locais das execuções com modelos.
+- Preparei um modo de demonstração offline na interface para P02, P07 e M01, com planos predefinidos explicitamente identificados e cálculos reais nos arquivos.
+- Validei a apresentação dos resultados, fontes, recortes e limitações e conferi o feedback de M01 persistido no Drive com pergunta, fonte, query_id e run_id.
+- Registrei as falhas de acesso à LLM e acompanhei a confirmação do professor de um problema de disponibilidade do serviço.
+- Após o retorno do endpoint, restaurei os artefatos v3 anteriores nos caminhos locais e retomei as consultas pela interface normal.
+- Investiguei a rejeição da seleção extrativa de P04: o modelo retornava um JSON por incisos, em vez do contrato chunk_ids.
+- Acrescentei saída estruturada por JSON Schema ao modo extrativo e preservei a validação dos identificadores e citações.
+- Ajustei a seleção final de perguntas normativas gerais para preservar uma definição já recuperada, com aplicação da regra identificada no log.
+- Corrigi a decomposição da consulta combinada antes da recuperação documental, mantendo a pergunta original e os filtros estruturados.
+- Configurei limites de conexão e leitura e desativei as tentativas automáticas dos clientes criados pelo pipeline.
+- Corrigi o resumo de geração no adaptador para não tratar mensagens de erro como respostas documentais geradas nem duplicar tokens.
+- Salvei logs em JSONL e cópias legíveis em TXT no Drive e preparei o roteiro da atualização.
+
+### Resultados obtidos
+
+- P01 apresentou 1.358 correspondências para RJ, pregão eletrônico e publicação em março de 2026, com 20 registros na primeira página de 68. A navegação completa não foi reconferida nesta execução.
+- P02 apresentou 19 itens, 8 homologados, 9 fracassados, 2 desertos e R$ 141.002,08 pela interface normal. O log registrou análise, roteamento e cálculo com os mesmos identificadores.
+- P04 apresentou os artigos 28, 29 e 6 com trechos e citações validados após as correções. A resposta permanece extensa por apresentar o artigo 6 inteiro.
+- P05 distinguiu o prazo inicial dos prazos confirmados: papel A4 em 10 dias e canetas em 15 dias. Preservou entregas parciais, caráter fictício e ausência de pedido real.
+- P08 apresentou aquisição de rodízios para camas elétricas e AGIMED COMERCIO DE EQUIPAMENTOS LTDA como contratada, sem confundir TENTE com a empresa.
+- P07 apresentou 36.994 linhas e R$ 55.968.524.178,3319 estimados no arquivo completo, com fonte e recorte associado. O resultado não representa gasto realizado.
+- P06 recusou a exposição de CPF e contatos pessoais; P09 recusou previsão futura sem modelo validado.
+- M01 apresentou o resumo correto e verificou 2.125 chunks no modo normal: 19 correspondências agregadas e zero nas demais naturezas. A limitação do vínculo por identificadores foi apresentada.
+- A validação offline de M01 com 2.172 chunks foi mantida separada da execução normal com 2.125.
+- A consulta combinada preservou a contagem de 1.234 registros. Após a decomposição, a busca recebeu somente o pedido normativo e selecionou os artigos 29, 28 e 6.
+- A geração da última consulta combinada falhou com HTTP 502 e timeout do proxy ao conectar ao Ollama. Portanto, essa execução permanece parcial.
+- A última suíte apresentou 454 testes aprovados, excluindo testes/teste_integracao.py e com os caminhos de compatibilidade configurados.
+- git diff --check não apresentou erros. Testes locais, integridade dos artefatos e avaliação das respostas foram registrados separadamente.
+- Publiquei os commits fda8a49, 42d738a e 2ade667. A integração dos PRs à main deve ser conferida separadamente.
+
+### Dificuldades encontradas
+
+O endpoint esteve indisponível durante parte do dia. Após o retorno, ocorreram latências elevadas e uma falha HTTP 502 na geração da consulta combinada. A indisponibilidade inicial foi confirmada pelo professor, que acionou o suporte.
+
+A saída extrativa respeitava JSON, mas não o formato solicitado. O schema corrigiu o formato; a cobertura da definição exigiu uma regra adicional sobre evidências já recuperadas.
+
+Os artefatos restaurados contêm 2.125 chunks. O corpus com fatiamento corrigido contém 2.172 chunks e ainda precisa de um conjunto vetorial próprio confirmado. Não misturei os chunks novos com os índices anteriores.
+
+Identifiquei também que a comunicação fictícia de P05 está classificada como ata_reuniao no metadado doc_type, embora seja uma troca de mensagens. Encaminhei essa diferença como pendência da ingestão.
+
+### Apoio de IA
+
+Utilizei IA para apoiar diagnóstico, implementação, testes, interpretação dos logs e elaboração do roteiro. Corrigi as propostas iniciais após conferir os resultados, incluindo o executor simulado dos testes, a cobertura de seleções de um a cinco chunks e a expectativa antiga da pergunta combinada. Verifiquei as alterações por testes, diff e execuções reais, sem considerar fixtures ou planos predefinidos como avaliação do roteador LLM.
+
+### Atividades realizadas pela equipe
+
+Apoiei a continuidade das correções da frente de Luiz e alinhei com Eridalgo a comprovação do modelo, o cache, os IDs e a integridade dos novos artefatos. Compartilhei o bloqueio do endpoint e acompanhei sua retomada.
+
+### Próximas atividades
+
+- Conferir revisão e integração dos PRs e registrar a versão final utilizada.
+- Revalidar a consulta combinada com os limites de chamada atualizados.
+- Concluir P03 após disponibilização dos artefatos corrigidos e compatíveis.
+- Consolidar com Janice os casos, reformulações, fontes, versões e situações.
+- Conferir paginação, campos solicitados, critério TIC e feedback no fluxo normal.
+- Implementar ou registrar separadamente a pendência do histórico persistente.
+- Conferir com Felipe os eventos de falha, resumo de geração e contagem de tokens.
+- Atualizar status, instruções e diagrama e preparar a demonstração final.
