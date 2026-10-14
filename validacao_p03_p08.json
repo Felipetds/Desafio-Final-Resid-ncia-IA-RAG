@@ -1,0 +1,276 @@
+{
+  "P03": {
+    "answer": "Não foi possível apresentar uma resposta com trechos literais verificados nesta execução. As evidências recuperadas continuam disponíveis para consulta.",
+    "query": "O que a ata nº 00191/2026 da EBSERH registra sobre o objeto da aquisição e qual é o número de controle PNCP associado?",
+    "query_id": "q_7f285d2a",
+    "run_id": "21697491",
+    "executado": true,
+    "estrategia": "recuperacao_hibrida",
+    "plano": {
+      "bases": [
+        "conversacional",
+        "estruturada"
+      ],
+      "estrategia": "recuperacao_hibrida",
+      "operacao": "buscar",
+      "filtros": {},
+      "campos": null,
+      "pagina": 1,
+      "tamanho_pagina": 20,
+      "query_id": "q_7f285d2a",
+      "is_refusal": false,
+      "refusal_reason": null,
+      "necessita_esclarecimento": false,
+      "pergunta_esclarecimento": null
+    },
+    "routes": [
+      "conversacional",
+      "estruturada"
+    ],
+    "filters": {
+      "uf": null,
+      "ano": 2026,
+      "valor_minimo": null,
+      "valor_maximo": null,
+      "modalidade": null,
+      "municipio": null,
+      "fornecedor": null
+    },
+    "evidences": [
+      {
+        "posição": 1,
+        "chunk_id": "contratacoes_publicacao.json_chunk_400",
+        "trecho": "{\"srp\": true, \"orgaoEntidade\": {\"cnpj\": \"15126437000305\", \"razaoSocial\": \"EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH\", \"poderId\": \"N\", \"esferaId\": \"N\"}, \"anoCompra\": 2026, \"sequencialCompra\": 676, \"dataInclusao\": \"2026-03-02T07:09:35\", \"dataPublicacaoPncp\": \"2026-03-02T07:09:35\", \"dataAtualizacao\": \"2026-03-02T07:09:35\", \"numeroCompra\": \"90019\", \"unidadeOrgao\": {\"ufNome\": \"Rio de Janeiro\", \"codigoUnidade\": \"157243\", \"nomeUnidade\": \"COMPLEXO HOSPITALAR DA UNIVERSIDADE FEDERAL\", \"ufSigla\": \"RJ\", \"municipioNome\": \"Rio de Janeiro\", \"codigoIbge\": \"3304557\"}, \"amparoLegal\": {\"descricao\": \"pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns\", \"nome\": \"Lei 14.133/2021, Art. 28, I\", \"codigo\": 1}, \"dataAberturaProposta\": \"2026-03-02T08:00:00\", \"dataEncerramentoProposta\": \"2026-03-12T09:00:00\", \"informacaoComplementar\": \" Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=15724305900192026\", \"processo\": \"23877002295202692\", \"objetoCompra\": \"Aquisição de Produtos para Saúde - peças mamógrafas (chassis), para o Complexo Hospitalar da Universidade Federal do Rio de Janeiro (CH-UFRJ/EBSERH).\", \"linkSistemaOrigem\": \"https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=acompanhamento-compra&compra=15724305900192026\", \"justificativaPresencial\": null, \"unidadeSubRogada\": null, \"orgaoSubRogado\": null, \"valorTotalHomologado\": 172096.8, \"linkProcessoEletronico\": null, \"modalidadeId\": 6, \"numeroControlePNCP\": \"15126437000305-1-000676/2026\", \"emendaParlamentar\": null, \"dataAtualizacaoGlobal\": \"2026-03-17T13:32:08\", \"modoDisputaId\": 1, \"valorTotalEstimado\": 219960.0, \"modalidadeNome\": \"Pregão - Eletrônico\", \"modoDisputaNome\": \"Aberto\", \"tipoInstrumentoConvocatorioCodigo\": 1, \"tipoInstrumentoConvocatorioNome\": \"Edital\", \"fontesOrcamentarias\": [], \"situacaoCompraId\": 1, \"situacaoCompraNome\": \"Divulgada no PNCP\", \"usuarioNome\": \"Compras.gov.br\"}",
+        "fonte": "contratacoes_publicacao.json",
+        "tipo_documento": "contrato",
+        "base": "base_estruturada",
+        "natureza": "estruturada",
+        "score_rrf": 0.032266,
+        "métodos": [
+          "bm25",
+          "dense"
+        ]
+      },
+      {
+        "posição": 2,
+        "chunk_id": "ata_00191.pdf_chunk_5",
+        "trecho": "determinações\t dos\t Poderes\t Públicos,\t mantendo\t sempre\t limpo\t o\t local\t de\t execução\t do\t objeto\t e\t nas\nmelhores\tcondições\tde\tsegurança,\thigiene\te\tdisciplina;\nXIII\n\t-\nreceber\t e\t dar\t o\t tratamento\t adequado\t a\t denúncias\t de\t discriminação,\t violência\t e\t assédio\t no\nambiente\tde\ttrabalho;\nXIV\n\t-\nentregar\to\tobjeto,\tquando\tfor\to\tcaso,\tacompanhado\tdo\tmanual\tdo\tusuário,\tcom\tuma\tversão\tem\nportuguês,\te\tda\trelação\tda\trede\tde\tassistência\ttécnica\tautorizada;\nXV\n\t-\nresponsabilizar-se\tpelos\tvícios\te\tdanos\tdecorrentes\tdo\tobjeto,\tde\tacordo\tcom\to\tCódigo\tde\tDefesa\ndo\tConsumidor\t(Lei\tn.º\t8.078/90),\tbem\tcomo\tpor\tdanos\tcausados\tdiretamente\ta\tterceiros\tou\tà\tEbserh\nindependentemente\tda\tcomprovação\tde\tsua\tculpa\tou\tdolo\tna\texecução\tdo\tcontrato;\nXVI\n\t-\ncomunicar\tà\tCONTRATANTE,\tno\tprazo\tmáximo\tde\t24\t(vinte\te\tquatro)\thoras\tque\tantecede\ta\tdata\nda\t entrega,\t os\t motivos\t que\t impossibilitem\t o\t cumprimento\t do\t prazo\t previsto,\t com\t a\t devida\ncomprovação.\n9\n.\nEXECUÇÃO\tDO\tOBJETO\n9\n.\n1\n.\nA\texecução\tdo\tobjeto\testá\tdefinida\tno\tTermo\tde\tReferência.\n10\n.\nGESTÃO\tDAS\tATAS\tDE\tREGISTROS\tDE\tPREÇOS\n10\n.\n1\n.\nA\tEbserh\tdesignará\tformalmente\tum\tconjunto\tde\tcolaboradores,\tempregados\tpúblicos,\tservidores\tefetivos\ncedidos\tou\tem\texercício\tna\tEbserh,\tpara\tcompor\ta\tEquipe\tde\tFiscalização\tda\tAta\tde\tRegistro\tde\tPreços\t-\tEFARP,\tque\nserá\t responsável\t pela\t gestão\t e\t fiscalização\t da\t ARP\t e\t respectivas\t Notas\t de\t Empenho,\t na\t qualidade\t de\t titulares\t ou\nsubstitutos.\n10\n.\n2\n.\nO\t acompanhamento\t e\t a\t fiscalização\t da\t execução\t das\t ARPs\t consistem\t na\t verificação\t da\t conformidade\t da\nexecução\tdo\tobjeto,\tcom\to\tobjetivo\tde\tassegurar\to\tfiel\te\tperfeito\tcumprimento\tdo\tajuste,\tsendo\texecutados\tda\tseguinte\nforma:\nI\n\t-\nAbertura\t de\t processo\t administrativo\t específico:\t Será\t realizada\t a\t abertura\t de\t processo\nadministrativo\t próprio,\t vinculado\t ao\t processo\t principal,\t destinado\t à\t consolidação\t da",
+        "fonte": "ata_00191.pdf",
+        "tipo_documento": "ata_reuniao",
+        "base": "base_conversacional",
+        "natureza": "conversacional",
+        "score_rrf": 0.031514,
+        "métodos": [
+          "bm25",
+          "dense"
+        ]
+      },
+      {
+        "posição": 3,
+        "chunk_id": "ata_00191.pdf_chunk_1",
+        "trecho": "COMPLEXO\tHOSPITALAR\tDA\tUNIVERSIDADE\tFEDERAL\tDO\tRIO\tDE\tJANEIRO\nRua\tProf.\tRodolpho\tPaulo\tRocco,\t255,\tHU-CFF\t\n-\tBairro\tCidade\tUniversitária\nRio\tde\tJaneiro-RJ,\tCEP\t21941-913\n-\thttp://ch-ufrj.ebserh.gov.br\n\t\t\nAta\tde\tRegistro\tde\tPreços\t-\tSEI\tnº\t191/2026\nProcesso\tnº\t23877.005839/2026-78\n\t\t\nATA\tDE\tREGISTRO\tDE\tPREÇOS\tNº\t\n191/20206\nA\t Empresa\t Brasileira\t de\t Serviços\t Hospitalares\t –\t Ebserh,\t FILIAL\t -\t COMPLEXO\t HOSPITALAR\t DA\t UNIVERSIDADE\nFEDERAL\t DO\t RIO\t DE\t JANEIRO\t –\t CH-UFRJ,\t sediado(a)\t na\t Rua\t Professor\t Rodolpho\t Paulo\t Rocco,\t 25,\t Cidade\nUniversitária,\tRio\tde\tJaneiro\t-\tRJ,\tCEP\tnº\t21.941-913,\tCNPJ\t15.126.437/0045-64,\tUG-157243,\tneste\tato\trepresentada\npelo\t seu\t Superintendente\t Geral,\t Amâncio\t Paulino\t Carvalho,\t matrícula\t SIAPE:\t 311040,\t nomeado\t por\t meio\t da\nPortaria/EBSERH\t número\t 240\t de\t 04\t de\t junho\t de\t 2024,\t publicada\t no\t DOU,\t de\t 05\t de\t junho\t de\t 2024\t e\t por\t sua\nSuperintendente\tAdministrativa,\tRoberta\tRodrigues\tCoelho,\tmatrícula\tSIAPE:\t3035578,\tnomeada\tpela\tPortaria\t-\tSEI\tnº\n589,\tde\t21\tde\toutubro\tde\t2025\tpublicada\tno\tBoletim\tde\tServiço\tnº\t2159,\tde\t23\tde\toutubro\tde\t2025\n,\tambos\tno\tuso\tdas\natribuições\tconferidas\tpelo\tart.\t277\tdo\tRegulamento\tde\tCompras\te\tContratos\tda\tEbserh,\tversão\t3.0,\taprovado\tpor\tmeio\nda\t Resolução\t n.º\t 297/2025\t do\t Conselho\t de\t Administração\n,\n\t\nconsiderando\t o\t julgamento\t do\t Pregão\t Eletrônico\t nº\n90019\n/2026\n,\tpublicado\tno\tDiário\tOficial\tda\tUnião\t-\tDOU\tde\t02/03/2026\n,\tprocesso\tadministrativo\tnº\t\n23877.002295/2026-\n92\n,\t resolve\t registrar\t os\t preços\t da\t empresa\t\nIMAGEM\t HEALTHCARE\t SOLUTIONS\t LTDA\n,\t inscrita\t no\t CNPJ\t sob\t o\t nº\n59.269.654/0001-68,\n\tsituada\tna\t\nAv.\tJuruá\tNº\t105,\tAlphaville\t–\tBarueri/SP\n,\tCEP:\t06455-900\n,\tTelefone:\t(11\n)\t\n[TELEFONE_OCULTO]\n,\nendereço\t eletrônico:\n\t\n[EMAIL_OCULTO]\n,\t neste\t ato\t representada\t por\t\nANDREA\t REIMBERG\t FIGUEIREDO\n,\ninscrita\n\tno\tCPF\t\n[CPF_OCULTO]\n,\tde\tacordo\tcom\ta\tclassificação\tpor\tela\talcançada\te\tnas\tquantidades\tcotadas,\tatendendo\nas\t condições\t previstas\t no",
+        "fonte": "ata_00191.pdf",
+        "tipo_documento": "ata_reuniao",
+        "base": "base_conversacional",
+        "natureza": "conversacional",
+        "score_rrf": 0.031054,
+        "métodos": [
+          "bm25",
+          "dense"
+        ]
+      },
+      {
+        "posição": 4,
+        "chunk_id": "ata_00191.pdf_chunk_11",
+        "trecho": "17\n.\n20\n.\nApós\t o\t trânsito\t em\t julgado\t do\t processo,\t as\t sanções\t administrativas\t aplicadas\t pela\t Ebserh\t deverão\t ser\nregistradas\te\tpublicadas\tno\tSicaf,\tno\tCadastro\tNacional\tde\tEmpresas\tInidôneas\te\tSuspensas\t(Ceis)\te,\tno\tcaso\tde\tsanção\nde\tmulta,\tno\tCadin,\tnos\ttermos\tda\tLei\tn.º\t10.522/2002.\n17\n.\n20\n.\n1\n.\nQuando\ta\tsanção\taplicada\tdecorrer\tde\tProcesso\tAdministrativo\tde\tResponsabilização\t-\tPAR,\tos\tdados\nrelativos\tà\tpenalidade\tdeverão\tser\tincluídos\tno\tCadastro\tNacional\tde\tEmpresas\tPunidas\t-\tCNEP,\tnos\ttermos\tda\tLei\nn.º\t 12.846/2013,\t ou\t em\t outras\t plataformas\t de\t cadastro\t de\t inadimplentes\t de\t pessoas\t jurídicas\t autorizadas\t pela\nEbserh.\n17\n.\n21\n.\nAs\t sanções\t aplicadas\t pelos\t Hospitais\t Universitários\t e\t pela\t Administração\t Central\t terão\t abrangência\t no\nâmbito\tde\ttoda\ta\tRede\tEbserh.\n18\n.\nCONDIÇÕES\tGERAIS\n18\n.\n1\n.\nA\tformalização\tde\tcada\tcontratação\te\tos\tdemais\tatos\tinerentes\tà\tpresente\tARP\tserão\tautorizados,\tcaso\ta\ncaso,\tpela\tautoridade\tresponsável\tdo\tórgão\tgerenciador,\te,\tno\tcaso\tdos\tórgãos\tparticipantes,\tpela\trespectiva\tautoridade\nresponsável.\n18\n.\n2\n.\nIntegram\teste\tinstrumento,\to\tEdital\tdo\tPregão\tEletrônico,\tseus\tanexos,\tbem\tcomo\ta\tproposta\tda\tempresa\nvencedora\tdos\titens\trelacionados\ta\tessa\tARP\te\tdemais\tanexos.\n18\n.\n3\n.\nAs\t condições\t gerais\t de\t execução\t do\t objeto,\t tais\t como\t os\t prazos\t para\t entrega\t e\t recebimento,\t e\t demais\ncondições\tdo\tajuste,\tencontram-se\tdefinidos\tno\tTermo\tde\tReferência.\n18\n.\n4\n.\nA\tEquipe\tde\tFiscalização\tda\tAta\tde\tRegistro\tde\tPreços\tconduzirá\to\tgerenciamento\tde\triscos\tdurante\ttoda\nexecução\tda\tARP.\n18\n.\n5\n.\nNo\tcaso\tde\tadjudicação\tpor\tpreço\tglobal\tde\tgrupo\tde\titens,\tsó\tserá\tadmitida\ta\tcontratação\tde\tparte\tde\titens\ndo\tgrupo\tse\thouver\tprévia\tpesquisa\tde\tmercado\te\tdemonstração\tde\tsua\tvantagem\tpara\to\tórgão\tou\ta\tentidade.\n18\n.\n6\n.\nOs\t casos\t omissos\t serão\t decididos\t pela\t CONTRATANTE,\t segundo\t as\t disposições\t contidas\t na\t Lei\t n.º\n13.303/2016,\t no\t Decreto\t n.º\t 8.945/2016,\t no\t RCC\t 3.0\t e\t nas\t demais\t normas\t federais",
+        "fonte": "ata_00191.pdf",
+        "tipo_documento": "ata_reuniao",
+        "base": "base_conversacional",
+        "natureza": "conversacional",
+        "score_rrf": 0.031025,
+        "métodos": [
+          "bm25",
+          "dense"
+        ]
+      },
+      {
+        "posição": 5,
+        "chunk_id": "ata_00191.pdf_chunk_2",
+        "trecho": "Referência:\tEHR-M3\nScreen\nFabricante:\tCarestream\nHealth\nCódigo\tP/N:\t9G7403\tREV\nB\n2\n478502\nPeça\t/\tComponente\nMamógrafo\nPlaca\tCompressora\tDe\nMama,\tAplicação:\tPara\nFilme\t24\tX\t30\tCm,\nCompatibilidade:\tSistemas\nCarestream\te\tKodak\tCR\nMammography.\nModelo\tdo\tCR:\tCarestream\nCR\tElite\nTipo\tde\tChassis:\nCarestream\tDirectView\tCR\nMammography\tCassette\ncom\ttela\tEHR-M3\nReferência:\tEHR-M3\nScreen\nFabricante:\tCarestream\nHealth\nCódigo\tP/N:\t9G7403\tREV\nB\nUnidade\n8\nR$\n11.406,10\nR$\n91.248,80\nValor\ttotal:\nR$\n172.096,80\n5\n.\nVIGÊNCIA\n5\n.\n1\n.\nA\tARP\tterá\tprazo\tde\tvigência\tde\t12\t(doze)\tmeses,\tcontado\ta\t\npartir\n\tdo\tprimeiro\tdia\tútil\tsubsequente\tà\tdata\nde\t divulgação\t no\t PNCP,\t podendo\t ser\t prorrogado\t por\t igual\t período,\t mediante\t a\t anuência\t do\t fornecedor,\t desde\t que\ncomprovado\to\tpreço\tvantajoso.\n5\n.\n2\n.\nPara\t prorrogação\t da\t ARP,\t deverá\t ocorrer\t acordo\t específico\t entre\t as\t partes,\t observando-se\t os\t seguintes\nparâmetros:\nI\n\t-\ncom\trenovação\ttotal\tdo\tquantitativo\te/ou\titens;\nII\n\t-\ncom\trenovação\tparcial\tdo\tquantitativo\te/ou\titens;\nIII\n\t-\nsem\trenovação\tde\tquantitativos\te/ou\titens,\tmas\tapenas\tpara\texecução\tdo\tsaldo\tremanescente.\n5\n.\n3\n.\nNão\tserá\tpermitida\ta\trenovação\tde\tquantitativos\tantes\tda\tconclusão\tda\tvigência\tda\tARP.\n5\n.\n4\n.\nA\tvigência\tda\tARP\tserá\tencerrada\tautomaticamente\tencerrada\tpelo\tdecurso\tde\tseu\tprazo\tou\tquando\tnão\nrestarem\tmais\tfornecedores\tregistrados\taptos\ta\tserem\tcontratados.\n6\n.\nFORMALIZAÇÃO\tDO\tINSTRUMENTO\tCONTRATUAL\n6\n.\n1\n.\nA\t existência\t de\t preços\t registrados\t implicará\t compromisso\t de\t fornecimento\t nas\t condições\t estabelecidas,\nmas\tnão\tobrigará\ta\tEbserh\ta\tcontratar,\tfacultada\ta\trealização\tde\tlicitação\tespecífica\tpara\ta\taquisição\tpretendida,\tdesde\nque\tdevidamente\tjustificada.\n6\n.\n2\n.\nEm\tsendo\trealizada\ta\tcontratação,\tserá\tfirmado\tTermo\tde\tContrato\tou\tinstrumento\tequivalente.\n6\n.\n3\n.\nO\tfornecedor\tregistrado\tterá\to\tprazo\tde\t05\t(cinco)\tdias\túteis,\t\npara\tassinar\to\tTermo\tde\tContrato\tou\taceitar\ninstrumento\t equivalente,\t conforme\t o\t caso,\t sob\t pena\t de\t decair\t do",
+        "fonte": "ata_00191.pdf",
+        "tipo_documento": "ata_reuniao",
+        "base": "base_conversacional",
+        "natureza": "conversacional",
+        "score_rrf": 0.030679,
+        "métodos": [
+          "bm25",
+          "dense"
+        ]
+      }
+    ],
+    "fontes": [
+      "ata_00191.pdf",
+      "contratacoes_publicacao.json"
+    ],
+    "fontes_recuperadas": [
+      "ata_00191.pdf",
+      "contratacoes_publicacao.json"
+    ],
+    "fontes_citadas": [],
+    "is_refusal": false,
+    "refusal_reason": null,
+    "generation_available": true,
+    "latency_ms": 59930.0,
+    "confidence_level": "baixa",
+    "tokens": {
+      "prompt": 2050,
+      "completion": 295,
+      "total": 2345
+    },
+    "modelo": "qcwind/qwen3-8b-instruct-Q4-K-M",
+    "retrieval_summary": {
+      "dense_candidates": 13,
+      "bm25_candidates": 13,
+      "rrf_candidates": 13,
+      "returned": 5
+    },
+    "fetch_k": 50,
+    "top_k": 5
+  },
+  "P08": {
+    "answer": "Trechos das evidências recuperadas:\n\n> 11. CONDIÇÕES GERAIS 11.1. As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, as obrigações da Administração e do fornecedor registrado, penalidades e demais condições do ajuste, encontram-se deﬁnidos no Termo de Referência, anexo ao edital. Para ﬁrmeza e validade do pactuado, a presente Ata foi lavrada em 2 (duas) vias de igual teor, que, depois de lida e achada em ordem, vai assinada pelas partes e encaminhada cópia aos demais órgãos participantes (se houver). INSTRUMENTO SUBSTITUTIVO AO CONTRATO (ART. 95, INCISO II, DA LEI 14.133, DE 2021) A União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça Cruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50, neste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, portador da Matrícula SIAPE nº 6241986, instituído pela Portaria nº 1.619, publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023, e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA, resolvem celebrar o presente INSTRUMENTO SUBSTITUTIVO AO CONTRATO, que será regido pela Lei nº 14.133/2021, legislação correlata e pelo Edital e anexos do Pregão Eletrônico 91.051/2026 – INCA, cuja Ata de Registro de Preços Nº 137/2026 é objeto deste TERMO, vinculado ao Processo de SRP - nº 25410.002318/2025-91, sob os termos e condições a seguir estabelecidos: 1. FORMALIZAÇÃO DA CONTRATAÇÃO 1.1. O adjudicatário terá o prazo de 05 (cinco) dias, contados a partir da data de sua convocação, para aceitar o instrumento equivalente ao contrato - Nota de Empenho, sob pena de decair do direito à contratação, sem prejuízo das sanções previstas. 1.2. O prazo poderá ser prorrogado, por igual período, por solicitação justiﬁcada do adjudicatário e\n\n[Fonte: ata_00137.pdf_chunk_6]\n\n> REPRESENTANTE DO FORNECEDOR REGISTRADO _____________________ Assinatura Nome Legível Documento assinado eletronicamente por Andréia Estelita Perné, Usuário Externo, em 10/04/2026, às 16:23, conforme horário oﬁcial de Brasília, com fundamento no § 3º, do art. 4º, do Decreto nº 10.543, de 13 de novembro de 2020; e art. 8º, da Portaria nº 900 de 31 de Março de 2017. Documento assinado eletronicamente por Roberto de Almeida Gil, Diretor(a) do Instituto Nacional de Câncer, em 13/04/2026, às 16:50, conforme horário oﬁcial de Brasília, com fundamento no § 3º, do art. 4º, do Decreto nº 10.543, de 13 de novembro de 2020; e art. 8º, da Portaria nº 900 de 31 de Março de 2017. A autenticidade deste documento pode ser conferida no site http://sei.saude.gov.br/sei/controlador_externo.php? acao=documento_conferir&id_orgao_acesso_externo=0, informando o código veriﬁcador [TELEFONE_OCULTO] e o código CRC D646AB1B. Referência: Processo nº 25410.002318/2025-91 SEI nº [TELEFONE_OCULTO] Divisão de Suprimentos - DISUP/INCA Rua Marquês de Pombal, nº 125 - Bairro Centro, Rio de Janeiro/RJ, CEP 20230-240 Site\n\n[Fonte: ata_00137.pdf_chunk_10]\n\n> 5.4.3. Será respeitada, nas contratações, a ordem de classiﬁcação dos licitantes ou dos fornecedores registrados na ata. 5.5. O registro a que se refere o item 5.4.2 tem por objetivo a formação de cadastro de reserva para o caso de impossibilidade de atendimento pelo signatário da ata. 5.6. Para ﬁns da ordem de classiﬁcação, os licitantes ou fornecedores que aceitarem reduzir suas propostas para o preço do adjudicatário antecederão aqueles que mantiverem sua proposta original. 5.7. A habilitação dos licitantes que comporão o cadastro de reserva a que se refere o item 5.4.2.2 somente será efetuada quando houver necessidade de contratação dos licitantes remanescentes, nas seguintes hipóteses: 5.7.1. Quando o licitante vencedor não assinar a ata de registro de preços, no prazo e nas condições estabelecidos no edital; e 5.7.2. Quando houver o cancelamento do registro do licitante ou do registro de preços nas hipóteses previstas no item 9. 5.8. O preço registrado com indicação dos licitantes e fornecedores será divulgado no PNCP e ﬁcará disponibilizado durante a vigência da ata de registro de preços. 5.9. Após a homologação da licitação ou da contratação direta, o licitante mais bem classiﬁcado ou o fornecedor, no caso da contratação direta, será convocado para assinar a ata de registro de preços, no prazo e nas condições estabelecidos no edital de licitação ou no aviso de contratação direta, sob pena de decair o direito, sem prejuízo das sanções previstas na Lei nº 14.133, de 2021. 5.9.1. O prazo de convocação poderá ser prorrogado 1 (uma) vez, por igual período, mediante solicitação do licitante ou fornecedor convocado, desde que apresentada dentro do prazo, devidamente justiﬁcada, e que a justiﬁcativa seja aceita pela Administração. 5.10. A ata de registro de preços será assinada por meio de assinatura digital e disponibilizada no Sistema de Registro de Preços. 5.11. Quando o convocado não assinar a ata de registro de preços no prazo e nas condições estabelecidos no\n\n[Fonte: ata_00137.pdf_chunk_3]",
+    "query": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
+    "query_id": "q_64c32a79",
+    "run_id": "6f719322",
+    "executado": true,
+    "estrategia": "recuperacao_hibrida",
+    "plano": {
+      "bases": [
+        "conversacional"
+      ],
+      "estrategia": "recuperacao_hibrida",
+      "operacao": "buscar",
+      "filtros": {},
+      "campos": null,
+      "pagina": 1,
+      "tamanho_pagina": 20,
+      "query_id": "q_64c32a79",
+      "is_refusal": false,
+      "refusal_reason": null,
+      "necessita_esclarecimento": false,
+      "pergunta_esclarecimento": null
+    },
+    "routes": [
+      "conversacional"
+    ],
+    "filters": {
+      "uf": null,
+      "ano": 2026,
+      "valor_minimo": null,
+      "valor_maximo": null,
+      "modalidade": null,
+      "municipio": null,
+      "fornecedor": null
+    },
+    "evidences": [
+      {
+        "posição": 1,
+        "chunk_id": "ata_00137.pdf_chunk_2",
+        "trecho": "Código Especiﬁcação Marca Modelo Unidade Quant.\nINCA\nValor\nUnitário\nValor\nTotal\n1 A50372 RODÍZIO COM FREIO,\nDEMAIS ESPECIFICAÇÕES\nNO TR\nMARCA\nFABRICANTE DO\nRODIZIO TENTE\n- UN 1028 R$ 311,00 R$\n319.708,00\n Valor total\nda ATA\nR$\n319.708,00\n2. 2. A listagem do cadastro de reserva referente ao presente registro de preços consta como anexo a esta Ata (se\nhouver).\n \n3. ÓRGÃO(S) GERENCIADOR E PARTICIPANTE(S)\n3.1. O órgão gerenciador será o Instituto Nacional de câncer;\n3.2. Além do gerenciador, não há órgãos e entidades públicas participantes do registro de preços.\n \n4. DA ADESÃO À ATA DE REGISTRO DE PREÇOS\n4.1. Não será admitida a adesão à ata de registro de preços decorrente desta licitação ou desta contratação direta,\nconforme justiﬁcativa apresentada nos estudos técnicos preliminares.\nVedação a acréscimo de quantitativos\n4.2. É vedado efetuar acréscimos nos quantitativos ﬁxados na ata de registro de preços.\n \n5. VALIDADE, FORMALIZAÇÃO DA ATA DE REGISTRO DE PREÇOS E CADASTRO RESERVA\n5.1. A validade da Ata de Registro de Preços será de 1 (um) ano, contado a partir do primeiro dia útil subsequente à\ndata de divulgação no PNCP, podendo ser prorrogada por igual período, mediante a anuência do fornecedor, desde\nque comprovado o preço vantajoso.\n5.1.1. Em caso de prorrogação da ata, poderá ser renovado o quantitativo originalmente registrado.\n5.1.2. O contrato decorrente da ata de registro de preços terá sua vigência estabelecida no próprio instrumento\ncontratual e observará no momento da contratação e a cada exercício ﬁnanceiro a disponibilidade de créditos\norçamentários, bem como a previsão no plano plurianual, quando ultrapassar 1 (um) exercício ﬁnanceiro.\n5.1.2. Na formalização do contrato ou do instrumento substituto deverá haver a indicação da disponibilidade dos\ncréditos orçamentários respectivos.\n5.2. A contratação com os fornecedores registrados na ata será formalizada pelo órgão ou pela entidade interessada\npor intermédio de instrumento contratual, emissão de nota",
+        "fonte": "ata_00137.pdf",
+        "tipo_documento": "ata_reuniao",
+        "base": "base_conversacional",
+        "natureza": "conversacional",
+        "score_rrf": 0.032266,
+        "métodos": [
+          "bm25",
+          "dense"
+        ]
+      },
+      {
+        "posição": 2,
+        "chunk_id": "ata_00137.pdf_chunk_1",
+        "trecho": "Ministério da Saúde\nSecretaria de Atenção Especializada à Saúde\nInstituto Nacional de Câncer\nCoordenação de Administração Geral\nDivisão de Suprimentos\n  \nATA DE REGISTRO DE PREÇOS Nº 137/2026\nProcesso nº 25410.002318/2025-91\n  \nREGISTRO DE PREÇOS nº 045/2025\nPREGÃO ELETRÔNICO Nº 91.051/2026 – INCA\n \n \nA União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça\nCruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50,\nneste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, nomeado(a) pela Portaria nº 1.619,\npublicada no Diário Oﬁcial da União de 13 de fevereiro de 2023,portador da Matrícula Funcional nº nº 6241986,\nconsiderando o julgamento da licitação na modalidade de pregão, na forma eletrônica, para REGISTRO DE PREÇOS n°\n045/2025, publicada no Portal Nacional de Contratações Públicas - PNCP de 01/04/2026, processo administrativo\nn.º 25410.002318/2025-91, RESOLVE registrar os preços da(s) empresa(s) indicada(s) e qualiﬁcada(s) nesta ATA, de\nacordo com a classiﬁcação por ela(s) alcançada(s) e na(s) quantidade(s) cotada(s), atendendo às condições previstas\nno Edital de licitação, sujeitando-se as partes às normas constantes na Lei nº 14.133, de 1º de abril de 2021, no\nDecreto n.º 11.462, de 31 de março de 2023, e em conformidade com as disposições a seguir:\n \n \n1. DO OBJETO\n1.1. A presente Ata tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS\nELÉTRICAS, especiﬁcado(s) no(s) item(ns) 1 do Termo de Referência, anexo I do edital de licitação nº 91.051/2026\nque é parte integrante desta Ata, assim como as propostas cujos preços tenham sido registrados,\nindependentemente de transcrição.\n \n2. DOS PREÇOS, ESPECIFICAÇÕES E QUANTITATIVO\n2.1. O preço registrado , as especiﬁcações do objeto, as quantidades mínimas e máximas de cada item,\nfornecedor(es) e as demais condições ofertadas na(s) proposta(s) são as que seguem:",
+        "fonte": "ata_00137.pdf",
+        "tipo_documento": "ata_reuniao",
+        "base": "base_conversacional",
+        "natureza": "conversacional",
+        "score_rrf": 0.032266,
+        "métodos": [
+          "bm25",
+          "dense"
+        ]
+      },
+      {
+        "posição": 3,
+        "chunk_id": "ata_00137.pdf_chunk_6",
+        "trecho": "11. CONDIÇÕES GERAIS\n11.1. As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, as obrigações da\nAdministração e do fornecedor registrado, penalidades e demais condições do ajuste, encontram-se deﬁnidos no\nTermo de Referência, anexo ao edital.\n \nPara ﬁrmeza e validade do pactuado, a presente Ata foi lavrada em 2 (duas) vias de igual teor, que, depois de lida e\nachada em ordem, vai assinada pelas partes e encaminhada cópia aos demais órgãos participantes (se houver).\n \n \n \nINSTRUMENTO SUBSTITUTIVO AO CONTRATO\n(ART. 95, INCISO II, DA LEI 14.133, DE 2021)\nA União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça\nCruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50,\nneste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, portador da Matrícula SIAPE nº\n6241986, instituído pela Portaria nº 1.619, publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023, e de\noutro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96,\nestabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada\nCONTRATADA, resolvem celebrar o presente INSTRUMENTO SUBSTITUTIVO AO CONTRATO, que será regido pela Lei\nnº 14.133/2021, legislação correlata e pelo Edital e anexos do Pregão Eletrônico 91.051/2026 – INCA, cuja Ata de\nRegistro de Preços Nº 137/2026 é objeto deste TERMO, vinculado ao Processo de SRP - nº 25410.002318/2025-91,\nsob os termos e condições a seguir estabelecidos:\n1. FORMALIZAÇÃO DA CONTRATAÇÃO\n1.1. O adjudicatário terá o prazo de 05 (cinco) dias, contados a partir da data de sua convocação, para\naceitar o instrumento equivalente ao contrato - Nota de Empenho, sob pena de decair do direito à contratação, sem\nprejuízo das sanções previstas.\n1.2. O prazo poderá ser prorrogado, por igual período, por solicitação justiﬁcada do adjudicatário e",
+        "fonte": "ata_00137.pdf",
+        "tipo_documento": "ata_reuniao",
+        "base": "base_conversacional",
+        "natureza": "conversacional",
+        "score_rrf": 0.031754,
+        "métodos": [
+          "bm25",
+          "dense"
+        ]
+      },
+      {
+        "posição": 4,
+        "chunk_id": "ata_00137.pdf_chunk_10",
+        "trecho": "REPRESENTANTE DO FORNECEDOR REGISTRADO\n \n \n_____________________\nAssinatura\nNome Legível\nDocumento assinado eletronicamente por Andréia Estelita Perné, Usuário Externo, em 10/04/2026, às 16:23,\nconforme horário oﬁcial de Brasília, com fundamento no § 3º, do art. 4º, do Decreto nº 10.543, de 13 de\nnovembro de 2020; e art. 8º, da Portaria nº 900 de 31 de Março de 2017.\nDocumento assinado eletronicamente por Roberto de Almeida Gil, Diretor(a) do Instituto Nacional de Câncer,\nem 13/04/2026, às 16:50, conforme horário oﬁcial de Brasília, com fundamento no § 3º, do art. 4º, do Decreto nº\n10.543, de 13 de novembro de 2020; e art. 8º, da Portaria nº 900 de 31 de Março de 2017.\nA autenticidade deste documento pode ser conferida no site http://sei.saude.gov.br/sei/controlador_externo.php?\nacao=documento_conferir&id_orgao_acesso_externo=0, informando o código veriﬁcador [TELEFONE_OCULTO] e o código\nCRC D646AB1B.\n \nReferência: Processo nº 25410.002318/2025-91 SEI nº [TELEFONE_OCULTO]\n \nDivisão de Suprimentos - DISUP/INCA\nRua Marquês de Pombal, nº 125  - Bairro Centro, Rio de Janeiro/RJ, CEP 20230-240\nSite",
+        "fonte": "ata_00137.pdf",
+        "tipo_documento": "ata_reuniao",
+        "base": "base_conversacional",
+        "natureza": "conversacional",
+        "score_rrf": 0.031054,
+        "métodos": [
+          "bm25",
+          "dense"
+        ]
+      },
+      {
+        "posição": 5,
+        "chunk_id": "ata_00137.pdf_chunk_3",
+        "trecho": "5.4.3. Será respeitada, nas contratações, a ordem de classiﬁcação dos licitantes ou dos fornecedores registrados na\nata.\n5.5. O registro a que se refere o item 5.4.2 tem por objetivo a formação de cadastro de reserva para o caso de\nimpossibilidade de atendimento pelo signatário da ata.\n5.6. Para ﬁns da ordem de classiﬁcação, os licitantes ou fornecedores que aceitarem reduzir suas propostas para o\npreço do adjudicatário antecederão aqueles que mantiverem sua proposta original.\n5.7. A habilitação dos licitantes que comporão o cadastro de reserva a que se refere o item 5.4.2.2 somente será\nefetuada quando houver necessidade de contratação dos licitantes remanescentes, nas seguintes hipóteses:\n5.7.1. Quando o licitante vencedor não assinar a ata de registro de preços, no prazo e nas condições estabelecidos no\nedital; e\n5.7.2. Quando houver o cancelamento do registro do licitante ou do registro de preços nas hipóteses previstas no\nitem 9.\n5.8. O preço registrado com indicação dos licitantes e fornecedores será divulgado no PNCP e ﬁcará disponibilizado\ndurante a vigência da ata de registro de preços.\n5.9. Após a homologação da licitação ou da contratação direta, o licitante mais bem classiﬁcado ou o fornecedor, no\ncaso da contratação direta, será convocado para assinar a ata de registro de preços, no prazo e nas condições\nestabelecidos no edital de licitação ou no aviso de contratação direta, sob pena de decair o direito, sem prejuízo das\nsanções previstas na Lei nº 14.133, de 2021.\n5.9.1. O prazo de convocação poderá ser prorrogado 1 (uma) vez, por igual período, mediante solicitação do licitante\nou fornecedor convocado, desde que apresentada dentro do prazo, devidamente justiﬁcada, e que a justiﬁcativa seja\naceita pela Administração.\n5.10. A ata de registro de preços será assinada por meio de assinatura digital e disponibilizada no Sistema de Registro\nde Preços.\n5.11. Quando o convocado não assinar a ata de registro de preços no prazo e nas condições estabelecidos no",
+        "fonte": "ata_00137.pdf",
+        "tipo_documento": "ata_reuniao",
+        "base": "base_conversacional",
+        "natureza": "conversacional",
+        "score_rrf": 0.030769,
+        "métodos": [
+          "bm25",
+          "dense"
+        ]
+      }
+    ],
+    "fontes": [
+      "ata_00137.pdf"
+    ],
+    "fontes_recuperadas": [
+      "ata_00137.pdf"
+    ],
+    "fontes_citadas": [
+      "ata_00137.pdf"
+    ],
+    "is_refusal": false,
+    "refusal_reason": null,
+    "generation_available": true,
+    "latency_ms": 142374.14,
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 2050,
+      "completion": 343,
+      "total": 2393
+    },
+    "modelo": "qcwind/qwen3-8b-instruct-Q4-K-M",
+    "retrieval_summary": {
+      "dense_candidates": 10,
+      "bm25_candidates": 9,
+      "rrf_candidates": 10,
+      "returned": 5
+    },
+    "fetch_k": 50,
+    "top_k": 5
+  }
+}

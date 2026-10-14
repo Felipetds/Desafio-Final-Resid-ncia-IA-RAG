@@ -1,0 +1,27 @@
+{
+  "versao_corpus": "v3",
+  "data_preparacao": "2026-10-13",
+  "commit_codigo_utilizado": "8dfc481b8c5eb8b8a804591737bb9d4ab67c0204",
+  "registros_estruturados": 1358,
+  "chunks": 2125,
+  "dimensao_vetores": 1024,
+  "itens_pe": 19,
+  "cache_historico_por_id": 2125,
+  "cache_hash_modelo_comprovado": 44,
+  "vetores_sem_modelo_comprovado": 2081,
+  "embeddings_novos_nesta_preparacao": 0,
+  "validacoes": [
+    "Oito arquivos brutos conferidos pelo inventário.",
+    "Base e chunks estruturados correspondem à coleta v3.",
+    "IDs, textos e vetores alinhados.",
+    "FAISS reaberto e vetores conferidos.",
+    "BM25 reaberto e conteúdo lexical conferido."
+  ],
+  "limitacoes": [
+    "Modelo de 2.081 vetores históricos não comprovado.",
+    "Cache por hash contém somente 44 vetores com modelo registrado.",
+    "Executar o indexador pode solicitar os 2.081 embeddings restantes.",
+    "Avaliação integrada do RAG com este pacote ainda pendente.",
+    "Serializações equivalentes foram alinhadas ao pacote anterior durante a auditoria; essa operação não é automática na ingestão."
+  ]
+}
