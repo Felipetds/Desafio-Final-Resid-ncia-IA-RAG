@@ -471,3 +471,62 @@ Utilizei ferramentas de IA como apoio na organização da validação, conferên
 Próximas atividades
 - Conferir manualmente a relevância dos trechos retornados nas consultas de vidraçaria e normativa.
 - Apoiar a equipe na integração e validação final do pipeline completo.
+
+---
+
+## Encontro 12 — 14/10/2026
+
+### Minha participação
+
+- Retomei a validação das consultas das personas com apoio de Maria Eduarda na execução, conferência dos resultados e integração das alterações.
+- Confirmei a integração das correções anteriores de planejamento, recuperação e geração à versão principal do repositório.
+- Investiguei a ausência da descrição do objeto da ata da EBSERH nos chunks recuperados.
+- Identifiquei e corrigi uma parada prematura em `fatiar_texto`, que preservava somente o primeiro bloco de cada página.
+- Adicionei testes de cobertura do texto, avanço do fatiamento, parâmetros inválidos e preservação de caudas curtas.
+- Regenerei as fontes conversacionais em uma pasta separada, mantendo os demais chunks do pacote revisado e preservando os artefatos ativos.
+- Conferi a recuperação lexical de P03, P05 e P08 sobre os chunks corrigidos.
+- Comparei alternativas de recuperação normativa por janelas, unidades textuais e expansão manual da pergunta, sem incorporar as configurações que não apresentaram resultado suficiente.
+- Implementei uma política de cobertura de definição para perguntas normativas gerais, sem fixar IDs de artigos ou alterar os scores.
+- Restringi essa política à recuperação exclusivamente normativa, preservando pedidos específicos e registrando os IDs antes e depois da seleção.
+- Corrigi a interpretação de anos em referências legais, evitando confundir o ano da Lei 14.133/2021 com o ano da compra.
+- Validei a separação dos filtros estruturados e normativos na consulta combinada.
+- Adicionei observabilidade ao encerramento de consultas por recusa ou necessidade de esclarecimento.
+- Revalidei M01 no corpus corrigido e conferi a apresentação de P02, P07, M01, P06 e P09 pelos adaptadores da interface.
+- Preparei uma pasta isolada e um procedimento retomável para gerar embeddings, com validação das respostas e salvamento após cada lote.
+- Registrei os resultados e as limitações em relatórios no repositório e no Drive.
+
+### Resultados obtidos
+
+- A correção do fatiamento recuperou a seção do objeto da ata nº 191/2026 da EBSERH, anteriormente ausente dos chunks.
+- O conjunto experimental passou de 2.125 para 2.172 chunks: 1.358 estruturados, 217 normativos, 519 agregados e 78 conversacionais.
+- A comparação por ID identificou 2.098 textos preservados, 27 conteúdos alterados no mesmo ID e 47 IDs novos.
+- Na avaliação lexical de P03, foram selecionados o objeto descrito na ata e o registro PNCP associado por processo exato.
+- P05 retornou somente a comunicação do processo fictício SIM-RJ-001, contendo prazos por item e entregas parciais.
+- P08 recuperou o objeto, a contratada AGIMED e o fabricante TENTE. A distinção na resposta do modelo real permanece pendente.
+- A seleção lexical de P04 passou a incluir os artigos 6º, 28 e 29, preservando candidatos e scores.
+- O contexto de P04 apresentou 24.418 caracteres e 3.379 palavras. Essas medidas não equivalem à contagem de tokens nem comprovam aceitação pelo servidor.
+- A consulta combinada retornou 1.234 contratações com ano da compra 2026, sem aplicar esse filtro à recuperação normativa. A recuperação documental dessa conferência foi simulada.
+- M01 verificou os 2.172 chunks e manteve os resultados com `top_k` 1, 3 e 5: 19 itens, 8 homologados, 9 fracassados, 2 desertos e R$ 141.002,08.
+- M01 encontrou 19 correspondências agregadas e nenhum vínculo complementar pelos identificadores pesquisados. Isso não comprova inexistência de documentos relacionados por conteúdo ou outros números de processo.
+- Os adaptadores apresentaram corretamente P02, P07 e M01 com cálculos sobre os arquivos reais e preservaram as recusas de P06 e P09.
+- P07 manteve 36.994 itens e valor estimado de `55968524178.3319`, preservando as quatro casas decimais na apresentação.
+- Os logs dos adaptadores preservaram `query_id`, `run_id` e as etapas de consulta agregada ou validação.
+- A última suíte executada aprovou 439 testes, com exclusão de `testes/teste_integracao.py`.
+- O cache compatível possui 44 embeddings comprovados; 2.128 entradas permanecem pendentes de geração ou comprovação de procedência.
+- A tentativa de geração de um lote foi interrompida por `APITimeoutError`, sem perda das 44 entradas disponíveis.
+- Os índices ativos não foram substituídos. O corpus experimental ainda depende de reconstrução e auditoria dos índices.
+
+### Apoio de IA
+
+Utilizei ferramentas de IA como apoio no diagnóstico do fatiamento, análise das consultas, implementação das correções, elaboração dos testes e organização dos relatórios. As sugestões foram conferidas por testes e execuções locais, distinguindo resultados com dados reais, dependências simuladas e verificações bloqueadas pelo endpoint.
+
+### Próximas atividades
+
+- Concluir a geração dos embeddings pendentes quando o endpoint estiver disponível.
+- Reconstruir e auditar FAISS, BM25, IDs e cache para o corpus corrigido.
+- Revalidar P01–P09 e M01 no fluxo completo, incluindo reformulações e escolha de rotas pelo modelo.
+- Conferir a geração de P03, P04, P05 e P08 quanto a citações, nomes, valores, condições e exceções.
+- Avaliar o orçamento de contexto e a extensão das respostas extrativas.
+- Confirmar o contrato e implementar o rerank real, realizando a comparação entre configurações.
+- Concluir com Janice a revisão humana das propostas de classificação TIC.
+- Confirmar a integração dos commits mais recentes e registrar a avaliação na versão final utilizada pela equipe.
