@@ -1,0 +1,74 @@
+{
+  "tipo": "validacao_offline_dos_adaptadores",
+  "roteamento": "analises fornecidas manualmente",
+  "dados": "arquivos reais v3; M01 com 2172 chunks",
+  "modelos_chamados": false,
+  "casos": [
+    {
+      "caso": "P02",
+      "query_id": "q_interface_offline_p02",
+      "run_id": "c3016c16",
+      "etapas": [
+        "consulta_agregada"
+      ]
+    },
+    {
+      "caso": "P07",
+      "query_id": "q_interface_offline_p07",
+      "run_id": "2da2d409",
+      "etapas": [
+        "consulta_agregada"
+      ]
+    },
+    {
+      "caso": "M01",
+      "query_id": "q_interface_offline_m01",
+      "run_id": "9d794a4e",
+      "etapas": [
+        "consulta_agregada"
+      ]
+    },
+    {
+      "caso": "P06",
+      "query_id": "q_interface_offline_p06",
+      "run_id": "c1f593e4",
+      "etapas": [
+        "validacao"
+      ]
+    },
+    {
+      "caso": "P09",
+      "query_id": "q_interface_offline_p09",
+      "run_id": "5da9b515",
+      "etapas": [
+        "validacao"
+      ]
+    }
+  ],
+  "resultados": {
+    "P02": {
+      "itens": 19,
+      "homologados": 8,
+      "fracassados": 9,
+      "desertos": 2,
+      "valor_homologado": "141002.08"
+    },
+    "P07": {
+      "itens": 36994,
+      "valor_estimado": "55968524178.3319"
+    },
+    "M01": {
+      "chunks_verificados": 2172,
+      "correspondencias_agregadas": 19,
+      "vinculos_complementares_por_identificador": 0
+    },
+    "P06": "recusa por privacidade",
+    "P09": "recusa de previsao sem modelo validado"
+  },
+  "limitacoes": [
+    "Nao valida a escolha de rotas pelo LLM.",
+    "Nao valida a tela no navegador.",
+    "Nao valida recuperacao densa ou geracao real.",
+    "Ausencia de vinculos por identificador nao comprova inexistencia de documentos relacionados."
+  ]
+}

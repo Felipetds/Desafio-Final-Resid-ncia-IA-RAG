@@ -1253,7 +1253,14 @@ def planejar_consulta(
             "Qual limite de valor deve ser aplicado? "
             "Não consegui extrair esse critério com segurança."
         )
-    anos = re.findall(r"\b20\d{2}\b", texto)
+    # O ano de uma referência legal não é um período da compra.
+    texto_periodo_compra = re.sub(
+        r"\b(?:lei(?:\s+complementar)?|decreto|resolucao|portaria)"
+        r"\s*(?:n[º°o.]?\s*)?\d[\d.]*\s*/\s*\d{4}\b",
+        "",
+        texto,
+    )
+    anos = re.findall(r"\b20\d{2}\b", texto_periodo_compra)
     if len(set(anos)) > 1:
         return esclarecer(
             "Você deseja consultar qual ano da compra? "
