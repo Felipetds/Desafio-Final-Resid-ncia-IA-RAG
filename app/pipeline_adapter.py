@@ -149,7 +149,12 @@ def executar_pipeline(
         "Interpretando e executando a consulta...",
     )
 
-    consulta = executar_consulta(
+    executar_consulta_ativa = executar_consulta
+    if os.getenv("RAG_DEMO_OFFLINE", "false").lower() == "true":
+        from app.offline_demo import executar_demo
+        executar_consulta_ativa = executar_demo
+
+    consulta = executar_consulta_ativa(
         pergunta=pergunta,
         criterio_tecnologia=criterio_tic_interface(),
         top_k=top_k,
@@ -179,6 +184,8 @@ def executar_pipeline(
             "filters": plano.get("filtros", {}),
             "plano": plano,
             "executado": False,
+            "modo_demonstracao": consulta.get("modo_demonstracao"),
+            "commit_demonstracao": consulta.get("commit_demonstracao"),
             "estrategia": plano.get("estrategia"),
             "is_refusal": plano.get("is_refusal", False),
             "necessita_esclarecimento": plano.get(
