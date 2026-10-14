@@ -182,3 +182,10 @@ Apoiar a finalização técnica do ARQUITETURA.md detalhando as etapas de ingest
 * **Recorte Indexado e Alinhamento:** Validação do recorte controlado de 2.125 chunks (incluindo os 19 itens de referência do PE e a base agregada).
 * **Testes Automatizados (Pytest):** Criação e aprovação da suíte de testes unitários para a lógica de cache (`testes/test_index_cache.py`, 3/3 testes aprovados).
 * **Artefatos e Empacotamento:** Documentação de geração/carregamento (`docs/INSTRUCOES_ARTEFATOS.md`) e empacotamento final gerado no arquivo `artefatos_v3_final.zip` com o código de integridade **SHA-256: `5acfb7e0a6bca0965dd3caa12f6758e31d21ed91d4f5b7ba80ae6ec1e76f47c0`**.
+
+
+### Atualização Complementar (14/10/2026) - Validação Integrada do Fluxo v3 e Suíte Oficial
+- **Fluxo v3 e Fatiamento (`src/ingest.py` / `src/index.py`):** Validação da conectividade das 4 naturezas em `data/raw/v3/`, interrupção segura em caso de fontes incompletas, preservação integral de início/meio/cauda no fatiamento de texto e reuso determinístico do cache de embeddings.
+- **Bateria Específica de Ingestão e Artefatos (Pytest):** 100% de aprovação nos 18 testes dedicados à frente (`test_ingestao_v3_fluxo.py`, `test_index_cache.py`, `test_text_chunking_coverage.py` e `test_compatibilidade_artefatos.py` — `18 passed in 5.56s`).
+- **Suíte Unitária Global do Repositório:** Sincronização completa com a branch `main` e aprovação integral dos **444 testes automatizados (`444 passed in 6.26s`)**.
+- **Ponto de Atenção Registrado:** O teste ponta a ponta `testes/teste_integracao.py::test_integracao_marina_arroz` apresenta retenção por dependência de chamada externa/ambiente em execução no Colab, mantendo-se 100% da suíte unitária e contratual validada.
