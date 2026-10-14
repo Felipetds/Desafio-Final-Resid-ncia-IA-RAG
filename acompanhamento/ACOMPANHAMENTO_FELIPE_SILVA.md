@@ -291,3 +291,43 @@ Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar
 * Executar novamente os testes de integração após as correções.
 
 * Concluir a avaliação integrada e consolidar os resultados no relatório de testes e observabilidade.
+
+## Encontro 12 — 14/10/2026
+
+### Minha contribuição
+
+* Executei testes de integração com LLM, concentrando a investigação na consulta de Marina sobre o valor médio do arroz.
+
+* Analisei falhas no generate.py, especialmente na geração e validação de citações.
+
+* Atualizei o mecanismo de validação para aceitar múltiplas fontes em uma mesma referência.
+
+* Investiguei erros de APITimeoutError e inconsistências no roteamento.
+
+* Analisei os logs de observabilidade para avaliar a rastreabilidade das respostas.
+
+### Uso de IA
+
+* Utilizei IA para auxiliar na análise dos testes, interpretação dos logs, identificação das falhas e implementação de melhorias no módulo de geração.
+
+### Resumo da equipe
+
+* O pipeline integra análise da consulta, roteamento, recuperação híbrida, fusão RRF, geração e validação.
+
+* Os logs demonstraram consultas às bases estruturada, agregada e normativa.
+
+* Foram identificadas execuções com citações válidas e outras com falhas de validação.
+
+* A análise de observabilidade identificou oportunidades de melhoria no registro das evidências finais.
+
+* As atividades individuais dos demais integrantes não foram detalhadas neste levantamento.
+
+### Próximos passos
+
+* Validar as correções do generate.py com testes unitários e de integração.
+
+* Investigar os timeouts e a inconsistência no roteamento da consulta de Marina.
+
+* Aprimorar os logs com os identificadores dos chunks finais e suas respectivas bases.
+
+* Consolidar os resultados dos testes e da observabilidade para a entrega do projeto.
