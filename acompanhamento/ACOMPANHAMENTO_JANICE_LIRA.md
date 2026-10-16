@@ -737,3 +737,59 @@ As execuções e os resultados foram conferidos antes de considerar as validaç�
 
 **Situação da atividade:** Matrizes de avaliação e qualidade P01–P09 atualizadas e publicadas no GitHub. Inspeção técnica da cópia do repositório realizada no Google Colab. Execução completa dos testes e validação ponta a ponta permanecem pendentes de confirmação.
 
+--- 
+## Encontro 14 — 16/10/2026
+
+### Minha contribuição
+
+#### Consolidação da avaliação P01–P09 — Rodada 5
+
+- Dei continuidade à minha atuação na frente de Corpus e Avaliação do Grande Desafio RAG — Cenário 1: Contratações Públicas do Estado do Rio de Janeiro.
+- Consolidei os resultados da Rodada 5, realizada em 16/10/2026, considerando os nove casos de avaliação P01–P09.
+- Comparei os resultados esperados com os observados, registrando as fontes, as versões do corpus, os identificadores de execução (`run_id`), os IDs dos chunks disponíveis e a situação de cada caso.
+- Revisei a qualidade das respostas, considerando a correção factual, a cobertura das informações solicitadas, a rastreabilidade das fontes, a validade das citações e as limitações técnicas.
+- Diferenciei os resultados históricos das rodadas anteriores dos resultados atuais, evitando considerar testes anteriores como comprovação automática de aprovação na Rodada 5.
+- Registrei as falhas e pendências identificadas, sem classificar todos os nove casos como aprovados.
+
+#### Documentação e publicação no GitHub
+
+- Atualizei a documentação de avaliação e qualidade dos casos P01–P09.
+- Consolidei as informações nas matrizes de avaliação e qualidade e no relatório de consolidação da Rodada 5.
+- Organizei os registros na pasta `eval/` do repositório `repositorio1`.
+- Registrei as evidências disponíveis e as pendências que dependem de correções técnicas ou de conferência factual pela equipe.
+
+### Uso de IA
+
+- Utilizei um assistente de IA como apoio à organização dos resultados, à revisão da qualidade das respostas e à redação da documentação.
+- Conferi as informações fornecidas nos registros da Rodada 5 antes de consolidá-las.
+- Mantive a distinção entre resultados observados, evidências verificadas e conclusões ainda pendentes, sem inventar informações ausentes.
+
+### Resultados
+
+- Nove casos P01–P09 consolidados com resultados esperados e observados.
+- Fontes, versões e identificadores de execução registrados conforme as evidências disponíveis.
+- Matrizes de avaliação e qualidade organizadas e publicadas no GitHub.
+- Relatório consolidado atualizado com a classificação dos resultados da Rodada 5.
+- Quatro casos aprovados nas etapas avaliadas: P02, P06, P07 e P09.
+- Um caso aprovado com ressalvas: P01.
+- Dois casos mantidos como pendentes de validação factual: P03 e P05.
+- Dois casos reprovados na execução atual: P04 e P08.
+
+### Dificuldades e limitações
+
+- P01 apresentou falha na validação dos trechos, apesar da contagem estruturada de 1.358 registros.
+- P03 e P05 ainda precisam de conferência factual das respostas em relação às evidências documentais.
+- P04 apresentou erro no formato de seleção dos trechos e não produziu resposta final com fontes verificadas.
+- P08 apresentou erro HTTP 502 por timeout durante a geração, impossibilitando a validação da resposta final.
+- A documentação consolidada não substitui a correção dos problemas técnicos nem a reexecução dos testes necessários.
+
+### Próximos passos
+
+- Acompanhar a conferência factual de P03 e P05.
+- Acompanhar a investigação e a correção das falhas de P04 e P08 junto aos responsáveis técnicos.
+- Verificar os resultados de novas execuções antes de alterar a classificação dos casos.
+- Atualizar as matrizes e o relatório somente quando houver novas evidências verificáveis.
+- Preservar a rastreabilidade dos resultados para a apresentação final ao professor.
+
+**Situação da atividade:** Consolidação documental da avaliação P01–P09 da Rodada 5 realizada, com matrizes e relatório registrados no GitHub. A validação integral dos nove casos permanece pendente da conferência factual e da resolução das falhas técnicas identificadas.
+
