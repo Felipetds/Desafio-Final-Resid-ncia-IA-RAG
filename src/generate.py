@@ -820,6 +820,7 @@ def gerar_resposta(
                 conteudo, _ = preparar_selecao_extrativa(
                     conteudo,
                     resultado.evidences,
+                    pergunta=resultado.query,
                 )
                 observacao_trechos["output"] = {
                     "trechos_validos": True,
