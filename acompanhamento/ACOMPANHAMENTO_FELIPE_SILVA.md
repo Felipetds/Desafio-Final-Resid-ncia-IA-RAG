@@ -331,3 +331,47 @@ Vamos dar continuidade no desenvolvimentos dos teste no próximo encontro. Focar
 * Aprimorar os logs com os identificadores dos chunks finais e suas respectivas bases.
 
 * Consolidar os resultados dos testes e da observabilidade para a entrega do projeto.
+
+## Encontro 13 — 16/10/2026
+
+### Minha contribuição
+
+* Executei testes de integração com LLM, foram testados os caso de P01 até P09. Foram rodados 8 baterias de testes levando em consideração algumas atualizações que ocorreram entre o dia 14/10 e 16/10. Os resultados obtidos na ultima rodada foram bem sucedidos.
+
+* Resultado consolidado — Rodada 8
+-Execuções técnicas concluídas 9 de 9, Sem erros de execução:
+
+Todos os nove testes terminaram com sucesso técnico nas etapas registradas.
+
+Teste   Rota / comportamento	        Resultado
+P01     Estruturada	                    Aprovado com ressalva geográfica
+P02	    Estruturada + agregada	        Aprovado tecnicamente
+P03	    Conversacional + estruturada	Aprovado tecnicamente
+P04	    Normativa	                    Aprovado tecnicamente
+P05	    Conversacional	                Aprovado tecnicamente
+P06	    Recusa por privacidade	        Aprovado
+P07	    Agregada	                    Aprovado tecnicamente
+P08	    Conversacional	                Aprovado tecnicamente
+P09	    Recusa por limite de escopo	    Aprovado
+
+### Uso de IA
+
+* Utilizei IA para auxiliar na análise dos testes, interpretação dos logs, identificação das falhas e implementação de melhorias no módulo de geração.
+
+### Resumo da equipe
+
+* O pipeline integra análise da consulta, roteamento, recuperação híbrida, fusão RRF, geração e validação.
+
+* Os logs demonstraram consultas às bases estruturada, agregada e normativa.
+
+* Foram identificadas execuções com citações válidas e outras com falhas de validação.
+
+* A análise de observabilidade identificou oportunidades de melhoria no registro das evidências finais.
+
+* As atividades individuais dos demais integrantes não foram detalhadas neste levantamento.
+
+### Próximos passos
+
+* Aprimorar os logs com os identificadores dos chunks finais e suas respectivas bases.
+
+* Consolidar os resultados dos testes e da observabilidade para a entrega do projeto.

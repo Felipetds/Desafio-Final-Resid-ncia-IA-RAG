@@ -77,7 +77,97 @@ def preparar_resposta_extrativa(conteudo, evidencias):
     return resposta, fontes
 
 
-def preparar_selecao_extrativa(conteudo, evidencias):
+
+
+def _recortar_campos_ata(pergunta, evidencia):
+    """Extrai campos literais em pedidos explícitos de objeto e PNCP."""
+    from src.document_scope import normalizar
+
+    original = evidencia.text
+    consulta = normalizar(pergunta or "")
+    if not (
+        re.search(r"\bata\b", consulta)
+        and re.search(r"\bobjeto\b", consulta)
+        and re.search(r"\bpncp\b", consulta)
+    ):
+        return original
+
+    texto = _normalizar_espacos(original)
+
+    # JSON: mostra somente o campo solicitado, mantendo texto literal.
+    if texto.startswith("{"):
+        try:
+            dados = json.loads(original)
+        except (TypeError, ValueError):
+            return original
+        if not isinstance(dados, dict):
+            return original
+        valor = dados.get("numeroControlePNCP")
+        if not isinstance(valor, str) or not valor.strip():
+            return original
+        campos = list(re.finditer(
+            r'"numeroControlePNCP"\s*:\s*"[^"]+"', texto
+        ))
+        if len(campos) == 1:
+            return campos[0].group(0)
+        return original
+
+    # Ata: mantém o objeto e o destinatário até a referência ao anexo.
+    # Na ausência de limites reconhecidos, preserva o texto completo.
+    objetos = list(re.finditer(
+        r"\btem\s+por\s+objeto\b.+?"
+        r"(?=,\s*conforme\s+especificado\b)",
+        texto,
+        flags=re.IGNORECASE,
+    ))
+    if len(objetos) == 1:
+        return objetos[0].group(0)
+    return original
+
+def _recortar_definicao_normativa(pergunta, evidencia):
+    """Recorta um inciso completo; preserva o original em caso de dúvida."""
+    from src.document_scope import normalizar
+
+    original = evidencia.text
+    if not pergunta or getattr(evidencia, "natureza", None) != "normativa":
+        return original
+
+    consulta = normalizar(pergunta)
+    if re.search(r"\b(?:artigo|art\.|arts\.)\s*\d+", consulta):
+        return original
+
+    pedido = re.fullmatch(
+        r"o que .+ estabelece sobre "
+        r"(?:(?:o|a|os|as)\s+)?"
+        r"([a-z]+(?:\s+[a-z]+){0,4})[?. ]*",
+        consulta,
+    )
+    if not pedido:
+        return original
+
+    texto = _normalizar_espacos(original)
+    if not re.match(r"Art\.\s*6\s*[º°o]?", texto, re.IGNORECASE):
+        return original
+
+    # Inciso completo até o próximo inciso: não corta por caracteres.
+    incisos = re.finditer(
+        r"(?<!\w)[IVXLCDM]+\s*[-–—]\s*.*?"
+        r"(?=\s+[IVXLCDM]+\s*[-–—]\s*|$)",
+        texto,
+    )
+    assunto = pedido.group(1).strip()
+    encontrados = []
+    for inciso in incisos:
+        trecho = inciso.group(0)
+        definicao = re.sub(
+            r"^[IVXLCDM]+\s*[-–—]\s*", "", trecho
+        )
+        if normalizar(definicao).startswith(assunto + ":"):
+            encontrados.append(trecho)
+
+    return encontrados[0] if len(encontrados) == 1 else original
+
+def preparar_selecao_extrativa(conteudo, evidencias, *, pergunta=None):
     """Apresenta o texto original dos chunks selecionados pelo modelo."""
     try:
         dados = json.loads(conteudo)
@@ -109,7 +199,15 @@ def preparar_selecao_extrativa(conteudo, evidencias):
 
         trechos.append({
             "chunk_id": identificador,
-            "trecho": por_id[identificador].text,
+            "trecho": (
+                _recortar_campos_ata(pergunta, por_id[identificador])
+                if _recortar_campos_ata(
+                    pergunta, por_id[identificador]
+                ) != por_id[identificador].text
+                else _recortar_definicao_normativa(
+                    pergunta, por_id[identificador]
+                )
+            ),
         })
 
     return preparar_resposta_extrativa(
