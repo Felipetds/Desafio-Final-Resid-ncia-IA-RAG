@@ -648,3 +648,32 @@ Apoiei a continuidade das correções da frente de Luiz e alinhei com Eridalgo a
 - Implementar ou registrar separadamente a pendência do histórico persistente.
 - Conferir com Felipe os eventos de falha, resumo de geração e contagem de tokens.
 - Atualizar status, instruções e diagrama e preparar a demonstração final.
+
+### Encontro — 16/10/2026
+
+**Minhas atividades**
+
+- Conferi a sincronização do repositório e os commits integrados à main, utilizando inicialmente o commit `66edbc6379d154cbb8dc974b7ea9b185b34de824`.
+- Retomei a geração dos embeddings do corpus com fatiamento corrigido, aproveitando 44 entradas compatíveis do cache e concluindo as 2.128 pendentes. Utilizei lotes de até 50 textos, pausa entre lotes, validação dos vetores e salvamento a cada lote.
+- Construí e conferi o conjunto de 2.172 chunks, IDs, cache, FAISS e BM25, com vetores de dimensão 1.024. Os dois testes de compatibilidade dos artefatos passaram.
+- Complementei o pacote no Drive com os oito arquivos brutos, a base estruturada normalizada, instruções de restauração, relatório e manifesto SHA-256. Ativei o novo conjunto no Colab, preservando o pacote anterior.
+- Validei P03 na interface com evidência do objeto na ata e do número PNCP no JSON associado. Também executei P04 com evidências normativas e citações.
+- Ajustei a apresentação extrativa para reduzir o excesso de texto: definição normativa pertinente e campos de objeto/PNCP em pedidos explícitos sobre atas. Os testes direcionados passaram, e conferi o resultado na interface, preservando as evidências completas.
+- Registrei e conferi o feedback de P02 no Drive, com pergunta, fontes, query_id e run_id. Preparei cópias TXT dos registros para demonstração.
+- Salvei logs e backup das alterações no Drive e preparei o roteiro da apresentação, explicando roteamento, cálculos, busca híbrida, validações e observabilidade.
+
+**Evidências**
+
+- Pacote: `geracao_embeddings_fatiamento_2026-10-14`, concluído em 16/10, com 2.172 chunks.
+- P03 após ajuste de apresentação: run_id `aa9bf2b2`, query_id `q_b90e29d2`.
+- P04 após ajuste de apresentação: run_id `02eea129`, query_id `q_004b4663`.
+- Feedback de P02: run_id `a956bf4c`, query_id `q_be3ff994`.
+- Registros salvos em `validacao_interface_2026-10-16` no Drive.
+
+**Uso de IA**
+
+Utilizei IA como apoio à inspeção do código, preparação de células de geração e validação dos artefatos, ajustes de apresentação, testes e roteiro da demonstração. Executei as células no Colab e conferi as saídas, os testes e as respostas da interface. Os ajustes foram limitados aos casos verificados, sem considerar citações válidas ou integridade dos índices como aprovação automática de todas as perguntas.
+
+**Resumo e próximos passos**
+
+O fluxo principal está integrado e foi demonstrado em execuções reais. Permanecem a consolidação da avaliação de P01–P09 e M01 no mesmo pacote, a validação completa da consulta combinada, a conferência do histórico persistente, a avaliação do rerank conforme disponibilidade e a reprodução por outro integrante. Também é necessário conferir a integração das alterações de apresentação e atualizar a documentação final.
