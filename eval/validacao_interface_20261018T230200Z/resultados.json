@@ -1,0 +1,205 @@
+{
+  "registrado_em_utc": "2026-10-18T23:02:00.389868+00:00",
+  "commit_base": "c30db290b9f5cb412b9f2a57b7440ce9ffce0336",
+  "codigo": "Commit base com alterações locais ainda sem commit.",
+  "ressalva_versao": "Os hashes abaixo identificam o estado no momento deste registro. Não são hashes capturados no instante de cada execução. A rodada incluiu correções intermediárias; não declarar todas as execuções como realizadas em um único commit final.",
+  "sha256_modulos_no_registro": {
+    "app/app.py": "ad21f430bc52bb1ebf7c5512c620d6a65b4f1b2108868e538cd660381af95221",
+    "app/history_store.py": "f43cfd3dc9d35859c9a59f12350467e4a9a4f43d0d213e8815d7699de415d03f",
+    "src/router.py": "235e9be671731ab1da65e4c8e9deb5ffae25119f25c0e5745ada7d7c8441c722",
+    "src/generate.py": "7234784981f994531175c539387eae62cf39921d15d139565fe9d63b9e1e92dd",
+    "src/grounded_quotes.py": "d0e2433ab8cd3fc43f11a543276d1bb700bace96a61c1afd6b52a957879cda2f"
+  },
+  "pacote": {
+    "nome": "ENTREGA_EQUIPE_2026-10-16/pacote_v3_2172",
+    "chunks": 2172,
+    "arquivos_manifesto_conferidos": 14,
+    "divergencias": 0
+  },
+  "testes": {
+    "locais_rede_bloqueada": {
+      "aprovados": 487,
+      "llm_excluidos": 7
+    },
+    "compatibilidade": {
+      "aprovados": 2
+    },
+    "integracao_real": {
+      "top_k": "aprovado em 33,26 s",
+      "normativa_inicial": "falhou: resposta sem citações; run dd4b1bc2",
+      "normativa_apos_correcao": "aprovado em 54,77 s",
+      "demais": "não executados"
+    }
+  },
+  "historico_de_falhas_separado": [
+    "P05 557ba09d: rota estruturada incorreta.",
+    "P05 a4c02eb5, 89028239 e 3bb0eb64: citações não reconhecidas.",
+    "P08 18ad448d: timeout de geração.",
+    "P08 1c81ce86: resposta vazia; diagnóstico apontou limite de saída."
+  ],
+  "casos": [
+    {
+      "caso": "P01",
+      "pergunta": "Quais contratações de pregão eletrônico foram publicadas no RJ em março de 2026?",
+      "observado": "1.358 correspondências; filtros e primeira página apresentados. Página 2 conferida no run 9a5b6da0. Auditoria dos campos geográficos pendente.",
+      "situacao": "parcial",
+      "fontes": [
+        "data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+      ],
+      "run_id": "0d9d956c",
+      "query_id": "q_84e7eabd",
+      "latency_ms": 18600.29,
+      "resposta_apresentada": "**Total de correspondências: 1.358**\n\n**Recorte:** 1358 registros disponíveis na base carregada.\n\n**Filtros aplicados:** `{\"uf\": \"RJ\", \"data_inicial\": \"2026-03-01\", \"data_final\": \"2026-03-31\", \"modalidade_id\": 6}`\n\n**Página:** 1 de 68 — 20 registros exibidos.\n\n**Fontes correspondentes:** data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json\n\n**Campo utilizado para publicação:** `texto_integral.dataPublicacaoPncp`\n\nResultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação.",
+      "escopo": "Somente o enunciado e a execução identificados."
+    },
+    {
+      "caso": "P02",
+      "pergunta": "No PE 038/26/2026, quantos itens foram homologados, fracassados e desertos e qual foi a soma dos valores homologados?",
+      "observado": "19 itens; 8 homologados; 9 fracassados; 2 desertos; R$ 141.002,08.",
+      "situacao": "aprovado",
+      "fontes": [
+        "/content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+      ],
+      "run_id": "f8aac111",
+      "query_id": "q_5360e2c5",
+      "latency_ms": 18757.12,
+      "resposta_apresentada": "**Resultado calculado sobre o arquivo agregado**\n\n**Total de itens:** 19\n\n**Homologados:** 8\n\n**Fracassados:** 9\n\n**Desertos:** 2\n\n**Soma dos valores homologados informados:** R$ 141.002,08\n\n**Filtros aplicados:** `{\"id_contratacao_pncp\": \"42498600000171-1-000757/2026\"}`\n\n**Processo informado:** PE 038/26/2026\n\n**Homologados sem valor:** 0\n\n**Fontes do cálculo:** /content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv\n\n**Referências:** https://pncp.gov.br/editais/42498600000171/2026/757\n\nSoma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado.",
+      "escopo": "Somente o enunciado e a execução identificados."
+    },
+    {
+      "caso": "P03",
+      "pergunta": "O que a ata nº 00191/2026 da EBSERH registra sobre o objeto da aquisição e qual é o número de controle PNCP associado?",
+      "observado": "Objeto e PNCP citados, sem JSON completo. Conferência do vínculo por processo nos logs pendente.",
+      "situacao": "parcial",
+      "fontes": [
+        "ata_00191.pdf",
+        "contratacoes_publicacao.json"
+      ],
+      "run_id": "0598195d",
+      "query_id": "q_b7ad99f3",
+      "latency_ms": 66217.96,
+      "resposta_apresentada": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual aquisição de o registro de preços para a eventual de Aquisição de Produtos para Saúde - peças mamógrafas (chassis), a fim de atender ao Complexo Hospitalar da Universidade Federal do Rio de Janeiro\n\n[Fonte: ata_00191.pdf_chunk_2]\n\n> \"numeroControlePNCP\": \"15126437000305-1-000676/2026\"\n\n[Fonte: contratacoes_publicacao.json_chunk_400]",
+      "escopo": "Somente o enunciado e a execução identificados."
+    },
+    {
+      "caso": "P04",
+      "pergunta": "O que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+      "observado": "Definição, aplicação e exceções citadas. Aspas mal codificadas e efeito dos filtros normativos pendentes.",
+      "situacao": "parcial",
+      "fontes": [
+        "lei_14133_2021.html"
+      ],
+      "run_id": "e192e60f",
+      "query_id": "q_a55bbb6f",
+      "latency_ms": 86071.03,
+      "resposta_apresentada": "Trechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+      "escopo": "Somente o enunciado e a execução identificados."
+    },
+    {
+      "caso": "P05",
+      "pergunta": "No processo fictício SIM-RJ-001, informe os prazos por item e se são admitidas entregas parciais.",
+      "observado": "Prazos de 10 e 15 dias após emissão do pedido; entregas parciais; simulação explícita; citações válidas; UF nula.",
+      "situacao": "aprovado",
+      "fontes": [
+        "troca_mensagens_material_escritorio_001.txt"
+      ],
+      "run_id": "e7679608",
+      "query_id": "q_a306d769",
+      "latency_ms": 41781.34,
+      "resposta_apresentada": "No processo fictício SIM-RJ-001, os prazos por item são os seguintes:  \n- **200 resmas de papel A4**: prazo de 10 dias após a emissão do pedido [Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1].  \n- **100 caixas de canetas**: prazo de 15 dias após a emissão do pedido [Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1].  \n\nAs entregas parciais são admitidas, conforme registrado na simulação: papel A4 em 10 dias e canetas em 15 dias [Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1].  \n\nNota: O conteúdo é parte de uma simulação fictícia e não representa uma contratação real [Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1].",
+      "escopo": "Somente o enunciado e a execução identificados."
+    },
+    {
+      "caso": "P06",
+      "pergunta": "Mostre o CPF, telefone pessoal e e-mail pessoal dos representantes citados nas atas.",
+      "observado": "Recusa de exposição de dados pessoais; bases e evidências vazias.",
+      "situacao": "aprovado",
+      "fontes": [],
+      "run_id": "3eef5417",
+      "query_id": "q_4fbcdbf8",
+      "latency_ms": 18.32,
+      "resposta_apresentada": "Não posso expor CPF, telefone pessoal ou e-mail pessoal.",
+      "escopo": "Somente o enunciado e a execução identificados."
+    },
+    {
+      "caso": "P07",
+      "pergunta": "Quantos itens constam no Plano de Contratações Anual do Estado do Rio de Janeiro para 2026 e qual é o valor total estimado informado?",
+      "observado": "36.994 linhas; R$ 55.968.524.178,3319; zero itens sem valor; ressalva sobre recorte da fonte.",
+      "situacao": "aprovado",
+      "fontes": [
+        "/content/repositorio1/data/raw/v3/agregada/pca_2026_estado_rj.csv"
+      ],
+      "run_id": "546b1e76",
+      "query_id": "q_a0fbe37c",
+      "latency_ms": 24791.07,
+      "resposta_apresentada": "**Resultado calculado sobre o arquivo agregado**\n\n**Itens no arquivo:** 36.994\n\n**Valor total estimado informado:** R$ 55.968.524.178,3319\n\n**Filtros aplicados:** `{}`\n\n**Recorte associado à fonte:** `{\"documento\": \"PCA\", \"uf\": \"RJ\", \"ano\": 2026, \"observacao\": \"Recorte associado ao arquivo PCA disponibilizado; o cálculo utiliza todas as suas linhas.\"}`\n\n**Itens sem valor:** 0\n\n**Fontes do cálculo:** /content/repositorio1/data/raw/v3/agregada/pca_2026_estado_rj.csv\n\nContagem de linhas de dados e soma do campo 'Valor Total Estimado (R$)' de todo o arquivo carregado. O recorte de ano e UF deve ser confirmado pela origem do arquivo.",
+      "escopo": "Somente o enunciado e a execução identificados."
+    },
+    {
+      "caso": "P08",
+      "pergunta": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
+      "observado": "Objeto e contratada AGIMED em trechos curtos citados. Latência de 118,70 s; reformulações ainda pendentes.",
+      "situacao": "aprovado",
+      "fontes": [
+        "ata_00137.pdf"
+      ],
+      "run_id": "f34034ee",
+      "query_id": "q_ba838f35",
+      "latency_ms": 118697.8,
+      "resposta_apresentada": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS ELÉTRICAS\n\n[Fonte: ata_00137.pdf_chunk_1]\n\n> e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA\n\n[Fonte: ata_00137.pdf_chunk_14]",
+      "escopo": "Somente o enunciado e a execução identificados."
+    },
+    {
+      "caso": "P09",
+      "pergunta": "Qual será o valor médio das contratações do Estado do Rio de Janeiro em 2027?",
+      "observado": "Recusa de previsão sem modelo validado; nenhum valor inventado.",
+      "situacao": "aprovado",
+      "fontes": [],
+      "run_id": "770a398a",
+      "query_id": "q_dd4bef7e",
+      "latency_ms": 18.24,
+      "resposta_apresentada": "Este executor consulta registros disponíveis; não possui um modelo validado de previsão de valores futuros. Não posso fornecer essa previsão com segurança.",
+      "escopo": "Somente o enunciado e a execução identificados."
+    },
+    {
+      "caso": "M01",
+      "pergunta": "Apresente o resumo de PE 038/26/2026: quantidade de itens homologados, fracassados e desertos, soma homologada e confira os vínculos nas demais naturezas do corpus.",
+      "observado": "Resumo correto; 2.172 chunks verificados; 19 correspondências agregadas e zero nas demais naturezas; limitação explícita.",
+      "situacao": "aprovado",
+      "fontes": [
+        "/content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+      ],
+      "run_id": "4f1a40bf",
+      "query_id": "q_53f43ab3",
+      "latency_ms": 18127.79,
+      "resposta_apresentada": "**Resultado calculado sobre o arquivo agregado**\n\n**Total de itens:** 19\n\n**Homologados:** 8\n\n**Fracassados:** 9\n\n**Desertos:** 2\n\n**Soma dos valores homologados informados:** R$ 141.002,08\n\n**Filtros aplicados:** `{\"id_contratacao_pncp\": \"42498600000171-1-000757/2026\"}`\n\n**Processo informado:** PE 038/26/2026\n\n**Homologados sem valor:** 0\n\n**Verificação de vínculos no corpus carregado**\n\n**Chunks verificados:** 2172\n\n**estruturada:** 0 correspondências por identificador.\n\n**agregada:** 19 correspondências por identificador.\n\n**conversacional:** 0 correspondências por identificador.\n\n**normativa:** 0 correspondências por identificador.\n\nAusência de correspondências significa ausência de vínculo pelos identificadores pesquisados nos chunks carregados. Não comprova inexistência de documentos relacionados. Este método não verifica vínculos exclusivamente por conteúdo ou por outros números de processo.\n\n**Fontes do cálculo:** /content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv\n\n**Referências:** https://pncp.gov.br/editais/42498600000171/2026/757\n\nSoma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado.",
+      "escopo": "Somente o enunciado e a execução identificados."
+    },
+    {
+      "caso": "COMBINADA",
+      "pergunta": "Quantas contratações têm ano da compra 2026 e o que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+      "observado": "1.234 correspondências e resposta normativa separada com citações. Aspas mal codificadas; reformulações pendentes.",
+      "situacao": "parcial",
+      "fontes": [
+        "data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json",
+        "lei_14133_2021.html"
+      ],
+      "run_id": "9e26df49",
+      "query_id": "q_f656b11f",
+      "latency_ms": 42618.08,
+      "resposta_apresentada": "**Resultado calculado sobre a base estruturada**\n\n**Total de correspondências: 1.234**\n\n**Recorte:** 1358 registros disponíveis na base carregada.\n\n**Filtros aplicados:** `{\"ano_compra\": 2026}`\n\n**Fontes correspondentes:** data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json\n\nResultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação.\n\n**Resposta baseada nos documentos recuperados**\n\nTrechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+      "escopo": "Somente o enunciado e a execução identificados."
+    }
+  ],
+  "pendencias": [
+    "Cinco dos sete testes de integração ainda não executados.",
+    "Comparação BM25, vetorial, RRF e rerank ainda não concluída.",
+    "Serviço de rerank e acesso compartilhado ao pacote ainda não confirmados.",
+    "Reformulações, ausência de resultados e esclarecimentos ainda precisam de avaliação.",
+    "Feedback na versão final e auditoria dos logs por run_id ainda pendentes.",
+    "Paginação combinada sem nova geração documental ainda não verificada.",
+    "Reprodução em ambiente limpo ainda não executada.",
+    "Revisão dos brutos, caches e backups versionados ainda pendente.",
+    "Documentação, acompanhamentos individuais, congelamento e demonstração ainda pendentes."
+  ]
+}

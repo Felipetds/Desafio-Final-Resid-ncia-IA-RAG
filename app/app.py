@@ -6,6 +6,11 @@ import sys
 import gradio as gr
 
 from app.pipeline_adapter import executar_pipeline
+from app.history_store import (
+    salvar_consulta,
+    listar_consultas,
+    carregar_consulta,
+)
 from app.interface_results import (
     feedback_da_consulta,
     mudar_pagina,
@@ -106,6 +111,14 @@ def executar(pergunta, top_k, progress=gr.Progress()):
             ),
         )
 
+        # Falha no histórico não deve descartar uma resposta pronta.
+        try:
+            salvar_consulta(resultado)
+        except Exception:
+            gr.Warning(
+                "A resposta foi concluída, mas não foi salva no histórico."
+            )
+
         return apresentar(resultado)
 
     except Exception as erro:
@@ -135,6 +148,28 @@ def limpar_interface():
             "answer": "Digite uma pergunta para iniciar.",
         }),
     )
+
+
+
+def atualizar_historico():
+    """Lista consultas persistidas no ambiente da aplicação."""
+    escolhas = [
+        (
+            f"{item['criado_em']} | {item['pergunta'][:100]} "
+            f"| {item['run_id']}",
+            item["run_id"],
+        )
+        for item in listar_consultas()
+    ]
+    return gr.update(choices=escolhas, value=None)
+
+
+def abrir_historico(run_id):
+    """Reapresenta o registro original sem executar consulta."""
+    resultado = carregar_consulta(run_id)
+    if resultado is None:
+        raise gr.Error("Selecione uma consulta salva disponível.")
+    return (resultado["query"], *apresentar(resultado))
 
 
 def criar_interface():
@@ -218,6 +253,24 @@ def criar_interface():
             )
 
         status = gr.Markdown()
+
+        with gr.Accordion("Histórico de consultas", open=False):
+            gr.Markdown(
+                "Consultas salvas neste ambiente da aplicação. "
+                "Abrir um registro apresenta a resposta original, "
+                "sem consultar novamente o modelo. "
+                "Os resultados podem corresponder a versões anteriores "
+                "dos dados. O histórico é compartilhado entre quem "
+                "tem acesso a esta instância."
+            )
+            consulta_salva = gr.Dropdown(
+                choices=[],
+                label="Consulta salva",
+                interactive=True,
+            )
+            with gr.Row():
+                atualizar_salvas = gr.Button("Atualizar histórico")
+                abrir_salva = gr.Button("Abrir consulta salva")
 
         with gr.Accordion(
             "Avalie esta resposta",
@@ -308,6 +361,18 @@ def criar_interface():
             **opcoes,
         )
 
+        atualizar_salvas.click(
+            fn=atualizar_historico,
+            outputs=[consulta_salva],
+            **opcoes,
+        )
+        abertura = abrir_salva.click(
+            fn=abrir_historico,
+            inputs=[consulta_salva],
+            outputs=[pergunta, *saidas],
+            **opcoes,
+        )
+
         # Permite escolher evidências para uma nova pergunta.
         pergunta.input(
             fn=lambda: gr.update(interactive=True),
@@ -319,7 +384,7 @@ def criar_interface():
             fn=limpar_interface,
             outputs=[pergunta, *saidas],
             queue=False,
-            cancels=[clique, enter, volta, avanca, feedback],
+            cancels=[clique, enter, volta, avanca, feedback, abertura],
         )
 
     return interface
