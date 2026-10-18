@@ -167,6 +167,59 @@ def _recortar_definicao_normativa(pergunta, evidencia):
 
     return encontrados[0] if len(encontrados) == 1 else original
 
+
+def _recortar_objeto_fornecedor(pergunta, trechos, por_id):
+    """Recorta os dois campos somente em pedidos explícitos reconhecidos."""
+    from src.document_scope import normalizar
+
+    consulta = normalizar(pergunta or "")
+    if not re.fullmatch(
+        r"o que a ata .+? informa sobre o objeto"
+        r"(?: adquirido)? e o fornecedor[?. ]*",
+        consulta,
+    ):
+        return trechos
+
+    objetos = []
+    fornecedores = []
+
+    for item in trechos:
+        identificador = item["chunk_id"]
+        evidencia = por_id[identificador]
+        if evidencia.natureza != "conversacional":
+            continue
+
+        original = _normalizar_espacos(evidencia.text)
+
+        objeto = re.search(
+            r"\btem\s+por\s+objeto\b.+?(?=,\s*especi)",
+            original,
+            flags=re.IGNORECASE,
+        )
+        fornecedor = re.search(
+            r"\be\s+de\s+outro\s+lado\s+a\s+.+?"
+            r"\bdoravante\s+denominada\s+CONTRATADA\b",
+            original,
+            flags=re.IGNORECASE,
+        )
+
+        if objeto:
+            objetos.append({
+                "chunk_id": identificador,
+                "trecho": objeto.group(0),
+            })
+        if fornecedor:
+            fornecedores.append({
+                "chunk_id": identificador,
+                "trecho": fornecedor.group(0),
+            })
+
+    # Ambiguidade ou campo ausente: preserva a apresentação anterior.
+    if len(objetos) != 1 or len(fornecedores) != 1:
+        return trechos
+
+    return objetos + fornecedores
+
 def preparar_selecao_extrativa(conteudo, evidencias, *, pergunta=None):
     """Apresenta o texto original dos chunks selecionados pelo modelo."""
     try:
@@ -209,6 +262,10 @@ def preparar_selecao_extrativa(conteudo, evidencias, *, pergunta=None):
                 )
             ),
         })
+
+    trechos = _recortar_objeto_fornecedor(
+        pergunta, trechos, por_id
+    )
 
     return preparar_resposta_extrativa(
         json.dumps({"trechos": trechos}, ensure_ascii=False),

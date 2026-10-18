@@ -220,6 +220,18 @@ Retorne exclusivamente JSON válido no formato:
 
 }
 
+
+Regra sobre comunicações e processos fictícios:
+- Comunicações sintéticas e processos explicitamente fictícios são fontes
+  da base conversacional. Pedidos sobre prazos por item, entregas parciais
+  ou condições informadas nessas comunicações exigem essa base, mesmo
+  quando a pergunta não repete a palavra "comunicação".
+- A menção a processo, item ou entrega não justifica, sozinha, selecionar
+  a base estruturada. Escolha a natureza da evidência solicitada.
+- Não acrescente outras bases sem um pedido que necessite delas.
+- Identificadores são valores completos: uma sigla dentro de um código
+  de processo não representa, sozinha, um filtro geográfico.
+
 """
 
 
@@ -366,7 +378,16 @@ def _extrair_filtros_monetarios(
 
 def _extrair_uf_explicita(pergunta: str) -> str | None:
     """Retorna RJ somente quando a localização aparece na pergunta."""
-    texto = _normalizar_texto_para_comparacao(pergunta)
+    from src.document_scope import (
+        PADRAO_PROCESSO_ALFANUMERICO,
+        normalizar,
+    )
+
+    # Siglas dentro do identificador não são localização explícita.
+    sem_identificadores = PADRAO_PROCESSO_ALFANUMERICO.sub(
+        " ", normalizar(pergunta)
+    )
+    texto = _normalizar_texto_para_comparacao(sem_identificadores)
     if re.search(r"\brj\b", texto) or "rio de janeiro" in texto:
         return "RJ"
     return None
