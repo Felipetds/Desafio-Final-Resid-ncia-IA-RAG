@@ -867,6 +867,14 @@ def gerar_resposta(
                 stage="validacao",
             )
 
+    from src.deadline_coverage import complementar_marco_prazo
+
+    conteudo_antes_marco = conteudo
+    conteudo = complementar_marco_prazo(
+        resultado.query, conteudo, resultado.evidences
+    )
+    marco_prazo_complementado = conteudo != conteudo_antes_marco
+
     resposta_segura = mascarar_dados_pessoais(
         conteudo.strip()
     )
@@ -889,6 +897,7 @@ def gerar_resposta(
             observacao_citacoes["output"] = {
                 "citacoes_validas": True,
                 "quantidade_evidencias_citadas": len(fontes_citadas),
+                "marco_prazo_complementado": marco_prazo_complementado,
             }
     except ValueError:
         return RAGResponse(

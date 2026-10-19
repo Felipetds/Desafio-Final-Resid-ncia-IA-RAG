@@ -1,0 +1,53 @@
+{
+  "commit": "5c771335673eb19c907f9c219fa3d422c3f8c856",
+  "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+  "metodo": "Conferência das transcrições da interface fornecidas pela usuária, com confirmação dos resultados no histórico e nos logs.",
+  "pasta_interface": "/content/drive/MyDrive/rag_grande_desafio/interface_5c77133_20261019T160541838989Z",
+  "casos": [
+    {
+      "caso": "P05",
+      "situacao": "aprovado",
+      "run_id": "c2c8fcaf",
+      "query_id": "q_b43085ec",
+      "pergunta": "Qual prazo de entrega foi informado nas comunicações do processo fictício SIM-RJ-001?",
+      "resposta": "O prazo de entrega informado nas comunicações do processo fictício SIM-RJ-001 foi de 10 dias para as 200 resmas de papel A4 e 15 dias para as 100 caixas de canetas, conforme confirmado pelo Fornecedor Fictício A [Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1].\n\nMarco inicial citado na fonte:\n\n> após a emissão do pedido\n\n[Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1]",
+      "fontes_citadas": [
+        "troca_mensagens_material_escritorio_001.txt"
+      ],
+      "historico_persistido": true,
+      "etapas": {
+        "query_analysis": 1,
+        "roteamento": 1,
+        "validacao": 3,
+        "retrieval_denso": 1,
+        "retrieval_bm25": 1,
+        "fusao_rrf": 1,
+        "geracao": 2
+      },
+      "erros": 0
+    },
+    {
+      "caso": "COMBINADA",
+      "situacao": "aprovado",
+      "run_id": "8a1005f6",
+      "query_id": "q_94417a36",
+      "pergunta": "Quantas contratações têm ano da compra 2026 e o que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+      "resposta": "**Resultado calculado sobre a base estruturada**\n\n**Total de correspondências: 1.234**\n\n**Recorte:** 1358 registros disponíveis na base carregada.\n\n**Filtros aplicados:** `{\"ano_compra\": 2026}`\n\n**Fontes correspondentes:** data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json\n\nResultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação.\n\n**Resposta baseada nos documentos recuperados**\n\nTrechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+      "fontes_citadas": [
+        "lei_14133_2021.html"
+      ],
+      "historico_persistido": true,
+      "etapas": {
+        "query_analysis": 1,
+        "roteamento": 1,
+        "consulta_estruturada": 1,
+        "retrieval_denso": 1,
+        "retrieval_bm25": 1,
+        "fusao_rrf": 1,
+        "geracao": 2,
+        "validacao": 3
+      },
+      "erros": 0
+    }
+  ]
+}

@@ -377,21 +377,38 @@ def _extrair_filtros_monetarios(
     }
 
 
-def _extrair_uf_explicita(pergunta: str) -> str | None:
-    """Retorna RJ somente quando a localização aparece na pergunta."""
-    from src.document_scope import (
-        PADRAO_PROCESSO_ALFANUMERICO,
-        normalizar,
-    )
+def _extrair_ufs_explicitas(pergunta: str) -> set[str]:
+    """Reconhece siglas de UF em contexto de localização, fora de IDs."""
+    from src.document_scope import PADRAO_PROCESSO_ALFANUMERICO, normalizar
 
-    # Siglas dentro do identificador não são localização explícita.
-    sem_identificadores = PADRAO_PROCESSO_ALFANUMERICO.sub(
+    texto = PADRAO_PROCESSO_ALFANUMERICO.sub(
         " ", normalizar(pergunta)
     )
-    texto = _normalizar_texto_para_comparacao(sem_identificadores)
+    texto = _normalizar_texto_para_comparacao(texto)
+    validas = set(
+        "AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI "
+        "RJ RN RS RO RR SC SP SE TO".split()
+    )
+    candidatas = re.findall(
+        r"\b(?:no|na|em|do|da)\s+([a-z]{2})\b"
+        r"|\buf\s*[:=]?\s*([a-z]{2})\b",
+        texto,
+    )
+    encontradas = {
+        (primeira or segunda).upper()
+        for primeira, segunda in candidatas
+        if (primeira or segunda).upper() in validas
+    }
+
+    # Preserva as formas de RJ já suportadas, após remover identificadores.
     if re.search(r"\brj\b", texto) or "rio de janeiro" in texto:
-        return "RJ"
-    return None
+        encontradas.add("RJ")
+    return encontradas
+
+
+def _extrair_uf_explicita(pergunta: str) -> str | None:
+    ufs = _extrair_ufs_explicitas(pergunta)
+    return next(iter(ufs)) if len(ufs) == 1 else None
 
 
 def _validar_filtros_contra_pergunta(
@@ -425,6 +442,12 @@ def _validar_filtros_contra_pergunta(
     filtros["valor_maximo"] = limites["valor_maximo"]
     # A UF só pode ser aplicada quando estiver explícita na pergunta.
     filtros["uf"] = _extrair_uf_explicita(pergunta)
+    if (
+        filtros["uf"]
+        and str(filtros.get("municipio") or "").strip().upper()
+        == filtros["uf"]
+    ):
+        filtros["municipio"] = None
     filtros.setdefault("ano", None)
     filtros.setdefault("modalidade", None)
     filtros.setdefault("municipio", None)
@@ -1229,6 +1252,18 @@ def planejar_consulta(
         )
         return plano
 
+    if len(_extrair_ufs_explicitas(pergunta)) > 1:
+        plano.update(
+            estrategia="esclarecimento",
+            operacao="esclarecer",
+            necessita_esclarecimento=True,
+            pergunta_esclarecimento=(
+                "Informe uma única UF para esta consulta. "
+                "A combinação de várias UFs ainda não está implementada."
+            ),
+        )
+        return plano
+
     from src.aggregate_planning import planejar_agregada
 
     plano_agregado = planejar_agregada(texto, plano)
@@ -1246,17 +1281,51 @@ def planejar_consulta(
     menciona_contratacao, contar, listar = _identificar_intencao_estruturada(
         texto
     )
+    # Pedidos explícitos sobre registros não dependem de o LLM
+    # ter incluído a rota estruturada. Preserva as rotas documentais.
+    pede_registros = bool(re.search(
+        r"\b(?:quantos|quantas|(?:total|numero|quantidade)\s+de)"
+        r"\s+(?:contratos|contratacoes)\b"
+        r"|\b(?:liste|listar|relacione)\s+(?:(?:os|as)\s+)?"
+        r"(?:contratos|contratacoes)\b"
+        r"|\bquais\s+(?:(?:os|as)\s+)?(?:contratos|contratacoes)\b",
+        texto,
+    ))
+    tem_recorte_de_dados = bool(re.search(
+        r"\bano da compra\b"
+        r"|\b(?:na|da|sobre a)\s+base\b"
+        r"|\bpublicad[oa]s?\b",
+        texto,
+    ))
+    if (
+        pede_registros
+        and tem_recorte_de_dados
+        and "estruturada" not in rotas
+    ):
+        rotas = [*rotas, "estruturada"]
+        plano["bases"] = list(rotas)
+
     rotas_recuperacao = _rotas_de_recuperacao(rotas)
     tem_rota_estruturada = "estruturada" in rotas
     # PCA segue o fluxo já existente; não entra na combinação nesta etapa.
     if _eh_consulta_pca(texto):
         return plano
-    consulta_combinada = bool(
+    from src.query_decomposition import extrair_pedido_documental
+
+    pedido_documental = extrair_pedido_documental(pergunta)
+    tarefa_estruturada = (
         tem_rota_estruturada
-        and rotas_recuperacao
         and menciona_contratacao
         and (contar or listar)
     )
+    consulta_combinada = bool(
+        tarefa_estruturada
+        and rotas_recuperacao
+        and pedido_documental
+    )
+    if tarefa_estruturada and not pedido_documental:
+        # Uma rota sugerida pelo LLM não cria outra tarefa para o usuário.
+        rotas_recuperacao = []
     # Consultas documentais abertas continuam no RAG híbrido.
     if rotas_recuperacao and not consulta_combinada:
         return plano
