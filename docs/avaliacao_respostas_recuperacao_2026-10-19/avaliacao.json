@@ -1,0 +1,439 @@
+{
+  "metodo_avaliacao": "Revisão qualitativa assistida por IA, com rubrica explícita.",
+  "sha256_respostas": "c1fed3dc2e1324c1895647a974a5aba45f97451f67517ae486d091b58bd6bf80",
+  "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+  "top_k": 3,
+  "avaliacoes": [
+    {
+      "caso": "P03",
+      "metodo": "vetorial",
+      "run_id": "f4ceb5bb",
+      "campos_esperados": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "campos_cobertos_na_resposta": [
+        "numero_pncp"
+      ],
+      "cobertura": 0.5,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P03",
+      "metodo": "bm25",
+      "run_id": "ea570843",
+      "campos_esperados": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "campos_cobertos_na_resposta": [
+        "objeto"
+      ],
+      "cobertura": 0.5,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P03",
+      "metodo": "rrf",
+      "run_id": "228931f3",
+      "campos_esperados": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "campos_cobertos_na_resposta": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "cobertura": 1.0,
+      "completa": true,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P03",
+      "metodo": "rrf_rerank",
+      "run_id": "acbd941f",
+      "campos_esperados": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "campos_cobertos_na_resposta": [
+        "objeto"
+      ],
+      "cobertura": 0.5,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P04",
+      "metodo": "vetorial",
+      "run_id": "9dd750ad",
+      "campos_esperados": [
+        "definicao",
+        "aplicacao",
+        "excecoes"
+      ],
+      "campos_cobertos_na_resposta": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P04",
+      "metodo": "bm25",
+      "run_id": "8fea4bba",
+      "campos_esperados": [
+        "definicao",
+        "aplicacao",
+        "excecoes"
+      ],
+      "campos_cobertos_na_resposta": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P04",
+      "metodo": "rrf",
+      "run_id": "ad007f7c",
+      "campos_esperados": [
+        "definicao",
+        "aplicacao",
+        "excecoes"
+      ],
+      "campos_cobertos_na_resposta": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P04",
+      "metodo": "rrf_rerank",
+      "run_id": "6906c41d",
+      "campos_esperados": [
+        "definicao",
+        "aplicacao",
+        "excecoes"
+      ],
+      "campos_cobertos_na_resposta": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P08",
+      "metodo": "vetorial",
+      "run_id": "1838ee6c",
+      "campos_esperados": [
+        "objeto",
+        "contratada"
+      ],
+      "campos_cobertos_na_resposta": [
+        "contratada"
+      ],
+      "cobertura": 0.5,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P08",
+      "metodo": "bm25",
+      "run_id": "bd158844",
+      "campos_esperados": [
+        "objeto",
+        "contratada"
+      ],
+      "campos_cobertos_na_resposta": [
+        "objeto",
+        "contratada"
+      ],
+      "cobertura": 1.0,
+      "completa": true,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P08",
+      "metodo": "rrf",
+      "run_id": "2e9d158a",
+      "campos_esperados": [
+        "objeto",
+        "contratada"
+      ],
+      "campos_cobertos_na_resposta": [
+        "objeto",
+        "contratada"
+      ],
+      "cobertura": 1.0,
+      "completa": true,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P08",
+      "metodo": "rrf_rerank",
+      "run_id": "008e6057",
+      "campos_esperados": [
+        "objeto",
+        "contratada"
+      ],
+      "campos_cobertos_na_resposta": [
+        "objeto",
+        "contratada"
+      ],
+      "cobertura": 1.0,
+      "completa": true,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P03_R",
+      "metodo": "vetorial",
+      "run_id": "2d47b9e9",
+      "campos_esperados": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "campos_cobertos_na_resposta": [
+        "numero_pncp"
+      ],
+      "cobertura": 0.5,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P03_R",
+      "metodo": "bm25",
+      "run_id": "e43fc61e",
+      "campos_esperados": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "campos_cobertos_na_resposta": [],
+      "cobertura": 0.0,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P03_R",
+      "metodo": "rrf",
+      "run_id": "75692eac",
+      "campos_esperados": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "campos_cobertos_na_resposta": [],
+      "cobertura": 0.0,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P03_R",
+      "metodo": "rrf_rerank",
+      "run_id": "815e9038",
+      "campos_esperados": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "campos_cobertos_na_resposta": [
+        "objeto"
+      ],
+      "cobertura": 0.5,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P04_R",
+      "metodo": "vetorial",
+      "run_id": "b1065fc4",
+      "campos_esperados": [
+        "definicao",
+        "aplicacao",
+        "excecoes"
+      ],
+      "campos_cobertos_na_resposta": [],
+      "cobertura": 0.0,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": false,
+      "erros": [
+        {
+          "stage": "validacao",
+          "output": {
+            "erro": "ValueError",
+            "mensagem": "Selecione entre um e cinco chunks."
+          }
+        }
+      ]
+    },
+    {
+      "caso": "P04_R",
+      "metodo": "bm25",
+      "run_id": "7cfbb840",
+      "campos_esperados": [
+        "definicao",
+        "aplicacao",
+        "excecoes"
+      ],
+      "campos_cobertos_na_resposta": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P04_R",
+      "metodo": "rrf",
+      "run_id": "cae3fe3c",
+      "campos_esperados": [
+        "definicao",
+        "aplicacao",
+        "excecoes"
+      ],
+      "campos_cobertos_na_resposta": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P04_R",
+      "metodo": "rrf_rerank",
+      "run_id": "bc1277b8",
+      "campos_esperados": [
+        "definicao",
+        "aplicacao",
+        "excecoes"
+      ],
+      "campos_cobertos_na_resposta": [],
+      "cobertura": 0.0,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P08_R",
+      "metodo": "vetorial",
+      "run_id": "e9403d6a",
+      "campos_esperados": [
+        "objeto",
+        "contratada"
+      ],
+      "campos_cobertos_na_resposta": [
+        "contratada"
+      ],
+      "cobertura": 0.5,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P08_R",
+      "metodo": "bm25",
+      "run_id": "70d4f872",
+      "campos_esperados": [
+        "objeto",
+        "contratada"
+      ],
+      "campos_cobertos_na_resposta": [
+        "objeto",
+        "contratada"
+      ],
+      "cobertura": 1.0,
+      "completa": true,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P08_R",
+      "metodo": "rrf",
+      "run_id": "cc5bb28f",
+      "campos_esperados": [
+        "objeto",
+        "contratada"
+      ],
+      "campos_cobertos_na_resposta": [
+        "contratada"
+      ],
+      "cobertura": 0.5,
+      "completa": false,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    },
+    {
+      "caso": "P08_R",
+      "metodo": "rrf_rerank",
+      "run_id": "fa60b384",
+      "campos_esperados": [
+        "objeto",
+        "contratada"
+      ],
+      "campos_cobertos_na_resposta": [
+        "objeto",
+        "contratada"
+      ],
+      "cobertura": 1.0,
+      "completa": true,
+      "citacoes_pertencem_a_entrada": true,
+      "erros": []
+    }
+  ],
+  "resumo": {
+    "vetorial": {
+      "perguntas": 6,
+      "cobertura_media_resposta": 0.4444444444444444,
+      "respostas_completas": 0,
+      "respostas_com_citacoes_da_entrada": 5
+    },
+    "bm25": {
+      "perguntas": 6,
+      "cobertura_media_resposta": 0.6388888888888888,
+      "respostas_completas": 2,
+      "respostas_com_citacoes_da_entrada": 6
+    },
+    "rrf": {
+      "perguntas": 6,
+      "cobertura_media_resposta": 0.6388888888888888,
+      "respostas_completas": 2,
+      "respostas_com_citacoes_da_entrada": 6
+    },
+    "rrf_rerank": {
+      "perguntas": 6,
+      "cobertura_media_resposta": 0.611111111111111,
+      "respostas_completas": 2,
+      "respostas_com_citacoes_da_entrada": 6
+    }
+  },
+  "decisao": "Manter rerank desativado por padrão."
+}

@@ -1,0 +1,14 @@
+{
+  "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+  "candidata_final": "a1c715d68548a5544a9f9069d32d6f96b9bf6e70",
+  "python": "/content/avaliacao_respostas_20261019T224542841177Z/venv/bin/python",
+  "repositorio": "/content/repositorio1",
+  "registros": "/content/drive/MyDrive/rag_grande_desafio/avaliacao_respostas_rankings_20261019T224542841177Z",
+  "protocolo": "Comparação de respostas com rankings preservados: seis perguntas, quatro métodos, top_k=3. Sem nova recuperação ou seleção de cobertura anterior à geração.",
+  "geracoes_previstas": 24,
+  "limites": [
+    "Não constitui comparação do pipeline completo.",
+    "Não avalia respostas com top_k=5.",
+    "Resultados sujeitos à avaliação de conteúdo e citações."
+  ]
+}
