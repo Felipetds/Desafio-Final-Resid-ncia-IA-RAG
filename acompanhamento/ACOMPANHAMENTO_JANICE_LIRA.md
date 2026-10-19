@@ -793,3 +793,79 @@ As execuções e os resultados foram conferidos antes de considerar as validaç�
 
 **Situação da atividade:** Consolidação documental da avaliação P01–P09 da Rodada 5 realizada, com matrizes e relatório registrados no GitHub. A validação integral dos nove casos permanece pendente da conferência factual e da resolução das falhas técnicas identificadas.
 
+---  
+
+## Encontro 15 — 19/10/2026
+
+**Projeto:** Grande Desafio RAG — Cenário 1: Contratações Públicas do Estado do Rio de Janeiro
+
+### Minha contribuição
+
+#### Validação final do benchmark P01–P09
+
+- Dei continuidade às atividades da frente de Corpus e Avaliação, realizando a validação final dos nove casos oficiais das personas no ambiente Google Colab.
+- Executei o benchmark utilizando o pipeline de recuperação e geração do projeto, contemplando consultas estruturadas, normativas, conversacionais e agregadas.
+- Após os ajustes e verificações necessários, obtive **9 casos aprovados de 9 avaliados (100%)**, conforme os critérios funcionais implementados.
+- Registrei a duração total da execução em **195,14 segundos**, preservando as respostas, as fontes documentais e os resultados individuais.
+- Confirmei os resultados das consultas agregadas, incluindo os 1.358 registros de pregões eletrônicos de março de 2026, os 19 itens do PE 038/26/2026 e os 36.994 itens do PCA 2026, com valor total estimado de R$ 55.968.524.178,3319.
+- Validei as respostas fundamentadas na Lei nº 14.133/2021 e nas atas da EBSERH e do INCA, além do processo fictício SIM-RJ-001.
+- Confirmei as recusas corretas nos casos P06 e P09, relacionados à proteção de dados pessoais e à impossibilidade de realizar previsões futuras sem fundamentação.
+
+#### Auditoria das quatro bases de conhecimento
+
+- Realizei uma auditoria complementar dos registros do benchmark para verificar o roteamento, as evidências recuperadas e as fontes utilizadas nas respostas.
+- Confirmei a presença das quatro bases do projeto nos resultados: **estruturada, agregada, normativa e conversacional**.
+- Verifiquei correspondência direta entre as fontes citadas e as evidências recuperadas nos casos P03, P04, P05 e P08.
+- Identifiquei particularidades de rastreabilidade nos casos P01, P02 e P07, cujas respostas utilizaram rotinas de agregação documental além dos resultados da recuperação.
+- Registrei que P01 apresentou recuperação vazia, embora a rotina de agregação tenha produzido a contagem correta dos 1.358 registros.
+- Mantive a distinção entre aprovação funcional, roteamento e comprovação da proveniência documental.
+
+#### Documentação e preparação para entrega
+
+- Consolidei os resultados no Relatório Técnico de Avaliação v3 atualizado.
+- Organizei os arquivos do benchmark final e da auditoria em formatos JSON e Markdown.
+- Preparei um pacote ZIP contendo o relatório técnico e os quatro arquivos de evidências para compartilhamento com a equipe.
+- Comuniquei à equipe os resultados alcançados, as ressalvas técnicas e a disponibilidade dos artefatos para revisão.
+- **Os novos arquivos ainda não foram publicados no GitHub oficial**, permanecendo preparados para análise e alinhamento com os integrantes.
+- Preservei os 2.172 chunks canônicos e os índices FAISS/BM25 durante a validação.
+
+### Uso de IA
+
+- Utilizei um assistente de IA como apoio à análise dos resultados do benchmark, à interpretação dos registros de recuperação e geração e à organização da auditoria das quatro bases.
+- Utilizei IA para auxiliar na preparação dos procedimentos executados no Google Colab, na consolidação do relatório técnico e na organização dos arquivos destinados à equipe.
+- Executei os testes e conferi os resultados apresentados antes de registrar as conclusões.
+- Mantive a distinção entre resultados comprovados, limitações de rastreabilidade e etapas ainda pendentes de validação.
+
+### Resultados
+
+- Benchmark funcional concluído com **9/9 casos aprovados**.
+- Tempo total de execução: **195,14 segundos**.
+- Quatro bases de conhecimento identificadas na auditoria.
+- Respostas normativas e documentais validadas nos casos avaliados.
+- Recusas de P06 e P09 confirmadas.
+- Ressalvas de rastreabilidade identificadas em P01, P02 e P07.
+- Relatório técnico atualizado.
+- Arquivos de benchmark e auditoria organizados e preservados.
+- Pacote de evidências preparado para compartilhamento com a equipe.
+- Chunks e índices preservados, sem alterações.
+
+### Dificuldades e limitações
+
+- A aprovação dos nove casos demonstra atendimento aos critérios do benchmark, mas não comprova, isoladamente, a qualidade geral do sistema em produção.
+- P01 apresentou zero evidências recuperadas, embora a resposta agregada tenha sido produzida corretamente.
+- P02 utilizou registros adicionais aos documentos recuperados no top-k.
+- P07 utilizou o CSV integral para o cálculo, enquanto o chunk citado na resposta não estava entre as cinco evidências recuperadas.
+- Foi necessário distinguir as fontes utilizadas pelas rotinas de agregação das evidências retornadas pelo mecanismo de recuperação.
+- O ambiente do Google Colab não estava configurado como repositório Git, e a tentativa de clonagem por HTTPS apresentou dificuldade de autenticação.
+- A publicação dos novos artefatos no GitHub permanece pendente de revisão e alinhamento com a equipe.
+
+### Próximos passos
+
+- Compartilhar e discutir os resultados finais com a equipe.
+- Submeter o relatório técnico e os arquivos de evidências à revisão dos integrantes.
+- Avaliar os ajustes necessários para melhorar a rastreabilidade das fontes em P01, P02 e P07.
+- Confirmar a integração permanente das correções ao código oficial do projeto.
+- Publicar os artefatos aprovados no repositório GitHub da equipe.
+- Preparar a documentação e as evidências técnicas para a apresentação final do Grande Desafio RAG.
+
+**Situação da atividade:** Benchmark funcional P01–P09 concluído com 9/9 aprovações. Auditoria das quatro bases realizada, com ressalvas de rastreabilidade documentadas. Relatório técnico e evidências preparados para revisão da equipe. Publicação no GitHub e confirmação das correções permanentes ainda pendentes.
