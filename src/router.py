@@ -1093,6 +1093,38 @@ def _extrair_campos_saida(texto: str) -> List[str] | None:
     ]
 
 
+
+def _solicita_calculo_media(texto):
+    """Distingue pedido de cálculo monetário de pergunta explicativa."""
+    menciona_media = bool(re.search(
+        r"\b(?:valor|preco|custo)\s+medi[oa]\b"
+        r"|\bmedia\s+(?:aritmetica|ponderada)\b"
+        r"|\bmedia\s+d[ao]s?\s+(?:valores|precos|custos|contratacoes|compras)\b",
+        texto,
+    ))
+    if not menciona_media:
+        return False
+
+    explicativa = bool(
+        re.match(r"^(?:explique|como|o que)\b", texto)
+        or re.match(
+            r"^qual\b.{0,40}\b(?:definicao|conceito|formula|metodo)\b",
+            texto,
+        )
+    )
+    if explicativa:
+        return False
+
+    return bool(
+        re.match(
+            r"^(?:por favor[, ]+)?"
+            r"(?:qual|quais|quanto|informe|apresente|mostre)\b",
+            texto,
+        )
+        or re.search(r"\b(?:calcule|calcular|obtenha|determine)\b", texto)
+    )
+
+
 def planejar_consulta(
     pergunta,
     client=None,
@@ -1181,6 +1213,22 @@ def planejar_consulta(
             operacao="recusar",
         )
         return plano
+    if _solicita_calculo_media(texto):
+        plano.update(
+            estrategia="esclarecimento",
+            operacao="esclarecer",
+            necessita_esclarecimento=True,
+            pergunta_esclarecimento=(
+                "O cálculo de médias monetárias, incluindo preço por quilo "
+                "e média ponderada, ainda não está implementado neste executor. "
+                "Não posso substituir esse cálculo por trechos documentais. "
+                "Você deseja uma contagem ou listagem dos registros disponíveis? "
+                "Para preço por quilo, também seria necessário definir valores, "
+                "quantidades e unidades compatíveis."
+            ),
+        )
+        return plano
+
     from src.aggregate_planning import planejar_agregada
 
     plano_agregado = planejar_agregada(texto, plano)

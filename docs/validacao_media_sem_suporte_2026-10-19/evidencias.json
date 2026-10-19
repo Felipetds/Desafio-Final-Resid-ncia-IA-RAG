@@ -1,0 +1,61 @@
+{
+  "identidade_codigo": {
+    "commit_base": "ff4f334957a7487911ecbcb242f2d15a2bbff73a",
+    "codigo_com_alteracoes_locais": true,
+    "sha256_codigo": {
+      "src/router.py": "a9f39f06a02850060bf8bf40f7706ac0274897516dd747fc7f2d7567914909cf",
+      "testes/test_unsupported_mean_planning.py": "19c364ea768855a7538af97092c942a53fb7cfc9494e5f9e8a33243485b0268d"
+    }
+  },
+  "validacao": {
+    "tempo_s": 19.894,
+    "resultado": {
+      "answer": "O cálculo de médias monetárias, incluindo preço por quilo e média ponderada, ainda não está implementado neste executor. Não posso substituir esse cálculo por trechos documentais. Você deseja uma contagem ou listagem dos registros disponíveis? Para preço por quilo, também seria necessário definir valores, quantidades e unidades compatíveis.",
+      "query": "Qual foi o valor médio por quilo de arroz contratado por municípios do RJ em 2025, e em quais modalidades?",
+      "query_id": "q_43a31db2",
+      "run_id": "a9fed5c2",
+      "routes": [
+        "agregada",
+        "estruturada"
+      ],
+      "filters": {},
+      "plano": {
+        "bases": [
+          "agregada",
+          "estruturada"
+        ],
+        "estrategia": "esclarecimento",
+        "operacao": "esclarecer",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_43a31db2",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": true,
+        "pergunta_esclarecimento": "O cálculo de médias monetárias, incluindo preço por quilo e média ponderada, ainda não está implementado neste executor. Não posso substituir esse cálculo por trechos documentais. Você deseja uma contagem ou listagem dos registros disponíveis? Para preço por quilo, também seria necessário definir valores, quantidades e unidades compatíveis."
+      },
+      "executado": false,
+      "modo_demonstracao": null,
+      "commit_demonstracao": null,
+      "estrategia": "esclarecimento",
+      "is_refusal": false,
+      "necessita_esclarecimento": true,
+      "evidences": [],
+      "tokens": {},
+      "latency_ms": 19889.37
+    },
+    "etapas": {
+      "query_analysis": 1,
+      "roteamento": 1,
+      "validacao": 1
+    },
+    "erros": []
+  },
+  "registro_original": "/content/drive/MyDrive/rag_grande_desafio/validacao_media_sem_suporte_20261019T152615485123Z",
+  "testes_locais": {
+    "aprovados": 525,
+    "deselecionados": 7
+  }
+}
