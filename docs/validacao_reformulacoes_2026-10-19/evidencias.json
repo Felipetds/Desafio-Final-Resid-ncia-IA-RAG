@@ -1,0 +1,474 @@
+{
+  "rodada_original": [
+    {
+      "caso": "P01_R",
+      "pergunta": "Liste as contratações de pregão eletrônico publicadas no RJ em março de 2026.",
+      "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+      "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+      "run_id": "b3437bfc",
+      "query_id": "q_d09f73f5",
+      "tempo_total_s": 27.281,
+      "answer": "**Total de correspondências: 1.358**\n\n**Recorte:** 1358 registros disponíveis na base carregada.\n\n**Filtros aplicados:** `{\"uf\": \"RJ\", \"data_inicial\": \"2026-03-01\", \"data_final\": \"2026-03-31\", \"modalidade_id\": 6}`\n\n**Página:** 1 de 68 — 20 registros exibidos.\n\n**Fontes correspondentes:** data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json\n\n**Campo utilizado para publicação:** `texto_integral.dataPublicacaoPncp`\n\nResultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação."
+    },
+    {
+      "caso": "P02_R",
+      "pergunta": "Resuma o PE 038/26/2026: quantidade de itens homologados, fracassados e desertos e valor total homologado.",
+      "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+      "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+      "run_id": "83796431",
+      "query_id": "q_418e79f5",
+      "tempo_total_s": 12.016,
+      "answer": "**Resultado calculado sobre o arquivo agregado**\n\n**Total de itens:** 19\n\n**Homologados:** 8\n\n**Fracassados:** 9\n\n**Desertos:** 2\n\n**Soma dos valores homologados informados:** R$ 141.002,08\n\n**Filtros aplicados:** `{\"id_contratacao_pncp\": \"42498600000171-1-000757/2026\"}`\n\n**Processo informado:** PE 038/26/2026\n\n**Homologados sem valor:** 0\n\n**Fontes do cálculo:** /content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv\n\n**Referências:** https://pncp.gov.br/editais/42498600000171/2026/757\n\nSoma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado."
+    },
+    {
+      "caso": "P03_R",
+      "pergunta": "Informe o objeto da ata nº 191/2026 da EBSERH e o número PNCP da contratação correspondente.",
+      "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+      "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+      "run_id": "6b36b2fb",
+      "query_id": "q_e687aad2",
+      "tempo_total_s": 248.0,
+      "answer": "Não foi possível gerar a resposta neste momento devido a uma falha no modelo de geração."
+    },
+    {
+      "caso": "P04_R",
+      "pergunta": "Explique as regras sobre pregão na Lei nº 14.133/2021.",
+      "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+      "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+      "run_id": "ff246054",
+      "query_id": "q_a8bf1c8d",
+      "tempo_total_s": 91.016,
+      "answer": "Trechos das evidências recuperadas:\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]"
+    },
+    {
+      "caso": "P05_R",
+      "pergunta": "No processo fictício SIM-RJ-001, informe os prazos por item e se são admitidas entregas parciais.",
+      "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+      "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+      "run_id": "6b4c3337",
+      "query_id": "q_eb8ffcad",
+      "tempo_total_s": 34.971,
+      "answer": "No processo fictício SIM-RJ-001, os prazos por item são os seguintes:  \n- **200 resmas de papel A4**: prazo de 10 dias após a emissão do pedido [Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1].  \n- **100 caixas de canetas**: prazo de 15 dias após a emissão do pedido [Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1].  \n\nAs entregas parciais são admitidas, conforme registrado na simulação: papel A4 em 10 dias e canetas em 15 dias [Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1].  \n\nNota: O conteúdo é parte de uma simulação fictícia e não representa uma contratação real [Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1]."
+    },
+    {
+      "caso": "P06_R",
+      "pergunta": "Informe o CPF e o telefone pessoal dos representantes das atas.",
+      "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+      "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+      "run_id": "b25fdfc8",
+      "query_id": "q_80afcfc8",
+      "tempo_total_s": 0.015,
+      "answer": "Não posso expor CPF, telefone pessoal ou e-mail pessoal."
+    },
+    {
+      "caso": "P07_R",
+      "pergunta": "Qual é o total de itens do PCA RJ de 2026 e o valor total estimado?",
+      "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+      "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+      "run_id": "ba8ccd4f",
+      "query_id": "q_fbb04809",
+      "tempo_total_s": 15.613,
+      "answer": "**Resultado calculado sobre o arquivo agregado**\n\n**Itens no arquivo:** 36.994\n\n**Valor total estimado informado:** R$ 55.968.524.178,3319\n\n**Filtros aplicados:** `{}`\n\n**Recorte associado à fonte:** `{\"documento\": \"PCA\", \"uf\": \"RJ\", \"ano\": 2026, \"observacao\": \"Recorte associado ao arquivo PCA disponibilizado; o cálculo utiliza todas as suas linhas.\"}`\n\n**Itens sem valor:** 0\n\n**Fontes do cálculo:** /content/repositorio1/data/raw/v3/agregada/pca_2026_estado_rj.csv\n\nContagem de linhas de dados e soma do campo 'Valor Total Estimado (R$)' de todo o arquivo carregado. O recorte de ano e UF deve ser confirmado pela origem do arquivo."
+    },
+    {
+      "caso": "P08_R",
+      "pergunta": "Na ata nº 137/2026 do INCA, qual é o objeto e qual empresa é a contratada?",
+      "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+      "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+      "run_id": "0fd52e5f",
+      "query_id": "q_e17cc282",
+      "tempo_total_s": 241.897,
+      "answer": "Não foi possível gerar a resposta neste momento devido a uma falha no modelo de geração."
+    },
+    {
+      "caso": "P09_R",
+      "pergunta": "Faça uma previsão do valor médio das contratações do RJ em 2027.",
+      "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+      "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+      "run_id": "2c809f0a",
+      "query_id": "q_e94623a6",
+      "tempo_total_s": 0.015,
+      "answer": "Este executor consulta registros disponíveis; não possui um modelo validado de previsão de valores futuros. Não posso fornecer essa previsão com segurança."
+    },
+    {
+      "caso": "M01_R",
+      "pergunta": "Resuma o PE 038/26/2026 e verifique os vínculos nas demais naturezas do corpus.",
+      "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+      "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+      "run_id": "872f68d5",
+      "query_id": "q_f7e29256",
+      "tempo_total_s": 80.1,
+      "answer": "**Resultado calculado sobre o arquivo agregado**\n\n**Total de itens:** 19\n\n**Homologados:** 8\n\n**Fracassados:** 9\n\n**Desertos:** 2\n\n**Soma dos valores homologados informados:** R$ 141.002,08\n\n**Filtros aplicados:** `{\"id_contratacao_pncp\": \"42498600000171-1-000757/2026\"}`\n\n**Processo informado:** PE 038/26/2026\n\n**Homologados sem valor:** 0\n\n**Verificação de vínculos no corpus carregado**\n\n**Chunks verificados:** 2172\n\n**estruturada:** 0 correspondências por identificador.\n\n**agregada:** 19 correspondências por identificador.\n\n**conversacional:** 0 correspondências por identificador.\n\n**normativa:** 0 correspondências por identificador.\n\nAusência de correspondências significa ausência de vínculo pelos identificadores pesquisados nos chunks carregados. Não comprova inexistência de documentos relacionados. Este método não verifica vínculos exclusivamente por conteúdo ou por outros números de processo.\n\n**Fontes do cálculo:** /content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv\n\n**Referências:** https://pncp.gov.br/editais/42498600000171/2026/757\n\nSoma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado."
+    }
+  ],
+  "replay_offline": [
+    {
+      "caso": "P03_R",
+      "run_id_replay": "f999392b",
+      "criterios_presentes": true,
+      "chunk_ids": [
+        "ata_00191.pdf_chunk_2",
+        "contratacoes_publicacao.json_chunk_400",
+        "ata_00191.pdf_chunk_12"
+      ]
+    },
+    {
+      "caso": "P04_R",
+      "run_id_replay": "60bf2e6f",
+      "criterios_presentes": true,
+      "chunk_ids": [
+        "lei_14133_2021.html_chunk_29",
+        "lei_14133_2021.html_chunk_207",
+        "lei_14133_2021.html_chunk_6"
+      ]
+    },
+    {
+      "caso": "P08_R",
+      "run_id_replay": "2c280855",
+      "criterios_presentes": true,
+      "chunk_ids": [
+        "ata_00137.pdf_chunk_14",
+        "ata_00137.pdf_chunk_1",
+        "contratacoes_publicacao.json_chunk_158"
+      ]
+    }
+  ],
+  "geracao_real_isolada": [
+    {
+      "caso": "P03_R",
+      "protocolo": "Geração real sobre recuperação corrigida e reproduzida offline. Sem nova execução de roteamento ou busca.",
+      "run_id_geracao": "04700270",
+      "run_id_replay": "f999392b",
+      "query_id": "q_replay_f999392b",
+      "tempo_total_s": 29.488,
+      "resposta_com_fontes": true,
+      "resultado": {
+        "query": "Informe o objeto da ata nº 191/2026 da EBSERH e o número PNCP da contratação correspondente.",
+        "query_id": "q_replay_f999392b",
+        "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual aquisição de o registro de preços para a eventual de Aquisição de Produtos para Saúde - peças mamógrafas (chassis), a fim de atender ao Complexo Hospitalar da Universidade Federal do Rio de Janeiro\n\n[Fonte: ata_00191.pdf_chunk_2]\n\n> \"numeroControlePNCP\": \"15126437000305-1-000676/2026\"\n\n[Fonte: contratacoes_publicacao.json_chunk_400]",
+        "confidence_level": "media",
+        "sources_used": [
+          {
+            "chunk_id": "ata_00191.pdf_chunk_2",
+            "text": "representada\t por\t\nANDREA\t REIMBERG\t FIGUEIREDO\n,\ninscrita\n\tno\tCPF\t\n[CPF_OCULTO]\n,\tde\tacordo\tcom\ta\tclassificação\tpor\tela\talcançada\te\tnas\tquantidades\tcotadas,\tatendendo\nas\t condições\t previstas\t no\t instrumento\t convocatório\t e\t no\t Termo\t de\t Referência,\t sujeitando-se\t as\t partes\t às\t normas\nconstantes\tno\tRegulamento\tde\tCompras\te\tContratos\tda\tEbserh\tversão\t3.0\t(RCC\t3.0),\tna\tLei\tn.º\t13.303,\tde\t30\tde\tjunho\nde\t2016,\tno\tDecreto\tn.º\t8.945,\tde\t27\tde\tdezembro\tde\t2016\t\ne,\tde\tforma\tsubsidiária,\tno\tDecreto\tn.º\t11.462,\tde\t31\tde\nmarço\tde\t2023,\tobservando\tainda\tas\tdisposições\ta\tseguir:\n1\n.\nOBJETO\n1\n.\n1\n.\nA\tpresente\tAta\tde\tRegistro\tde\tPreços\t-\tARP\ttem\tpor\tobjeto\to\tregistro\tde\tpreços\tpara\ta\t\neventual\n\taquisição\tde\no\t registro\t de\t preços\t para\t a\t\neventual\n\t de\t Aquisição\t de\t Produtos\t para\t Saúde\t -\t peças\t mamógrafas\t (chassis),\n\t\na\t fim\t de\natender\t ao\t Complexo\t Hospitalar\t da\t Universidade\t Federal\t do\t Rio\t de\t Janeiro\n,\t conforme\t especificado\t no\t Termo\t de\nReferência,\t anexo\t do\t Edital\t do\t Pregão\t\n90019\n/2026\n,\t que\t é\t parte\t integrante\t desta\t ARP,\t assim\t como\t a",
+            "rrf_score": 0.030303,
+            "rerank_score": null,
+            "retrieval_sources": [
+              "bm25",
+              "dense"
+            ],
+            "dense_distance": 1.063735008239746,
+            "bm25_score": 2.8056591054068347,
+            "source_file": "ata_00191.pdf",
+            "doc_type": "ata_reuniao",
+            "sensitivity": "restrito_sanitizado",
+            "base_id": "base_conversacional",
+            "natureza": "conversacional",
+            "metadata": {
+              "chunk_id": "ata_00191.pdf_chunk_2",
+              "source_file": "ata_00191.pdf",
+              "doc_type": "ata_reuniao",
+              "sensitivity": "restrito_sanitizado",
+              "base_id": "base_conversacional",
+              "natureza": "conversacional",
+              "uf": "RJ",
+              "ano": "",
+              "modalidade": "",
+              "orgao": "",
+              "municipio": "",
+              "valor": "",
+              "fornecedor": "",
+              "vigencia": "",
+              "pagina": 1
+            }
+          },
+          {
+            "chunk_id": "contratacoes_publicacao.json_chunk_400",
+            "text": "{\"srp\": true, \"orgaoEntidade\": {\"cnpj\": \"15126437000305\", \"razaoSocial\": \"EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH\", \"poderId\": \"N\", \"esferaId\": \"N\"}, \"anoCompra\": 2026, \"sequencialCompra\": 676, \"dataInclusao\": \"2026-03-02T07:09:35\", \"dataPublicacaoPncp\": \"2026-03-02T07:09:35\", \"dataAtualizacao\": \"2026-03-02T07:09:35\", \"numeroCompra\": \"90019\", \"unidadeOrgao\": {\"ufNome\": \"Rio de Janeiro\", \"codigoUnidade\": \"157243\", \"nomeUnidade\": \"COMPLEXO HOSPITALAR DA UNIVERSIDADE FEDERAL\", \"ufSigla\": \"RJ\", \"municipioNome\": \"Rio de Janeiro\", \"codigoIbge\": \"3304557\"}, \"amparoLegal\": {\"descricao\": \"pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns\", \"nome\": \"Lei 14.133/2021, Art. 28, I\", \"codigo\": 1}, \"dataAberturaProposta\": \"2026-03-02T08:00:00\", \"dataEncerramentoProposta\": \"2026-03-12T09:00:00\", \"informacaoComplementar\": \" Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=15724305900192026\", \"processo\": \"23877002295202692\", \"objetoCompra\": \"Aquisição de Produtos para Saúde - peças mamógrafas (chassis), para o Complexo Hospitalar da Universidade Federal do Rio de Janeiro (CH-UFRJ/EBSERH).\", \"linkSistemaOrigem\": \"https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=acompanhamento-compra&compra=15724305900192026\", \"justificativaPresencial\": null, \"unidadeSubRogada\": null, \"orgaoSubRogado\": null, \"valorTotalHomologado\": 172096.8, \"linkProcessoEletronico\": null, \"modalidadeId\": 6, \"numeroControlePNCP\": \"15126437000305-1-000676/2026\", \"emendaParlamentar\": null, \"dataAtualizacaoGlobal\": \"2026-03-17T13:32:08\", \"modoDisputaId\": 1, \"valorTotalEstimado\": 219960.0, \"modalidadeNome\": \"Pregão - Eletrônico\", \"modoDisputaNome\": \"Aberto\", \"tipoInstrumentoConvocatorioCodigo\": 1, \"tipoInstrumentoConvocatorioNome\": \"Edital\", \"fontesOrcamentarias\": [], \"situacaoCompraId\": 1, \"situacaoCompraNome\": \"Divulgada no PNCP\", \"usuarioNome\": \"Compras.gov.br\"}",
+            "rrf_score": 0.028442,
+            "rerank_score": null,
+            "retrieval_sources": [
+              "bm25",
+              "dense"
+            ],
+            "dense_distance": 0.8852459192276001,
+            "bm25_score": 1.1043199644056148,
+            "source_file": "contratacoes_publicacao.json",
+            "doc_type": "contrato",
+            "sensitivity": "publico",
+            "base_id": "base_estruturada",
+            "natureza": "estruturada",
+            "metadata": {
+              "chunk_id": "contratacoes_publicacao.json_chunk_400",
+              "source_file": "contratacoes_publicacao.json",
+              "doc_type": "contrato",
+              "sensitivity": "publico",
+              "base_id": "base_estruturada",
+              "natureza": "estruturada",
+              "uf": "RJ",
+              "ano": "2026",
+              "modalidade": "Pregão - Eletrônico",
+              "orgao": "EMPRESA BRASILEIRA DE SERVICOS HOSPITALARES - EBSERH",
+              "municipio": "Rio de Janeiro",
+              "valor": 172096.8,
+              "fornecedor": "",
+              "vigencia": "",
+              "id_pncp": "15126437000305-1-000676/2026",
+              "objeto": "Aquisição de Produtos para Saúde - peças mamógrafas (chassis), para o Complexo Hospitalar da Universidade Federal do Rio de Janeiro (CH-UFRJ/EBSERH).",
+              "ano_compra": "2026",
+              "data_publicacao": "2026-03-02T07:09:35",
+              "data_atualizacao": "2026-03-02T07:09:35",
+              "valor_homologado": 172096.8,
+              "valor_estimado": 219960.0
+            }
+          }
+        ],
+        "is_refusal": false,
+        "refusal_reason": null,
+        "tokens": {
+          "prompt": 2931,
+          "completion": 349,
+          "total": 3280
+        },
+        "modelo": "qcwind/qwen3-8b-instruct-Q4-K-M",
+        "latencia_ms": 29487.27,
+        "stage": "geracao"
+      }
+    },
+    {
+      "caso": "P04_R",
+      "protocolo": "Geração real sobre recuperação corrigida e reproduzida offline. Sem nova execução de roteamento ou busca.",
+      "run_id_geracao": "5fd6239b",
+      "run_id_replay": "60bf2e6f",
+      "query_id": "q_replay_60bf2e6f",
+      "tempo_total_s": 25.395,
+      "resposta_com_fontes": true,
+      "resultado": {
+        "query": "Explique as regras sobre pregão na Lei nº 14.133/2021.",
+        "query_id": "q_replay_60bf2e6f",
+        "answer": "Trechos das evidências recuperadas:\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+        "confidence_level": "media",
+        "sources_used": [
+          {
+            "chunk_id": "lei_14133_2021.html_chunk_29",
+            "text": "Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se \n\trefere o  art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir \n\tpadrões de desempenho e qualidade que possam ser objetivamente definidos \n\tpelo edital, por meio de especificações usuais de mercado. \n \n \n Parágrafo único. O pregão não se aplica às contratações de serviços técnicos \n\tespecializados de natureza predominantemente intelectual e de obras e \n\tserviços de engenharia, exceto os serviços de engenharia de que trata a \n\t alínea a do inciso XXI do  caput  do art. 6º desta Lei .",
+            "rrf_score": 0.031545,
+            "rerank_score": null,
+            "retrieval_sources": [
+              "bm25",
+              "dense"
+            ],
+            "dense_distance": 1.0670456886291504,
+            "bm25_score": 7.00406455468956,
+            "source_file": "lei_14133_2021.html",
+            "doc_type": "lei",
+            "sensitivity": "publico",
+            "base_id": "base_normativa",
+            "natureza": "normativa",
+            "metadata": {
+              "chunk_id": "lei_14133_2021.html_chunk_29",
+              "source_file": "lei_14133_2021.html",
+              "doc_type": "lei",
+              "sensitivity": "publico",
+              "base_id": "base_normativa",
+              "natureza": "normativa",
+              "uf": "",
+              "ano": "",
+              "modalidade": "",
+              "orgao": "",
+              "municipio": "",
+              "valor": "",
+              "fornecedor": "",
+              "vigencia": ""
+            }
+          },
+          {
+            "chunk_id": "lei_14133_2021.html_chunk_6",
+            "text": "Art. 6º Para os fins desta Lei, consideram-se: \n \n \n I - \n\tórgão: unidade de atuação integrante da estrutura da Administração Pública; \n \n \n II - \n\tentidade: unidade de atuação dotada de personalidade jurídica; \n \n \n III \n\t- Administração Pública: administração direta e indireta da União, dos \n\tEstados, do Distrito Federal e dos Municípios, inclusive as entidades com \n\tpersonalidade jurídica de direito privado sob controle do poder público e as \n\tfundações por ele instituídas ou mantidas; \n \n \n IV - \n\tAdministração: órgão ou entidade por meio do qual a Administração Pública \n\tatua; \n \n \n V - \n\tagente público: indivíduo que, em virtude de eleição, nomeação, designação, \n\tcontratação ou qualquer outra forma de investidura ou vínculo, exerce \n\tmandato, cargo, emprego ou função em pessoa jurídica integrante da \n\tAdministração Pública; \n \n \n VI - \n\tautoridade: agente público dotado de poder de decisão; \n \n \n VII \n\t- contratante: pessoa jurídica integrante da Administração Pública \n\tresponsável pela contratação; \n \n \n VIII \n\t- contratado: pessoa física ou jurídica, ou consórcio de pessoas jurídicas, \n\tsignatária de contrato com a Administração; \n \n \n IX - \n\tlicitante: pessoa física ou jurídica, ou consórcio de pessoas jurídicas, que \n\tparticipa ou manifesta a intenção de participar de processo licitatório, \n\tsendo-lhe equiparável, para os fins desta Lei, o fornecedor ou o prestador \n\tde serviço que, em atendimento à solicitação da Administração, oferece \n\tproposta; \n \n \n X - \n\tcompra: aquisição remunerada de bens para fornecimento de uma só vez ou \n\tparceladamente, considerada imediata aquela com prazo de entrega de até 30 \n\t(trinta) dias da ordem de fornecimento; \n \n \n XI - \n\tserviço: atividade ou conjunto de atividades destinadas a obter determinada \n\tutilidade, intelectual ou material, de interesse da Administração; \n \n \n XII \n\t- obra: toda atividade estabelecida, por força de lei, como privativa das \n\tprofissões de arquiteto e engenheiro que implica intervenção no meio \n\tambiente por meio de um conjunto harmônico de ações que, agregadas, formam \n\tum todo que inova o espaço físico da natureza ou acarreta alteração \n\tsubstancial das características originais de bem imóvel; \n \n \n XIII \n\t- bens e serviços comuns: aqueles cujos padrões de desempenho e qualidade \n\tpodem ser objetivamente definidos pelo edital, por meio de especificações \n\tusuais de mercado; \n \n \n XIV \n\t- bens e serviços especiais: aqueles que, por sua alta heterogeneidade ou \n\tcomplexidade, não podem ser descritos na forma do inciso XIII do  caput  \n\tdeste artigo, exigida justificativa prévia do contratante; \n \n \n XV - \n\tserviços e fornecimentos contínuos: serviços contratados e compras \n\trealizadas pela Administração Pública para a manutenção da atividade \n\tadministrativa, decorrentes de necessidades permanentes ou prolongadas; \n \n \n XVI \n\t- serviços contínuos com regime de dedicação exclusiva de mão de obra: \n\taqueles cujo modelo de execução contratual exige, entre outros requisitos, \n\tque: \n \n \n a) \n\tos empregados do contratado fiquem à disposição nas dependências do \n\tcontratante para a prestação dos serviços; \n \n \n b) o \n\tcontratado não compartilhe os recursos humanos e materiais disponíveis de \n\tuma contratação para execução simultânea de outros contratos; \n \n \n c) o \n\tcontratado possibilite a fiscalização pelo contratante quanto à \n\tdistribuição, controle e supervisão dos recursos humanos alocados aos seus \n\tcontratos; \n \n \n XVII \n\t- serviços não contínuos ou contratados por escopo: aqueles que impõem ao \n\tcontratado o dever de realizar a prestação de um serviço específico em \n\tperíodo predeterminado, podendo ser prorrogado, desde que justificadamente, \n\tpelo prazo necessário à conclusão do objeto; \n \n \n XVIII - serviços técnicos especializados de natureza predominantemente \n\tintelectual: aqueles realizados em trabalhos relativos a: \n \n \n a) \n\testudos técnicos, planejamentos, projetos básicos e projetos executivos; \n \n \n b) \n\tpareceres, perícias e avaliações em geral; \n \n \n c) \n\tassessorias e consultorias técnicas e auditorias financeiras e tributárias; \n \n \n d) \n\tfiscalização, supervisão e gerenciamento de obras e serviços; \n \n \n e) \n\tpatrocínio ou defesa de causas judiciais e administrativas; \n \n \n f) \n\ttreinamento e aperfeiçoamento de pessoal; \n \n \n g) \n\trestauração de obras de arte e de bens de valor histórico; \n \n \n h) \n\tcontroles de qualidade e tecnológico, análises, testes e ensaios de campo e \n\tlaboratoriais, instrumentação e monitoramento de parâmetros específicos de \n\tobras e do meio ambiente e demais serviços de engenharia que se enquadrem na \n\tdefinição deste inciso; \n \n \n XIX \n\t- notória especialização: qualidade de profissional ou de empresa cujo \n\tconceito, no campo de sua especialidade, decorrente de desempenho anterior, \n\testudos, experiência, publicações, organização, aparelhamento, equipe \n\ttécnica ou outros requisitos relacionados com suas atividades, permite \n\tinferir que o seu trabalho é essencial e reconhecidamente adequado à plena \n\tsatisfação do objeto do contrato; \n \n \n XX - \n\testudo técnico preliminar: documento constitutivo da primeira etapa do \n\tplanejamento de uma contratação que caracteriza o interesse público \n\tenvolvido e a sua melhor solução e dá base ao anteprojeto, ao termo de \n\treferência ou ao projeto básico a serem elaborados caso se conclua pela \n\tviabilidade da contratação; \n \n \n XXI \n\t- serviço de engenharia: toda atividade ou conjunto de atividades destinadas \n\ta obter determinada utilidade, intelectual ou material, de interesse para a \n\tAdministração e que, não enquadradas no conceito de obra a que se refere o \n\tinciso XII do  caput  deste artigo, são estabelecidas, por força de \n\tlei, como privativas das profissões de arquiteto e engenheiro ou de técnicos \n\tespecializados, que compreendem: \n \n \n a) \n\tserviço comum de engenharia: todo serviço de engenharia que tem por objeto \n\tações, objetivamente padronizáveis em termos de desempenho e qualidade, de \n\tmanutenção, de adequação e de adaptação de bens móveis e imóveis, com \n\tpreservação das características originais dos bens; \n \n \n b) \n\tserviço especial de engenharia: aquele que, por sua alta heterogeneidade ou \n\tcomplexidade, não pode se enquadrar na definição constante da alínea a \n\tdeste inciso; \n \n \n XXII \n\t- obras, serviços e fornecimentos de grande vulto: aqueles cujo valor \n\testimado supera R$ 200.000.000,00 (duzentos milhões de reais);        \n \n \n (Vide \n\tDecreto nº 10.922, de 2021)      \n\t (Vigência)      \n\t \n (Vide \n\t\tDecreto nº 11.317, de 2022)       \n\t\t Vigência       \n \n (Vide \n\t\tDecreto nº 11.871, de 2023)     \n\t\t Vigência     \n\t (Vide Decreto nº \n\t12.343, de 2024)    \n\t Vigência    \n\t (Vide Decreto nº \n\t12.807, de 2025)     Vigência \n \n \n XXIII - termo de referência: documento necessário para a contratação de bens \n\te serviços, que deve conter os seguintes parâmetros e elementos descritivos: \n \n \n a) \n\tdefinição do objeto, incluídos sua natureza, os quantitativos, o prazo do \n\tcontrato e, se for o caso, a possibilidade de sua prorrogação; \n \n \n b) \n\tfundamentação da contratação, que consiste na referência aos estudos \n\ttécnicos preliminares correspondentes ou, quando não for possível divulgar \n\tesses estudos, no extrato das partes que não contiverem informações \n\tsigilosas; \n \n \n c) \n\tdescrição da solução como um todo, considerado todo o ciclo de vida do \n\tobjeto; \n \n \n d) \n\trequisitos da contratação; \n \n \n e) \n\tmodelo de execução do objeto, que consiste na definição de como o contrato \n\tdeverá produzir os resultados pretendidos desde o seu início até o seu \n\tencerramento; \n \n \n f) \n\tmodelo de gestão do contrato, que descreve como a execução do objeto será \n\tacompanhada e fiscalizada pelo órgão ou entidade; \n \n \n g) \n\tcritérios de medição e de pagamento; \n \n \n h) \n\tforma e critérios de seleção do fornecedor; \n \n \n i) \n\testimativas do valor da contratação, acompanhadas dos preços unitários \n\treferenciais, das memórias de cálculo e dos documentos que lhe dão suporte, \n\tcom os parâmetros utilizados para a obtenção dos preços e para os \n\trespectivos cálculos, que devem constar de documento separado e \n\tclassificado; \n \n \n j) \n\tadequação orçamentária; \n \n \n XXIV \n\t- anteprojeto: peça técnica com todos os subsídios necessários à elaboração \n\tdo projeto básico, que deve conter, no mínimo, os seguintes elementos: \n \n \n a) \n\tdemonstração e justificativa do programa de necessidades, avaliação de \n\tdemanda do público-alvo, motivação técnico-econômico-social do \n\tempreendimento, visão global dos investimentos e definições relacionadas ao \n\tnível de serviço desejado; \n \n \n b) \n\tcondições de solidez, de segurança e de durabilidade; \n \n \n c) \n\tprazo de entrega; \n \n \n d) \n\testética do projeto arquitetônico, traçado geométrico e/ou projeto da área \n\tde influência, quando cabível; \n \n \n e) \n\tparâmetros de adequação ao interesse público, de economia na utilização, de \n\tfacilidade na execução, de impacto ambiental e de acessibilidade; \n \n \n f) \n\tproposta de concepção da obra ou do serviço de engenharia; \n \n \n g) \n\tprojetos anteriores ou estudos preliminares que embasaram a concepção \n\tproposta; \n \n \n h) \n\tlevantamento topográfico e cadastral; \n \n \n i) \n\tpareceres de sondagem; \n \n \n j) \n\tmemorial descritivo dos elementos da edificação, dos componentes \n\tconstrutivos e dos materiais de construção, de forma a estabelecer padrões \n\tmínimos para a contratação; \n \n \n XXV \n\t- projeto básico: conjunto de elementos necessários e suficientes, com nível \n\tde precisão adequado para definir e dimensionar a obra ou o serviço, ou o \n\tcomplexo de obras ou de serviços objeto da licitação, elaborado com base nas \n\tindicações dos estudos técnicos preliminares, que assegure a viabilidade \n\ttécnica e o adequado tratamento do impacto ambiental do empreendimento e que \n\tpossibilite a avaliação do custo da obra e a definição dos métodos e do \n\tprazo de execução, devendo conter os seguintes elementos: \n \n \n a) \n\tlevantamentos topográficos e cadastrais, sondagens e ensaios geotécnicos, \n\tensaios e análises laboratoriais, estudos socioambientais e demais dados e \n\tlevantamentos necessários para execução da solução escolhida; \n \n \n b) \n\tsoluções técnicas globais e localizadas, suficientemente detalhadas, de \n\tforma a evitar, por ocasião da elaboração do projeto executivo e da \n\trealização das obras e montagem, a necessidade de reformulações ou variantes \n\tquanto à qualidade, ao preço e ao prazo inicialmente definidos; \n \n \n c) \n\tidentificação dos tipos de serviços a executar e dos materiais e \n\tequipamentos a incorporar à obra, bem como das suas especificações, de modo \n\ta assegurar os melhores resultados para o empreendimento e a segurança \n\texecutiva na utilização do objeto, para os fins a que se destina, \n\tconsiderados os riscos e os perigos identificáveis, sem frustrar o caráter \n\tcompetitivo para a sua execução; \n \n \n d) \n\tinformações que possibilitem o estudo e a definição de métodos construtivos, \n\tde instalações provisórias e de condições organizacionais para a obra, sem \n\tfrustrar o caráter competitivo para a sua execução; \n \n \n e) \n\tsubsídios para montagem do plano de licitação e gestão da obra, \n\tcompreendidos a sua programação, a estratégia de suprimentos, as normas de \n\tfiscalização e outros dados necessários em cada caso; \n \n \n f) \n\torçamento detalhado do custo global da obra, fundamentado em quantitativos \n\tde serviços e fornecimentos propriamente avaliados, obrigatório \n\texclusivamente para os regimes de execução previstos nos  incisos I, II, III, \n\tIV e VII do  caput  do art. 46 desta Lei ; \n \n \n XXVI \n\t- projeto executivo: conjunto de elementos necessários e suficientes à \n\texecução completa da obra, com o detalhamento das soluções previstas no \n\tprojeto básico, a identificação de serviços, de materiais e de equipamentos \n\ta serem incorporados à obra, bem como suas especificações técnicas, de \n\tacordo com as normas técnicas pertinentes; \n \n \n XXVII - matriz de riscos: cláusula contratual definidora de riscos e de \n\tresponsabilidades entre as partes e caracterizadora do equilíbrio \n\teconômico-financeiro inicial do contrato, em termos de ônus financeiro \n\tdecorrente de eventos supervenientes à contratação, contendo, no mínimo, as \n\tseguintes informações: \n \n \n a) \n\tlistagem de possíveis eventos supervenientes à assinatura do contrato que \n\tpossam causar impacto em seu equilíbrio econômico-financeiro e previsão de \n\teventual necessidade de prolação de termo aditivo por ocasião de sua \n\tocorrência; \n \n \n b) \n\tno caso de obrigações de resultado, estabelecimento das frações do objeto \n\tcom relação às quais haverá liberdade para os contratados inovarem em \n\tsoluções metodológicas ou tecnológicas, em termos de modificação das \n\tsoluções previamente delineadas no anteprojeto ou no projeto básico; \n \n \n c) \n\tno caso de obrigações de meio, estabelecimento preciso das frações do objeto \n\tcom relação às quais não haverá liberdade para os contratados inovarem em \n\tsoluções metodológicas ou tecnológicas, devendo haver obrigação de aderência \n\tentre a execução e a solução predefinida no anteprojeto ou no projeto \n\tbásico, consideradas as características do regime de execução no caso de \n\tobras e serviços de engenharia; \n \n \n XXVIII - empreitada por preço unitário: contratação da execução da obra ou \n\tdo serviço por preço certo de unidades determinadas; \n \n \n XXIX \n\t- empreitada por preço global: contratação da execução da obra ou do serviço \n\tpor preço certo e total; \n \n \n XXX \n\t- empreitada integral: contratação de empreendimento em sua integralidade, \n\tcompreendida a totalidade das etapas de obras, serviços e instalações \n\tnecessárias, sob inteira responsabilidade do contratado até sua entrega ao \n\tcontratante em condições de entrada em operação, com características \n\tadequadas às finalidades para as quais foi contratado e atendidos os \n\trequisitos técnicos e legais para sua utilização com segurança estrutural e \n\toperacional; \n \n \n XXXI \n\t- contratação por tarefa: regime de contratação de mão de obra para pequenos \n\ttrabalhos por preço certo, com ou sem fornecimento de materiais; \n \n \n XXXII - contratação integrada: regime de contratação de obras e serviços de \n\tengenharia em que o contratado é responsável por elaborar e desenvolver os \n\tprojetos básico e executivo, executar obras e serviços de engenharia, \n\tfornecer bens ou prestar serviços especiais e realizar montagem, teste, \n\tpré-operação e as demais operações necessárias e suficientes para a entrega \n\tfinal do objeto; \n \n \n XXXIII - contratação semi-integrada: regime de contratação de obras e \n\tserviços de engenharia em que o contratado é responsável por elaborar e \n\tdesenvolver o projeto executivo, executar obras e serviços de engenharia, \n\tfornecer bens ou prestar serviços especiais e realizar montagem, teste, \n\tpré-operação e as demais operações necessárias e suficientes para a entrega \n\tfinal do objeto; \n \n \n XXXIV - fornecimento e prestação de serviço associado: regime de contratação \n\tem que, além do fornecimento do objeto, o contratado responsabiliza-se por \n\tsua operação, manutenção ou ambas, por tempo determinado; \n \n \n XXXV \n\t- licitação internacional: licitação processada em território nacional na \n\tqual é admitida a participação de licitantes estrangeiros, com a \n\tpossibilidade de cotação de preços em moeda estrangeira, ou licitação na \n\tqual o objeto contratual pode ou deve ser executado no todo ou em parte em \n\tterritório estrangeiro; \n \n \n XXXVI - serviço nacional: serviço prestado em território nacional, nas \n\tcondições estabelecidas pelo Poder Executivo federal; \n \n \n XXXVII - produto manufaturado nacional: produto manufaturado produzido no \n\tterritório nacional de acordo com o processo produtivo básico ou com as \n\tregras de origem estabelecidas pelo Poder Executivo federal; \n \n \n XXXVIII - concorrência: modalidade de licitação para contratação de bens e \n\tserviços especiais e de obras e serviços comuns e especiais de engenharia, \n\tcujo critério de julgamento poderá ser: \n \n \n a) \n\tmenor preço; \n \n \n b) \n\tmelhor técnica ou conteúdo artístico; \n \n \n c) \n\ttécnica e preço; \n \n \n d) \n\tmaior retorno econômico; \n \n \n e) \n\tmaior desconto; \n \n \n XXXIX - concurso: modalidade de licitação para escolha de trabalho técnico, \n\tcientífico ou artístico, cujo critério de julgamento será o de melhor \n\ttécnica ou conteúdo artístico, e para concessão de prêmio ou remuneração ao \n\tvencedor; \n \n \n XL - \n\tleilão: modalidade de licitação para alienação de bens imóveis ou de bens \n\tmóveis inservíveis ou legalmente apreendidos a quem oferecer o maior lance; \n \n \n XLI \n\t- pregão: modalidade de licitação obrigatória para aquisição de bens e \n\tserviços comuns, cujo critério de julgamento poderá ser o de menor preço ou \n\to de maior desconto; \n \n \n XLII \n\t- diálogo competitivo: modalidade de licitação para contratação de obras, \n\tserviços e compras em que a Administração Pública realiza diálogos com \n\tlicitantes previamente selecionados mediante critérios objetivos, com o \n\tintuito de desenvolver uma ou mais alternativas capazes de atender às suas \n\tnecessidades, devendo os licitantes apresentar proposta final após o \n\tencerramento dos diálogos; \n \n \n XLIII - credenciamento: processo administrativo de chamamento público em que \n\ta Administração Pública convoca interessados em prestar serviços ou fornecer \n\tbens para que, preenchidos os requisitos necessários, se credenciem no órgão \n\tou na entidade para executar o objeto quando convocados; \n \n \n XLIV \n\t- pré-qualificação: procedimento seletivo prévio à licitação, convocado por \n\tmeio de edital, destinado à análise das condições de habilitação, total ou \n\tparcial, dos interessados ou do objeto; \n \n \n XLV \n\t- sistema de registro de preços: conjunto de procedimentos para realização, \n\tmediante contratação direta ou licitação nas modalidades pregão ou \n\tconcorrência, de registro formal de preços relativos a prestação de \n\tserviços, a obras e a aquisição e locação de bens para contratações futuras; \n \n \n XLVI \n\t- ata de registro de preços: documento vinculativo e obrigacional, com \n\tcaracterística de compromisso para futura contratação, no qual são \n\tregistrados o objeto, os preços, os fornecedores, os órgãos participantes e \n\tas condições a serem praticadas, conforme as disposições contidas no edital \n\tda licitação, no aviso ou instrumento de contratação direta e nas propostas \n\tapresentadas; \n \n \n XLVII - órgão ou entidade gerenciadora: órgão ou entidade da Administração \n\tPública responsável pela condução do conjunto de procedimentos para registro \n\tde preços e pelo gerenciamento da ata de registro de preços dele decorrente; \n \n \n XLVIII - órgão ou entidade participante: órgão ou entidade da Administração \n\tPública que participa dos procedimentos iniciais da contratação para \n\tregistro de preços e integra a ata de registro de preços; \n \n \n XLIX \n\t- órgão ou entidade não participante: órgão ou entidade da Administração \n\tPública que não participa dos procedimentos iniciais da licitação para \n\tregistro de preços e não integra a ata de registro de preços; \n \n \n L - \n\tcomissão de contratação: conjunto de agentes públicos indicados pela \n\tAdministração, em caráter permanente ou especial, com a função de receber, \n\texaminar e julgar documentos relativos às licitações e aos procedimentos \n\tauxiliares; \n \n \n LI - \n\tcatálogo eletrônico de padronização de compras, serviços e obras: sistema \n\tinformatizado, de gerenciamento centralizado e com indicação de preços, \n\tdestinado a permitir a padronização de itens a serem adquiridos pela \n\tAdministração Pública e que estarão disponíveis para a licitação; \n \n \n LII \n\t- sítio eletrônico oficial: sítio da internet, certificado digitalmente por \n\tautoridade certificadora, no qual o ente federativo divulga de forma \n\tcentralizada as informações e os serviços de governo digital dos seus órgãos \n\te entidades; \n \n \n LIII \n\t- contrato de eficiência: contrato cujo objeto é a prestação de serviços, \n\tque pode incluir a realização de obras e o fornecimento de bens, com o \n\tobjetivo de proporcionar economia ao contratante, na forma de redução de \n\tdespesas correntes, remunerado o contratado com base em percentual da \n\teconomia gerada; \n \n \n LIV \n\t- seguro-garantia: seguro que garante o fiel cumprimento das obrigações \n\tassumidas pelo contratado; \n \n \n LV - \n\tprodutos para pesquisa e desenvolvimento: bens, insumos, serviços e obras \n\tnecessários para atividade de pesquisa científica e tecnológica, \n\tdesenvolvimento de tecnologia ou inovação tecnológica, discriminados em \n\tprojeto de pesquisa; \n \n \n LVI \n\t- sobrepreço: preço orçado para licitação ou contratado em valor \n\texpressivamente superior aos preços referenciais de mercado, seja de apenas \n\t1 (um) item, se a licitação ou a contratação for por preços unitários de \n\tserviço, seja do valor global do objeto, se a licitação ou a contratação for \n\tpor tarefa, empreitada por preço global ou empreitada integral, \n\tsemi-integrada ou integrada; \n \n \n LVII \n\t- superfaturamento: dano provocado ao patrimônio da Administração, \n\tcaracterizado, entre outras situações, por: \n \n \n a) \n\tmedição de quantidades superiores às efetivamente executadas ou fornecidas; \n \n \n b) \n\tdeficiência na execução de obras e de serviços de engenharia que resulte em \n\tdiminuição da sua qualidade, vida útil ou segurança; \n \n \n c) \n\talterações no orçamento de obras e de serviços de engenharia que causem \n\tdesequilíbrio econômico-financeiro do contrato em favor do contratado; \n \n \n d) \n\toutras alterações de cláusulas financeiras que gerem recebimentos \n\tcontratuais antecipados, distorção do cronograma físico-financeiro, \n\tprorrogação injustificada do prazo contratual com custos adicionais para a \n\tAdministração ou reajuste irregular de preços; \n \n \n LVIII - reajustamento em sentido estrito: forma de manutenção do equilíbrio \n\teconômico-financeiro de contrato consistente na aplicação do índice de \n\tcorreção monetária previsto no contrato, que deve retratar a variação \n\tefetiva do custo de produção, admitida a adoção de índices específicos ou \n\tsetoriais; \n \n \n LIX \n\t- repactuação: forma de manutenção do equilíbrio econômico-financeiro de \n\tcontrato utilizada para serviços contínuos com regime de dedicação exclusiva \n\tde mão de obra ou predominância de mão de obra, por meio da análise da \n\tvariação dos custos contratuais, devendo estar prevista no edital com data \n\tvinculada à apresentação das propostas, para os custos decorrentes do \n\tmercado, e com data vinculada ao acordo, à convenção coletiva ou ao dissídio \n\tcoletivo ao qual o orçamento esteja vinculado, para os custos decorrentes da \n\tmão de obra; \n \n \n LX - \n\tagente de contratação: pessoa designada pela autoridade competente, entre \n\tservidores efetivos ou empregados públicos dos quadros permanentes da \n\tAdministração Pública, para tomar decisões, acompanhar o trâmite da \n\tlicitação, dar impulso ao procedimento licitatório e executar quaisquer \n\toutras atividades necessárias ao bom andamento do certame até a homologação. \n \n \n CAPÍTULO IV \n \n DOS \n\tAGENTES PÚBLICOS",
+            "rrf_score": 0.012195,
+            "rerank_score": null,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "dense_distance": null,
+            "bm25_score": 1.1213935380715574,
+            "source_file": "lei_14133_2021.html",
+            "doc_type": "lei",
+            "sensitivity": "publico",
+            "base_id": "base_normativa",
+            "natureza": "normativa",
+            "metadata": {
+              "chunk_id": "lei_14133_2021.html_chunk_6",
+              "source_file": "lei_14133_2021.html",
+              "doc_type": "lei",
+              "sensitivity": "publico",
+              "base_id": "base_normativa",
+              "natureza": "normativa",
+              "uf": "",
+              "ano": "",
+              "modalidade": "",
+              "orgao": "",
+              "municipio": "",
+              "valor": "",
+              "fornecedor": "",
+              "vigencia": ""
+            }
+          }
+        ],
+        "is_refusal": false,
+        "refusal_reason": null,
+        "tokens": {
+          "prompt": 2050,
+          "completion": 653,
+          "total": 2703
+        },
+        "modelo": "qcwind/qwen3-8b-instruct-Q4-K-M",
+        "latencia_ms": 25394.79,
+        "stage": "geracao"
+      }
+    },
+    {
+      "caso": "P08_R",
+      "protocolo": "Geração real sobre recuperação corrigida e reproduzida offline. Sem nova execução de roteamento ou busca.",
+      "run_id_geracao": "d96a1450",
+      "run_id_replay": "2c280855",
+      "query_id": "q_replay_2c280855",
+      "tempo_total_s": 47.591,
+      "resposta_com_fontes": true,
+      "resultado": {
+        "query": "Na ata nº 137/2026 do INCA, qual é o objeto e qual empresa é a contratada?",
+        "query_id": "q_replay_2c280855",
+        "answer": "Trechos das evidências recuperadas:\n\n> 11. CONDIÇÕES GERAIS 11.1. As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, as obrigações da Administração e do fornecedor registrado, penalidades e demais condições do ajuste, encontram-se deﬁnidos no Termo de Referência, anexo ao edital. Para ﬁrmeza e validade do pactuado, a presente Ata foi lavrada em 2 (duas) vias de igual teor, que, depois de lida e achada em ordem, vai assinada pelas partes e encaminhada cópia aos demais órgãos participantes (se houver). INSTRUMENTO SUBSTITUTIVO AO CONTRATO (ART. 95, INCISO II, DA LEI 14.133, DE 2021) A União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça Cruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50, neste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, portador da Matrícula SIAPE nº 6241986, instituído pela Portaria nº 1.619, publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023, e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA, resolvem celebrar o presente INSTRUMENTO SUBSTITUTIVO AO CONTRATO, que será regido pela Lei nº 14.133/2021, legislação correlata e pelo Edital e anexos do Pregão Eletrônico 91.051/2026 – INCA, cuja Ata de Registro de Preços Nº 137/2026 é objeto deste TERMO, vinculado ao Processo de SRP - nº 25410.002318/2025-91, sob os termos e condições a seguir estabelecidos: 1. FORMALIZAÇÃO DA CONTRATAÇÃO 1.1. O adjudicatário terá o prazo de 05 (cinco) dias, contados a partir da data de sua convocação, para aceitar o instrumento equivalente ao contrato - Nota de Empenho, sob pena de decair do direito à contratação, sem prejuízo das sanções previstas. 1.2. O prazo poderá ser prorrogado, por igual período, por solicitação justiﬁcada do adjudicatário e\n\n[Fonte: ata_00137.pdf_chunk_14]\n\n> Ministério da Saúde Secretaria de Atenção Especializada à Saúde Instituto Nacional de Câncer Coordenação de Administração Geral Divisão de Suprimentos ATA DE REGISTRO DE PREÇOS Nº 137/2026 Processo nº 25410.002318/2025-91 REGISTRO DE PREÇOS nº 045/2025 PREGÃO ELETRÔNICO Nº 91.051/2026 – INCA A União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça Cruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50, neste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, nomeado(a) pela Portaria nº 1.619, publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023,portador da Matrícula Funcional nº nº 6241986, considerando o julgamento da licitação na modalidade de pregão, na forma eletrônica, para REGISTRO DE PREÇOS n° 045/2025, publicada no Portal Nacional de Contratações Públicas - PNCP de 01/04/2026, processo administrativo n.º 25410.002318/2025-91, RESOLVE registrar os preços da(s) empresa(s) indicada(s) e qualiﬁcada(s) nesta ATA, de acordo com a classiﬁcação por ela(s) alcançada(s) e na(s) quantidade(s) cotada(s), atendendo às condições previstas no Edital de licitação, sujeitando-se as partes às normas constantes na Lei nº 14.133, de 1º de abril de 2021, no Decreto n.º 11.462, de 31 de março de 2023, e em conformidade com as disposições a seguir: 1. DO OBJETO 1.1. A presente Ata tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS ELÉTRICAS, especiﬁcado(s) no(s) item(ns) 1 do Termo de Referência, anexo I do edital de licitação nº 91.051/2026 que é parte integrante desta Ata, assim como as propostas cujos preços tenham sido registrados, independentemente de transcrição. 2. DOS PREÇOS, ESPECIFICAÇÕES E QUANTITATIVO 2.1. O preço registrado , as especiﬁcações do objeto, as quantidades mínimas e máximas de cada item, fornecedor(es) e as demais condições ofertadas na(s) proposta(s) são as que seguem:\n\n[Fonte: ata_00137.pdf_chunk_1]\n\n> {\"srp\": true, \"orgaoEntidade\": {\"cnpj\": \"00394544000185\", \"razaoSocial\": \"MINISTERIO DA SAUDE\", \"poderId\": \"E\", \"esferaId\": \"F\"}, \"anoCompra\": 2026, \"sequencialCompra\": 359, \"dataInclusao\": \"2026-03-02T07:05:35\", \"dataPublicacaoPncp\": \"2026-03-02T07:05:35\", \"dataAtualizacao\": \"2026-03-02T07:05:35\", \"numeroCompra\": \"91051\", \"unidadeOrgao\": {\"ufNome\": \"Rio de Janeiro\", \"codigoUnidade\": \"250052\", \"nomeUnidade\": \"INSTITUTO NACIONAL DO CANCER - RJ\", \"ufSigla\": \"RJ\", \"municipioNome\": \"Rio de Janeiro\", \"codigoIbge\": \"3304557\"}, \"amparoLegal\": {\"descricao\": \"pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns\", \"nome\": \"Lei 14.133/2021, Art. 28, I\", \"codigo\": 1}, \"dataAberturaProposta\": \"2026-03-02T09:00:00\", \"dataEncerramentoProposta\": \"2026-03-16T09:00:00\", \"informacaoComplementar\": \"Acessar os sites www.compras.gov.br ou www.inca.gov.br para retirar o edital Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=25005205910512026\", \"processo\": \"25410002318202591\", \"objetoCompra\": \"Aquisição de Rodízios para Camas Elétricas Stryker. ( PROCESSO: 25410.002318/2025-91 )\", \"linkSistemaOrigem\": \"https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=acompanhamento-compra&compra=25005205910512026\", \"justificativaPresencial\": null, \"unidadeSubRogada\": null, \"orgaoSubRogado\": null, \"valorTotalHomologado\": 319708.0, \"linkProcessoEletronico\": null, \"modalidadeId\": 6, \"numeroControlePNCP\": \"00394544000185-1-000359/2026\", \"emendaParlamentar\": null, \"dataAtualizacaoGlobal\": \"2026-04-01T09:19:20\", \"modoDisputaId\": 1, \"valorTotalEstimado\": 651752.0, \"modalidadeNome\": \"Pregão - Eletrônico\", \"modoDisputaNome\": \"Aberto\", \"tipoInstrumentoConvocatorioCodigo\": 1, \"tipoInstrumentoConvocatorioNome\": \"Edital\", \"fontesOrcamentarias\": [], \"situacaoCompraId\": 1, \"situacaoCompraNome\": \"Divulgada no PNCP\", \"usuarioNome\": \"Compras.gov.br\"}\n\n[Fonte: contratacoes_publicacao.json_chunk_158]",
+        "confidence_level": "alta",
+        "sources_used": [
+          {
+            "chunk_id": "ata_00137.pdf_chunk_14",
+            "text": "11. CONDIÇÕES GERAIS\n11.1. As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, as obrigações da\nAdministração e do fornecedor registrado, penalidades e demais condições do ajuste, encontram-se deﬁnidos no\nTermo de Referência, anexo ao edital.\n \nPara ﬁrmeza e validade do pactuado, a presente Ata foi lavrada em 2 (duas) vias de igual teor, que, depois de lida e\nachada em ordem, vai assinada pelas partes e encaminhada cópia aos demais órgãos participantes (se houver).\n \n \n \nINSTRUMENTO SUBSTITUTIVO AO CONTRATO\n(ART. 95, INCISO II, DA LEI 14.133, DE 2021)\nA União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça\nCruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50,\nneste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, portador da Matrícula SIAPE nº\n6241986, instituído pela Portaria nº 1.619, publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023, e de\noutro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96,\nestabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada\nCONTRATADA, resolvem celebrar o presente INSTRUMENTO SUBSTITUTIVO AO CONTRATO, que será regido pela Lei\nnº 14.133/2021, legislação correlata e pelo Edital e anexos do Pregão Eletrônico 91.051/2026 – INCA, cuja Ata de\nRegistro de Preços Nº 137/2026 é objeto deste TERMO, vinculado ao Processo de SRP - nº 25410.002318/2025-91,\nsob os termos e condições a seguir estabelecidos:\n1. FORMALIZAÇÃO DA CONTRATAÇÃO\n1.1. O adjudicatário terá o prazo de 05 (cinco) dias, contados a partir da data de sua convocação, para\naceitar o instrumento equivalente ao contrato - Nota de Empenho, sob pena de decair do direito à contratação, sem\nprejuízo das sanções previstas.\n1.2. O prazo poderá ser prorrogado, por igual período, por solicitação justiﬁcada do adjudicatário e",
+            "rrf_score": 0.032266,
+            "rerank_score": null,
+            "retrieval_sources": [
+              "bm25",
+              "dense"
+            ],
+            "dense_distance": 0.9384186267852783,
+            "bm25_score": 4.58485423809539,
+            "source_file": "ata_00137.pdf",
+            "doc_type": "ata_reuniao",
+            "sensitivity": "restrito_sanitizado",
+            "base_id": "base_conversacional",
+            "natureza": "conversacional",
+            "metadata": {
+              "chunk_id": "ata_00137.pdf_chunk_14",
+              "source_file": "ata_00137.pdf",
+              "doc_type": "ata_reuniao",
+              "sensitivity": "restrito_sanitizado",
+              "base_id": "base_conversacional",
+              "natureza": "conversacional",
+              "uf": "RJ",
+              "ano": "",
+              "modalidade": "",
+              "orgao": "",
+              "municipio": "",
+              "valor": "",
+              "fornecedor": "",
+              "vigencia": "",
+              "pagina": 6
+            }
+          },
+          {
+            "chunk_id": "ata_00137.pdf_chunk_1",
+            "text": "Ministério da Saúde\nSecretaria de Atenção Especializada à Saúde\nInstituto Nacional de Câncer\nCoordenação de Administração Geral\nDivisão de Suprimentos\n  \nATA DE REGISTRO DE PREÇOS Nº 137/2026\nProcesso nº 25410.002318/2025-91\n  \nREGISTRO DE PREÇOS nº 045/2025\nPREGÃO ELETRÔNICO Nº 91.051/2026 – INCA\n \n \nA União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça\nCruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50,\nneste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, nomeado(a) pela Portaria nº 1.619,\npublicada no Diário Oﬁcial da União de 13 de fevereiro de 2023,portador da Matrícula Funcional nº nº 6241986,\nconsiderando o julgamento da licitação na modalidade de pregão, na forma eletrônica, para REGISTRO DE PREÇOS n°\n045/2025, publicada no Portal Nacional de Contratações Públicas - PNCP de 01/04/2026, processo administrativo\nn.º 25410.002318/2025-91, RESOLVE registrar os preços da(s) empresa(s) indicada(s) e qualiﬁcada(s) nesta ATA, de\nacordo com a classiﬁcação por ela(s) alcançada(s) e na(s) quantidade(s) cotada(s), atendendo às condições previstas\nno Edital de licitação, sujeitando-se as partes às normas constantes na Lei nº 14.133, de 1º de abril de 2021, no\nDecreto n.º 11.462, de 31 de março de 2023, e em conformidade com as disposições a seguir:\n \n \n1. DO OBJETO\n1.1. A presente Ata tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS\nELÉTRICAS, especiﬁcado(s) no(s) item(ns) 1 do Termo de Referência, anexo I do edital de licitação nº 91.051/2026\nque é parte integrante desta Ata, assim como as propostas cujos preços tenham sido registrados,\nindependentemente de transcrição.\n \n2. DOS PREÇOS, ESPECIFICAÇÕES E QUANTITATIVO\n2.1. O preço registrado , as especiﬁcações do objeto, as quantidades mínimas e máximas de cada item,\nfornecedor(es) e as demais condições ofertadas na(s) proposta(s) são as que seguem:",
+            "rrf_score": 0.031099,
+            "rerank_score": null,
+            "retrieval_sources": [
+              "bm25",
+              "dense"
+            ],
+            "dense_distance": 1.1362544298171997,
+            "bm25_score": 5.05947136328982,
+            "source_file": "ata_00137.pdf",
+            "doc_type": "ata_reuniao",
+            "sensitivity": "restrito_sanitizado",
+            "base_id": "base_conversacional",
+            "natureza": "conversacional",
+            "metadata": {
+              "chunk_id": "ata_00137.pdf_chunk_1",
+              "source_file": "ata_00137.pdf",
+              "doc_type": "ata_reuniao",
+              "sensitivity": "restrito_sanitizado",
+              "base_id": "base_conversacional",
+              "natureza": "conversacional",
+              "uf": "RJ",
+              "ano": "",
+              "modalidade": "",
+              "orgao": "",
+              "municipio": "",
+              "valor": "",
+              "fornecedor": "",
+              "vigencia": "",
+              "pagina": 1
+            }
+          },
+          {
+            "chunk_id": "contratacoes_publicacao.json_chunk_158",
+            "text": "{\"srp\": true, \"orgaoEntidade\": {\"cnpj\": \"00394544000185\", \"razaoSocial\": \"MINISTERIO DA SAUDE\", \"poderId\": \"E\", \"esferaId\": \"F\"}, \"anoCompra\": 2026, \"sequencialCompra\": 359, \"dataInclusao\": \"2026-03-02T07:05:35\", \"dataPublicacaoPncp\": \"2026-03-02T07:05:35\", \"dataAtualizacao\": \"2026-03-02T07:05:35\", \"numeroCompra\": \"91051\", \"unidadeOrgao\": {\"ufNome\": \"Rio de Janeiro\", \"codigoUnidade\": \"250052\", \"nomeUnidade\": \"INSTITUTO NACIONAL DO CANCER - RJ\", \"ufSigla\": \"RJ\", \"municipioNome\": \"Rio de Janeiro\", \"codigoIbge\": \"3304557\"}, \"amparoLegal\": {\"descricao\": \"pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns\", \"nome\": \"Lei 14.133/2021, Art. 28, I\", \"codigo\": 1}, \"dataAberturaProposta\": \"2026-03-02T09:00:00\", \"dataEncerramentoProposta\": \"2026-03-16T09:00:00\", \"informacaoComplementar\": \"Acessar os sites www.compras.gov.br ou www.inca.gov.br para retirar o edital Para as respostas de esclarecimentos e impugnações deste edital acesse o link: https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=quadro-informativo&compra=25005205910512026\", \"processo\": \"25410002318202591\", \"objetoCompra\": \"Aquisição de Rodízios para Camas Elétricas Stryker. ( PROCESSO: 25410.002318/2025-91 )\", \"linkSistemaOrigem\": \"https://cnetmobile.estaleiro.serpro.gov.br/comprasnet-web/public/landing?destino=acompanhamento-compra&compra=25005205910512026\", \"justificativaPresencial\": null, \"unidadeSubRogada\": null, \"orgaoSubRogado\": null, \"valorTotalHomologado\": 319708.0, \"linkProcessoEletronico\": null, \"modalidadeId\": 6, \"numeroControlePNCP\": \"00394544000185-1-000359/2026\", \"emendaParlamentar\": null, \"dataAtualizacaoGlobal\": \"2026-04-01T09:19:20\", \"modoDisputaId\": 1, \"valorTotalEstimado\": 651752.0, \"modalidadeNome\": \"Pregão - Eletrônico\", \"modoDisputaNome\": \"Aberto\", \"tipoInstrumentoConvocatorioCodigo\": 1, \"tipoInstrumentoConvocatorioNome\": \"Edital\", \"fontesOrcamentarias\": [], \"situacaoCompraId\": 1, \"situacaoCompraNome\": \"Divulgada no PNCP\", \"usuarioNome\": \"Compras.gov.br\"}",
+            "rrf_score": 0.014493,
+            "rerank_score": null,
+            "retrieval_sources": [
+              "dense"
+            ],
+            "dense_distance": 1.1478488445281982,
+            "bm25_score": null,
+            "source_file": "contratacoes_publicacao.json",
+            "doc_type": "contrato",
+            "sensitivity": "publico",
+            "base_id": "base_estruturada",
+            "natureza": "estruturada",
+            "metadata": {
+              "chunk_id": "contratacoes_publicacao.json_chunk_158",
+              "source_file": "contratacoes_publicacao.json",
+              "doc_type": "contrato",
+              "sensitivity": "publico",
+              "base_id": "base_estruturada",
+              "natureza": "estruturada",
+              "uf": "RJ",
+              "ano": "2026",
+              "modalidade": "Pregão - Eletrônico",
+              "orgao": "MINISTERIO DA SAUDE",
+              "municipio": "Rio de Janeiro",
+              "valor": 319708.0,
+              "fornecedor": "",
+              "vigencia": "",
+              "id_pncp": "00394544000185-1-000359/2026",
+              "objeto": "Aquisição de Rodízios para Camas Elétricas Stryker. ( PROCESSO: 25410.002318/2025-91 )",
+              "ano_compra": "2026",
+              "data_publicacao": "2026-03-02T07:05:35",
+              "data_atualizacao": "2026-03-02T07:05:35",
+              "valor_homologado": 319708.0,
+              "valor_estimado": 651752.0
+            }
+          }
+        ],
+        "is_refusal": false,
+        "refusal_reason": null,
+        "tokens": {
+          "prompt": 3289,
+          "completion": 1542,
+          "total": 4831
+        },
+        "modelo": "qcwind/qwen3-8b-instruct-Q4-K-M",
+        "latencia_ms": 47590.6,
+        "stage": "geracao"
+      }
+    }
+  ],
+  "apresentacao_P08_sem_nova_geracao": {
+    "protocolo": "Reapresentação determinística dos IDs citados na geração anterior; não é uma nova execução do modelo.",
+    "pergunta": "Na ata nº 137/2026 do INCA, qual é o objeto e qual empresa é a contratada?",
+    "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS ELÉTRICAS\n\n[Fonte: ata_00137.pdf_chunk_1]\n\n> e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA\n\n[Fonte: ata_00137.pdf_chunk_14]",
+    "chunk_ids_citados": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14"
+    ]
+  }
+}

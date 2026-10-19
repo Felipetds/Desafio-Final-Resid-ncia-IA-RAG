@@ -720,6 +720,19 @@ def recuperar_evidencias(
             item["chunk_id"] for item in ranking_final[:top_k]
         ]
 
+        from src.factual_selection import cobrir_campos_ata
+
+        ids_antes_campos = [
+            item["chunk_id"] for item in ranking_final[:top_k]
+        ]
+        ranking_final = cobrir_campos_ata(
+            pergunta, ranking_final, chunks_por_id, rotas, top_k,
+            ids_escopo=escopo_ata["ids"] if escopo_ata else None,
+        )
+        ids_apos_campos = [
+            item["chunk_id"] for item in ranking_final[:top_k]
+        ]
+
         ranking_selecionado = selecionar_resultados_multirrota(ranking_final, chunks_por_id, rotas, top_k)
 
         evidencias = []
@@ -759,6 +772,12 @@ def recuperar_evidencias(
             ),
             "top_ids_antes_cobertura": ids_antes_cobertura,
             "top_ids_apos_cobertura": ids_apos_cobertura,
+            "politica_cobertura_campos": "campos_ata_escopo_v1",
+            "cobertura_campos_aplicada": (
+                ids_antes_campos != ids_apos_campos
+            ),
+            "top_ids_antes_campos": ids_antes_campos,
+            "top_ids_apos_campos": ids_apos_campos,
             "rerank_enabled": rerank.RERANK_ENABLED,
             "rerank_applied": bool(resultado_rerank.get("applied", False)),
             "rerank_status": resultado_rerank.get(

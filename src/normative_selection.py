@@ -5,6 +5,8 @@ import re
 from src.document_scope import normalizar
 
 
+from src.normative_query import reconhecer_pedido_normativo
+
 def cobrir_definicao(pergunta, ranking, chunks_por_id, rotas, top_k):
     """Reserva uma vaga, sem alterar scores nem acrescentar candidatos."""
     if set(rotas) != {"normativa"} or top_k < 2:
@@ -14,11 +16,7 @@ def cobrir_definicao(pergunta, ranking, chunks_por_id, rotas, top_k):
     if re.search(r"\b(?:artigo|art\.|arts\.)\s*\d+", texto):
         return ranking
 
-    pedido = re.fullmatch(
-        r"o que .+ estabelece sobre "
-        r"(?:(?:o|a|os|as)\s+)?([a-z]+(?:\s+[a-z]+){0,4})[?. ]*",
-        texto,
-    )
+    pedido = reconhecer_pedido_normativo(texto)
     if not pedido:
         return ranking
 
@@ -101,12 +99,7 @@ def cobrir_selecao_definicao(pergunta, conteudo, evidencias, rotas):
         ):
             return conteudo
 
-        pedido = re.fullmatch(
-            r"o que .+ estabelece sobre "
-            r"(?:(?:o|a|os|as)\s+)?"
-            r"([a-z]+(?:\s+[a-z]+){0,4})[?. ]*",
-            texto_pergunta,
-        )
+        pedido = reconhecer_pedido_normativo(texto_pergunta)
 
         if not pedido:
             return conteudo
@@ -262,6 +255,7 @@ def cobrir_selecao_definicao(pergunta, conteudo, evidencias, rotas):
         and (
             "numero de controle" in texto_pergunta
             or "controle pncp" in texto_pergunta
+            or "numero pncp" in texto_pergunta
         )
     ):
         requisitos.append(score_pncp)
@@ -356,11 +350,7 @@ def cobrir_selecao_definicao(pergunta, conteudo, evidencias, rotas):
     if re.search(r"\b(?:artigo|art\.|arts\.)\s*\d+", texto):
         return conteudo
 
-    pedido = re.fullmatch(
-        r"o que .+ estabelece sobre "
-        r"(?:(?:o|a|os|as)\s+)?([a-z]+(?:\s+[a-z]+){0,4})[?. ]*",
-        texto,
-    )
+    pedido = reconhecer_pedido_normativo(texto)
     if not pedido:
         return conteudo
 

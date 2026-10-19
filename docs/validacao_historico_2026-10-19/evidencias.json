@@ -1,0 +1,15 @@
+{
+  "registrado_em_utc": "2026-10-19T12:30:10.551810+00:00",
+  "commit": "5449912fd66a36bafbefb4bb805ad2c2d42d9425",
+  "run_id": "b1733a99",
+  "query_id": "q_7659ad53",
+  "pagina": 1,
+  "total": 1358,
+  "registros_na_pagina": 20,
+  "resultado_persistido_identico": true,
+  "logs_identicos_antes_depois": true,
+  "feedback_original_preservado": true,
+  "conferencia_visual": "Confirmada pela saída enviada pela integrante.",
+  "alteracao_de_codigo": false,
+  "limite": "Erro visual anterior não reproduzido na nova sessão; causa não determinada. Não valida reinício completo do Colab."
+}
