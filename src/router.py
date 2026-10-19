@@ -377,21 +377,38 @@ def _extrair_filtros_monetarios(
     }
 
 
-def _extrair_uf_explicita(pergunta: str) -> str | None:
-    """Retorna RJ somente quando a localização aparece na pergunta."""
-    from src.document_scope import (
-        PADRAO_PROCESSO_ALFANUMERICO,
-        normalizar,
-    )
+def _extrair_ufs_explicitas(pergunta: str) -> set[str]:
+    """Reconhece siglas de UF em contexto de localização, fora de IDs."""
+    from src.document_scope import PADRAO_PROCESSO_ALFANUMERICO, normalizar
 
-    # Siglas dentro do identificador não são localização explícita.
-    sem_identificadores = PADRAO_PROCESSO_ALFANUMERICO.sub(
+    texto = PADRAO_PROCESSO_ALFANUMERICO.sub(
         " ", normalizar(pergunta)
     )
-    texto = _normalizar_texto_para_comparacao(sem_identificadores)
+    texto = _normalizar_texto_para_comparacao(texto)
+    validas = set(
+        "AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI "
+        "RJ RN RS RO RR SC SP SE TO".split()
+    )
+    candidatas = re.findall(
+        r"\b(?:no|na|em|do|da)\s+([a-z]{2})\b"
+        r"|\buf\s*[:=]?\s*([a-z]{2})\b",
+        texto,
+    )
+    encontradas = {
+        (primeira or segunda).upper()
+        for primeira, segunda in candidatas
+        if (primeira or segunda).upper() in validas
+    }
+
+    # Preserva as formas de RJ já suportadas, após remover identificadores.
     if re.search(r"\brj\b", texto) or "rio de janeiro" in texto:
-        return "RJ"
-    return None
+        encontradas.add("RJ")
+    return encontradas
+
+
+def _extrair_uf_explicita(pergunta: str) -> str | None:
+    ufs = _extrair_ufs_explicitas(pergunta)
+    return next(iter(ufs)) if len(ufs) == 1 else None
 
 
 def _validar_filtros_contra_pergunta(
@@ -425,6 +442,12 @@ def _validar_filtros_contra_pergunta(
     filtros["valor_maximo"] = limites["valor_maximo"]
     # A UF só pode ser aplicada quando estiver explícita na pergunta.
     filtros["uf"] = _extrair_uf_explicita(pergunta)
+    if (
+        filtros["uf"]
+        and str(filtros.get("municipio") or "").strip().upper()
+        == filtros["uf"]
+    ):
+        filtros["municipio"] = None
     filtros.setdefault("ano", None)
     filtros.setdefault("modalidade", None)
     filtros.setdefault("municipio", None)
@@ -1225,6 +1248,18 @@ def planejar_consulta(
                 "Você deseja uma contagem ou listagem dos registros disponíveis? "
                 "Para preço por quilo, também seria necessário definir valores, "
                 "quantidades e unidades compatíveis."
+            ),
+        )
+        return plano
+
+    if len(_extrair_ufs_explicitas(pergunta)) > 1:
+        plano.update(
+            estrategia="esclarecimento",
+            operacao="esclarecer",
+            necessita_esclarecimento=True,
+            pergunta_esclarecimento=(
+                "Informe uma única UF para esta consulta. "
+                "A combinação de várias UFs ainda não está implementada."
             ),
         )
         return plano

@@ -165,11 +165,58 @@ def _recortar_definicao_normativa(pergunta, evidencia):
     return encontrados[0] if len(encontrados) == 1 else original
 
 
+def _recortar_contratada_marca(consulta, trechos, por_id):
+    """Recorta papéis explícitos sem escolher entre candidatos ambíguos."""
+    if not re.fullmatch(
+        r"na ata .+?, qual empresa e a contratada e qual e a "
+        r"(?:marca ou fabricante|marca|fabricante) do "
+        r"(?:rodizio|produto|item)[?. ]*",
+        consulta,
+    ):
+        return None
+
+    contratadas = []
+    marcas = []
+    for item in trechos:
+        identificador = item["chunk_id"]
+        evidencia = por_id[identificador]
+        if evidencia.natureza != "conversacional":
+            continue
+        texto = _normalizar_espacos(evidencia.text)
+
+        for achado in re.finditer(
+            r"\be\s+de\s+outro\s+lado\s+a\s+.+?"
+            r"\bdoravante\s+denominada\s+CONTRATADA\b",
+            texto, flags=re.IGNORECASE,
+        ):
+            contratadas.append({
+                "chunk_id": identificador,
+                "trecho": achado.group(0),
+            })
+
+        for achado in re.finditer(
+            r"\bMARCA\s+FABRICANTE\s+DO\s+[^,;.\n]+?"
+            r"(?=\s+-\s+(?:UN|UND|UNID)\b)",
+            texto, flags=re.IGNORECASE,
+        ):
+            marcas.append({
+                "chunk_id": identificador,
+                "trecho": achado.group(0),
+            })
+
+    if len(contratadas) != 1 or len(marcas) != 1:
+        return None
+    return contratadas + marcas
+
+
 def _recortar_objeto_fornecedor(pergunta, trechos, por_id):
     """Recorta os dois campos somente em pedidos explícitos reconhecidos."""
     from src.document_scope import normalizar
 
     consulta = normalizar(pergunta or "")
+    papeis = _recortar_contratada_marca(consulta, trechos, por_id)
+    if papeis is not None:
+        return papeis
     if not re.fullmatch(
         r"(?:"
         r"o que a ata .+? informa sobre o objeto"
