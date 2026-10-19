@@ -1,0 +1,1013 @@
+[
+  {
+    "caso": "P03",
+    "pergunta": "O que a ata nº 00191/2026 da EBSERH registra sobre o objeto da aquisição e qual é o número de controle PNCP associado?",
+    "metodo": "vetorial",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "f4ceb5bb",
+    "ids_entrada": [
+      "contratacoes_publicacao.json_chunk_400",
+      "ata_00191.pdf_chunk_31",
+      "ata_00191.pdf_chunk_2"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "cobertura": 1.0,
+      "cobertura_completa": true
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 21.833,
+    "answer": "Trechos das evidências recuperadas:\n\n> \"numeroControlePNCP\": \"15126437000305-1-000676/2026\"\n\n[Fonte: contratacoes_publicacao.json_chunk_400]\n\n> 17 . 20 . Após o trânsito em julgado do processo, as sanções administrativas aplicadas pela Ebserh deverão ser registradas e publicadas no Sicaf, no Cadastro Nacional de Empresas Inidôneas e Suspensas (Ceis) e, no caso de sanção de multa, no Cadin, nos termos da Lei n.º 10.522/2002. 17 . 20 . 1 . Quando a sanção aplicada decorrer de Processo Administrativo de Responsabilização - PAR, os dados relativos à penalidade deverão ser incluídos no Cadastro Nacional de Empresas Punidas - CNEP, nos termos da Lei n.º 12.846/2013, ou em outras plataformas de cadastro de inadimplentes de pessoas jurídicas autorizadas pela Ebserh. 17 . 21 . As sanções aplicadas pelos Hospitais Universitários e pela Administração Central terão abrangência no âmbito de toda a Rede Ebserh. 18 . CONDIÇÕES GERAIS 18 . 1 . A formalização de cada contratação e os demais atos inerentes à presente ARP serão autorizados, caso a caso, pela autoridade responsável do órgão gerenciador, e, no caso dos órgãos participantes, pela respectiva autoridade responsável. 18 . 2 . Integram este instrumento, o Edital do Pregão Eletrônico, seus anexos, bem como a proposta da empresa vencedora dos itens relacionados a essa ARP e demais anexos. 18 . 3 . As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, e demais condições do ajuste, encontram-se definidos no Termo de Referência. 18 . 4 . A Equipe de Fiscalização da Ata de Registro de Preços conduzirá o gerenciamento de riscos durante toda execução da ARP. 18 . 5 . No caso de adjudicação por preço global de grupo de itens, só será admitida a contratação de parte de itens do grupo se houver prévia pesquisa de mercado e demonstração de sua vantagem para o órgão ou a entidade. 18 . 6 . Os casos omissos serão decididos pela CONTRATANTE, segundo as disposições contidas na Lei n.º 13.303/2016, no Decreto n.º 8.945/2016, no RCC 3.0 e nas demais normas federais\n\n[Fonte: ata_00191.pdf_chunk_31]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 3059,
+      "completion": 32,
+      "total": 3091
+    },
+    "citacoes": [
+      "contratacoes_publicacao.json_chunk_400",
+      "ata_00191.pdf_chunk_31"
+    ],
+    "sources_used_ids": [
+      "contratacoes_publicacao.json_chunk_400",
+      "ata_00191.pdf_chunk_31"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P03",
+    "pergunta": "O que a ata nº 00191/2026 da EBSERH registra sobre o objeto da aquisição e qual é o número de controle PNCP associado?",
+    "metodo": "bm25",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "ea570843",
+    "ids_entrada": [
+      "ata_00191.pdf_chunk_2",
+      "ata_00191.pdf_chunk_4",
+      "ata_00191.pdf_chunk_13"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "objeto"
+      ],
+      "cobertura": 0.5,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 7.883,
+    "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual aquisição de o registro de preços para a eventual de Aquisição de Produtos para Saúde - peças mamógrafas (chassis), a fim de atender ao Complexo Hospitalar da Universidade Federal do Rio de Janeiro\n\n[Fonte: ata_00191.pdf_chunk_2]\n\n> Referência: EHR-M3 Screen Fabricante: Carestream Health Código P/N: 9G7403 REV B 2 478502 Peça / Componente Mamógrafo Placa Compressora De Mama, Aplicação: Para Filme 24 X 30 Cm, Compatibilidade: Sistemas Carestream e Kodak CR Mammography. Modelo do CR: Carestream CR Elite Tipo de Chassis: Carestream DirectView CR Mammography Cassette com tela EHR-M3 Referência: EHR-M3 Screen Fabricante: Carestream Health Código P/N: 9G7403 REV B Unidade 8 R$ 11.406,10 R$ 91.248,80 Valor total: R$ 172.096,80 5 . VIGÊNCIA 5 . 1 . A ARP terá prazo de vigência de 12 (doze) meses, contado a partir do primeiro dia útil subsequente à data de divulgação no PNCP, podendo ser prorrogado por igual período, mediante a anuência do fornecedor, desde que comprovado o preço vantajoso. 5 . 2 . Para prorrogação da ARP, deverá ocorrer acordo específico entre as partes, observando-se os seguintes parâmetros: I - com renovação total do quantitativo e/ou itens; II - com renovação parcial do quantitativo e/ou itens; III - sem renovação de quantitativos e/ou itens, mas apenas para execução do saldo remanescente. 5 . 3 . Não será permitida a renovação de quantitativos antes da conclusão da vigência da ARP. 5 . 4 . A vigência da ARP será encerrada automaticamente encerrada pelo decurso de seu prazo ou quando não restarem mais fornecedores registrados aptos a serem contratados. 6 . FORMALIZAÇÃO DO INSTRUMENTO CONTRATUAL 6 . 1 . A existência de preços registrados implicará compromisso de fornecimento nas condições estabelecidas, mas não obrigará a Ebserh a contratar, facultada a realização de licitação específica para a aquisição pretendida, desde que devidamente justificada. 6 . 2 . Em sendo realizada a contratação, será firmado Termo de Contrato ou instrumento equivalente. 6 . 3 . O fornecedor registrado terá o prazo de 05 (cinco) dias úteis, para assinar o Termo de Contrato ou aceitar instrumento equivalente, conforme o caso, sob pena de decair do\n\n[Fonte: ata_00191.pdf_chunk_4]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 2872,
+      "completion": 31,
+      "total": 2903
+    },
+    "citacoes": [
+      "ata_00191.pdf_chunk_2",
+      "ata_00191.pdf_chunk_4"
+    ],
+    "sources_used_ids": [
+      "ata_00191.pdf_chunk_2",
+      "ata_00191.pdf_chunk_4"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P03",
+    "pergunta": "O que a ata nº 00191/2026 da EBSERH registra sobre o objeto da aquisição e qual é o número de controle PNCP associado?",
+    "metodo": "rrf",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "228931f3",
+    "ids_entrada": [
+      "ata_00191.pdf_chunk_2",
+      "contratacoes_publicacao.json_chunk_400",
+      "ata_00191.pdf_chunk_12"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "objeto",
+        "numero_pncp"
+      ],
+      "cobertura": 1.0,
+      "cobertura_completa": true
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 6.565,
+    "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual aquisição de o registro de preços para a eventual de Aquisição de Produtos para Saúde - peças mamógrafas (chassis), a fim de atender ao Complexo Hospitalar da Universidade Federal do Rio de Janeiro\n\n[Fonte: ata_00191.pdf_chunk_2]\n\n> \"numeroControlePNCP\": \"15126437000305-1-000676/2026\"\n\n[Fonte: contratacoes_publicacao.json_chunk_400]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 2956,
+      "completion": 31,
+      "total": 2987
+    },
+    "citacoes": [
+      "ata_00191.pdf_chunk_2",
+      "contratacoes_publicacao.json_chunk_400"
+    ],
+    "sources_used_ids": [
+      "ata_00191.pdf_chunk_2",
+      "contratacoes_publicacao.json_chunk_400"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P03",
+    "pergunta": "O que a ata nº 00191/2026 da EBSERH registra sobre o objeto da aquisição e qual é o número de controle PNCP associado?",
+    "metodo": "rrf_rerank",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "acbd941f",
+    "ids_entrada": [
+      "ata_00191.pdf_chunk_1",
+      "ata_00191.pdf_chunk_2",
+      "ata_00191.pdf_chunk_8"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "objeto"
+      ],
+      "cobertura": 0.5,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 8.263,
+    "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual aquisição de o registro de preços para a eventual de Aquisição de Produtos para Saúde - peças mamógrafas (chassis), a fim de atender ao Complexo Hospitalar da Universidade Federal do Rio de Janeiro\n\n[Fonte: ata_00191.pdf_chunk_2]\n\n> COMPLEXO HOSPITALAR DA UNIVERSIDADE FEDERAL DO RIO DE JANEIRO Rua Prof. Rodolpho Paulo Rocco, 255, HU-CFF - Bairro Cidade Universitária Rio de Janeiro-RJ, CEP 21941-913 - http://ch-ufrj.ebserh.gov.br Ata de Registro de Preços - SEI nº 191/2026 Processo nº 23877.005839/2026-78 ATA DE REGISTRO DE PREÇOS Nº 191/20206 A Empresa Brasileira de Serviços Hospitalares – Ebserh, FILIAL - COMPLEXO HOSPITALAR DA UNIVERSIDADE FEDERAL DO RIO DE JANEIRO – CH-UFRJ, sediado(a) na Rua Professor Rodolpho Paulo Rocco, 25, Cidade Universitária, Rio de Janeiro - RJ, CEP nº 21.941-913, CNPJ 15.126.437/0045-64, UG-157243, neste ato representada pelo seu Superintendente Geral, Amâncio Paulino Carvalho, matrícula SIAPE: 311040, nomeado por meio da Portaria/EBSERH número 240 de 04 de junho de 2024, publicada no DOU, de 05 de junho de 2024 e por sua Superintendente Administrativa, Roberta Rodrigues Coelho, matrícula SIAPE: 3035578, nomeada pela Portaria - SEI nº 589, de 21 de outubro de 2025 publicada no Boletim de Serviço nº 2159, de 23 de outubro de 2025 , ambos no uso das atribuições conferidas pelo art. 277 do Regulamento de Compras e Contratos da Ebserh, versão 3.0, aprovado por meio da Resolução n.º 297/2025 do Conselho de Administração , considerando o julgamento do Pregão Eletrônico nº 90019 /2026 , publicado no Diário Oficial da União - DOU de 02/03/2026 , processo administrativo nº 23877.002295/2026- 92 , resolve registrar os preços da empresa IMAGEM HEALTHCARE SOLUTIONS LTDA , inscrita no CNPJ sob o nº 59.269.654/0001-68, situada na Av. Juruá Nº 105, Alphaville – Barueri/SP , CEP: 06455-900 , Telefone: (11 ) [TELEFONE_OCULTO] , endereço eletrônico: [EMAIL_OCULTO] , neste ato representada por ANDREA REIMBERG FIGUEIREDO , inscrita no CPF [CPF_OCULTO] , de acordo com a classificação por ela alcançada e nas quantidades cotadas, atendendo as condições previstas no\n\n[Fonte: ata_00191.pdf_chunk_1]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 3089,
+      "completion": 31,
+      "total": 3120
+    },
+    "citacoes": [
+      "ata_00191.pdf_chunk_2",
+      "ata_00191.pdf_chunk_1"
+    ],
+    "sources_used_ids": [
+      "ata_00191.pdf_chunk_1",
+      "ata_00191.pdf_chunk_2"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P04",
+    "pergunta": "O que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+    "metodo": "vetorial",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "9dd750ad",
+    "ids_entrada": [
+      "lei_14133_2021.html_chunk_213",
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_206"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 4.113,
+    "answer": "Trechos das evidências recuperadas:\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]",
+    "stage": "geracao",
+    "confidence_level": "baixa",
+    "tokens": {
+      "prompt": 1604,
+      "completion": 24,
+      "total": 1628
+    },
+    "citacoes": [
+      "lei_14133_2021.html_chunk_29"
+    ],
+    "sources_used_ids": [
+      "lei_14133_2021.html_chunk_29"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P04",
+    "pergunta": "O que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+    "metodo": "bm25",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "8fea4bba",
+    "ids_entrada": [
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_28",
+      "lei_14133_2021.html_chunk_8"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 5.019,
+    "answer": "Trechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> Art. 8º A licitação será conduzida por agente de contratação, pessoa designada pela autoridade competente, entre servidores efetivos ou empregados públicos dos quadros permanentes da Administração Pública, para tomar decisões, acompanhar o trâmite da licitação, dar impulso ao procedimento licitatório e executar quaisquer outras atividades necessárias ao bom andamento do certame até a homologação. § 1º O agente de contratação será auxiliado por equipe de apoio e responderá individualmente pelos atos que praticar, salvo quando induzido a erro pela atuação da equipe. § 2º Em licitação que envolva bens ou serviços especiais, desde que observados os requisitos estabelecidos no art. 7º desta Lei , o agente de contratação poderá ser substituído por comissão de contratação formada por, no mínimo, 3 (três) membros, que responderão solidariamente por todos os atos praticados pela comissão, ressalvado o membro que expressar posição individual divergente fundamentada e registrada em ata lavrada na reunião em que houver sido tomada a decisão. § 3º As regras relativas à atuação do agente de contratação e da equipe de apoio, ao funcionamento da comissão de contratação e à atuação de fiscais e gestores de contratos de que trata esta Lei serão estabelecidas em regulamento, e deverá ser prevista a possibilidade de eles contarem com o apoio dos órgãos de assessoramento jurídico e de controle interno para o desempenho das funções essenciais à execução do disposto nesta Lei. (Regulamento) Vigência § 4º Em licitação que envolva bens ou serviços especiais cujo objeto não seja rotineiramente contratado pela Administração, poderá ser contratado, por prazo determinado, serviço de empresa ou de profissional especializado para assessorar os agentes públicos responsáveis pela condução da licitação. § 5º Em licitação na modalidade pregão, o agente responsável pela condução do certame será designado pregoeiro.\n\n[Fonte: lei_14133_2021.html_chunk_8]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 1841,
+      "completion": 43,
+      "total": 1884
+    },
+    "citacoes": [
+      "lei_14133_2021.html_chunk_28",
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_8"
+    ],
+    "sources_used_ids": [
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_28",
+      "lei_14133_2021.html_chunk_8"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P04",
+    "pergunta": "O que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+    "metodo": "rrf",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "ad007f7c",
+    "ids_entrada": [
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_28",
+      "lei_14133_2021.html_chunk_213"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 2.59,
+    "answer": "Trechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 1640,
+      "completion": 43,
+      "total": 1683
+    },
+    "citacoes": [
+      "lei_14133_2021.html_chunk_28",
+      "lei_14133_2021.html_chunk_29"
+    ],
+    "sources_used_ids": [
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_28"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P04",
+    "pergunta": "O que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+    "metodo": "rrf_rerank",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "6906c41d",
+    "ids_entrada": [
+      "lei_14133_2021.html_chunk_213",
+      "lei_14133_2021.html_chunk_8",
+      "lei_14133_2021.html_chunk_29"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 4.006,
+    "answer": "Trechos das evidências recuperadas:\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> Art. 8º A licitação será conduzida por agente de contratação, pessoa designada pela autoridade competente, entre servidores efetivos ou empregados públicos dos quadros permanentes da Administração Pública, para tomar decisões, acompanhar o trâmite da licitação, dar impulso ao procedimento licitatório e executar quaisquer outras atividades necessárias ao bom andamento do certame até a homologação. § 1º O agente de contratação será auxiliado por equipe de apoio e responderá individualmente pelos atos que praticar, salvo quando induzido a erro pela atuação da equipe. § 2º Em licitação que envolva bens ou serviços especiais, desde que observados os requisitos estabelecidos no art. 7º desta Lei , o agente de contratação poderá ser substituído por comissão de contratação formada por, no mínimo, 3 (três) membros, que responderão solidariamente por todos os atos praticados pela comissão, ressalvado o membro que expressar posição individual divergente fundamentada e registrada em ata lavrada na reunião em que houver sido tomada a decisão. § 3º As regras relativas à atuação do agente de contratação e da equipe de apoio, ao funcionamento da comissão de contratação e à atuação de fiscais e gestores de contratos de que trata esta Lei serão estabelecidas em regulamento, e deverá ser prevista a possibilidade de eles contarem com o apoio dos órgãos de assessoramento jurídico e de controle interno para o desempenho das funções essenciais à execução do disposto nesta Lei. (Regulamento) Vigência § 4º Em licitação que envolva bens ou serviços especiais cujo objeto não seja rotineiramente contratado pela Administração, poderá ser contratado, por prazo determinado, serviço de empresa ou de profissional especializado para assessorar os agentes públicos responsáveis pela condução da licitação. § 5º Em licitação na modalidade pregão, o agente responsável pela condução do certame será designado pregoeiro.\n\n[Fonte: lei_14133_2021.html_chunk_8]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 2057,
+      "completion": 24,
+      "total": 2081
+    },
+    "citacoes": [
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_8"
+    ],
+    "sources_used_ids": [
+      "lei_14133_2021.html_chunk_8",
+      "lei_14133_2021.html_chunk_29"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P08",
+    "pergunta": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
+    "metodo": "vetorial",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "1838ee6c",
+    "ids_entrada": [
+      "ata_00137.pdf_chunk_3",
+      "ata_00137.pdf_chunk_24",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "contratada"
+      ],
+      "cobertura": 0.5,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 7.454,
+    "answer": "Trechos das evidências recuperadas:\n\n> Código Especiﬁcação Marca Modelo Unidade Quant. INCA Valor Unitário Valor Total 1 A50372 RODÍZIO COM FREIO, DEMAIS ESPECIFICAÇÕES NO TR MARCA FABRICANTE DO RODIZIO TENTE - UN 1028 R$ 311,00 R$ 319.708,00 Valor total da ATA R$ 319.708,00 2. 2. A listagem do cadastro de reserva referente ao presente registro de preços consta como anexo a esta Ata (se houver). 3. ÓRGÃO(S) GERENCIADOR E PARTICIPANTE(S) 3.1. O órgão gerenciador será o Instituto Nacional de câncer; 3.2. Além do gerenciador, não há órgãos e entidades públicas participantes do registro de preços. 4. DA ADESÃO À ATA DE REGISTRO DE PREÇOS 4.1. Não será admitida a adesão à ata de registro de preços decorrente desta licitação ou desta contratação direta, conforme justiﬁcativa apresentada nos estudos técnicos preliminares. Vedação a acréscimo de quantitativos 4.2. É vedado efetuar acréscimos nos quantitativos ﬁxados na ata de registro de preços. 5. VALIDADE, FORMALIZAÇÃO DA ATA DE REGISTRO DE PREÇOS E CADASTRO RESERVA 5.1. A validade da Ata de Registro de Preços será de 1 (um) ano, contado a partir do primeiro dia útil subsequente à data de divulgação no PNCP, podendo ser prorrogada por igual período, mediante a anuência do fornecedor, desde que comprovado o preço vantajoso. 5.1.1. Em caso de prorrogação da ata, poderá ser renovado o quantitativo originalmente registrado. 5.1.2. O contrato decorrente da ata de registro de preços terá sua vigência estabelecida no próprio instrumento contratual e observará no momento da contratação e a cada exercício ﬁnanceiro a disponibilidade de créditos orçamentários, bem como a previsão no plano plurianual, quando ultrapassar 1 (um) exercício ﬁnanceiro. 5.1.2. Na formalização do contrato ou do instrumento substituto deverá haver a indicação da disponibilidade dos créditos orçamentários respectivos. 5.2. A contratação com os fornecedores registrados na ata será formalizada pelo órgão ou pela entidade interessada por intermédio de instrumento contratual, emissão de nota\n\n[Fonte: ata_00137.pdf_chunk_3]\n\n> 11. CONDIÇÕES GERAIS 11.1. As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, as obrigações da Administração e do fornecedor registrado, penalidades e demais condições do ajuste, encontram-se deﬁnidos no Termo de Referência, anexo ao edital. Para ﬁrmeza e validade do pactuado, a presente Ata foi lavrada em 2 (duas) vias de igual teor, que, depois de lida e achada em ordem, vai assinada pelas partes e encaminhada cópia aos demais órgãos participantes (se houver). INSTRUMENTO SUBSTITUTIVO AO CONTRATO (ART. 95, INCISO II, DA LEI 14.133, DE 2021) A União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça Cruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50, neste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, portador da Matrícula SIAPE nº 6241986, instituído pela Portaria nº 1.619, publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023, e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA, resolvem celebrar o presente INSTRUMENTO SUBSTITUTIVO AO CONTRATO, que será regido pela Lei nº 14.133/2021, legislação correlata e pelo Edital e anexos do Pregão Eletrônico 91.051/2026 – INCA, cuja Ata de Registro de Preços Nº 137/2026 é objeto deste TERMO, vinculado ao Processo de SRP - nº 25410.002318/2025-91, sob os termos e condições a seguir estabelecidos: 1. FORMALIZAÇÃO DA CONTRATAÇÃO 1.1. O adjudicatário terá o prazo de 05 (cinco) dias, contados a partir da data de sua convocação, para aceitar o instrumento equivalente ao contrato - Nota de Empenho, sob pena de decair do direito à contratação, sem prejuízo das sanções previstas. 1.2. O prazo poderá ser prorrogado, por igual período, por solicitação justiﬁcada do adjudicatário e\n\n[Fonte: ata_00137.pdf_chunk_14]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 2756,
+      "completion": 32,
+      "total": 2788
+    },
+    "citacoes": [
+      "ata_00137.pdf_chunk_3",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "sources_used_ids": [
+      "ata_00137.pdf_chunk_3",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P08",
+    "pergunta": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
+    "metodo": "bm25",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "bd158844",
+    "ids_entrada": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_3"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "objeto",
+        "contratada"
+      ],
+      "cobertura": 1.0,
+      "cobertura_completa": true
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 8.197,
+    "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS ELÉTRICAS\n\n[Fonte: ata_00137.pdf_chunk_1]\n\n> e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA\n\n[Fonte: ata_00137.pdf_chunk_14]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 3063,
+      "completion": 32,
+      "total": 3095
+    },
+    "citacoes": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "sources_used_ids": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P08",
+    "pergunta": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
+    "metodo": "rrf",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "2e9d158a",
+    "ids_entrada": [
+      "ata_00137.pdf_chunk_3",
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_1"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "objeto",
+        "contratada"
+      ],
+      "cobertura": 1.0,
+      "cobertura_completa": true
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 6.771,
+    "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS ELÉTRICAS\n\n[Fonte: ata_00137.pdf_chunk_1]\n\n> e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA\n\n[Fonte: ata_00137.pdf_chunk_14]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 3063,
+      "completion": 32,
+      "total": 3095
+    },
+    "citacoes": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "sources_used_ids": [
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_1"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P08",
+    "pergunta": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
+    "metodo": "rrf_rerank",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "008e6057",
+    "ids_entrada": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_24"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "objeto",
+        "contratada"
+      ],
+      "cobertura": 1.0,
+      "cobertura_completa": true
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 5.049,
+    "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS ELÉTRICAS\n\n[Fonte: ata_00137.pdf_chunk_1]\n\n> e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA\n\n[Fonte: ata_00137.pdf_chunk_14]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 2884,
+      "completion": 32,
+      "total": 2916
+    },
+    "citacoes": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "sources_used_ids": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P03_R",
+    "pergunta": "Informe o objeto da ata nº 191/2026 da EBSERH e o número PNCP da contratação correspondente.",
+    "metodo": "vetorial",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "2d47b9e9",
+    "ids_entrada": [
+      "contratacoes_publicacao.json_chunk_400",
+      "ata_00191.pdf_chunk_33",
+      "ata_00191.pdf_chunk_31"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "numero_pncp"
+      ],
+      "cobertura": 0.5,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 7.585,
+    "answer": "Trechos das evidências recuperadas:\n\n> \"numeroControlePNCP\": \"15126437000305-1-000676/2026\"\n\n[Fonte: contratacoes_publicacao.json_chunk_400]\n\n> o_conferir&id_orgao_acesso_externo=0 , informando o código verificador [RG_OCULTO] e o código CRC C5CFF77A . Referência: Processo nº 23877.005839/2026-78 SEI nº [RG_OCULTO] Ata de Registro de Preços - SEI 191 IMAGEM ([RG_OCULTO]) SEI 23877.005839/2026-78 / pg. 11\n\n[Fonte: ata_00191.pdf_chunk_33]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 2737,
+      "completion": 32,
+      "total": 2769
+    },
+    "citacoes": [
+      "contratacoes_publicacao.json_chunk_400",
+      "ata_00191.pdf_chunk_33"
+    ],
+    "sources_used_ids": [
+      "contratacoes_publicacao.json_chunk_400",
+      "ata_00191.pdf_chunk_33"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P03_R",
+    "pergunta": "Informe o objeto da ata nº 191/2026 da EBSERH e o número PNCP da contratação correspondente.",
+    "metodo": "bm25",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "e43fc61e",
+    "ids_entrada": [
+      "ata_00191.pdf_chunk_8",
+      "ata_00191.pdf_chunk_10",
+      "ata_00191.pdf_chunk_12"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [],
+      "cobertura": 0.0,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 7.894,
+    "answer": "Trechos das evidências recuperadas:\n\n> nvocados terão, em momento anterior à assinatura do contrato, as suas propostas e eventuais documentos complementares analisados, negociarão sua proposta com a Ebserh, bem como deverão comprovar os requisitos para habilitação. 6 . 10 . A recusa injustificada do fornecedor registrado em assinar o contrato ou em aceitar ou retirar o instrumento equivalente no prazo estabelecido pela Ebserh caracterizará descumprimento total da obrigação assumida e o sujeitará às penalidades estabelecidas no instrumento convocatório e à imediata perda da garantia de proposta, quando exigida, em favor da Ebserh. 7 . OBRIGAÇÕES DA CONTRATANTE 7 . 1 . São obrigações da CONTRATANTE: I - exigir o cumprimento de todas as obrigações assumidas pela CONTRATADA, de acordo com o presente instrumento e seus anexos; II - receber o objeto nas condições e nos prazos estabelecidos no Termo de Referência; III - prestar à CONTRATADA, em tempo hábil, as informações eventualmente necessárias ao cumprimento do objeto. IV - notificar a CONTRATADA, por escrito, sobre vícios, defeitos, incorreções, imperfeições, falhas ou irregularidades verificadas na execução do objeto, fixando prazo para que seja substituído, reparado ou corrigido, total ou parcialmente, às suas expensas, certificando-se de que as soluções por ela propostas sejam as mais adequadas; V - acompanhar e fiscalizar a execução do presente instrumento e o cumprimento das obrigações pela CONTRATADA, através de equipe especialmente designada; VI - efetuar o pagamento à CONTRATADA do valor correspondente ao fornecimento do objeto, no prazo, forma e condições estabelecidos no Termo de Referência; VII - aplicar à CONTRATADA as sanções previstas na lei e no presente instrumento; Ata de Registro de Preços - SEI 191 IMAGEM ([RG_OCULTO]) SEI 23877.005839/2026-78 / pg. 3\n\n[Fonte: ata_00191.pdf_chunk_8]",
+    "stage": "geracao",
+    "confidence_level": "baixa",
+    "tokens": {
+      "prompt": 3010,
+      "completion": 18,
+      "total": 3028
+    },
+    "citacoes": [
+      "ata_00191.pdf_chunk_8"
+    ],
+    "sources_used_ids": [
+      "ata_00191.pdf_chunk_8"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P03_R",
+    "pergunta": "Informe o objeto da ata nº 191/2026 da EBSERH e o número PNCP da contratação correspondente.",
+    "metodo": "rrf",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "75692eac",
+    "ids_entrada": [
+      "ata_00191.pdf_chunk_12",
+      "ata_00191.pdf_chunk_8",
+      "ata_00191.pdf_chunk_31"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [],
+      "cobertura": 0.0,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 8.634,
+    "answer": "Trechos das evidências recuperadas:\n\n> 17 . 20 . Após o trânsito em julgado do processo, as sanções administrativas aplicadas pela Ebserh deverão ser registradas e publicadas no Sicaf, no Cadastro Nacional de Empresas Inidôneas e Suspensas (Ceis) e, no caso de sanção de multa, no Cadin, nos termos da Lei n.º 10.522/2002. 17 . 20 . 1 . Quando a sanção aplicada decorrer de Processo Administrativo de Responsabilização - PAR, os dados relativos à penalidade deverão ser incluídos no Cadastro Nacional de Empresas Punidas - CNEP, nos termos da Lei n.º 12.846/2013, ou em outras plataformas de cadastro de inadimplentes de pessoas jurídicas autorizadas pela Ebserh. 17 . 21 . As sanções aplicadas pelos Hospitais Universitários e pela Administração Central terão abrangência no âmbito de toda a Rede Ebserh. 18 . CONDIÇÕES GERAIS 18 . 1 . A formalização de cada contratação e os demais atos inerentes à presente ARP serão autorizados, caso a caso, pela autoridade responsável do órgão gerenciador, e, no caso dos órgãos participantes, pela respectiva autoridade responsável. 18 . 2 . Integram este instrumento, o Edital do Pregão Eletrônico, seus anexos, bem como a proposta da empresa vencedora dos itens relacionados a essa ARP e demais anexos. 18 . 3 . As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, e demais condições do ajuste, encontram-se definidos no Termo de Referência. 18 . 4 . A Equipe de Fiscalização da Ata de Registro de Preços conduzirá o gerenciamento de riscos durante toda execução da ARP. 18 . 5 . No caso de adjudicação por preço global de grupo de itens, só será admitida a contratação de parte de itens do grupo se houver prévia pesquisa de mercado e demonstração de sua vantagem para o órgão ou a entidade. 18 . 6 . Os casos omissos serão decididos pela CONTRATANTE, segundo as disposições contidas na Lei n.º 13.303/2016, no Decreto n.º 8.945/2016, no RCC 3.0 e nas demais normas federais\n\n[Fonte: ata_00191.pdf_chunk_31]\n\n> nvocados terão, em momento anterior à assinatura do contrato, as suas propostas e eventuais documentos complementares analisados, negociarão sua proposta com a Ebserh, bem como deverão comprovar os requisitos para habilitação. 6 . 10 . A recusa injustificada do fornecedor registrado em assinar o contrato ou em aceitar ou retirar o instrumento equivalente no prazo estabelecido pela Ebserh caracterizará descumprimento total da obrigação assumida e o sujeitará às penalidades estabelecidas no instrumento convocatório e à imediata perda da garantia de proposta, quando exigida, em favor da Ebserh. 7 . OBRIGAÇÕES DA CONTRATANTE 7 . 1 . São obrigações da CONTRATANTE: I - exigir o cumprimento de todas as obrigações assumidas pela CONTRATADA, de acordo com o presente instrumento e seus anexos; II - receber o objeto nas condições e nos prazos estabelecidos no Termo de Referência; III - prestar à CONTRATADA, em tempo hábil, as informações eventualmente necessárias ao cumprimento do objeto. IV - notificar a CONTRATADA, por escrito, sobre vícios, defeitos, incorreções, imperfeições, falhas ou irregularidades verificadas na execução do objeto, fixando prazo para que seja substituído, reparado ou corrigido, total ou parcialmente, às suas expensas, certificando-se de que as soluções por ela propostas sejam as mais adequadas; V - acompanhar e fiscalizar a execução do presente instrumento e o cumprimento das obrigações pela CONTRATADA, através de equipe especialmente designada; VI - efetuar o pagamento à CONTRATADA do valor correspondente ao fornecimento do objeto, no prazo, forma e condições estabelecidos no Termo de Referência; VII - aplicar à CONTRATADA as sanções previstas na lei e no presente instrumento; Ata de Registro de Preços - SEI 191 IMAGEM ([RG_OCULTO]) SEI 23877.005839/2026-78 / pg. 3\n\n[Fonte: ata_00191.pdf_chunk_8]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 3178,
+      "completion": 32,
+      "total": 3210
+    },
+    "citacoes": [
+      "ata_00191.pdf_chunk_31",
+      "ata_00191.pdf_chunk_8"
+    ],
+    "sources_used_ids": [
+      "ata_00191.pdf_chunk_8",
+      "ata_00191.pdf_chunk_31"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P03_R",
+    "pergunta": "Informe o objeto da ata nº 191/2026 da EBSERH e o número PNCP da contratação correspondente.",
+    "metodo": "rrf_rerank",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "815e9038",
+    "ids_entrada": [
+      "ata_00191.pdf_chunk_1",
+      "ata_00191.pdf_chunk_2",
+      "ata_00191.pdf_chunk_8"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "objeto"
+      ],
+      "cobertura": 0.5,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 8.218,
+    "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual aquisição de o registro de preços para a eventual de Aquisição de Produtos para Saúde - peças mamógrafas (chassis), a fim de atender ao Complexo Hospitalar da Universidade Federal do Rio de Janeiro\n\n[Fonte: ata_00191.pdf_chunk_2]\n\n> COMPLEXO HOSPITALAR DA UNIVERSIDADE FEDERAL DO RIO DE JANEIRO Rua Prof. Rodolpho Paulo Rocco, 255, HU-CFF - Bairro Cidade Universitária Rio de Janeiro-RJ, CEP 21941-913 - http://ch-ufrj.ebserh.gov.br Ata de Registro de Preços - SEI nº 191/2026 Processo nº 23877.005839/2026-78 ATA DE REGISTRO DE PREÇOS Nº 191/20206 A Empresa Brasileira de Serviços Hospitalares – Ebserh, FILIAL - COMPLEXO HOSPITALAR DA UNIVERSIDADE FEDERAL DO RIO DE JANEIRO – CH-UFRJ, sediado(a) na Rua Professor Rodolpho Paulo Rocco, 25, Cidade Universitária, Rio de Janeiro - RJ, CEP nº 21.941-913, CNPJ 15.126.437/0045-64, UG-157243, neste ato representada pelo seu Superintendente Geral, Amâncio Paulino Carvalho, matrícula SIAPE: 311040, nomeado por meio da Portaria/EBSERH número 240 de 04 de junho de 2024, publicada no DOU, de 05 de junho de 2024 e por sua Superintendente Administrativa, Roberta Rodrigues Coelho, matrícula SIAPE: 3035578, nomeada pela Portaria - SEI nº 589, de 21 de outubro de 2025 publicada no Boletim de Serviço nº 2159, de 23 de outubro de 2025 , ambos no uso das atribuições conferidas pelo art. 277 do Regulamento de Compras e Contratos da Ebserh, versão 3.0, aprovado por meio da Resolução n.º 297/2025 do Conselho de Administração , considerando o julgamento do Pregão Eletrônico nº 90019 /2026 , publicado no Diário Oficial da União - DOU de 02/03/2026 , processo administrativo nº 23877.002295/2026- 92 , resolve registrar os preços da empresa IMAGEM HEALTHCARE SOLUTIONS LTDA , inscrita no CNPJ sob o nº 59.269.654/0001-68, situada na Av. Juruá Nº 105, Alphaville – Barueri/SP , CEP: 06455-900 , Telefone: (11 ) [TELEFONE_OCULTO] , endereço eletrônico: [EMAIL_OCULTO] , neste ato representada por ANDREA REIMBERG FIGUEIREDO , inscrita no CPF [CPF_OCULTO] , de acordo com a classificação por ela alcançada e nas quantidades cotadas, atendendo as condições previstas no\n\n[Fonte: ata_00191.pdf_chunk_1]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 3079,
+      "completion": 31,
+      "total": 3110
+    },
+    "citacoes": [
+      "ata_00191.pdf_chunk_2",
+      "ata_00191.pdf_chunk_1"
+    ],
+    "sources_used_ids": [
+      "ata_00191.pdf_chunk_1",
+      "ata_00191.pdf_chunk_2"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P04_R",
+    "pergunta": "Explique as regras sobre pregão na Lei nº 14.133/2021.",
+    "metodo": "vetorial",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "b1065fc4",
+    "ids_entrada": [
+      "lei_14133_2021.html_chunk_213",
+      "lei_14133_2021.html_chunk_212",
+      "lei_14133_2021.html_chunk_206"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [],
+      "cobertura": 0.0,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 5.128,
+    "answer": "Não foi possível apresentar uma resposta com trechos literais verificados nesta execução. As evidências recuperadas continuam disponíveis para consulta.",
+    "stage": "validacao",
+    "confidence_level": "baixa",
+    "tokens": {
+      "prompt": 2137,
+      "completion": 7,
+      "total": 2144
+    },
+    "citacoes": [],
+    "sources_used_ids": [],
+    "citacoes_pertencem_a_entrada": false,
+    "erros_registrados": [
+      {
+        "stage": "validacao",
+        "output": {
+          "erro": "ValueError",
+          "mensagem": "Selecione entre um e cinco chunks."
+        }
+      }
+    ],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P04_R",
+    "pergunta": "Explique as regras sobre pregão na Lei nº 14.133/2021.",
+    "metodo": "bm25",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "7cfbb840",
+    "ids_entrada": [
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_28",
+      "lei_14133_2021.html_chunk_8"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 5.1,
+    "answer": "Trechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> Art. 8º A licitação será conduzida por agente de contratação, pessoa designada pela autoridade competente, entre servidores efetivos ou empregados públicos dos quadros permanentes da Administração Pública, para tomar decisões, acompanhar o trâmite da licitação, dar impulso ao procedimento licitatório e executar quaisquer outras atividades necessárias ao bom andamento do certame até a homologação. § 1º O agente de contratação será auxiliado por equipe de apoio e responderá individualmente pelos atos que praticar, salvo quando induzido a erro pela atuação da equipe. § 2º Em licitação que envolva bens ou serviços especiais, desde que observados os requisitos estabelecidos no art. 7º desta Lei , o agente de contratação poderá ser substituído por comissão de contratação formada por, no mínimo, 3 (três) membros, que responderão solidariamente por todos os atos praticados pela comissão, ressalvado o membro que expressar posição individual divergente fundamentada e registrada em ata lavrada na reunião em que houver sido tomada a decisão. § 3º As regras relativas à atuação do agente de contratação e da equipe de apoio, ao funcionamento da comissão de contratação e à atuação de fiscais e gestores de contratos de que trata esta Lei serão estabelecidas em regulamento, e deverá ser prevista a possibilidade de eles contarem com o apoio dos órgãos de assessoramento jurídico e de controle interno para o desempenho das funções essenciais à execução do disposto nesta Lei. (Regulamento) Vigência § 4º Em licitação que envolva bens ou serviços especiais cujo objeto não seja rotineiramente contratado pela Administração, poderá ser contratado, por prazo determinado, serviço de empresa ou de profissional especializado para assessorar os agentes públicos responsáveis pela condução da licitação. § 5º Em licitação na modalidade pregão, o agente responsável pela condução do certame será designado pregoeiro.\n\n[Fonte: lei_14133_2021.html_chunk_8]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 1840,
+      "completion": 43,
+      "total": 1883
+    },
+    "citacoes": [
+      "lei_14133_2021.html_chunk_28",
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_8"
+    ],
+    "sources_used_ids": [
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_28",
+      "lei_14133_2021.html_chunk_8"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P04_R",
+    "pergunta": "Explique as regras sobre pregão na Lei nº 14.133/2021.",
+    "metodo": "rrf",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "cae3fe3c",
+    "ids_entrada": [
+      "lei_14133_2021.html_chunk_29",
+      "lei_14133_2021.html_chunk_207",
+      "lei_14133_2021.html_chunk_208"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "aplicacao",
+        "excecoes"
+      ],
+      "cobertura": 0.6666666666666666,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 2.208,
+    "answer": "Trechos das evidências recuperadas:\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]",
+    "stage": "geracao",
+    "confidence_level": "baixa",
+    "tokens": {
+      "prompt": 1414,
+      "completion": 24,
+      "total": 1438
+    },
+    "citacoes": [
+      "lei_14133_2021.html_chunk_29"
+    ],
+    "sources_used_ids": [
+      "lei_14133_2021.html_chunk_29"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P04_R",
+    "pergunta": "Explique as regras sobre pregão na Lei nº 14.133/2021.",
+    "metodo": "rrf_rerank",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "bc1277b8",
+    "ids_entrada": [
+      "lei_14133_2021.html_chunk_213",
+      "lei_14133_2021.html_chunk_8",
+      "lei_14133_2021.html_chunk_80"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [],
+      "cobertura": 0.0,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 6.978,
+    "answer": "Trechos das evidências recuperadas:\n\n> Art. 8º A licitação será conduzida por agente de contratação, pessoa designada pela autoridade competente, entre servidores efetivos ou empregados públicos dos quadros permanentes da Administração Pública, para tomar decisões, acompanhar o trâmite da licitação, dar impulso ao procedimento licitatório e executar quaisquer outras atividades necessárias ao bom andamento do certame até a homologação. § 1º O agente de contratação será auxiliado por equipe de apoio e responderá individualmente pelos atos que praticar, salvo quando induzido a erro pela atuação da equipe. § 2º Em licitação que envolva bens ou serviços especiais, desde que observados os requisitos estabelecidos no art. 7º desta Lei , o agente de contratação poderá ser substituído por comissão de contratação formada por, no mínimo, 3 (três) membros, que responderão solidariamente por todos os atos praticados pela comissão, ressalvado o membro que expressar posição individual divergente fundamentada e registrada em ata lavrada na reunião em que houver sido tomada a decisão. § 3º As regras relativas à atuação do agente de contratação e da equipe de apoio, ao funcionamento da comissão de contratação e à atuação de fiscais e gestores de contratos de que trata esta Lei serão estabelecidas em regulamento, e deverá ser prevista a possibilidade de eles contarem com o apoio dos órgãos de assessoramento jurídico e de controle interno para o desempenho das funções essenciais à execução do disposto nesta Lei. (Regulamento) Vigência § 4º Em licitação que envolva bens ou serviços especiais cujo objeto não seja rotineiramente contratado pela Administração, poderá ser contratado, por prazo determinado, serviço de empresa ou de profissional especializado para assessorar os agentes públicos responsáveis pela condução da licitação. § 5º Em licitação na modalidade pregão, o agente responsável pela condução do certame será designado pregoeiro.\n\n[Fonte: lei_14133_2021.html_chunk_8]",
+    "stage": "geracao",
+    "confidence_level": "baixa",
+    "tokens": {
+      "prompt": 3103,
+      "completion": 23,
+      "total": 3126
+    },
+    "citacoes": [
+      "lei_14133_2021.html_chunk_8"
+    ],
+    "sources_used_ids": [
+      "lei_14133_2021.html_chunk_8"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P08_R",
+    "pergunta": "Na ata nº 137/2026 do INCA, qual é o objeto e qual empresa é a contratada?",
+    "metodo": "vetorial",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "e9403d6a",
+    "ids_entrada": [
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_3",
+      "ata_00137.pdf_chunk_23"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "contratada"
+      ],
+      "cobertura": 0.5,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 7.269,
+    "answer": "Trechos das evidências recuperadas:\n\n> 11. CONDIÇÕES GERAIS 11.1. As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, as obrigações da Administração e do fornecedor registrado, penalidades e demais condições do ajuste, encontram-se deﬁnidos no Termo de Referência, anexo ao edital. Para ﬁrmeza e validade do pactuado, a presente Ata foi lavrada em 2 (duas) vias de igual teor, que, depois de lida e achada em ordem, vai assinada pelas partes e encaminhada cópia aos demais órgãos participantes (se houver). INSTRUMENTO SUBSTITUTIVO AO CONTRATO (ART. 95, INCISO II, DA LEI 14.133, DE 2021) A União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça Cruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50, neste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, portador da Matrícula SIAPE nº 6241986, instituído pela Portaria nº 1.619, publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023, e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA, resolvem celebrar o presente INSTRUMENTO SUBSTITUTIVO AO CONTRATO, que será regido pela Lei nº 14.133/2021, legislação correlata e pelo Edital e anexos do Pregão Eletrônico 91.051/2026 – INCA, cuja Ata de Registro de Preços Nº 137/2026 é objeto deste TERMO, vinculado ao Processo de SRP - nº 25410.002318/2025-91, sob os termos e condições a seguir estabelecidos: 1. FORMALIZAÇÃO DA CONTRATAÇÃO 1.1. O adjudicatário terá o prazo de 05 (cinco) dias, contados a partir da data de sua convocação, para aceitar o instrumento equivalente ao contrato - Nota de Empenho, sob pena de decair do direito à contratação, sem prejuízo das sanções previstas. 1.2. O prazo poderá ser prorrogado, por igual período, por solicitação justiﬁcada do adjudicatário e\n\n[Fonte: ata_00137.pdf_chunk_14]\n\n> Código Especiﬁcação Marca Modelo Unidade Quant. INCA Valor Unitário Valor Total 1 A50372 RODÍZIO COM FREIO, DEMAIS ESPECIFICAÇÕES NO TR MARCA FABRICANTE DO RODIZIO TENTE - UN 1028 R$ 311,00 R$ 319.708,00 Valor total da ATA R$ 319.708,00 2. 2. A listagem do cadastro de reserva referente ao presente registro de preços consta como anexo a esta Ata (se houver). 3. ÓRGÃO(S) GERENCIADOR E PARTICIPANTE(S) 3.1. O órgão gerenciador será o Instituto Nacional de câncer; 3.2. Além do gerenciador, não há órgãos e entidades públicas participantes do registro de preços. 4. DA ADESÃO À ATA DE REGISTRO DE PREÇOS 4.1. Não será admitida a adesão à ata de registro de preços decorrente desta licitação ou desta contratação direta, conforme justiﬁcativa apresentada nos estudos técnicos preliminares. Vedação a acréscimo de quantitativos 4.2. É vedado efetuar acréscimos nos quantitativos ﬁxados na ata de registro de preços. 5. VALIDADE, FORMALIZAÇÃO DA ATA DE REGISTRO DE PREÇOS E CADASTRO RESERVA 5.1. A validade da Ata de Registro de Preços será de 1 (um) ano, contado a partir do primeiro dia útil subsequente à data de divulgação no PNCP, podendo ser prorrogada por igual período, mediante a anuência do fornecedor, desde que comprovado o preço vantajoso. 5.1.1. Em caso de prorrogação da ata, poderá ser renovado o quantitativo originalmente registrado. 5.1.2. O contrato decorrente da ata de registro de preços terá sua vigência estabelecida no próprio instrumento contratual e observará no momento da contratação e a cada exercício ﬁnanceiro a disponibilidade de créditos orçamentários, bem como a previsão no plano plurianual, quando ultrapassar 1 (um) exercício ﬁnanceiro. 5.1.2. Na formalização do contrato ou do instrumento substituto deverá haver a indicação da disponibilidade dos créditos orçamentários respectivos. 5.2. A contratação com os fornecedores registrados na ata será formalizada pelo órgão ou pela entidade interessada por intermédio de instrumento contratual, emissão de nota\n\n[Fonte: ata_00137.pdf_chunk_3]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 2655,
+      "completion": 32,
+      "total": 2687
+    },
+    "citacoes": [
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_3"
+    ],
+    "sources_used_ids": [
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_3"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P08_R",
+    "pergunta": "Na ata nº 137/2026 do INCA, qual é o objeto e qual empresa é a contratada?",
+    "metodo": "bm25",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "70d4f872",
+    "ids_entrada": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_20",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "objeto",
+        "contratada"
+      ],
+      "cobertura": 1.0,
+      "cobertura_completa": true
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 8.309,
+    "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS ELÉTRICAS\n\n[Fonte: ata_00137.pdf_chunk_1]\n\n> e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA\n\n[Fonte: ata_00137.pdf_chunk_14]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 3067,
+      "completion": 32,
+      "total": 3099
+    },
+    "citacoes": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "sources_used_ids": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P08_R",
+    "pergunta": "Na ata nº 137/2026 do INCA, qual é o objeto e qual empresa é a contratada?",
+    "metodo": "rrf",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "cc5bb28f",
+    "ids_entrada": [
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_3",
+      "ata_00137.pdf_chunk_23"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "contratada"
+      ],
+      "cobertura": 0.5,
+      "cobertura_completa": false
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 1.748,
+    "answer": "Trechos das evidências recuperadas:\n\n> 11. CONDIÇÕES GERAIS 11.1. As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, as obrigações da Administração e do fornecedor registrado, penalidades e demais condições do ajuste, encontram-se deﬁnidos no Termo de Referência, anexo ao edital. Para ﬁrmeza e validade do pactuado, a presente Ata foi lavrada em 2 (duas) vias de igual teor, que, depois de lida e achada em ordem, vai assinada pelas partes e encaminhada cópia aos demais órgãos participantes (se houver). INSTRUMENTO SUBSTITUTIVO AO CONTRATO (ART. 95, INCISO II, DA LEI 14.133, DE 2021) A União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça Cruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50, neste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, portador da Matrícula SIAPE nº 6241986, instituído pela Portaria nº 1.619, publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023, e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA, resolvem celebrar o presente INSTRUMENTO SUBSTITUTIVO AO CONTRATO, que será regido pela Lei nº 14.133/2021, legislação correlata e pelo Edital e anexos do Pregão Eletrônico 91.051/2026 – INCA, cuja Ata de Registro de Preços Nº 137/2026 é objeto deste TERMO, vinculado ao Processo de SRP - nº 25410.002318/2025-91, sob os termos e condições a seguir estabelecidos: 1. FORMALIZAÇÃO DA CONTRATAÇÃO 1.1. O adjudicatário terá o prazo de 05 (cinco) dias, contados a partir da data de sua convocação, para aceitar o instrumento equivalente ao contrato - Nota de Empenho, sob pena de decair do direito à contratação, sem prejuízo das sanções previstas. 1.2. O prazo poderá ser prorrogado, por igual período, por solicitação justiﬁcada do adjudicatário e\n\n[Fonte: ata_00137.pdf_chunk_14]\n\n> Código Especiﬁcação Marca Modelo Unidade Quant. INCA Valor Unitário Valor Total 1 A50372 RODÍZIO COM FREIO, DEMAIS ESPECIFICAÇÕES NO TR MARCA FABRICANTE DO RODIZIO TENTE - UN 1028 R$ 311,00 R$ 319.708,00 Valor total da ATA R$ 319.708,00 2. 2. A listagem do cadastro de reserva referente ao presente registro de preços consta como anexo a esta Ata (se houver). 3. ÓRGÃO(S) GERENCIADOR E PARTICIPANTE(S) 3.1. O órgão gerenciador será o Instituto Nacional de câncer; 3.2. Além do gerenciador, não há órgãos e entidades públicas participantes do registro de preços. 4. DA ADESÃO À ATA DE REGISTRO DE PREÇOS 4.1. Não será admitida a adesão à ata de registro de preços decorrente desta licitação ou desta contratação direta, conforme justiﬁcativa apresentada nos estudos técnicos preliminares. Vedação a acréscimo de quantitativos 4.2. É vedado efetuar acréscimos nos quantitativos ﬁxados na ata de registro de preços. 5. VALIDADE, FORMALIZAÇÃO DA ATA DE REGISTRO DE PREÇOS E CADASTRO RESERVA 5.1. A validade da Ata de Registro de Preços será de 1 (um) ano, contado a partir do primeiro dia útil subsequente à data de divulgação no PNCP, podendo ser prorrogada por igual período, mediante a anuência do fornecedor, desde que comprovado o preço vantajoso. 5.1.1. Em caso de prorrogação da ata, poderá ser renovado o quantitativo originalmente registrado. 5.1.2. O contrato decorrente da ata de registro de preços terá sua vigência estabelecida no próprio instrumento contratual e observará no momento da contratação e a cada exercício ﬁnanceiro a disponibilidade de créditos orçamentários, bem como a previsão no plano plurianual, quando ultrapassar 1 (um) exercício ﬁnanceiro. 5.1.2. Na formalização do contrato ou do instrumento substituto deverá haver a indicação da disponibilidade dos créditos orçamentários respectivos. 5.2. A contratação com os fornecedores registrados na ata será formalizada pelo órgão ou pela entidade interessada por intermédio de instrumento contratual, emissão de nota\n\n[Fonte: ata_00137.pdf_chunk_3]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 2655,
+      "completion": 32,
+      "total": 2687
+    },
+    "citacoes": [
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_3"
+    ],
+    "sources_used_ids": [
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_3"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  },
+  {
+    "caso": "P08_R",
+    "pergunta": "Na ata nº 137/2026 do INCA, qual é o objeto e qual empresa é a contratada?",
+    "metodo": "rrf_rerank",
+    "top_k": 3,
+    "commit_executor": "cbf4b11e85ed714c561938e6cc0c01e3870747c5",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "run_id": "fa60b384",
+    "ids_entrada": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14",
+      "ata_00137.pdf_chunk_23"
+    ],
+    "cobertura_ranking": {
+      "campos_cobertos": [
+        "objeto",
+        "contratada"
+      ],
+      "cobertura": 1.0,
+      "cobertura_completa": true
+    },
+    "protocolo": "Geração extrativa real sobre ranking preservado; sem nova busca, rerank ou resgate de cobertura.",
+    "tempo_s": 5.426,
+    "answer": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS ELÉTRICAS\n\n[Fonte: ata_00137.pdf_chunk_1]\n\n> e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA\n\n[Fonte: ata_00137.pdf_chunk_14]",
+    "stage": "geracao",
+    "confidence_level": "media",
+    "tokens": {
+      "prompt": 2783,
+      "completion": 32,
+      "total": 2815
+    },
+    "citacoes": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "sources_used_ids": [
+      "ata_00137.pdf_chunk_1",
+      "ata_00137.pdf_chunk_14"
+    ],
+    "citacoes_pertencem_a_entrada": true,
+    "erros_registrados": [],
+    "avaliacao_conteudo": "pendente"
+  }
+]
