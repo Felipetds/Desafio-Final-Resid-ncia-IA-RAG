@@ -1,0 +1,775 @@
+{
+  "pergunta": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
+  "protocolo": "Busca densa salva reutilizada; BM25 contextual recalculado sobre os artefatos atuais. Rede bloqueada. Rankings denso e lexical capturados após os filtros e antes da fusão.",
+  "rankings": {
+    "densa": [
+      {
+        "chunk_id": "ata_00137.pdf_chunk_3",
+        "dense_distance": 0.9553152322769165
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_24",
+        "dense_distance": 0.9602603912353516
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_14",
+        "dense_distance": 1.0440917015075684
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_4",
+        "dense_distance": 1.0529999732971191
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_2",
+        "dense_distance": 1.0574960708618164
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_1",
+        "dense_distance": 1.0891355276107788
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_23",
+        "dense_distance": 1.1986477375030518
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_12",
+        "dense_distance": 1.2442736625671387
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_5",
+        "dense_distance": 1.2488443851470947
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_9",
+        "dense_distance": 1.2650134563446045
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_17",
+        "dense_distance": 1.2860546112060547
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_13",
+        "dense_distance": 1.2864124774932861
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_7",
+        "dense_distance": 1.3233709335327148
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_6",
+        "dense_distance": 1.3352830410003662
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_11",
+        "dense_distance": 1.3406600952148438
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_22",
+        "dense_distance": 1.3499011993408203
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_15",
+        "dense_distance": 1.3535603284835815
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_16",
+        "dense_distance": 1.35798978805542
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_18",
+        "dense_distance": 1.382979393005371
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_10",
+        "dense_distance": 1.4006855487823486
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_19",
+        "dense_distance": 1.4073200225830078
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_8",
+        "dense_distance": 1.4085988998413086
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_21",
+        "dense_distance": 1.5378837585449219
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_20",
+        "dense_distance": 1.6111762523651123
+      }
+    ],
+    "bm25_contextual": [
+      {
+        "chunk_id": "ata_00137.pdf_chunk_1",
+        "bm25_score": 3.210882812490839
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_14",
+        "bm25_score": 2.779312746997352
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_3",
+        "bm25_score": 2.39468561983487
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_23",
+        "bm25_score": 1.9746122271162716
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_24",
+        "bm25_score": 1.6359449210726182
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_12",
+        "bm25_score": 1.3563382556335961
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_5",
+        "bm25_score": 1.348506091402962
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_9",
+        "bm25_score": 1.2409229039693148
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_2",
+        "bm25_score": 1.211162964208396
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_17",
+        "bm25_score": 1.194592749290553
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_8",
+        "bm25_score": 1.1800438768550863
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_4",
+        "bm25_score": 1.1483814015985163
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_16",
+        "bm25_score": 1.1345183590205639
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_13",
+        "bm25_score": 1.027558605663831
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_11",
+        "bm25_score": 1.0182707327496157
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_20",
+        "bm25_score": 1.0017018614923885
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_19",
+        "bm25_score": 0.8622087195299615
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_7",
+        "bm25_score": 0.823780569059842
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_10",
+        "bm25_score": 0.8118832300041503
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_6",
+        "bm25_score": 0.745214532216894
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_15",
+        "bm25_score": 0.6158742424674297
+      }
+    ],
+    "rrf_puro": [
+      {
+        "chunk_id": "ata_00137.pdf_chunk_3",
+        "rrf_score": 0.032266458495966696,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 0.9553152322769165,
+        "bm25_score": 2.39468561983487
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_14",
+        "rrf_score": 0.03200204813108039,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.0440917015075684,
+        "bm25_score": 2.779312746997352
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_1",
+        "rrf_score": 0.031544957774465976,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.0891355276107788,
+        "bm25_score": 3.210882812490839
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_24",
+        "rrf_score": 0.0315136476426799,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 0.9602603912353516,
+        "bm25_score": 1.6359449210726182
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_23",
+        "rrf_score": 0.03055037313432836,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.1986477375030518,
+        "bm25_score": 1.9746122271162716
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_2",
+        "rrf_score": 0.029877369007803793,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.0574960708618164,
+        "bm25_score": 1.211162964208396
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_12",
+        "rrf_score": 0.029857397504456328,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.2442736625671387,
+        "bm25_score": 1.3563382556335961
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_4",
+        "rrf_score": 0.029513888888888888,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.0529999732971191,
+        "bm25_score": 1.1483814015985163
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_5",
+        "rrf_score": 0.029418126757516764,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.2488443851470947,
+        "bm25_score": 1.348506091402962
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_9",
+        "rrf_score": 0.028991596638655463,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.2650134563446045,
+        "bm25_score": 1.2409229039693148
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_17",
+        "rrf_score": 0.028370221327967807,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.2860546112060547,
+        "bm25_score": 1.194592749290553
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_13",
+        "rrf_score": 0.027402402402402402,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.2864124774932861,
+        "bm25_score": 1.027558605663831
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_11",
+        "rrf_score": 0.02666666666666667,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.3406600952148438,
+        "bm25_score": 1.0182707327496157
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_7",
+        "rrf_score": 0.02651914295749912,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.3233709335327148,
+        "bm25_score": 0.823780569059842
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_16",
+        "rrf_score": 0.02651914295749912,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.35798978805542,
+        "bm25_score": 1.1345183590205639
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_8",
+        "rrf_score": 0.026279628993473032,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.4085988998413086,
+        "bm25_score": 1.1800438768550863
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_6",
+        "rrf_score": 0.026013513513513515,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.3352830410003662,
+        "bm25_score": 0.745214532216894
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_15",
+        "rrf_score": 0.025332691999358666,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.3535603284835815,
+        "bm25_score": 0.6158742424674297
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_19",
+        "rrf_score": 0.025332691999358666,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.4073200225830078,
+        "bm25_score": 0.8622087195299615
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_10",
+        "rrf_score": 0.025158227848101268,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.4006855487823486,
+        "bm25_score": 0.8118832300041503
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_20",
+        "rrf_score": 0.02506265664160401,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.6111762523651123,
+        "bm25_score": 1.0017018614923885
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_22",
+        "rrf_score": 0.013157894736842105,
+        "retrieval_sources": [
+          "dense"
+        ],
+        "dense_distance": 1.3499011993408203
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_18",
+        "rrf_score": 0.012658227848101266,
+        "retrieval_sources": [
+          "dense"
+        ],
+        "dense_distance": 1.382979393005371
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_21",
+        "rrf_score": 0.012048192771084338,
+        "retrieval_sources": [
+          "dense"
+        ],
+        "dense_distance": 1.5378837585449219
+      }
+    ],
+    "rrf_com_selecao_final": [
+      {
+        "chunk_id": "ata_00137.pdf_chunk_3",
+        "text": "Código Especiﬁcação Marca Modelo Unidade Quant.\nINCA\nValor\nUnitário\nValor\nTotal\n1 A50372 RODÍZIO COM FREIO,\nDEMAIS ESPECIFICAÇÕES\nNO TR\nMARCA\nFABRICANTE DO\nRODIZIO TENTE\n- UN 1028 R$ 311,00 R$\n319.708,00\n Valor total\nda ATA\nR$\n319.708,00\n2. 2. A listagem do cadastro de reserva referente ao presente registro de preços consta como anexo a esta Ata (se\nhouver).\n \n3. ÓRGÃO(S) GERENCIADOR E PARTICIPANTE(S)\n3.1. O órgão gerenciador será o Instituto Nacional de câncer;\n3.2. Além do gerenciador, não há órgãos e entidades públicas participantes do registro de preços.\n \n4. DA ADESÃO À ATA DE REGISTRO DE PREÇOS\n4.1. Não será admitida a adesão à ata de registro de preços decorrente desta licitação ou desta contratação direta,\nconforme justiﬁcativa apresentada nos estudos técnicos preliminares.\nVedação a acréscimo de quantitativos\n4.2. É vedado efetuar acréscimos nos quantitativos ﬁxados na ata de registro de preços.\n \n5. VALIDADE, FORMALIZAÇÃO DA ATA DE REGISTRO DE PREÇOS E CADASTRO RESERVA\n5.1. A validade da Ata de Registro de Preços será de 1 (um) ano, contado a partir do primeiro dia útil subsequente à\ndata de divulgação no PNCP, podendo ser prorrogada por igual período, mediante a anuência do fornecedor, desde\nque comprovado o preço vantajoso.\n5.1.1. Em caso de prorrogação da ata, poderá ser renovado o quantitativo originalmente registrado.\n5.1.2. O contrato decorrente da ata de registro de preços terá sua vigência estabelecida no próprio instrumento\ncontratual e observará no momento da contratação e a cada exercício ﬁnanceiro a disponibilidade de créditos\norçamentários, bem como a previsão no plano plurianual, quando ultrapassar 1 (um) exercício ﬁnanceiro.\n5.1.2. Na formalização do contrato ou do instrumento substituto deverá haver a indicação da disponibilidade dos\ncréditos orçamentários respectivos.\n5.2. A contratação com os fornecedores registrados na ata será formalizada pelo órgão ou pela entidade interessada\npor intermédio de instrumento contratual, emissão de nota",
+        "rrf_score": 0.032266,
+        "rerank_score": null,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 0.9553152322769165,
+        "bm25_score": 2.39468561983487,
+        "source_file": "ata_00137.pdf",
+        "doc_type": "ata_reuniao",
+        "sensitivity": "restrito_sanitizado",
+        "base_id": "base_conversacional",
+        "natureza": "conversacional",
+        "metadata": {
+          "chunk_id": "ata_00137.pdf_chunk_3",
+          "source_file": "ata_00137.pdf",
+          "doc_type": "ata_reuniao",
+          "sensitivity": "restrito_sanitizado",
+          "base_id": "base_conversacional",
+          "natureza": "conversacional",
+          "uf": "RJ",
+          "ano": "",
+          "modalidade": "",
+          "orgao": "",
+          "municipio": "",
+          "valor": "",
+          "fornecedor": "",
+          "vigencia": "",
+          "pagina": 2
+        }
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_14",
+        "text": "11. CONDIÇÕES GERAIS\n11.1. As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, as obrigações da\nAdministração e do fornecedor registrado, penalidades e demais condições do ajuste, encontram-se deﬁnidos no\nTermo de Referência, anexo ao edital.\n \nPara ﬁrmeza e validade do pactuado, a presente Ata foi lavrada em 2 (duas) vias de igual teor, que, depois de lida e\nachada em ordem, vai assinada pelas partes e encaminhada cópia aos demais órgãos participantes (se houver).\n \n \n \nINSTRUMENTO SUBSTITUTIVO AO CONTRATO\n(ART. 95, INCISO II, DA LEI 14.133, DE 2021)\nA União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça\nCruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50,\nneste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, portador da Matrícula SIAPE nº\n6241986, instituído pela Portaria nº 1.619, publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023, e de\noutro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96,\nestabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada\nCONTRATADA, resolvem celebrar o presente INSTRUMENTO SUBSTITUTIVO AO CONTRATO, que será regido pela Lei\nnº 14.133/2021, legislação correlata e pelo Edital e anexos do Pregão Eletrônico 91.051/2026 – INCA, cuja Ata de\nRegistro de Preços Nº 137/2026 é objeto deste TERMO, vinculado ao Processo de SRP - nº 25410.002318/2025-91,\nsob os termos e condições a seguir estabelecidos:\n1. FORMALIZAÇÃO DA CONTRATAÇÃO\n1.1. O adjudicatário terá o prazo de 05 (cinco) dias, contados a partir da data de sua convocação, para\naceitar o instrumento equivalente ao contrato - Nota de Empenho, sob pena de decair do direito à contratação, sem\nprejuízo das sanções previstas.\n1.2. O prazo poderá ser prorrogado, por igual período, por solicitação justiﬁcada do adjudicatário e",
+        "rrf_score": 0.032002,
+        "rerank_score": null,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.0440917015075684,
+        "bm25_score": 2.779312746997352,
+        "source_file": "ata_00137.pdf",
+        "doc_type": "ata_reuniao",
+        "sensitivity": "restrito_sanitizado",
+        "base_id": "base_conversacional",
+        "natureza": "conversacional",
+        "metadata": {
+          "chunk_id": "ata_00137.pdf_chunk_14",
+          "source_file": "ata_00137.pdf",
+          "doc_type": "ata_reuniao",
+          "sensitivity": "restrito_sanitizado",
+          "base_id": "base_conversacional",
+          "natureza": "conversacional",
+          "uf": "RJ",
+          "ano": "",
+          "modalidade": "",
+          "orgao": "",
+          "municipio": "",
+          "valor": "",
+          "fornecedor": "",
+          "vigencia": "",
+          "pagina": 6
+        }
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_1",
+        "text": "Ministério da Saúde\nSecretaria de Atenção Especializada à Saúde\nInstituto Nacional de Câncer\nCoordenação de Administração Geral\nDivisão de Suprimentos\n  \nATA DE REGISTRO DE PREÇOS Nº 137/2026\nProcesso nº 25410.002318/2025-91\n  \nREGISTRO DE PREÇOS nº 045/2025\nPREGÃO ELETRÔNICO Nº 91.051/2026 – INCA\n \n \nA União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça\nCruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50,\nneste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, nomeado(a) pela Portaria nº 1.619,\npublicada no Diário Oﬁcial da União de 13 de fevereiro de 2023,portador da Matrícula Funcional nº nº 6241986,\nconsiderando o julgamento da licitação na modalidade de pregão, na forma eletrônica, para REGISTRO DE PREÇOS n°\n045/2025, publicada no Portal Nacional de Contratações Públicas - PNCP de 01/04/2026, processo administrativo\nn.º 25410.002318/2025-91, RESOLVE registrar os preços da(s) empresa(s) indicada(s) e qualiﬁcada(s) nesta ATA, de\nacordo com a classiﬁcação por ela(s) alcançada(s) e na(s) quantidade(s) cotada(s), atendendo às condições previstas\nno Edital de licitação, sujeitando-se as partes às normas constantes na Lei nº 14.133, de 1º de abril de 2021, no\nDecreto n.º 11.462, de 31 de março de 2023, e em conformidade com as disposições a seguir:\n \n \n1. DO OBJETO\n1.1. A presente Ata tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS\nELÉTRICAS, especiﬁcado(s) no(s) item(ns) 1 do Termo de Referência, anexo I do edital de licitação nº 91.051/2026\nque é parte integrante desta Ata, assim como as propostas cujos preços tenham sido registrados,\nindependentemente de transcrição.\n \n2. DOS PREÇOS, ESPECIFICAÇÕES E QUANTITATIVO\n2.1. O preço registrado , as especiﬁcações do objeto, as quantidades mínimas e máximas de cada item,\nfornecedor(es) e as demais condições ofertadas na(s) proposta(s) são as que seguem:",
+        "rrf_score": 0.031545,
+        "rerank_score": null,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.0891355276107788,
+        "bm25_score": 3.210882812490839,
+        "source_file": "ata_00137.pdf",
+        "doc_type": "ata_reuniao",
+        "sensitivity": "restrito_sanitizado",
+        "base_id": "base_conversacional",
+        "natureza": "conversacional",
+        "metadata": {
+          "chunk_id": "ata_00137.pdf_chunk_1",
+          "source_file": "ata_00137.pdf",
+          "doc_type": "ata_reuniao",
+          "sensitivity": "restrito_sanitizado",
+          "base_id": "base_conversacional",
+          "natureza": "conversacional",
+          "uf": "RJ",
+          "ano": "",
+          "modalidade": "",
+          "orgao": "",
+          "municipio": "",
+          "valor": "",
+          "fornecedor": "",
+          "vigencia": "",
+          "pagina": 1
+        }
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_24",
+        "text": "REPRESENTANTE DO FORNECEDOR REGISTRADO\n \n \n_____________________\nAssinatura\nNome Legível\nDocumento assinado eletronicamente por Andréia Estelita Perné, Usuário Externo, em 10/04/2026, às 16:23,\nconforme horário oﬁcial de Brasília, com fundamento no § 3º, do art. 4º, do Decreto nº 10.543, de 13 de\nnovembro de 2020; e art. 8º, da Portaria nº 900 de 31 de Março de 2017.\nDocumento assinado eletronicamente por Roberto de Almeida Gil, Diretor(a) do Instituto Nacional de Câncer,\nem 13/04/2026, às 16:50, conforme horário oﬁcial de Brasília, com fundamento no § 3º, do art. 4º, do Decreto nº\n10.543, de 13 de novembro de 2020; e art. 8º, da Portaria nº 900 de 31 de Março de 2017.\nA autenticidade deste documento pode ser conferida no site http://sei.saude.gov.br/sei/controlador_externo.php?\nacao=documento_conferir&id_orgao_acesso_externo=0, informando o código veriﬁcador [TELEFONE_OCULTO] e o código\nCRC D646AB1B.\n \nReferência: Processo nº 25410.002318/2025-91 SEI nº [TELEFONE_OCULTO]\n \nDivisão de Suprimentos - DISUP/INCA\nRua Marquês de Pombal, nº 125  - Bairro Centro, Rio de Janeiro/RJ, CEP 20230-240\nSite",
+        "rrf_score": 0.031514,
+        "rerank_score": null,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 0.9602603912353516,
+        "bm25_score": 1.6359449210726182,
+        "source_file": "ata_00137.pdf",
+        "doc_type": "ata_reuniao",
+        "sensitivity": "restrito_sanitizado",
+        "base_id": "base_conversacional",
+        "natureza": "conversacional",
+        "metadata": {
+          "chunk_id": "ata_00137.pdf_chunk_24",
+          "source_file": "ata_00137.pdf",
+          "doc_type": "ata_reuniao",
+          "sensitivity": "restrito_sanitizado",
+          "base_id": "base_conversacional",
+          "natureza": "conversacional",
+          "uf": "RJ",
+          "ano": "",
+          "modalidade": "",
+          "orgao": "",
+          "municipio": "",
+          "valor": "",
+          "fornecedor": "",
+          "vigencia": "",
+          "pagina": 10
+        }
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_23",
+        "text": "r no prazo máximo de 1 (um) mês.\n7.5. Registros que não caracterizam alterações contratuais podem ser realizados por simples apostila,\ndispensada a celebração de termo aditivo, na forma do art. 136 da Lei nº 14.133, de 2021.\n8. FORO\n8.1. Fica deﬁnido o Foro da Justiça Federal , Seção Judiciária do Rio de Janeiro - RJ para dirimir os litígios\nque decorrerem da execução contratual que não puderem ser compostos pela conciliação, conforme art. 92, §1º, da\nLei nº 14.133, de 2021.\n \n \n \n \n \n \nTERMO DE CIÊNCIA E CONCORDÂNCIA\n \nPor meio deste instrumento, AGIMED COMERCIO DE EQUIPAMENTOS LTDA declara que está ciente e concorda com\nas disposições e obrigações previstas no Edital , no Termo de Referência e nos demais anexos a que se refere o Pregão\nEletrônico Nº 91.051/2026 – INCA e seus atos subsequentes, bem como que se responsabiliza, sob as penas da Lei,\npela veracidade e legitimidade das informações e documentos apresentados durante o processo de contratação.\n \n \nRio de Janeiro,      de                            de 2025.\n \n_______________________________________\nDr. ROBERTO DE ALMEIDA GIL\nDiretor Geral - INCA/MS",
+        "rrf_score": 0.03055,
+        "rerank_score": null,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.1986477375030518,
+        "bm25_score": 1.9746122271162716,
+        "source_file": "ata_00137.pdf",
+        "doc_type": "ata_reuniao",
+        "sensitivity": "restrito_sanitizado",
+        "base_id": "base_conversacional",
+        "natureza": "conversacional",
+        "metadata": {
+          "chunk_id": "ata_00137.pdf_chunk_23",
+          "source_file": "ata_00137.pdf",
+          "doc_type": "ata_reuniao",
+          "sensitivity": "restrito_sanitizado",
+          "base_id": "base_conversacional",
+          "natureza": "conversacional",
+          "uf": "RJ",
+          "ano": "",
+          "modalidade": "",
+          "orgao": "",
+          "municipio": "",
+          "valor": "",
+          "fornecedor": "",
+          "vigencia": "",
+          "pagina": 9
+        }
+      }
+    ],
+    "cross_encoder_com_selecao_final": [
+      {
+        "chunk_id": "ata_00137.pdf_chunk_1",
+        "text": "Ministério da Saúde\nSecretaria de Atenção Especializada à Saúde\nInstituto Nacional de Câncer\nCoordenação de Administração Geral\nDivisão de Suprimentos\n  \nATA DE REGISTRO DE PREÇOS Nº 137/2026\nProcesso nº 25410.002318/2025-91\n  \nREGISTRO DE PREÇOS nº 045/2025\nPREGÃO ELETRÔNICO Nº 91.051/2026 – INCA\n \n \nA União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça\nCruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50,\nneste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, nomeado(a) pela Portaria nº 1.619,\npublicada no Diário Oﬁcial da União de 13 de fevereiro de 2023,portador da Matrícula Funcional nº nº 6241986,\nconsiderando o julgamento da licitação na modalidade de pregão, na forma eletrônica, para REGISTRO DE PREÇOS n°\n045/2025, publicada no Portal Nacional de Contratações Públicas - PNCP de 01/04/2026, processo administrativo\nn.º 25410.002318/2025-91, RESOLVE registrar os preços da(s) empresa(s) indicada(s) e qualiﬁcada(s) nesta ATA, de\nacordo com a classiﬁcação por ela(s) alcançada(s) e na(s) quantidade(s) cotada(s), atendendo às condições previstas\nno Edital de licitação, sujeitando-se as partes às normas constantes na Lei nº 14.133, de 1º de abril de 2021, no\nDecreto n.º 11.462, de 31 de março de 2023, e em conformidade com as disposições a seguir:\n \n \n1. DO OBJETO\n1.1. A presente Ata tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS\nELÉTRICAS, especiﬁcado(s) no(s) item(ns) 1 do Termo de Referência, anexo I do edital de licitação nº 91.051/2026\nque é parte integrante desta Ata, assim como as propostas cujos preços tenham sido registrados,\nindependentemente de transcrição.\n \n2. DOS PREÇOS, ESPECIFICAÇÕES E QUANTITATIVO\n2.1. O preço registrado , as especiﬁcações do objeto, as quantidades mínimas e máximas de cada item,\nfornecedor(es) e as demais condições ofertadas na(s) proposta(s) são as que seguem:",
+        "rrf_score": 0.031545,
+        "rerank_score": 5.339176654815674,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.0891355276107788,
+        "bm25_score": 3.210882812490839,
+        "source_file": "ata_00137.pdf",
+        "doc_type": "ata_reuniao",
+        "sensitivity": "restrito_sanitizado",
+        "base_id": "base_conversacional",
+        "natureza": "conversacional",
+        "metadata": {
+          "chunk_id": "ata_00137.pdf_chunk_1",
+          "source_file": "ata_00137.pdf",
+          "doc_type": "ata_reuniao",
+          "sensitivity": "restrito_sanitizado",
+          "base_id": "base_conversacional",
+          "natureza": "conversacional",
+          "uf": "RJ",
+          "ano": "",
+          "modalidade": "",
+          "orgao": "",
+          "municipio": "",
+          "valor": "",
+          "fornecedor": "",
+          "vigencia": "",
+          "pagina": 1
+        }
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_14",
+        "text": "11. CONDIÇÕES GERAIS\n11.1. As condições gerais de execução do objeto, tais como os prazos para entrega e recebimento, as obrigações da\nAdministração e do fornecedor registrado, penalidades e demais condições do ajuste, encontram-se deﬁnidos no\nTermo de Referência, anexo ao edital.\n \nPara ﬁrmeza e validade do pactuado, a presente Ata foi lavrada em 2 (duas) vias de igual teor, que, depois de lida e\nachada em ordem, vai assinada pelas partes e encaminhada cópia aos demais órgãos participantes (se houver).\n \n \n \nINSTRUMENTO SUBSTITUTIVO AO CONTRATO\n(ART. 95, INCISO II, DA LEI 14.133, DE 2021)\nA União, por intermédio do INSTITUTO NACIONAL DE CÂNCER, vinculado ao Ministério da Saúde, com sede na Praça\nCruz Vermelha, nº 23, 4° andar, nesta cidade, CEP: 20231-130, inscrito no CNPJ/MF sob o nº 00.394.544/0171-50,\nneste ato representado por seu Diretor Geral, Dr. ROBERTO DE ALMEIDA GIL, portador da Matrícula SIAPE nº\n6241986, instituído pela Portaria nº 1.619, publicada no Diário Oﬁcial da União de 13 de fevereiro de 2023, e de\noutro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96,\nestabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada\nCONTRATADA, resolvem celebrar o presente INSTRUMENTO SUBSTITUTIVO AO CONTRATO, que será regido pela Lei\nnº 14.133/2021, legislação correlata e pelo Edital e anexos do Pregão Eletrônico 91.051/2026 – INCA, cuja Ata de\nRegistro de Preços Nº 137/2026 é objeto deste TERMO, vinculado ao Processo de SRP - nº 25410.002318/2025-91,\nsob os termos e condições a seguir estabelecidos:\n1. FORMALIZAÇÃO DA CONTRATAÇÃO\n1.1. O adjudicatário terá o prazo de 05 (cinco) dias, contados a partir da data de sua convocação, para\naceitar o instrumento equivalente ao contrato - Nota de Empenho, sob pena de decair do direito à contratação, sem\nprejuízo das sanções previstas.\n1.2. O prazo poderá ser prorrogado, por igual período, por solicitação justiﬁcada do adjudicatário e",
+        "rrf_score": 0.032002,
+        "rerank_score": 5.255431652069092,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.0440917015075684,
+        "bm25_score": 2.779312746997352,
+        "source_file": "ata_00137.pdf",
+        "doc_type": "ata_reuniao",
+        "sensitivity": "restrito_sanitizado",
+        "base_id": "base_conversacional",
+        "natureza": "conversacional",
+        "metadata": {
+          "chunk_id": "ata_00137.pdf_chunk_14",
+          "source_file": "ata_00137.pdf",
+          "doc_type": "ata_reuniao",
+          "sensitivity": "restrito_sanitizado",
+          "base_id": "base_conversacional",
+          "natureza": "conversacional",
+          "uf": "RJ",
+          "ano": "",
+          "modalidade": "",
+          "orgao": "",
+          "municipio": "",
+          "valor": "",
+          "fornecedor": "",
+          "vigencia": "",
+          "pagina": 6
+        }
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_24",
+        "text": "REPRESENTANTE DO FORNECEDOR REGISTRADO\n \n \n_____________________\nAssinatura\nNome Legível\nDocumento assinado eletronicamente por Andréia Estelita Perné, Usuário Externo, em 10/04/2026, às 16:23,\nconforme horário oﬁcial de Brasília, com fundamento no § 3º, do art. 4º, do Decreto nº 10.543, de 13 de\nnovembro de 2020; e art. 8º, da Portaria nº 900 de 31 de Março de 2017.\nDocumento assinado eletronicamente por Roberto de Almeida Gil, Diretor(a) do Instituto Nacional de Câncer,\nem 13/04/2026, às 16:50, conforme horário oﬁcial de Brasília, com fundamento no § 3º, do art. 4º, do Decreto nº\n10.543, de 13 de novembro de 2020; e art. 8º, da Portaria nº 900 de 31 de Março de 2017.\nA autenticidade deste documento pode ser conferida no site http://sei.saude.gov.br/sei/controlador_externo.php?\nacao=documento_conferir&id_orgao_acesso_externo=0, informando o código veriﬁcador [TELEFONE_OCULTO] e o código\nCRC D646AB1B.\n \nReferência: Processo nº 25410.002318/2025-91 SEI nº [TELEFONE_OCULTO]\n \nDivisão de Suprimentos - DISUP/INCA\nRua Marquês de Pombal, nº 125  - Bairro Centro, Rio de Janeiro/RJ, CEP 20230-240\nSite",
+        "rrf_score": 0.031514,
+        "rerank_score": 0.2055683732032776,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 0.9602603912353516,
+        "bm25_score": 1.6359449210726182,
+        "source_file": "ata_00137.pdf",
+        "doc_type": "ata_reuniao",
+        "sensitivity": "restrito_sanitizado",
+        "base_id": "base_conversacional",
+        "natureza": "conversacional",
+        "metadata": {
+          "chunk_id": "ata_00137.pdf_chunk_24",
+          "source_file": "ata_00137.pdf",
+          "doc_type": "ata_reuniao",
+          "sensitivity": "restrito_sanitizado",
+          "base_id": "base_conversacional",
+          "natureza": "conversacional",
+          "uf": "RJ",
+          "ano": "",
+          "modalidade": "",
+          "orgao": "",
+          "municipio": "",
+          "valor": "",
+          "fornecedor": "",
+          "vigencia": "",
+          "pagina": 10
+        }
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_23",
+        "text": "r no prazo máximo de 1 (um) mês.\n7.5. Registros que não caracterizam alterações contratuais podem ser realizados por simples apostila,\ndispensada a celebração de termo aditivo, na forma do art. 136 da Lei nº 14.133, de 2021.\n8. FORO\n8.1. Fica deﬁnido o Foro da Justiça Federal , Seção Judiciária do Rio de Janeiro - RJ para dirimir os litígios\nque decorrerem da execução contratual que não puderem ser compostos pela conciliação, conforme art. 92, §1º, da\nLei nº 14.133, de 2021.\n \n \n \n \n \n \nTERMO DE CIÊNCIA E CONCORDÂNCIA\n \nPor meio deste instrumento, AGIMED COMERCIO DE EQUIPAMENTOS LTDA declara que está ciente e concorda com\nas disposições e obrigações previstas no Edital , no Termo de Referência e nos demais anexos a que se refere o Pregão\nEletrônico Nº 91.051/2026 – INCA e seus atos subsequentes, bem como que se responsabiliza, sob as penas da Lei,\npela veracidade e legitimidade das informações e documentos apresentados durante o processo de contratação.\n \n \nRio de Janeiro,      de                            de 2025.\n \n_______________________________________\nDr. ROBERTO DE ALMEIDA GIL\nDiretor Geral - INCA/MS",
+        "rrf_score": 0.03055,
+        "rerank_score": 0.0873444452881813,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 1.1986477375030518,
+        "bm25_score": 1.9746122271162716,
+        "source_file": "ata_00137.pdf",
+        "doc_type": "ata_reuniao",
+        "sensitivity": "restrito_sanitizado",
+        "base_id": "base_conversacional",
+        "natureza": "conversacional",
+        "metadata": {
+          "chunk_id": "ata_00137.pdf_chunk_23",
+          "source_file": "ata_00137.pdf",
+          "doc_type": "ata_reuniao",
+          "sensitivity": "restrito_sanitizado",
+          "base_id": "base_conversacional",
+          "natureza": "conversacional",
+          "uf": "RJ",
+          "ano": "",
+          "modalidade": "",
+          "orgao": "",
+          "municipio": "",
+          "valor": "",
+          "fornecedor": "",
+          "vigencia": "",
+          "pagina": 9
+        }
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_3",
+        "text": "Código Especiﬁcação Marca Modelo Unidade Quant.\nINCA\nValor\nUnitário\nValor\nTotal\n1 A50372 RODÍZIO COM FREIO,\nDEMAIS ESPECIFICAÇÕES\nNO TR\nMARCA\nFABRICANTE DO\nRODIZIO TENTE\n- UN 1028 R$ 311,00 R$\n319.708,00\n Valor total\nda ATA\nR$\n319.708,00\n2. 2. A listagem do cadastro de reserva referente ao presente registro de preços consta como anexo a esta Ata (se\nhouver).\n \n3. ÓRGÃO(S) GERENCIADOR E PARTICIPANTE(S)\n3.1. O órgão gerenciador será o Instituto Nacional de câncer;\n3.2. Além do gerenciador, não há órgãos e entidades públicas participantes do registro de preços.\n \n4. DA ADESÃO À ATA DE REGISTRO DE PREÇOS\n4.1. Não será admitida a adesão à ata de registro de preços decorrente desta licitação ou desta contratação direta,\nconforme justiﬁcativa apresentada nos estudos técnicos preliminares.\nVedação a acréscimo de quantitativos\n4.2. É vedado efetuar acréscimos nos quantitativos ﬁxados na ata de registro de preços.\n \n5. VALIDADE, FORMALIZAÇÃO DA ATA DE REGISTRO DE PREÇOS E CADASTRO RESERVA\n5.1. A validade da Ata de Registro de Preços será de 1 (um) ano, contado a partir do primeiro dia útil subsequente à\ndata de divulgação no PNCP, podendo ser prorrogada por igual período, mediante a anuência do fornecedor, desde\nque comprovado o preço vantajoso.\n5.1.1. Em caso de prorrogação da ata, poderá ser renovado o quantitativo originalmente registrado.\n5.1.2. O contrato decorrente da ata de registro de preços terá sua vigência estabelecida no próprio instrumento\ncontratual e observará no momento da contratação e a cada exercício ﬁnanceiro a disponibilidade de créditos\norçamentários, bem como a previsão no plano plurianual, quando ultrapassar 1 (um) exercício ﬁnanceiro.\n5.1.2. Na formalização do contrato ou do instrumento substituto deverá haver a indicação da disponibilidade dos\ncréditos orçamentários respectivos.\n5.2. A contratação com os fornecedores registrados na ata será formalizada pelo órgão ou pela entidade interessada\npor intermédio de instrumento contratual, emissão de nota",
+        "rrf_score": 0.032266,
+        "rerank_score": -1.7862935066223145,
+        "retrieval_sources": [
+          "bm25",
+          "dense"
+        ],
+        "dense_distance": 0.9553152322769165,
+        "bm25_score": 2.39468561983487,
+        "source_file": "ata_00137.pdf",
+        "doc_type": "ata_reuniao",
+        "sensitivity": "restrito_sanitizado",
+        "base_id": "base_conversacional",
+        "natureza": "conversacional",
+        "metadata": {
+          "chunk_id": "ata_00137.pdf_chunk_3",
+          "source_file": "ata_00137.pdf",
+          "doc_type": "ata_reuniao",
+          "sensitivity": "restrito_sanitizado",
+          "base_id": "base_conversacional",
+          "natureza": "conversacional",
+          "uf": "RJ",
+          "ano": "",
+          "modalidade": "",
+          "orgao": "",
+          "municipio": "",
+          "valor": "",
+          "fornecedor": "",
+          "vigencia": "",
+          "pagina": 2
+        }
+      }
+    ]
+  },
+  "limites": [
+    "P08 apenas; sem métricas de relevância anotada.",
+    "Rankings puros separados dos resultados com seleção final.",
+    "Não permite comparar latência de recuperação real."
+  ]
+}

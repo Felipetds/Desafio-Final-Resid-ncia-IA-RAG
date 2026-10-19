@@ -1,0 +1,55 @@
+{
+  "caso": "P08",
+  "pergunta": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
+  "protocolo": "Mesma análise, artefatos, buscas e candidatos RRF; comparação inclui regras finais de seleção.",
+  "rrf_top5": [
+    "ata_00137.pdf_chunk_3",
+    "ata_00137.pdf_chunk_14",
+    "ata_00137.pdf_chunk_1",
+    "ata_00137.pdf_chunk_24",
+    "ata_00137.pdf_chunk_23"
+  ],
+  "cross_encoder_top5": [
+    {
+      "chunk_id": "ata_00137.pdf_chunk_1",
+      "rerank_score": 5.339176654815674
+    },
+    {
+      "chunk_id": "ata_00137.pdf_chunk_14",
+      "rerank_score": 5.255431652069092
+    },
+    {
+      "chunk_id": "ata_00137.pdf_chunk_24",
+      "rerank_score": 0.2055683732032776
+    },
+    {
+      "chunk_id": "ata_00137.pdf_chunk_23",
+      "rerank_score": 0.0873444452881813
+    },
+    {
+      "chunk_id": "ata_00137.pdf_chunk_3",
+      "rerank_score": -1.7862935066223145
+    }
+  ],
+  "evento_rerank": {
+    "event": "rerank",
+    "status": "applied_local_cross_encoder",
+    "applied": true,
+    "latency_ms": 31602.73,
+    "model": "/content/reranker_mmarco_exportado",
+    "revision": null,
+    "candidates_scored": 20,
+    "candidates_preserved_unscored": 4,
+    "device": "cpu",
+    "max_length": 512
+  },
+  "decisao": "Backend opcional; manter desativado por padrão.",
+  "limites": [
+    "Um único caso; não permite concluir ganho geral.",
+    "Mesmo conjunto final de cinco trechos, com ordem diferente.",
+    "Trecho do objeto caiu da primeira para a quinta posição.",
+    "Não foram calculadas métricas com relevância anotada.",
+    "Tempos totais das duas execuções não são comparáveis.",
+    "Comparação isolada BM25 versus densa ainda pendente."
+  ]
+}

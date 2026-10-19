@@ -693,6 +693,7 @@ def recuperar_evidencias(
             })
             
         ranking_reranked_tuples = rerank.executar_rerank(pergunta, candidatos_para_rerank)
+        resultado_rerank = rerank.ultimo_resultado()
         
         # Reconstrói a lista no formato que o selecionar_resultados_multirrota espera
         ranking_final = []
@@ -759,12 +760,11 @@ def recuperar_evidencias(
             "top_ids_antes_cobertura": ids_antes_cobertura,
             "top_ids_apos_cobertura": ids_apos_cobertura,
             "rerank_enabled": rerank.RERANK_ENABLED,
-            "rerank_applied": False,
-            "rerank_status": (
-                "not_implemented_fallback_rrf"
-                if rerank.RERANK_ENABLED
-                else "disabled_fallback_rrf"
+            "rerank_applied": bool(resultado_rerank.get("applied", False)),
+            "rerank_status": resultado_rerank.get(
+                "status", "unknown"
             ),
+            "rerank_details": resultado_rerank,
             "returned": len(evidencias),
         }
 

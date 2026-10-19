@@ -1,0 +1,64 @@
+{
+  "registrado_em_utc": "2026-10-18T23:34:24.486231+00:00",
+  "commit_validado": "1576b60f4ffc72a22bf614923b39811cfc8fae3f",
+  "origem_codigo": "Clone local independente; commit confirmado no remoto.",
+  "instalacao": "Ambiente virtual sem pacotes do sistema; Python 3.13.",
+  "restauracao": "14 arquivos conferidos por SHA-256 antes e depois da cópia.",
+  "testes_locais": "487 aprovados, rede bloqueada; 7 llm excluídos.",
+  "compatibilidade": "2 aprovados.",
+  "interface": "Criada e aberta com o Python isolado.",
+  "historico": "P04 reaberto visualmente em outro processo, com mesmos IDs.",
+  "feedback": {
+    "run_id": "2402fe3b",
+    "query_id": "q_282717c4",
+    "avaliacao": "util",
+    "fonte": "lei_14133_2021.html",
+    "persistencia": "Registro no disco conferido.",
+    "ressalva": "FEEDBACK_PATH herdado aponta para validacao_interface_2026-10-18/feedback.jsonl."
+  },
+  "logs": "P01, P02 e P04 reproduzidos sem eventos de erro.",
+  "rerank": "Desativado; fallback RRF confirmado.",
+  "casos": [
+    {
+      "caso": "P01",
+      "run_id": "7964c4d6",
+      "query_id": "q_7129efd1",
+      "pergunta": "Quais contratações de pregão eletrônico foram publicadas no RJ em março de 2026?",
+      "estrategia": "consulta_estruturada",
+      "fontes": [
+        "data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+      ],
+      "resposta": "**Total de correspondências: 1.358**\n\n**Recorte:** 1358 registros disponíveis na base carregada.\n\n**Filtros aplicados:** `{\"uf\": \"RJ\", \"data_inicial\": \"2026-03-01\", \"data_final\": \"2026-03-31\", \"modalidade_id\": 6}`\n\n**Página:** 1 de 68 — 20 registros exibidos.\n\n**Fontes correspondentes:** data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json\n\n**Campo utilizado para publicação:** `texto_integral.dataPublicacaoPncp`\n\nResultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação."
+    },
+    {
+      "caso": "P02",
+      "run_id": "7b9dd21b",
+      "query_id": "q_31d37313",
+      "pergunta": "No PE 038/26/2026, quantos itens foram homologados, fracassados e desertos e qual foi a soma dos valores homologados?",
+      "estrategia": "consulta_agregada",
+      "fontes": [
+        "/content/reproducao_rag_1576b60_local/data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+      ],
+      "resposta": "**Resultado calculado sobre o arquivo agregado**\n\n**Total de itens:** 19\n\n**Homologados:** 8\n\n**Fracassados:** 9\n\n**Desertos:** 2\n\n**Soma dos valores homologados informados:** R$ 141.002,08\n\n**Filtros aplicados:** `{\"id_contratacao_pncp\": \"42498600000171-1-000757/2026\"}`\n\n**Processo informado:** PE 038/26/2026\n\n**Homologados sem valor:** 0\n\n**Fontes do cálculo:** /content/reproducao_rag_1576b60_local/data/raw/v3/agregada/itens_pe_038_26_2026.csv\n\n**Referências:** https://pncp.gov.br/editais/42498600000171/2026/757\n\nSoma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado."
+    },
+    {
+      "caso": "P04",
+      "run_id": "2402fe3b",
+      "query_id": "q_282717c4",
+      "pergunta": "O que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+      "estrategia": "recuperacao_hibrida",
+      "fontes": [
+        "lei_14133_2021.html"
+      ],
+      "resposta": "Trechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]"
+    }
+  ],
+  "limites": [
+    "Clone remoto sem credenciais falhou; acesso por outro integrante pendente.",
+    "Mesmo host Colab e Drive montado; não é validação em máquina independente.",
+    "Consulta documental gerou embedding da pergunta; corpus não foi reindexado.",
+    "Fixação de versões registra este ambiente; não comprova outras plataformas.",
+    "Reinício completo do runtime Colab ainda não foi validado.",
+    "Comparação de recuperação e demais pendências da entrega permanecem abertas."
+  ]
+}

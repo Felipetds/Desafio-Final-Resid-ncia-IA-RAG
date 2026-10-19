@@ -1,0 +1,15 @@
+{
+  "testes_aprovados": 497,
+  "testes_llm_excluidos": 7,
+  "rede_bloqueada": true,
+  "rerank_padrao": false,
+  "decisao": "RRF como padrão; cross-encoder local opcional. P08 não demonstrou melhora com rerank.",
+  "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]",
+  "pacotes": {
+    "torch": "2.11.0+cpu",
+    "transformers": "5.18.0",
+    "sentence-transformers": "5.7.0",
+    "rank-bm25": "0.2.2",
+    "numpy": "2.1.3"
+  }
+}
