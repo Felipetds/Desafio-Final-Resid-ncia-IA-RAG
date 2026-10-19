@@ -88,3 +88,46 @@ def test_id_nao_recuperado_continua_rejeitado():
             evidencias(),
             pergunta=PERGUNTA,
         )
+
+
+def test_reformulacao_recorta_campos_sem_json_ou_fabricante():
+    itens = evidencias() + [
+        SimpleNamespace(
+            chunk_id="registro_estruturado",
+            natureza="estruturada",
+            source_file="registro.json",
+            text=json.dumps({
+                "objetoCompra": "Mesas",
+                "outroCampo": "informação não solicitada",
+            }),
+        ),
+    ]
+    originais = [item.text for item in itens]
+    resposta, fontes = apresentar(
+        itens,
+        pergunta=(
+            "Na ata nº 137/2026 do INCA, qual é o objeto "
+            "e qual empresa é a contratada?"
+        ),
+    )
+    assert "aquisição de mesas" in resposta
+    assert "EMPRESA EXEMPLO LTDA" in resposta
+    assert "denominada CONTRATADA" in resposta
+    assert "Condições gerais" not in resposta
+    assert "outroCampo" not in resposta
+    assert "FABRICANTE EXEMPLO" not in resposta
+    assert [item.chunk_id for item in fontes] == [
+        "objeto_1", "fornecedor_1",
+    ]
+    assert [item.text for item in itens] == originais
+
+
+def test_reformulacao_com_pedido_adicional_preserva_textos():
+    resposta, _ = apresentar(
+        evidencias(),
+        pergunta=(
+            "Na ata nº 137/2026 do INCA, qual é o objeto "
+            "e qual empresa é a contratada, incluindo condições gerais?"
+        ),
+    )
+    assert "Condições gerais" in resposta

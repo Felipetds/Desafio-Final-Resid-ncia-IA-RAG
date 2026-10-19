@@ -1,0 +1,530 @@
+[
+  {
+    "caso": "P04_k3",
+    "commit_base": "9e1a26857c81fa61a55ab38b23f43c92ddc5df13",
+    "alteracoes_locais": true,
+    "sha256_selecao_normativa": "337facea979212a8364ce6d8c90e3ebfd7b191d1d836f206af82d472762dc8c9",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "total_chunks": 2172,
+    "top_k": 3,
+    "tempo_total_s": 64.157,
+    "resultado": {
+      "answer": "Trechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+      "query": "O que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+      "query_id": "q_47903094",
+      "run_id": "582688cb",
+      "executado": true,
+      "estrategia": "recuperacao_hibrida",
+      "plano": {
+        "bases": [
+          "normativa"
+        ],
+        "estrategia": "recuperacao_hibrida",
+        "operacao": "buscar",
+        "filtros": {},
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_47903094",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null
+      },
+      "routes": [
+        "normativa"
+      ],
+      "filters": {
+        "uf": null,
+        "ano": 2021,
+        "valor_minimo": null,
+        "valor_maximo": null,
+        "modalidade": "pregão",
+        "municipio": null,
+        "fornecedor": null
+      },
+      "evidences": [
+        {
+          "posição": 1,
+          "chunk_id": "lei_14133_2021.html_chunk_29",
+          "trecho": "Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se \n\trefere o  art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir \n\tpadrões de desempenho e qualidade que possam ser objetivamente definidos \n\tpelo edital, por meio de especificações usuais de mercado. \n \n \n Parágrafo único. O pregão não se aplica às contratações de serviços técnicos \n\tespecializados de natureza predominantemente intelectual e de obras e \n\tserviços de engenharia, exceto os serviços de engenharia de que trata a \n\t alínea a do inciso XXI do  caput  do art. 6º desta Lei .",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.032522,
+          "métodos": [
+            "bm25",
+            "dense"
+          ]
+        },
+        {
+          "posição": 2,
+          "chunk_id": "lei_14133_2021.html_chunk_28",
+          "trecho": "Art. 28.   São modalidades de licitação: \n \n \n I - \n\tpregão; \n \n \n II - \n\tconcorrência; \n \n \n III \n\t- concurso; \n \n \n IV - \n\tleilão; \n \n \n V - \n\tdiálogo competitivo. \n \n \n § 1º \n\tAlém das modalidades referidas no  caput  deste artigo, a Administração \n\tpode servir-se dos procedimentos auxiliares previstos no  art. 78 desta Lei . \n \n \n § 2º \n\tÉ vedada a criação de outras modalidades de licitação ou, ainda, a \n\tcombinação daquelas referidas no  caput  deste artigo.",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.025475,
+          "métodos": [
+            "bm25",
+            "dense"
+          ]
+        },
+        {
+          "posição": 3,
+          "chunk_id": "lei_14133_2021.html_chunk_6",
+          "trecho": "Art. 6º Para os fins desta Lei, consideram-se: \n \n \n I - \n\tórgão: unidade de atuação integrante da estrutura da Administração Pública; \n \n \n II - \n\tentidade: unidade de atuação dotada de personalidade jurídica; \n \n \n III \n\t- Administração Pública: administração direta e indireta da União, dos \n\tEstados, do Distrito Federal e dos Municípios, inclusive as entidades com \n\tpersonalidade jurídica de direito privado sob controle do poder público e as \n\tfundações por ele instituídas ou mantidas; \n \n \n IV - \n\tAdministração: órgão ou entidade por meio do qual a Administração Pública \n\tatua; \n \n \n V - \n\tagente público: indivíduo que, em virtude de eleição, nomeação, designação, \n\tcontratação ou qualquer outra forma de investidura ou vínculo, exerce \n\tmandato, cargo, emprego ou função em pessoa jurídica integrante da \n\tAdministração Pública; \n \n \n VI - \n\tautoridade: agente público dotado de poder de decisão; \n \n \n VII \n\t- contratante: pessoa jurídica integrante da Administração Pública \n\tresponsável pela contratação; \n \n \n VIII \n\t- contratado: pessoa física ou jurídica, ou consórcio de pessoas jurídicas, \n\tsignatária de contrato com a Administração; \n \n \n IX - \n\tlicitante: pessoa física ou jurídica, ou consórcio de pessoas jurídicas, que \n\tparticipa ou manifesta a intenção de participar de processo licitatório, \n\tsendo-lhe equiparável, para os fins desta Lei, o fornecedor ou o prestador \n\tde serviço que, em atendimento à solicitação da Administração, oferece \n\tproposta; \n \n \n X - \n\tcompra: aquisição remunerada de bens para fornecimento de uma só vez ou \n\tparceladamente, considerada imediata aquela com prazo de entrega de até 30 \n\t(trinta) dias da ordem de fornecimento; \n \n \n XI - \n\tserviço: atividade ou conjunto de atividades destinadas a obter determinada \n\tutilidade, intelectual ou material, de interesse da Administração; \n \n \n XII \n\t- obra: toda atividade estabelecida, por força de lei, como privativa das \n\tprofissões de arquiteto e engenheiro que implica intervenção no meio \n\tambiente por meio de um conjunto harmônico de ações que, agregadas, formam \n\tum todo que inova o espaço físico da natureza ou acarreta alteração \n\tsubstancial das características originais de bem imóvel; \n \n \n XIII \n\t- bens e serviços comuns: aqueles cujos padrões de desempenho e qualidade \n\tpodem ser objetivamente definidos pelo edital, por meio de especificações \n\tusuais de mercado; \n \n \n XIV \n\t- bens e serviços especiais: aqueles que, por sua alta heterogeneidade ou \n\tcomplexidade, não podem ser descritos na forma do inciso XIII do  caput  \n\tdeste artigo, exigida justificativa prévia do contratante; \n \n \n XV - \n\tserviços e fornecimentos contínuos: serviços contratados e compras \n\trealizadas pela Administração Pública para a manutenção da atividade \n\tadministrativa, decorrentes de necessidades permanentes ou prolongadas; \n \n \n XVI \n\t- serviços contínuos com regime de dedicação exclusiva de mão de obra: \n\taqueles cujo modelo de execução contratual exige, entre outros requisitos, \n\tque: \n \n \n a) \n\tos empregados do contratado fiquem à disposição nas dependências do \n\tcontratante para a prestação dos serviços; \n \n \n b) o \n\tcontratado não compartilhe os recursos humanos e materiais disponíveis de \n\tuma contratação para execução simultânea de outros contratos; \n \n \n c) o \n\tcontratado possibilite a fiscalização pelo contratante quanto à \n\tdistribuição, controle e supervisão dos recursos humanos alocados aos seus \n\tcontratos; \n \n \n XVII \n\t- serviços não contínuos ou contratados por escopo: aqueles que impõem ao \n\tcontratado o dever de realizar a prestação de um serviço específico em \n\tperíodo predeterminado, podendo ser prorrogado, desde que justificadamente, \n\tpelo prazo necessário à conclusão do objeto; \n \n \n XVIII - serviços técnicos especializados de natureza predominantemente \n\tintelectual: aqueles realizados em trabalhos relativos a: \n \n \n a) \n\testudos técnicos, planejamentos, projetos básicos e projetos executivos; \n \n \n b) \n\tpareceres, perícias e avaliações em geral; \n \n \n c) \n\tassessorias e consultorias técnicas e auditorias financeiras e tributárias; \n \n \n d) \n\tfiscalização, supervisão e gerenciamento de obras e serviços; \n \n \n e) \n\tpatrocínio ou defesa de causas judiciais e administrativas; \n \n \n f) \n\ttreinamento e aperfeiçoamento de pessoal; \n \n \n g) \n\trestauração de obras de arte e de bens de valor histórico; \n \n \n h) \n\tcontroles de qualidade e tecnológico, análises, testes e ensaios de campo e \n\tlaboratoriais, instrumentação e monitoramento de parâmetros específicos de \n\tobras e do meio ambiente e demais serviços de engenharia que se enquadrem na \n\tdefinição deste inciso; \n \n \n XIX \n\t- notória especialização: qualidade de profissional ou de empresa cujo \n\tconceito, no campo de sua especialidade, decorrente de desempenho anterior, \n\testudos, experiência, publicações, organização, aparelhamento, equipe \n\ttécnica ou outros requisitos relacionados com suas atividades, permite \n\tinferir que o seu trabalho é essencial e reconhecidamente adequado à plena \n\tsatisfação do objeto do contrato; \n \n \n XX - \n\testudo técnico preliminar: documento constitutivo da primeira etapa do \n\tplanejamento de uma contratação que caracteriza o interesse público \n\tenvolvido e a sua melhor solução e dá base ao anteprojeto, ao termo de \n\treferência ou ao projeto básico a serem elaborados caso se conclua pela \n\tviabilidade da contratação; \n \n \n XXI \n\t- serviço de engenharia: toda atividade ou conjunto de atividades destinadas \n\ta obter determinada utilidade, intelectual ou material, de interesse para a \n\tAdministração e que, não enquadradas no conceito de obra a que se refere o \n\tinciso XII do  caput  deste artigo, são estabelecidas, por força de \n\tlei, como privativas das profissões de arquiteto e engenheiro ou de técnicos \n\tespecializados, que compreendem: \n \n \n a) \n\tserviço comum de engenharia: todo serviço de engenharia que tem por objeto \n\tações, objetivamente padronizáveis em termos de desempenho e qualidade, de \n\tmanutenção, de adequação e de adaptação de bens móveis e imóveis, com \n\tpreservação das características originais dos bens; \n \n \n b) \n\tserviço especial de engenharia: aquele que, por sua alta heterogeneidade ou \n\tcomplexidade, não pode se enquadrar na definição constante da alínea a \n\tdeste inciso; \n \n \n XXII \n\t- obras, serviços e fornecimentos de grande vulto: aqueles cujo valor \n\testimado supera R$ 200.000.000,00 (duzentos milhões de reais);        \n \n \n (Vide \n\tDecreto nº 10.922, de 2021)      \n\t (Vigência)      \n\t \n (Vide \n\t\tDecreto nº 11.317, de 2022)       \n\t\t Vigência       \n \n (Vide \n\t\tDecreto nº 11.871, de 2023)     \n\t\t Vigência     \n\t (Vide Decreto nº \n\t12.343, de 2024)    \n\t Vigência    \n\t (Vide Decreto nº \n\t12.807, de 2025)     Vigência \n \n \n XXIII - termo de referência: documento necessário para a contratação de bens \n\te serviços, que deve conter os seguintes parâmetros e elementos descritivos: \n \n \n a) \n\tdefinição do objeto, incluídos sua natureza, os quantitativos, o prazo do \n\tcontrato e, se for o caso, a possibilidade de sua prorrogação; \n \n \n b) \n\tfundamentação da contratação, que consiste na referência aos estudos \n\ttécnicos preliminares correspondentes ou, quando não for possível divulgar \n\tesses estudos, no extrato das partes que não contiverem informações \n\tsigilosas; \n \n \n c) \n\tdescrição da solução como um todo, considerado todo o ciclo de vida do \n\tobjeto; \n \n \n d) \n\trequisitos da contratação; \n \n \n e) \n\tmodelo de execução do objeto, que consiste na definição de como o contrato \n\tdeverá produzir os resultados pretendidos desde o seu início até o seu \n\tencerramento; \n \n \n f) \n\tmodelo de gestão do contrato, que descreve como a execução do objeto será \n\tacompanhada e fiscalizada pelo órgão ou entidade; \n \n \n g) \n\tcritérios de medição e de pagamento; \n \n \n h) \n\tforma e critérios de seleção do fornecedor; \n \n \n i) \n\testimativas do valor da contratação, acompanhadas dos preços unitários \n\treferenciais, das memórias de cálculo e dos documentos que lhe dão suporte, \n\tcom os parâmetros utilizados para a obtenção dos preços e para os \n\trespectivos cálculos, que devem constar de documento separado e \n\tclassificado; \n \n \n j) \n\tadequação orçamentária; \n \n \n XXIV \n\t- anteprojeto: peça técnica com todos os subsídios necessários à elaboração \n\tdo projeto básico, que deve conter, no mínimo, os seguintes elementos: \n \n \n a) \n\tdemonstração e justificativa do programa de necessidades, avaliação de \n\tdemanda do público-alvo, motivação técnico-econômico-social do \n\tempreendimento, visão global dos investimentos e definições relacionadas ao \n\tnível de serviço desejado; \n \n \n b) \n\tcondições de solidez, de segurança e de durabilidade; \n \n \n c) \n\tprazo de entrega; \n \n \n d) \n\testética do projeto arquitetônico, traçado geométrico e/ou projeto da área \n\tde influência, quando cabível; \n \n \n e) \n\tparâmetros de adequação ao interesse público, de economia na utilização, de \n\tfacilidade na execução, de impacto ambiental e de acessibilidade; \n \n \n f) \n\tproposta de concepção da obra ou do serviço de engenharia; \n \n \n g) \n\tprojetos anteriores ou estudos preliminares que embasaram a concepção \n\tproposta; \n \n \n h) \n\tlevantamento topográfico e cadastral; \n \n \n i) \n\tpareceres de sondagem; \n \n \n j) \n\tmemorial descritivo dos elementos da edificação, dos componentes \n\tconstrutivos e dos materiais de construção, de forma a estabelecer padrões \n\tmínimos para a contratação; \n \n \n XXV \n\t- projeto básico: conjunto de elementos necessários e suficientes, com nível \n\tde precisão adequado para definir e dimensionar a obra ou o serviço, ou o \n\tcomplexo de obras ou de serviços objeto da licitação, elaborado com base nas \n\tindicações dos estudos técnicos preliminares, que assegure a viabilidade \n\ttécnica e o adequado tratamento do impacto ambiental do empreendimento e que \n\tpossibilite a avaliação do custo da obra e a definição dos métodos e do \n\tprazo de execução, devendo conter os seguintes elementos: \n \n \n a) \n\tlevantamentos topográficos e cadastrais, sondagens e ensaios geotécnicos, \n\tensaios e análises laboratoriais, estudos socioambientais e demais dados e \n\tlevantamentos necessários para execução da solução escolhida; \n \n \n b) \n\tsoluções técnicas globais e localizadas, suficientemente detalhadas, de \n\tforma a evitar, por ocasião da elaboração do projeto executivo e da \n\trealização das obras e montagem, a necessidade de reformulações ou variantes \n\tquanto à qualidade, ao preço e ao prazo inicialmente definidos; \n \n \n c) \n\tidentificação dos tipos de serviços a executar e dos materiais e \n\tequipamentos a incorporar à obra, bem como das suas especificações, de modo \n\ta assegurar os melhores resultados para o empreendimento e a segurança \n\texecutiva na utilização do objeto, para os fins a que se destina, \n\tconsiderados os riscos e os perigos identificáveis, sem frustrar o caráter \n\tcompetitivo para a sua execução; \n \n \n d) \n\tinformações que possibilitem o estudo e a definição de métodos construtivos, \n\tde instalações provisórias e de condições organizacionais para a obra, sem \n\tfrustrar o caráter competitivo para a sua execução; \n \n \n e) \n\tsubsídios para montagem do plano de licitação e gestão da obra, \n\tcompreendidos a sua programação, a estratégia de suprimentos, as normas de \n\tfiscalização e outros dados necessários em cada caso; \n \n \n f) \n\torçamento detalhado do custo global da obra, fundamentado em quantitativos \n\tde serviços e fornecimentos propriamente avaliados, obrigatório \n\texclusivamente para os regimes de execução previstos nos  incisos I, II, III, \n\tIV e VII do  caput  do art. 46 desta Lei ; \n \n \n XXVI \n\t- projeto executivo: conjunto de elementos necessários e suficientes à \n\texecução completa da obra, com o detalhamento das soluções previstas no \n\tprojeto básico, a identificação de serviços, de materiais e de equipamentos \n\ta serem incorporados à obra, bem como suas especificações técnicas, de \n\tacordo com as normas técnicas pertinentes; \n \n \n XXVII - matriz de riscos: cláusula contratual definidora de riscos e de \n\tresponsabilidades entre as partes e caracterizadora do equilíbrio \n\teconômico-financeiro inicial do contrato, em termos de ônus financeiro \n\tdecorrente de eventos supervenientes à contratação, contendo, no mínimo, as \n\tseguintes informações: \n \n \n a) \n\tlistagem de possíveis eventos supervenientes à assinatura do contrato que \n\tpossam causar impacto em seu equilíbrio econômico-financeiro e previsão de \n\teventual necessidade de prolação de termo aditivo por ocasião de sua \n\tocorrência; \n \n \n b) \n\tno caso de obrigações de resultado, estabelecimento das frações do objeto \n\tcom relação às quais haverá liberdade para os contratados inovarem em \n\tsoluções metodológicas ou tecnológicas, em termos de modificação das \n\tsoluções previamente delineadas no anteprojeto ou no projeto básico; \n \n \n c) \n\tno caso de obrigações de meio, estabelecimento preciso das frações do objeto \n\tcom relação às quais não haverá liberdade para os contratados inovarem em \n\tsoluções metodológicas ou tecnológicas, devendo haver obrigação de aderência \n\tentre a execução e a solução predefinida no anteprojeto ou no projeto \n\tbásico, consideradas as características do regime de execução no caso de \n\tobras e serviços de engenharia; \n \n \n XXVIII - empreitada por preço unitário: contratação da execução da obra ou \n\tdo serviço por preço certo de unidades determinadas; \n \n \n XXIX \n\t- empreitada por preço global: contratação da execução da obra ou do serviço \n\tpor preço certo e total; \n \n \n XXX \n\t- empreitada integral: contratação de empreendimento em sua integralidade, \n\tcompreendida a totalidade das etapas de obras, serviços e instalações \n\tnecessárias, sob inteira responsabilidade do contratado até sua entrega ao \n\tcontratante em condições de entrada em operação, com características \n\tadequadas às finalidades para as quais foi contratado e atendidos os \n\trequisitos técnicos e legais para sua utilização com segurança estrutural e \n\toperacional; \n \n \n XXXI \n\t- contratação por tarefa: regime de contratação de mão de obra para pequenos \n\ttrabalhos por preço certo, com ou sem fornecimento de materiais; \n \n \n XXXII - contratação integrada: regime de contratação de obras e serviços de \n\tengenharia em que o contratado é responsável por elaborar e desenvolver os \n\tprojetos básico e executivo, executar obras e serviços de engenharia, \n\tfornecer bens ou prestar serviços especiais e realizar montagem, teste, \n\tpré-operação e as demais operações necessárias e suficientes para a entrega \n\tfinal do objeto; \n \n \n XXXIII - contratação semi-integrada: regime de contratação de obras e \n\tserviços de engenharia em que o contratado é responsável por elaborar e \n\tdesenvolver o projeto executivo, executar obras e serviços de engenharia, \n\tfornecer bens ou prestar serviços especiais e realizar montagem, teste, \n\tpré-operação e as demais operações necessárias e suficientes para a entrega \n\tfinal do objeto; \n \n \n XXXIV - fornecimento e prestação de serviço associado: regime de contratação \n\tem que, além do fornecimento do objeto, o contratado responsabiliza-se por \n\tsua operação, manutenção ou ambas, por tempo determinado; \n \n \n XXXV \n\t- licitação internacional: licitação processada em território nacional na \n\tqual é admitida a participação de licitantes estrangeiros, com a \n\tpossibilidade de cotação de preços em moeda estrangeira, ou licitação na \n\tqual o objeto contratual pode ou deve ser executado no todo ou em parte em \n\tterritório estrangeiro; \n \n \n XXXVI - serviço nacional: serviço prestado em território nacional, nas \n\tcondições estabelecidas pelo Poder Executivo federal; \n \n \n XXXVII - produto manufaturado nacional: produto manufaturado produzido no \n\tterritório nacional de acordo com o processo produtivo básico ou com as \n\tregras de origem estabelecidas pelo Poder Executivo federal; \n \n \n XXXVIII - concorrência: modalidade de licitação para contratação de bens e \n\tserviços especiais e de obras e serviços comuns e especiais de engenharia, \n\tcujo critério de julgamento poderá ser: \n \n \n a) \n\tmenor preço; \n \n \n b) \n\tmelhor técnica ou conteúdo artístico; \n \n \n c) \n\ttécnica e preço; \n \n \n d) \n\tmaior retorno econômico; \n \n \n e) \n\tmaior desconto; \n \n \n XXXIX - concurso: modalidade de licitação para escolha de trabalho técnico, \n\tcientífico ou artístico, cujo critério de julgamento será o de melhor \n\ttécnica ou conteúdo artístico, e para concessão de prêmio ou remuneração ao \n\tvencedor; \n \n \n XL - \n\tleilão: modalidade de licitação para alienação de bens imóveis ou de bens \n\tmóveis inservíveis ou legalmente apreendidos a quem oferecer o maior lance; \n \n \n XLI \n\t- pregão: modalidade de licitação obrigatória para aquisição de bens e \n\tserviços comuns, cujo critério de julgamento poderá ser o de menor preço ou \n\to de maior desconto; \n \n \n XLII \n\t- diálogo competitivo: modalidade de licitação para contratação de obras, \n\tserviços e compras em que a Administração Pública realiza diálogos com \n\tlicitantes previamente selecionados mediante critérios objetivos, com o \n\tintuito de desenvolver uma ou mais alternativas capazes de atender às suas \n\tnecessidades, devendo os licitantes apresentar proposta final após o \n\tencerramento dos diálogos; \n \n \n XLIII - credenciamento: processo administrativo de chamamento público em que \n\ta Administração Pública convoca interessados em prestar serviços ou fornecer \n\tbens para que, preenchidos os requisitos necessários, se credenciem no órgão \n\tou na entidade para executar o objeto quando convocados; \n \n \n XLIV \n\t- pré-qualificação: procedimento seletivo prévio à licitação, convocado por \n\tmeio de edital, destinado à análise das condições de habilitação, total ou \n\tparcial, dos interessados ou do objeto; \n \n \n XLV \n\t- sistema de registro de preços: conjunto de procedimentos para realização, \n\tmediante contratação direta ou licitação nas modalidades pregão ou \n\tconcorrência, de registro formal de preços relativos a prestação de \n\tserviços, a obras e a aquisição e locação de bens para contratações futuras; \n \n \n XLVI \n\t- ata de registro de preços: documento vinculativo e obrigacional, com \n\tcaracterística de compromisso para futura contratação, no qual são \n\tregistrados o objeto, os preços, os fornecedores, os órgãos participantes e \n\tas condições a serem praticadas, conforme as disposições contidas no edital \n\tda licitação, no aviso ou instrumento de contratação direta e nas propostas \n\tapresentadas; \n \n \n XLVII - órgão ou entidade gerenciadora: órgão ou entidade da Administração \n\tPública responsável pela condução do conjunto de procedimentos para registro \n\tde preços e pelo gerenciamento da ata de registro de preços dele decorrente; \n \n \n XLVIII - órgão ou entidade participante: órgão ou entidade da Administração \n\tPública que participa dos procedimentos iniciais da contratação para \n\tregistro de preços e integra a ata de registro de preços; \n \n \n XLIX \n\t- órgão ou entidade não participante: órgão ou entidade da Administração \n\tPública que não participa dos procedimentos iniciais da licitação para \n\tregistro de preços e não integra a ata de registro de preços; \n \n \n L - \n\tcomissão de contratação: conjunto de agentes públicos indicados pela \n\tAdministração, em caráter permanente ou especial, com a função de receber, \n\texaminar e julgar documentos relativos às licitações e aos procedimentos \n\tauxiliares; \n \n \n LI - \n\tcatálogo eletrônico de padronização de compras, serviços e obras: sistema \n\tinformatizado, de gerenciamento centralizado e com indicação de preços, \n\tdestinado a permitir a padronização de itens a serem adquiridos pela \n\tAdministração Pública e que estarão disponíveis para a licitação; \n \n \n LII \n\t- sítio eletrônico oficial: sítio da internet, certificado digitalmente por \n\tautoridade certificadora, no qual o ente federativo divulga de forma \n\tcentralizada as informações e os serviços de governo digital dos seus órgãos \n\te entidades; \n \n \n LIII \n\t- contrato de eficiência: contrato cujo objeto é a prestação de serviços, \n\tque pode incluir a realização de obras e o fornecimento de bens, com o \n\tobjetivo de proporcionar economia ao contratante, na forma de redução de \n\tdespesas correntes, remunerado o contratado com base em percentual da \n\teconomia gerada; \n \n \n LIV \n\t- seguro-garantia: seguro que garante o fiel cumprimento das obrigações \n\tassumidas pelo contratado; \n \n \n LV - \n\tprodutos para pesquisa e desenvolvimento: bens, insumos, serviços e obras \n\tnecessários para atividade de pesquisa científica e tecnológica, \n\tdesenvolvimento de tecnologia ou inovação tecnológica, discriminados em \n\tprojeto de pesquisa; \n \n \n LVI \n\t- sobrepreço: preço orçado para licitação ou contratado em valor \n\texpressivamente superior aos preços referenciais de mercado, seja de apenas \n\t1 (um) item, se a licitação ou a contratação for por preços unitários de \n\tserviço, seja do valor global do objeto, se a licitação ou a contratação for \n\tpor tarefa, empreitada por preço global ou empreitada integral, \n\tsemi-integrada ou integrada; \n \n \n LVII \n\t- superfaturamento: dano provocado ao patrimônio da Administração, \n\tcaracterizado, entre outras situações, por: \n \n \n a) \n\tmedição de quantidades superiores às efetivamente executadas ou fornecidas; \n \n \n b) \n\tdeficiência na execução de obras e de serviços de engenharia que resulte em \n\tdiminuição da sua qualidade, vida útil ou segurança; \n \n \n c) \n\talterações no orçamento de obras e de serviços de engenharia que causem \n\tdesequilíbrio econômico-financeiro do contrato em favor do contratado; \n \n \n d) \n\toutras alterações de cláusulas financeiras que gerem recebimentos \n\tcontratuais antecipados, distorção do cronograma físico-financeiro, \n\tprorrogação injustificada do prazo contratual com custos adicionais para a \n\tAdministração ou reajuste irregular de preços; \n \n \n LVIII - reajustamento em sentido estrito: forma de manutenção do equilíbrio \n\teconômico-financeiro de contrato consistente na aplicação do índice de \n\tcorreção monetária previsto no contrato, que deve retratar a variação \n\tefetiva do custo de produção, admitida a adoção de índices específicos ou \n\tsetoriais; \n \n \n LIX \n\t- repactuação: forma de manutenção do equilíbrio econômico-financeiro de \n\tcontrato utilizada para serviços contínuos com regime de dedicação exclusiva \n\tde mão de obra ou predominância de mão de obra, por meio da análise da \n\tvariação dos custos contratuais, devendo estar prevista no edital com data \n\tvinculada à apresentação das propostas, para os custos decorrentes do \n\tmercado, e com data vinculada ao acordo, à convenção coletiva ou ao dissídio \n\tcoletivo ao qual o orçamento esteja vinculado, para os custos decorrentes da \n\tmão de obra; \n \n \n LX - \n\tagente de contratação: pessoa designada pela autoridade competente, entre \n\tservidores efetivos ou empregados públicos dos quadros permanentes da \n\tAdministração Pública, para tomar decisões, acompanhar o trâmite da \n\tlicitação, dar impulso ao procedimento licitatório e executar quaisquer \n\toutras atividades necessárias ao bom andamento do certame até a homologação. \n \n \n CAPÍTULO IV \n \n DOS \n\tAGENTES PÚBLICOS",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.015385,
+          "métodos": [
+            "bm25"
+          ]
+        }
+      ],
+      "fontes": [
+        "lei_14133_2021.html"
+      ],
+      "fontes_recuperadas": [
+        "lei_14133_2021.html"
+      ],
+      "fontes_citadas": [
+        "lei_14133_2021.html"
+      ],
+      "is_refusal": false,
+      "refusal_reason": null,
+      "generation_available": true,
+      "latency_ms": 64119.01,
+      "confidence_level": "media",
+      "tokens": {
+        "prompt": 2050,
+        "completion": 648,
+        "total": 2698
+      },
+      "modelo": "qcwind/qwen3-8b-instruct-Q4-K-M",
+      "retrieval_summary": {
+        "dense_candidates": 50,
+        "bm25_candidates": 5,
+        "rrf_candidates": 53,
+        "returned": 3
+      },
+      "fetch_k": 50,
+      "top_k": 3
+    },
+    "avaliacao": {
+      "situacao": "aprovado",
+      "escopo": "Resposta produzida pelo adaptador; interface visual pendente.",
+      "criterios": "Definição, aplicação e exceções citadas; sem art. 194. Na combinada, cálculo de 1.234 separado da parte documental."
+    }
+  },
+  {
+    "caso": "COMBINADA_k3",
+    "commit_base": "9e1a26857c81fa61a55ab38b23f43c92ddc5df13",
+    "alteracoes_locais": true,
+    "sha256_selecao_normativa": "337facea979212a8364ce6d8c90e3ebfd7b191d1d836f206af82d472762dc8c9",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "total_chunks": 2172,
+    "top_k": 3,
+    "tempo_total_s": 38.321,
+    "resultado": {
+      "answer": "**Resultado calculado sobre a base estruturada**\n\n**Total de correspondências: 1.234**\n\n**Recorte:** 1358 registros disponíveis na base carregada.\n\n**Filtros aplicados:** `{\"ano_compra\": 2026}`\n\n**Fontes correspondentes:** data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json\n\nResultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação.\n\n**Resposta baseada nos documentos recuperados**\n\nTrechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+      "query": "Quantas contratações têm ano da compra 2026 e o que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+      "query_id": "q_1c486305",
+      "run_id": "024cda72",
+      "executado": true,
+      "estrategia": "combinada",
+      "plano": {
+        "bases": [
+          "normativa",
+          "estruturada"
+        ],
+        "estrategia": "combinada",
+        "operacao": "contar",
+        "filtros": {
+          "ano_compra": 2026
+        },
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_1c486305",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "campo_valor": null,
+        "criterio_objeto": null,
+        "minimo_inclusivo": true,
+        "maximo_inclusivo": true,
+        "rotas_recuperacao": [
+          "normativa"
+        ]
+      },
+      "routes": [
+        "normativa",
+        "estruturada"
+      ],
+      "filters": {
+        "ano_compra": 2026
+      },
+      "evidences": [
+        {
+          "posição": 1,
+          "chunk_id": "lei_14133_2021.html_chunk_29",
+          "trecho": "Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se \n\trefere o  art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir \n\tpadrões de desempenho e qualidade que possam ser objetivamente definidos \n\tpelo edital, por meio de especificações usuais de mercado. \n \n \n Parágrafo único. O pregão não se aplica às contratações de serviços técnicos \n\tespecializados de natureza predominantemente intelectual e de obras e \n\tserviços de engenharia, exceto os serviços de engenharia de que trata a \n\t alínea a do inciso XXI do  caput  do art. 6º desta Lei .",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.032522,
+          "métodos": [
+            "bm25",
+            "dense"
+          ]
+        },
+        {
+          "posição": 2,
+          "chunk_id": "lei_14133_2021.html_chunk_28",
+          "trecho": "Art. 28.   São modalidades de licitação: \n \n \n I - \n\tpregão; \n \n \n II - \n\tconcorrência; \n \n \n III \n\t- concurso; \n \n \n IV - \n\tleilão; \n \n \n V - \n\tdiálogo competitivo. \n \n \n § 1º \n\tAlém das modalidades referidas no  caput  deste artigo, a Administração \n\tpode servir-se dos procedimentos auxiliares previstos no  art. 78 desta Lei . \n \n \n § 2º \n\tÉ vedada a criação de outras modalidades de licitação ou, ainda, a \n\tcombinação daquelas referidas no  caput  deste artigo.",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.026333,
+          "métodos": [
+            "bm25",
+            "dense"
+          ]
+        },
+        {
+          "posição": 3,
+          "chunk_id": "lei_14133_2021.html_chunk_6",
+          "trecho": "Art. 6º Para os fins desta Lei, consideram-se: \n \n \n I - \n\tórgão: unidade de atuação integrante da estrutura da Administração Pública; \n \n \n II - \n\tentidade: unidade de atuação dotada de personalidade jurídica; \n \n \n III \n\t- Administração Pública: administração direta e indireta da União, dos \n\tEstados, do Distrito Federal e dos Municípios, inclusive as entidades com \n\tpersonalidade jurídica de direito privado sob controle do poder público e as \n\tfundações por ele instituídas ou mantidas; \n \n \n IV - \n\tAdministração: órgão ou entidade por meio do qual a Administração Pública \n\tatua; \n \n \n V - \n\tagente público: indivíduo que, em virtude de eleição, nomeação, designação, \n\tcontratação ou qualquer outra forma de investidura ou vínculo, exerce \n\tmandato, cargo, emprego ou função em pessoa jurídica integrante da \n\tAdministração Pública; \n \n \n VI - \n\tautoridade: agente público dotado de poder de decisão; \n \n \n VII \n\t- contratante: pessoa jurídica integrante da Administração Pública \n\tresponsável pela contratação; \n \n \n VIII \n\t- contratado: pessoa física ou jurídica, ou consórcio de pessoas jurídicas, \n\tsignatária de contrato com a Administração; \n \n \n IX - \n\tlicitante: pessoa física ou jurídica, ou consórcio de pessoas jurídicas, que \n\tparticipa ou manifesta a intenção de participar de processo licitatório, \n\tsendo-lhe equiparável, para os fins desta Lei, o fornecedor ou o prestador \n\tde serviço que, em atendimento à solicitação da Administração, oferece \n\tproposta; \n \n \n X - \n\tcompra: aquisição remunerada de bens para fornecimento de uma só vez ou \n\tparceladamente, considerada imediata aquela com prazo de entrega de até 30 \n\t(trinta) dias da ordem de fornecimento; \n \n \n XI - \n\tserviço: atividade ou conjunto de atividades destinadas a obter determinada \n\tutilidade, intelectual ou material, de interesse da Administração; \n \n \n XII \n\t- obra: toda atividade estabelecida, por força de lei, como privativa das \n\tprofissões de arquiteto e engenheiro que implica intervenção no meio \n\tambiente por meio de um conjunto harmônico de ações que, agregadas, formam \n\tum todo que inova o espaço físico da natureza ou acarreta alteração \n\tsubstancial das características originais de bem imóvel; \n \n \n XIII \n\t- bens e serviços comuns: aqueles cujos padrões de desempenho e qualidade \n\tpodem ser objetivamente definidos pelo edital, por meio de especificações \n\tusuais de mercado; \n \n \n XIV \n\t- bens e serviços especiais: aqueles que, por sua alta heterogeneidade ou \n\tcomplexidade, não podem ser descritos na forma do inciso XIII do  caput  \n\tdeste artigo, exigida justificativa prévia do contratante; \n \n \n XV - \n\tserviços e fornecimentos contínuos: serviços contratados e compras \n\trealizadas pela Administração Pública para a manutenção da atividade \n\tadministrativa, decorrentes de necessidades permanentes ou prolongadas; \n \n \n XVI \n\t- serviços contínuos com regime de dedicação exclusiva de mão de obra: \n\taqueles cujo modelo de execução contratual exige, entre outros requisitos, \n\tque: \n \n \n a) \n\tos empregados do contratado fiquem à disposição nas dependências do \n\tcontratante para a prestação dos serviços; \n \n \n b) o \n\tcontratado não compartilhe os recursos humanos e materiais disponíveis de \n\tuma contratação para execução simultânea de outros contratos; \n \n \n c) o \n\tcontratado possibilite a fiscalização pelo contratante quanto à \n\tdistribuição, controle e supervisão dos recursos humanos alocados aos seus \n\tcontratos; \n \n \n XVII \n\t- serviços não contínuos ou contratados por escopo: aqueles que impõem ao \n\tcontratado o dever de realizar a prestação de um serviço específico em \n\tperíodo predeterminado, podendo ser prorrogado, desde que justificadamente, \n\tpelo prazo necessário à conclusão do objeto; \n \n \n XVIII - serviços técnicos especializados de natureza predominantemente \n\tintelectual: aqueles realizados em trabalhos relativos a: \n \n \n a) \n\testudos técnicos, planejamentos, projetos básicos e projetos executivos; \n \n \n b) \n\tpareceres, perícias e avaliações em geral; \n \n \n c) \n\tassessorias e consultorias técnicas e auditorias financeiras e tributárias; \n \n \n d) \n\tfiscalização, supervisão e gerenciamento de obras e serviços; \n \n \n e) \n\tpatrocínio ou defesa de causas judiciais e administrativas; \n \n \n f) \n\ttreinamento e aperfeiçoamento de pessoal; \n \n \n g) \n\trestauração de obras de arte e de bens de valor histórico; \n \n \n h) \n\tcontroles de qualidade e tecnológico, análises, testes e ensaios de campo e \n\tlaboratoriais, instrumentação e monitoramento de parâmetros específicos de \n\tobras e do meio ambiente e demais serviços de engenharia que se enquadrem na \n\tdefinição deste inciso; \n \n \n XIX \n\t- notória especialização: qualidade de profissional ou de empresa cujo \n\tconceito, no campo de sua especialidade, decorrente de desempenho anterior, \n\testudos, experiência, publicações, organização, aparelhamento, equipe \n\ttécnica ou outros requisitos relacionados com suas atividades, permite \n\tinferir que o seu trabalho é essencial e reconhecidamente adequado à plena \n\tsatisfação do objeto do contrato; \n \n \n XX - \n\testudo técnico preliminar: documento constitutivo da primeira etapa do \n\tplanejamento de uma contratação que caracteriza o interesse público \n\tenvolvido e a sua melhor solução e dá base ao anteprojeto, ao termo de \n\treferência ou ao projeto básico a serem elaborados caso se conclua pela \n\tviabilidade da contratação; \n \n \n XXI \n\t- serviço de engenharia: toda atividade ou conjunto de atividades destinadas \n\ta obter determinada utilidade, intelectual ou material, de interesse para a \n\tAdministração e que, não enquadradas no conceito de obra a que se refere o \n\tinciso XII do  caput  deste artigo, são estabelecidas, por força de \n\tlei, como privativas das profissões de arquiteto e engenheiro ou de técnicos \n\tespecializados, que compreendem: \n \n \n a) \n\tserviço comum de engenharia: todo serviço de engenharia que tem por objeto \n\tações, objetivamente padronizáveis em termos de desempenho e qualidade, de \n\tmanutenção, de adequação e de adaptação de bens móveis e imóveis, com \n\tpreservação das características originais dos bens; \n \n \n b) \n\tserviço especial de engenharia: aquele que, por sua alta heterogeneidade ou \n\tcomplexidade, não pode se enquadrar na definição constante da alínea a \n\tdeste inciso; \n \n \n XXII \n\t- obras, serviços e fornecimentos de grande vulto: aqueles cujo valor \n\testimado supera R$ 200.000.000,00 (duzentos milhões de reais);        \n \n \n (Vide \n\tDecreto nº 10.922, de 2021)      \n\t (Vigência)      \n\t \n (Vide \n\t\tDecreto nº 11.317, de 2022)       \n\t\t Vigência       \n \n (Vide \n\t\tDecreto nº 11.871, de 2023)     \n\t\t Vigência     \n\t (Vide Decreto nº \n\t12.343, de 2024)    \n\t Vigência    \n\t (Vide Decreto nº \n\t12.807, de 2025)     Vigência \n \n \n XXIII - termo de referência: documento necessário para a contratação de bens \n\te serviços, que deve conter os seguintes parâmetros e elementos descritivos: \n \n \n a) \n\tdefinição do objeto, incluídos sua natureza, os quantitativos, o prazo do \n\tcontrato e, se for o caso, a possibilidade de sua prorrogação; \n \n \n b) \n\tfundamentação da contratação, que consiste na referência aos estudos \n\ttécnicos preliminares correspondentes ou, quando não for possível divulgar \n\tesses estudos, no extrato das partes que não contiverem informações \n\tsigilosas; \n \n \n c) \n\tdescrição da solução como um todo, considerado todo o ciclo de vida do \n\tobjeto; \n \n \n d) \n\trequisitos da contratação; \n \n \n e) \n\tmodelo de execução do objeto, que consiste na definição de como o contrato \n\tdeverá produzir os resultados pretendidos desde o seu início até o seu \n\tencerramento; \n \n \n f) \n\tmodelo de gestão do contrato, que descreve como a execução do objeto será \n\tacompanhada e fiscalizada pelo órgão ou entidade; \n \n \n g) \n\tcritérios de medição e de pagamento; \n \n \n h) \n\tforma e critérios de seleção do fornecedor; \n \n \n i) \n\testimativas do valor da contratação, acompanhadas dos preços unitários \n\treferenciais, das memórias de cálculo e dos documentos que lhe dão suporte, \n\tcom os parâmetros utilizados para a obtenção dos preços e para os \n\trespectivos cálculos, que devem constar de documento separado e \n\tclassificado; \n \n \n j) \n\tadequação orçamentária; \n \n \n XXIV \n\t- anteprojeto: peça técnica com todos os subsídios necessários à elaboração \n\tdo projeto básico, que deve conter, no mínimo, os seguintes elementos: \n \n \n a) \n\tdemonstração e justificativa do programa de necessidades, avaliação de \n\tdemanda do público-alvo, motivação técnico-econômico-social do \n\tempreendimento, visão global dos investimentos e definições relacionadas ao \n\tnível de serviço desejado; \n \n \n b) \n\tcondições de solidez, de segurança e de durabilidade; \n \n \n c) \n\tprazo de entrega; \n \n \n d) \n\testética do projeto arquitetônico, traçado geométrico e/ou projeto da área \n\tde influência, quando cabível; \n \n \n e) \n\tparâmetros de adequação ao interesse público, de economia na utilização, de \n\tfacilidade na execução, de impacto ambiental e de acessibilidade; \n \n \n f) \n\tproposta de concepção da obra ou do serviço de engenharia; \n \n \n g) \n\tprojetos anteriores ou estudos preliminares que embasaram a concepção \n\tproposta; \n \n \n h) \n\tlevantamento topográfico e cadastral; \n \n \n i) \n\tpareceres de sondagem; \n \n \n j) \n\tmemorial descritivo dos elementos da edificação, dos componentes \n\tconstrutivos e dos materiais de construção, de forma a estabelecer padrões \n\tmínimos para a contratação; \n \n \n XXV \n\t- projeto básico: conjunto de elementos necessários e suficientes, com nível \n\tde precisão adequado para definir e dimensionar a obra ou o serviço, ou o \n\tcomplexo de obras ou de serviços objeto da licitação, elaborado com base nas \n\tindicações dos estudos técnicos preliminares, que assegure a viabilidade \n\ttécnica e o adequado tratamento do impacto ambiental do empreendimento e que \n\tpossibilite a avaliação do custo da obra e a definição dos métodos e do \n\tprazo de execução, devendo conter os seguintes elementos: \n \n \n a) \n\tlevantamentos topográficos e cadastrais, sondagens e ensaios geotécnicos, \n\tensaios e análises laboratoriais, estudos socioambientais e demais dados e \n\tlevantamentos necessários para execução da solução escolhida; \n \n \n b) \n\tsoluções técnicas globais e localizadas, suficientemente detalhadas, de \n\tforma a evitar, por ocasião da elaboração do projeto executivo e da \n\trealização das obras e montagem, a necessidade de reformulações ou variantes \n\tquanto à qualidade, ao preço e ao prazo inicialmente definidos; \n \n \n c) \n\tidentificação dos tipos de serviços a executar e dos materiais e \n\tequipamentos a incorporar à obra, bem como das suas especificações, de modo \n\ta assegurar os melhores resultados para o empreendimento e a segurança \n\texecutiva na utilização do objeto, para os fins a que se destina, \n\tconsiderados os riscos e os perigos identificáveis, sem frustrar o caráter \n\tcompetitivo para a sua execução; \n \n \n d) \n\tinformações que possibilitem o estudo e a definição de métodos construtivos, \n\tde instalações provisórias e de condições organizacionais para a obra, sem \n\tfrustrar o caráter competitivo para a sua execução; \n \n \n e) \n\tsubsídios para montagem do plano de licitação e gestão da obra, \n\tcompreendidos a sua programação, a estratégia de suprimentos, as normas de \n\tfiscalização e outros dados necessários em cada caso; \n \n \n f) \n\torçamento detalhado do custo global da obra, fundamentado em quantitativos \n\tde serviços e fornecimentos propriamente avaliados, obrigatório \n\texclusivamente para os regimes de execução previstos nos  incisos I, II, III, \n\tIV e VII do  caput  do art. 46 desta Lei ; \n \n \n XXVI \n\t- projeto executivo: conjunto de elementos necessários e suficientes à \n\texecução completa da obra, com o detalhamento das soluções previstas no \n\tprojeto básico, a identificação de serviços, de materiais e de equipamentos \n\ta serem incorporados à obra, bem como suas especificações técnicas, de \n\tacordo com as normas técnicas pertinentes; \n \n \n XXVII - matriz de riscos: cláusula contratual definidora de riscos e de \n\tresponsabilidades entre as partes e caracterizadora do equilíbrio \n\teconômico-financeiro inicial do contrato, em termos de ônus financeiro \n\tdecorrente de eventos supervenientes à contratação, contendo, no mínimo, as \n\tseguintes informações: \n \n \n a) \n\tlistagem de possíveis eventos supervenientes à assinatura do contrato que \n\tpossam causar impacto em seu equilíbrio econômico-financeiro e previsão de \n\teventual necessidade de prolação de termo aditivo por ocasião de sua \n\tocorrência; \n \n \n b) \n\tno caso de obrigações de resultado, estabelecimento das frações do objeto \n\tcom relação às quais haverá liberdade para os contratados inovarem em \n\tsoluções metodológicas ou tecnológicas, em termos de modificação das \n\tsoluções previamente delineadas no anteprojeto ou no projeto básico; \n \n \n c) \n\tno caso de obrigações de meio, estabelecimento preciso das frações do objeto \n\tcom relação às quais não haverá liberdade para os contratados inovarem em \n\tsoluções metodológicas ou tecnológicas, devendo haver obrigação de aderência \n\tentre a execução e a solução predefinida no anteprojeto ou no projeto \n\tbásico, consideradas as características do regime de execução no caso de \n\tobras e serviços de engenharia; \n \n \n XXVIII - empreitada por preço unitário: contratação da execução da obra ou \n\tdo serviço por preço certo de unidades determinadas; \n \n \n XXIX \n\t- empreitada por preço global: contratação da execução da obra ou do serviço \n\tpor preço certo e total; \n \n \n XXX \n\t- empreitada integral: contratação de empreendimento em sua integralidade, \n\tcompreendida a totalidade das etapas de obras, serviços e instalações \n\tnecessárias, sob inteira responsabilidade do contratado até sua entrega ao \n\tcontratante em condições de entrada em operação, com características \n\tadequadas às finalidades para as quais foi contratado e atendidos os \n\trequisitos técnicos e legais para sua utilização com segurança estrutural e \n\toperacional; \n \n \n XXXI \n\t- contratação por tarefa: regime de contratação de mão de obra para pequenos \n\ttrabalhos por preço certo, com ou sem fornecimento de materiais; \n \n \n XXXII - contratação integrada: regime de contratação de obras e serviços de \n\tengenharia em que o contratado é responsável por elaborar e desenvolver os \n\tprojetos básico e executivo, executar obras e serviços de engenharia, \n\tfornecer bens ou prestar serviços especiais e realizar montagem, teste, \n\tpré-operação e as demais operações necessárias e suficientes para a entrega \n\tfinal do objeto; \n \n \n XXXIII - contratação semi-integrada: regime de contratação de obras e \n\tserviços de engenharia em que o contratado é responsável por elaborar e \n\tdesenvolver o projeto executivo, executar obras e serviços de engenharia, \n\tfornecer bens ou prestar serviços especiais e realizar montagem, teste, \n\tpré-operação e as demais operações necessárias e suficientes para a entrega \n\tfinal do objeto; \n \n \n XXXIV - fornecimento e prestação de serviço associado: regime de contratação \n\tem que, além do fornecimento do objeto, o contratado responsabiliza-se por \n\tsua operação, manutenção ou ambas, por tempo determinado; \n \n \n XXXV \n\t- licitação internacional: licitação processada em território nacional na \n\tqual é admitida a participação de licitantes estrangeiros, com a \n\tpossibilidade de cotação de preços em moeda estrangeira, ou licitação na \n\tqual o objeto contratual pode ou deve ser executado no todo ou em parte em \n\tterritório estrangeiro; \n \n \n XXXVI - serviço nacional: serviço prestado em território nacional, nas \n\tcondições estabelecidas pelo Poder Executivo federal; \n \n \n XXXVII - produto manufaturado nacional: produto manufaturado produzido no \n\tterritório nacional de acordo com o processo produtivo básico ou com as \n\tregras de origem estabelecidas pelo Poder Executivo federal; \n \n \n XXXVIII - concorrência: modalidade de licitação para contratação de bens e \n\tserviços especiais e de obras e serviços comuns e especiais de engenharia, \n\tcujo critério de julgamento poderá ser: \n \n \n a) \n\tmenor preço; \n \n \n b) \n\tmelhor técnica ou conteúdo artístico; \n \n \n c) \n\ttécnica e preço; \n \n \n d) \n\tmaior retorno econômico; \n \n \n e) \n\tmaior desconto; \n \n \n XXXIX - concurso: modalidade de licitação para escolha de trabalho técnico, \n\tcientífico ou artístico, cujo critério de julgamento será o de melhor \n\ttécnica ou conteúdo artístico, e para concessão de prêmio ou remuneração ao \n\tvencedor; \n \n \n XL - \n\tleilão: modalidade de licitação para alienação de bens imóveis ou de bens \n\tmóveis inservíveis ou legalmente apreendidos a quem oferecer o maior lance; \n \n \n XLI \n\t- pregão: modalidade de licitação obrigatória para aquisição de bens e \n\tserviços comuns, cujo critério de julgamento poderá ser o de menor preço ou \n\to de maior desconto; \n \n \n XLII \n\t- diálogo competitivo: modalidade de licitação para contratação de obras, \n\tserviços e compras em que a Administração Pública realiza diálogos com \n\tlicitantes previamente selecionados mediante critérios objetivos, com o \n\tintuito de desenvolver uma ou mais alternativas capazes de atender às suas \n\tnecessidades, devendo os licitantes apresentar proposta final após o \n\tencerramento dos diálogos; \n \n \n XLIII - credenciamento: processo administrativo de chamamento público em que \n\ta Administração Pública convoca interessados em prestar serviços ou fornecer \n\tbens para que, preenchidos os requisitos necessários, se credenciem no órgão \n\tou na entidade para executar o objeto quando convocados; \n \n \n XLIV \n\t- pré-qualificação: procedimento seletivo prévio à licitação, convocado por \n\tmeio de edital, destinado à análise das condições de habilitação, total ou \n\tparcial, dos interessados ou do objeto; \n \n \n XLV \n\t- sistema de registro de preços: conjunto de procedimentos para realização, \n\tmediante contratação direta ou licitação nas modalidades pregão ou \n\tconcorrência, de registro formal de preços relativos a prestação de \n\tserviços, a obras e a aquisição e locação de bens para contratações futuras; \n \n \n XLVI \n\t- ata de registro de preços: documento vinculativo e obrigacional, com \n\tcaracterística de compromisso para futura contratação, no qual são \n\tregistrados o objeto, os preços, os fornecedores, os órgãos participantes e \n\tas condições a serem praticadas, conforme as disposições contidas no edital \n\tda licitação, no aviso ou instrumento de contratação direta e nas propostas \n\tapresentadas; \n \n \n XLVII - órgão ou entidade gerenciadora: órgão ou entidade da Administração \n\tPública responsável pela condução do conjunto de procedimentos para registro \n\tde preços e pelo gerenciamento da ata de registro de preços dele decorrente; \n \n \n XLVIII - órgão ou entidade participante: órgão ou entidade da Administração \n\tPública que participa dos procedimentos iniciais da contratação para \n\tregistro de preços e integra a ata de registro de preços; \n \n \n XLIX \n\t- órgão ou entidade não participante: órgão ou entidade da Administração \n\tPública que não participa dos procedimentos iniciais da licitação para \n\tregistro de preços e não integra a ata de registro de preços; \n \n \n L - \n\tcomissão de contratação: conjunto de agentes públicos indicados pela \n\tAdministração, em caráter permanente ou especial, com a função de receber, \n\texaminar e julgar documentos relativos às licitações e aos procedimentos \n\tauxiliares; \n \n \n LI - \n\tcatálogo eletrônico de padronização de compras, serviços e obras: sistema \n\tinformatizado, de gerenciamento centralizado e com indicação de preços, \n\tdestinado a permitir a padronização de itens a serem adquiridos pela \n\tAdministração Pública e que estarão disponíveis para a licitação; \n \n \n LII \n\t- sítio eletrônico oficial: sítio da internet, certificado digitalmente por \n\tautoridade certificadora, no qual o ente federativo divulga de forma \n\tcentralizada as informações e os serviços de governo digital dos seus órgãos \n\te entidades; \n \n \n LIII \n\t- contrato de eficiência: contrato cujo objeto é a prestação de serviços, \n\tque pode incluir a realização de obras e o fornecimento de bens, com o \n\tobjetivo de proporcionar economia ao contratante, na forma de redução de \n\tdespesas correntes, remunerado o contratado com base em percentual da \n\teconomia gerada; \n \n \n LIV \n\t- seguro-garantia: seguro que garante o fiel cumprimento das obrigações \n\tassumidas pelo contratado; \n \n \n LV - \n\tprodutos para pesquisa e desenvolvimento: bens, insumos, serviços e obras \n\tnecessários para atividade de pesquisa científica e tecnológica, \n\tdesenvolvimento de tecnologia ou inovação tecnológica, discriminados em \n\tprojeto de pesquisa; \n \n \n LVI \n\t- sobrepreço: preço orçado para licitação ou contratado em valor \n\texpressivamente superior aos preços referenciais de mercado, seja de apenas \n\t1 (um) item, se a licitação ou a contratação for por preços unitários de \n\tserviço, seja do valor global do objeto, se a licitação ou a contratação for \n\tpor tarefa, empreitada por preço global ou empreitada integral, \n\tsemi-integrada ou integrada; \n \n \n LVII \n\t- superfaturamento: dano provocado ao patrimônio da Administração, \n\tcaracterizado, entre outras situações, por: \n \n \n a) \n\tmedição de quantidades superiores às efetivamente executadas ou fornecidas; \n \n \n b) \n\tdeficiência na execução de obras e de serviços de engenharia que resulte em \n\tdiminuição da sua qualidade, vida útil ou segurança; \n \n \n c) \n\talterações no orçamento de obras e de serviços de engenharia que causem \n\tdesequilíbrio econômico-financeiro do contrato em favor do contratado; \n \n \n d) \n\toutras alterações de cláusulas financeiras que gerem recebimentos \n\tcontratuais antecipados, distorção do cronograma físico-financeiro, \n\tprorrogação injustificada do prazo contratual com custos adicionais para a \n\tAdministração ou reajuste irregular de preços; \n \n \n LVIII - reajustamento em sentido estrito: forma de manutenção do equilíbrio \n\teconômico-financeiro de contrato consistente na aplicação do índice de \n\tcorreção monetária previsto no contrato, que deve retratar a variação \n\tefetiva do custo de produção, admitida a adoção de índices específicos ou \n\tsetoriais; \n \n \n LIX \n\t- repactuação: forma de manutenção do equilíbrio econômico-financeiro de \n\tcontrato utilizada para serviços contínuos com regime de dedicação exclusiva \n\tde mão de obra ou predominância de mão de obra, por meio da análise da \n\tvariação dos custos contratuais, devendo estar prevista no edital com data \n\tvinculada à apresentação das propostas, para os custos decorrentes do \n\tmercado, e com data vinculada ao acordo, à convenção coletiva ou ao dissídio \n\tcoletivo ao qual o orçamento esteja vinculado, para os custos decorrentes da \n\tmão de obra; \n \n \n LX - \n\tagente de contratação: pessoa designada pela autoridade competente, entre \n\tservidores efetivos ou empregados públicos dos quadros permanentes da \n\tAdministração Pública, para tomar decisões, acompanhar o trâmite da \n\tlicitação, dar impulso ao procedimento licitatório e executar quaisquer \n\toutras atividades necessárias ao bom andamento do certame até a homologação. \n \n \n CAPÍTULO IV \n \n DOS \n\tAGENTES PÚBLICOS",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.015385,
+          "métodos": [
+            "bm25"
+          ]
+        }
+      ],
+      "fontes": [
+        "data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json",
+        "lei_14133_2021.html"
+      ],
+      "fontes_recuperadas": [
+        "lei_14133_2021.html"
+      ],
+      "fontes_citadas": [
+        "lei_14133_2021.html"
+      ],
+      "is_refusal": false,
+      "refusal_reason": null,
+      "generation_available": true,
+      "latency_ms": 38284.62,
+      "confidence_level": "media",
+      "tokens": {
+        "prompt": 2050,
+        "completion": 674,
+        "total": 2724
+      },
+      "modelo": "qcwind/qwen3-8b-instruct-Q4-K-M",
+      "retrieval_summary": {
+        "dense_candidates": 50,
+        "bm25_candidates": 5,
+        "rrf_candidates": 53,
+        "returned": 3
+      },
+      "fetch_k": 50,
+      "top_k": 3,
+      "operacao": "contar",
+      "total": 1234,
+      "total_base": 1358,
+      "registros": [],
+      "campos": [],
+      "referencias": [],
+      "pagina": null,
+      "tamanho_pagina": null,
+      "total_paginas": 0,
+      "filtros_aplicados": {
+        "ano_compra": 2026
+      },
+      "campo_valor": null,
+      "minimo_inclusivo": true,
+      "maximo_inclusivo": true,
+      "criterio_objeto": null,
+      "fonte_data_publicacao": null,
+      "observacao": "Resultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação.",
+      "criterio_tecnologia": null,
+      "resumo_tecnologia": null,
+      "classificacoes_tecnologia": [],
+      "estruturada": {
+        "estrategia": "consulta_estruturada",
+        "operacao": "contar",
+        "filtros_aplicados": {
+          "ano_compra": 2026
+        },
+        "campo_valor": null,
+        "minimo_inclusivo": true,
+        "maximo_inclusivo": true,
+        "criterio_objeto": null,
+        "criterio_tecnologia": null,
+        "resumo_tecnologia": null,
+        "classificacoes_tecnologia": [],
+        "registros_sem_publicacao": 0,
+        "fonte_data_publicacao": null,
+        "total_base": 1358,
+        "total": 1234,
+        "campos": [],
+        "registros": [],
+        "referencias": [],
+        "fontes": [
+          "data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+        ],
+        "pagina": null,
+        "tamanho_pagina": null,
+        "total_paginas": 0,
+        "observacao": "Resultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação.",
+        "query": "Quantas contratações têm ano da compra 2026 e o que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+        "query_id": "q_1c486305",
+        "run_id": "024cda72",
+        "routes": [
+          "estruturada"
+        ],
+        "latencia_ms": 111.23
+      },
+      "fontes_estruturadas": [
+        "data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+      ],
+      "resposta_documental": "Trechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+      "documental_query_id": "q_1c486305",
+      "documental_run_id": "024cda72"
+    },
+    "avaliacao": {
+      "situacao": "aprovado",
+      "escopo": "Resposta produzida pelo adaptador; interface visual pendente.",
+      "criterios": "Definição, aplicação e exceções citadas; sem art. 194. Na combinada, cálculo de 1.234 separado da parte documental."
+    }
+  },
+  {
+    "caso": "COMBINADA_k5",
+    "commit_base": "9e1a26857c81fa61a55ab38b23f43c92ddc5df13",
+    "alteracoes_locais": true,
+    "sha256_selecao_normativa": "337facea979212a8364ce6d8c90e3ebfd7b191d1d836f206af82d472762dc8c9",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+    "total_chunks": 2172,
+    "top_k": 5,
+    "tempo_total_s": 35.398,
+    "resultado": {
+      "answer": "**Resultado calculado sobre a base estruturada**\n\n**Total de correspondências: 1.234**\n\n**Recorte:** 1358 registros disponíveis na base carregada.\n\n**Filtros aplicados:** `{\"ano_compra\": 2026}`\n\n**Fontes correspondentes:** data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json\n\nResultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação.\n\n**Resposta baseada nos documentos recuperados**\n\nTrechos das evidências recuperadas:\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+      "query": "Quantas contratações têm ano da compra 2026 e o que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+      "query_id": "q_e40d7824",
+      "run_id": "a07e2247",
+      "executado": true,
+      "estrategia": "combinada",
+      "plano": {
+        "bases": [
+          "normativa",
+          "estruturada"
+        ],
+        "estrategia": "combinada",
+        "operacao": "contar",
+        "filtros": {
+          "ano_compra": 2026
+        },
+        "campos": null,
+        "pagina": 1,
+        "tamanho_pagina": 20,
+        "query_id": "q_e40d7824",
+        "is_refusal": false,
+        "refusal_reason": null,
+        "necessita_esclarecimento": false,
+        "pergunta_esclarecimento": null,
+        "campo_valor": null,
+        "criterio_objeto": null,
+        "minimo_inclusivo": true,
+        "maximo_inclusivo": true,
+        "rotas_recuperacao": [
+          "normativa"
+        ]
+      },
+      "routes": [
+        "normativa",
+        "estruturada"
+      ],
+      "filters": {
+        "ano_compra": 2026
+      },
+      "evidences": [
+        {
+          "posição": 1,
+          "chunk_id": "lei_14133_2021.html_chunk_29",
+          "trecho": "Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se \n\trefere o  art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir \n\tpadrões de desempenho e qualidade que possam ser objetivamente definidos \n\tpelo edital, por meio de especificações usuais de mercado. \n \n \n Parágrafo único. O pregão não se aplica às contratações de serviços técnicos \n\tespecializados de natureza predominantemente intelectual e de obras e \n\tserviços de engenharia, exceto os serviços de engenharia de que trata a \n\t alínea a do inciso XXI do  caput  do art. 6º desta Lei .",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.032522,
+          "métodos": [
+            "bm25",
+            "dense"
+          ]
+        },
+        {
+          "posição": 2,
+          "chunk_id": "lei_14133_2021.html_chunk_28",
+          "trecho": "Art. 28.   São modalidades de licitação: \n \n \n I - \n\tpregão; \n \n \n II - \n\tconcorrência; \n \n \n III \n\t- concurso; \n \n \n IV - \n\tleilão; \n \n \n V - \n\tdiálogo competitivo. \n \n \n § 1º \n\tAlém das modalidades referidas no  caput  deste artigo, a Administração \n\tpode servir-se dos procedimentos auxiliares previstos no  art. 78 desta Lei . \n \n \n § 2º \n\tÉ vedada a criação de outras modalidades de licitação ou, ainda, a \n\tcombinação daquelas referidas no  caput  deste artigo.",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.026546,
+          "métodos": [
+            "bm25",
+            "dense"
+          ]
+        },
+        {
+          "posição": 3,
+          "chunk_id": "lei_14133_2021.html_chunk_213",
+          "trecho": "Art. 194. Esta Lei entra em vigor na data de sua publicação. \n \n \n\tBrasília, 1º de abril de 2021; 200 o  da Independência e 133 o  \n\tda República. \n \n JAIR \n\tMESSIAS BOLSONARO \n \n \n Anderson Gustavo Torres \n \n \n Paulo Guedes \n \n \n Tarcisio Gomes de Freitas \n \n \n Marcelo Antônio Cartaxo Queiroga Lopes \n \n \n Wagner de Campos Rosário \n \n \n André Luiz de Almeida Mendonça \n \n \n Este texto não substitui o \n\tpublicado no DOU de 1º.4.2021   - Edição \n\textra-F \n \n \n \n  \n \n  \n \n  \n \n  \n \n  \n \n  \n \n  \n \n  \n \n  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n          Presidência da República\n          \n \n \n \n \n \n \n \n \n          Secretaria-Geral\n          \n \n \n \n \n \n \n \n \n          Subchefia para\n  Assuntos Jurídicos\n          \n \n \n \n \n \n \n \n \n \n \n \n \n LEI Nº 14.133, DE \n\t1º DE ABRIL DE 2021  \n \n \n \n \n \n \n \n Mensagem de \n\t\tveto \n \n \n \n Lei de Licitações \n\t\te Contratos Administrativos. \n \n \n \n \n\tO PRESIDENTE DA REPÚBLICA  \n Faço saber que o Congresso \n\tNacional decreta e eu promulgo, nos termos do parágrafo 5 o  \n\tdo art. 66 da Constituição Federal, as seguintes partes vetadas da Lei n o  \n\t14.133, de 1º de abril de 2021: \n \n ",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.016393,
+          "métodos": [
+            "dense"
+          ]
+        },
+        {
+          "posição": 4,
+          "chunk_id": "lei_14133_2021.html_chunk_206",
+          "trecho": "Art. 189. Aplica-se esta Lei às hipóteses previstas na legislação que façam \n\treferência expressa à  Lei nº 8.666, de \n\t21 de junho de 1993 , à  Lei nº \n\t10.520, de 17 de julho de 2002 , e aos\n\t arts. 1º a 47-A da \n\tLei nº 12.462, de 4 de agosto de 2011.",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.015873,
+          "métodos": [
+            "dense"
+          ]
+        },
+        {
+          "posição": 5,
+          "chunk_id": "lei_14133_2021.html_chunk_6",
+          "trecho": "Art. 6º Para os fins desta Lei, consideram-se: \n \n \n I - \n\tórgão: unidade de atuação integrante da estrutura da Administração Pública; \n \n \n II - \n\tentidade: unidade de atuação dotada de personalidade jurídica; \n \n \n III \n\t- Administração Pública: administração direta e indireta da União, dos \n\tEstados, do Distrito Federal e dos Municípios, inclusive as entidades com \n\tpersonalidade jurídica de direito privado sob controle do poder público e as \n\tfundações por ele instituídas ou mantidas; \n \n \n IV - \n\tAdministração: órgão ou entidade por meio do qual a Administração Pública \n\tatua; \n \n \n V - \n\tagente público: indivíduo que, em virtude de eleição, nomeação, designação, \n\tcontratação ou qualquer outra forma de investidura ou vínculo, exerce \n\tmandato, cargo, emprego ou função em pessoa jurídica integrante da \n\tAdministração Pública; \n \n \n VI - \n\tautoridade: agente público dotado de poder de decisão; \n \n \n VII \n\t- contratante: pessoa jurídica integrante da Administração Pública \n\tresponsável pela contratação; \n \n \n VIII \n\t- contratado: pessoa física ou jurídica, ou consórcio de pessoas jurídicas, \n\tsignatária de contrato com a Administração; \n \n \n IX - \n\tlicitante: pessoa física ou jurídica, ou consórcio de pessoas jurídicas, que \n\tparticipa ou manifesta a intenção de participar de processo licitatório, \n\tsendo-lhe equiparável, para os fins desta Lei, o fornecedor ou o prestador \n\tde serviço que, em atendimento à solicitação da Administração, oferece \n\tproposta; \n \n \n X - \n\tcompra: aquisição remunerada de bens para fornecimento de uma só vez ou \n\tparceladamente, considerada imediata aquela com prazo de entrega de até 30 \n\t(trinta) dias da ordem de fornecimento; \n \n \n XI - \n\tserviço: atividade ou conjunto de atividades destinadas a obter determinada \n\tutilidade, intelectual ou material, de interesse da Administração; \n \n \n XII \n\t- obra: toda atividade estabelecida, por força de lei, como privativa das \n\tprofissões de arquiteto e engenheiro que implica intervenção no meio \n\tambiente por meio de um conjunto harmônico de ações que, agregadas, formam \n\tum todo que inova o espaço físico da natureza ou acarreta alteração \n\tsubstancial das características originais de bem imóvel; \n \n \n XIII \n\t- bens e serviços comuns: aqueles cujos padrões de desempenho e qualidade \n\tpodem ser objetivamente definidos pelo edital, por meio de especificações \n\tusuais de mercado; \n \n \n XIV \n\t- bens e serviços especiais: aqueles que, por sua alta heterogeneidade ou \n\tcomplexidade, não podem ser descritos na forma do inciso XIII do  caput  \n\tdeste artigo, exigida justificativa prévia do contratante; \n \n \n XV - \n\tserviços e fornecimentos contínuos: serviços contratados e compras \n\trealizadas pela Administração Pública para a manutenção da atividade \n\tadministrativa, decorrentes de necessidades permanentes ou prolongadas; \n \n \n XVI \n\t- serviços contínuos com regime de dedicação exclusiva de mão de obra: \n\taqueles cujo modelo de execução contratual exige, entre outros requisitos, \n\tque: \n \n \n a) \n\tos empregados do contratado fiquem à disposição nas dependências do \n\tcontratante para a prestação dos serviços; \n \n \n b) o \n\tcontratado não compartilhe os recursos humanos e materiais disponíveis de \n\tuma contratação para execução simultânea de outros contratos; \n \n \n c) o \n\tcontratado possibilite a fiscalização pelo contratante quanto à \n\tdistribuição, controle e supervisão dos recursos humanos alocados aos seus \n\tcontratos; \n \n \n XVII \n\t- serviços não contínuos ou contratados por escopo: aqueles que impõem ao \n\tcontratado o dever de realizar a prestação de um serviço específico em \n\tperíodo predeterminado, podendo ser prorrogado, desde que justificadamente, \n\tpelo prazo necessário à conclusão do objeto; \n \n \n XVIII - serviços técnicos especializados de natureza predominantemente \n\tintelectual: aqueles realizados em trabalhos relativos a: \n \n \n a) \n\testudos técnicos, planejamentos, projetos básicos e projetos executivos; \n \n \n b) \n\tpareceres, perícias e avaliações em geral; \n \n \n c) \n\tassessorias e consultorias técnicas e auditorias financeiras e tributárias; \n \n \n d) \n\tfiscalização, supervisão e gerenciamento de obras e serviços; \n \n \n e) \n\tpatrocínio ou defesa de causas judiciais e administrativas; \n \n \n f) \n\ttreinamento e aperfeiçoamento de pessoal; \n \n \n g) \n\trestauração de obras de arte e de bens de valor histórico; \n \n \n h) \n\tcontroles de qualidade e tecnológico, análises, testes e ensaios de campo e \n\tlaboratoriais, instrumentação e monitoramento de parâmetros específicos de \n\tobras e do meio ambiente e demais serviços de engenharia que se enquadrem na \n\tdefinição deste inciso; \n \n \n XIX \n\t- notória especialização: qualidade de profissional ou de empresa cujo \n\tconceito, no campo de sua especialidade, decorrente de desempenho anterior, \n\testudos, experiência, publicações, organização, aparelhamento, equipe \n\ttécnica ou outros requisitos relacionados com suas atividades, permite \n\tinferir que o seu trabalho é essencial e reconhecidamente adequado à plena \n\tsatisfação do objeto do contrato; \n \n \n XX - \n\testudo técnico preliminar: documento constitutivo da primeira etapa do \n\tplanejamento de uma contratação que caracteriza o interesse público \n\tenvolvido e a sua melhor solução e dá base ao anteprojeto, ao termo de \n\treferência ou ao projeto básico a serem elaborados caso se conclua pela \n\tviabilidade da contratação; \n \n \n XXI \n\t- serviço de engenharia: toda atividade ou conjunto de atividades destinadas \n\ta obter determinada utilidade, intelectual ou material, de interesse para a \n\tAdministração e que, não enquadradas no conceito de obra a que se refere o \n\tinciso XII do  caput  deste artigo, são estabelecidas, por força de \n\tlei, como privativas das profissões de arquiteto e engenheiro ou de técnicos \n\tespecializados, que compreendem: \n \n \n a) \n\tserviço comum de engenharia: todo serviço de engenharia que tem por objeto \n\tações, objetivamente padronizáveis em termos de desempenho e qualidade, de \n\tmanutenção, de adequação e de adaptação de bens móveis e imóveis, com \n\tpreservação das características originais dos bens; \n \n \n b) \n\tserviço especial de engenharia: aquele que, por sua alta heterogeneidade ou \n\tcomplexidade, não pode se enquadrar na definição constante da alínea a \n\tdeste inciso; \n \n \n XXII \n\t- obras, serviços e fornecimentos de grande vulto: aqueles cujo valor \n\testimado supera R$ 200.000.000,00 (duzentos milhões de reais);        \n \n \n (Vide \n\tDecreto nº 10.922, de 2021)      \n\t (Vigência)      \n\t \n (Vide \n\t\tDecreto nº 11.317, de 2022)       \n\t\t Vigência       \n \n (Vide \n\t\tDecreto nº 11.871, de 2023)     \n\t\t Vigência     \n\t (Vide Decreto nº \n\t12.343, de 2024)    \n\t Vigência    \n\t (Vide Decreto nº \n\t12.807, de 2025)     Vigência \n \n \n XXIII - termo de referência: documento necessário para a contratação de bens \n\te serviços, que deve conter os seguintes parâmetros e elementos descritivos: \n \n \n a) \n\tdefinição do objeto, incluídos sua natureza, os quantitativos, o prazo do \n\tcontrato e, se for o caso, a possibilidade de sua prorrogação; \n \n \n b) \n\tfundamentação da contratação, que consiste na referência aos estudos \n\ttécnicos preliminares correspondentes ou, quando não for possível divulgar \n\tesses estudos, no extrato das partes que não contiverem informações \n\tsigilosas; \n \n \n c) \n\tdescrição da solução como um todo, considerado todo o ciclo de vida do \n\tobjeto; \n \n \n d) \n\trequisitos da contratação; \n \n \n e) \n\tmodelo de execução do objeto, que consiste na definição de como o contrato \n\tdeverá produzir os resultados pretendidos desde o seu início até o seu \n\tencerramento; \n \n \n f) \n\tmodelo de gestão do contrato, que descreve como a execução do objeto será \n\tacompanhada e fiscalizada pelo órgão ou entidade; \n \n \n g) \n\tcritérios de medição e de pagamento; \n \n \n h) \n\tforma e critérios de seleção do fornecedor; \n \n \n i) \n\testimativas do valor da contratação, acompanhadas dos preços unitários \n\treferenciais, das memórias de cálculo e dos documentos que lhe dão suporte, \n\tcom os parâmetros utilizados para a obtenção dos preços e para os \n\trespectivos cálculos, que devem constar de documento separado e \n\tclassificado; \n \n \n j) \n\tadequação orçamentária; \n \n \n XXIV \n\t- anteprojeto: peça técnica com todos os subsídios necessários à elaboração \n\tdo projeto básico, que deve conter, no mínimo, os seguintes elementos: \n \n \n a) \n\tdemonstração e justificativa do programa de necessidades, avaliação de \n\tdemanda do público-alvo, motivação técnico-econômico-social do \n\tempreendimento, visão global dos investimentos e definições relacionadas ao \n\tnível de serviço desejado; \n \n \n b) \n\tcondições de solidez, de segurança e de durabilidade; \n \n \n c) \n\tprazo de entrega; \n \n \n d) \n\testética do projeto arquitetônico, traçado geométrico e/ou projeto da área \n\tde influência, quando cabível; \n \n \n e) \n\tparâmetros de adequação ao interesse público, de economia na utilização, de \n\tfacilidade na execução, de impacto ambiental e de acessibilidade; \n \n \n f) \n\tproposta de concepção da obra ou do serviço de engenharia; \n \n \n g) \n\tprojetos anteriores ou estudos preliminares que embasaram a concepção \n\tproposta; \n \n \n h) \n\tlevantamento topográfico e cadastral; \n \n \n i) \n\tpareceres de sondagem; \n \n \n j) \n\tmemorial descritivo dos elementos da edificação, dos componentes \n\tconstrutivos e dos materiais de construção, de forma a estabelecer padrões \n\tmínimos para a contratação; \n \n \n XXV \n\t- projeto básico: conjunto de elementos necessários e suficientes, com nível \n\tde precisão adequado para definir e dimensionar a obra ou o serviço, ou o \n\tcomplexo de obras ou de serviços objeto da licitação, elaborado com base nas \n\tindicações dos estudos técnicos preliminares, que assegure a viabilidade \n\ttécnica e o adequado tratamento do impacto ambiental do empreendimento e que \n\tpossibilite a avaliação do custo da obra e a definição dos métodos e do \n\tprazo de execução, devendo conter os seguintes elementos: \n \n \n a) \n\tlevantamentos topográficos e cadastrais, sondagens e ensaios geotécnicos, \n\tensaios e análises laboratoriais, estudos socioambientais e demais dados e \n\tlevantamentos necessários para execução da solução escolhida; \n \n \n b) \n\tsoluções técnicas globais e localizadas, suficientemente detalhadas, de \n\tforma a evitar, por ocasião da elaboração do projeto executivo e da \n\trealização das obras e montagem, a necessidade de reformulações ou variantes \n\tquanto à qualidade, ao preço e ao prazo inicialmente definidos; \n \n \n c) \n\tidentificação dos tipos de serviços a executar e dos materiais e \n\tequipamentos a incorporar à obra, bem como das suas especificações, de modo \n\ta assegurar os melhores resultados para o empreendimento e a segurança \n\texecutiva na utilização do objeto, para os fins a que se destina, \n\tconsiderados os riscos e os perigos identificáveis, sem frustrar o caráter \n\tcompetitivo para a sua execução; \n \n \n d) \n\tinformações que possibilitem o estudo e a definição de métodos construtivos, \n\tde instalações provisórias e de condições organizacionais para a obra, sem \n\tfrustrar o caráter competitivo para a sua execução; \n \n \n e) \n\tsubsídios para montagem do plano de licitação e gestão da obra, \n\tcompreendidos a sua programação, a estratégia de suprimentos, as normas de \n\tfiscalização e outros dados necessários em cada caso; \n \n \n f) \n\torçamento detalhado do custo global da obra, fundamentado em quantitativos \n\tde serviços e fornecimentos propriamente avaliados, obrigatório \n\texclusivamente para os regimes de execução previstos nos  incisos I, II, III, \n\tIV e VII do  caput  do art. 46 desta Lei ; \n \n \n XXVI \n\t- projeto executivo: conjunto de elementos necessários e suficientes à \n\texecução completa da obra, com o detalhamento das soluções previstas no \n\tprojeto básico, a identificação de serviços, de materiais e de equipamentos \n\ta serem incorporados à obra, bem como suas especificações técnicas, de \n\tacordo com as normas técnicas pertinentes; \n \n \n XXVII - matriz de riscos: cláusula contratual definidora de riscos e de \n\tresponsabilidades entre as partes e caracterizadora do equilíbrio \n\teconômico-financeiro inicial do contrato, em termos de ônus financeiro \n\tdecorrente de eventos supervenientes à contratação, contendo, no mínimo, as \n\tseguintes informações: \n \n \n a) \n\tlistagem de possíveis eventos supervenientes à assinatura do contrato que \n\tpossam causar impacto em seu equilíbrio econômico-financeiro e previsão de \n\teventual necessidade de prolação de termo aditivo por ocasião de sua \n\tocorrência; \n \n \n b) \n\tno caso de obrigações de resultado, estabelecimento das frações do objeto \n\tcom relação às quais haverá liberdade para os contratados inovarem em \n\tsoluções metodológicas ou tecnológicas, em termos de modificação das \n\tsoluções previamente delineadas no anteprojeto ou no projeto básico; \n \n \n c) \n\tno caso de obrigações de meio, estabelecimento preciso das frações do objeto \n\tcom relação às quais não haverá liberdade para os contratados inovarem em \n\tsoluções metodológicas ou tecnológicas, devendo haver obrigação de aderência \n\tentre a execução e a solução predefinida no anteprojeto ou no projeto \n\tbásico, consideradas as características do regime de execução no caso de \n\tobras e serviços de engenharia; \n \n \n XXVIII - empreitada por preço unitário: contratação da execução da obra ou \n\tdo serviço por preço certo de unidades determinadas; \n \n \n XXIX \n\t- empreitada por preço global: contratação da execução da obra ou do serviço \n\tpor preço certo e total; \n \n \n XXX \n\t- empreitada integral: contratação de empreendimento em sua integralidade, \n\tcompreendida a totalidade das etapas de obras, serviços e instalações \n\tnecessárias, sob inteira responsabilidade do contratado até sua entrega ao \n\tcontratante em condições de entrada em operação, com características \n\tadequadas às finalidades para as quais foi contratado e atendidos os \n\trequisitos técnicos e legais para sua utilização com segurança estrutural e \n\toperacional; \n \n \n XXXI \n\t- contratação por tarefa: regime de contratação de mão de obra para pequenos \n\ttrabalhos por preço certo, com ou sem fornecimento de materiais; \n \n \n XXXII - contratação integrada: regime de contratação de obras e serviços de \n\tengenharia em que o contratado é responsável por elaborar e desenvolver os \n\tprojetos básico e executivo, executar obras e serviços de engenharia, \n\tfornecer bens ou prestar serviços especiais e realizar montagem, teste, \n\tpré-operação e as demais operações necessárias e suficientes para a entrega \n\tfinal do objeto; \n \n \n XXXIII - contratação semi-integrada: regime de contratação de obras e \n\tserviços de engenharia em que o contratado é responsável por elaborar e \n\tdesenvolver o projeto executivo, executar obras e serviços de engenharia, \n\tfornecer bens ou prestar serviços especiais e realizar montagem, teste, \n\tpré-operação e as demais operações necessárias e suficientes para a entrega \n\tfinal do objeto; \n \n \n XXXIV - fornecimento e prestação de serviço associado: regime de contratação \n\tem que, além do fornecimento do objeto, o contratado responsabiliza-se por \n\tsua operação, manutenção ou ambas, por tempo determinado; \n \n \n XXXV \n\t- licitação internacional: licitação processada em território nacional na \n\tqual é admitida a participação de licitantes estrangeiros, com a \n\tpossibilidade de cotação de preços em moeda estrangeira, ou licitação na \n\tqual o objeto contratual pode ou deve ser executado no todo ou em parte em \n\tterritório estrangeiro; \n \n \n XXXVI - serviço nacional: serviço prestado em território nacional, nas \n\tcondições estabelecidas pelo Poder Executivo federal; \n \n \n XXXVII - produto manufaturado nacional: produto manufaturado produzido no \n\tterritório nacional de acordo com o processo produtivo básico ou com as \n\tregras de origem estabelecidas pelo Poder Executivo federal; \n \n \n XXXVIII - concorrência: modalidade de licitação para contratação de bens e \n\tserviços especiais e de obras e serviços comuns e especiais de engenharia, \n\tcujo critério de julgamento poderá ser: \n \n \n a) \n\tmenor preço; \n \n \n b) \n\tmelhor técnica ou conteúdo artístico; \n \n \n c) \n\ttécnica e preço; \n \n \n d) \n\tmaior retorno econômico; \n \n \n e) \n\tmaior desconto; \n \n \n XXXIX - concurso: modalidade de licitação para escolha de trabalho técnico, \n\tcientífico ou artístico, cujo critério de julgamento será o de melhor \n\ttécnica ou conteúdo artístico, e para concessão de prêmio ou remuneração ao \n\tvencedor; \n \n \n XL - \n\tleilão: modalidade de licitação para alienação de bens imóveis ou de bens \n\tmóveis inservíveis ou legalmente apreendidos a quem oferecer o maior lance; \n \n \n XLI \n\t- pregão: modalidade de licitação obrigatória para aquisição de bens e \n\tserviços comuns, cujo critério de julgamento poderá ser o de menor preço ou \n\to de maior desconto; \n \n \n XLII \n\t- diálogo competitivo: modalidade de licitação para contratação de obras, \n\tserviços e compras em que a Administração Pública realiza diálogos com \n\tlicitantes previamente selecionados mediante critérios objetivos, com o \n\tintuito de desenvolver uma ou mais alternativas capazes de atender às suas \n\tnecessidades, devendo os licitantes apresentar proposta final após o \n\tencerramento dos diálogos; \n \n \n XLIII - credenciamento: processo administrativo de chamamento público em que \n\ta Administração Pública convoca interessados em prestar serviços ou fornecer \n\tbens para que, preenchidos os requisitos necessários, se credenciem no órgão \n\tou na entidade para executar o objeto quando convocados; \n \n \n XLIV \n\t- pré-qualificação: procedimento seletivo prévio à licitação, convocado por \n\tmeio de edital, destinado à análise das condições de habilitação, total ou \n\tparcial, dos interessados ou do objeto; \n \n \n XLV \n\t- sistema de registro de preços: conjunto de procedimentos para realização, \n\tmediante contratação direta ou licitação nas modalidades pregão ou \n\tconcorrência, de registro formal de preços relativos a prestação de \n\tserviços, a obras e a aquisição e locação de bens para contratações futuras; \n \n \n XLVI \n\t- ata de registro de preços: documento vinculativo e obrigacional, com \n\tcaracterística de compromisso para futura contratação, no qual são \n\tregistrados o objeto, os preços, os fornecedores, os órgãos participantes e \n\tas condições a serem praticadas, conforme as disposições contidas no edital \n\tda licitação, no aviso ou instrumento de contratação direta e nas propostas \n\tapresentadas; \n \n \n XLVII - órgão ou entidade gerenciadora: órgão ou entidade da Administração \n\tPública responsável pela condução do conjunto de procedimentos para registro \n\tde preços e pelo gerenciamento da ata de registro de preços dele decorrente; \n \n \n XLVIII - órgão ou entidade participante: órgão ou entidade da Administração \n\tPública que participa dos procedimentos iniciais da contratação para \n\tregistro de preços e integra a ata de registro de preços; \n \n \n XLIX \n\t- órgão ou entidade não participante: órgão ou entidade da Administração \n\tPública que não participa dos procedimentos iniciais da licitação para \n\tregistro de preços e não integra a ata de registro de preços; \n \n \n L - \n\tcomissão de contratação: conjunto de agentes públicos indicados pela \n\tAdministração, em caráter permanente ou especial, com a função de receber, \n\texaminar e julgar documentos relativos às licitações e aos procedimentos \n\tauxiliares; \n \n \n LI - \n\tcatálogo eletrônico de padronização de compras, serviços e obras: sistema \n\tinformatizado, de gerenciamento centralizado e com indicação de preços, \n\tdestinado a permitir a padronização de itens a serem adquiridos pela \n\tAdministração Pública e que estarão disponíveis para a licitação; \n \n \n LII \n\t- sítio eletrônico oficial: sítio da internet, certificado digitalmente por \n\tautoridade certificadora, no qual o ente federativo divulga de forma \n\tcentralizada as informações e os serviços de governo digital dos seus órgãos \n\te entidades; \n \n \n LIII \n\t- contrato de eficiência: contrato cujo objeto é a prestação de serviços, \n\tque pode incluir a realização de obras e o fornecimento de bens, com o \n\tobjetivo de proporcionar economia ao contratante, na forma de redução de \n\tdespesas correntes, remunerado o contratado com base em percentual da \n\teconomia gerada; \n \n \n LIV \n\t- seguro-garantia: seguro que garante o fiel cumprimento das obrigações \n\tassumidas pelo contratado; \n \n \n LV - \n\tprodutos para pesquisa e desenvolvimento: bens, insumos, serviços e obras \n\tnecessários para atividade de pesquisa científica e tecnológica, \n\tdesenvolvimento de tecnologia ou inovação tecnológica, discriminados em \n\tprojeto de pesquisa; \n \n \n LVI \n\t- sobrepreço: preço orçado para licitação ou contratado em valor \n\texpressivamente superior aos preços referenciais de mercado, seja de apenas \n\t1 (um) item, se a licitação ou a contratação for por preços unitários de \n\tserviço, seja do valor global do objeto, se a licitação ou a contratação for \n\tpor tarefa, empreitada por preço global ou empreitada integral, \n\tsemi-integrada ou integrada; \n \n \n LVII \n\t- superfaturamento: dano provocado ao patrimônio da Administração, \n\tcaracterizado, entre outras situações, por: \n \n \n a) \n\tmedição de quantidades superiores às efetivamente executadas ou fornecidas; \n \n \n b) \n\tdeficiência na execução de obras e de serviços de engenharia que resulte em \n\tdiminuição da sua qualidade, vida útil ou segurança; \n \n \n c) \n\talterações no orçamento de obras e de serviços de engenharia que causem \n\tdesequilíbrio econômico-financeiro do contrato em favor do contratado; \n \n \n d) \n\toutras alterações de cláusulas financeiras que gerem recebimentos \n\tcontratuais antecipados, distorção do cronograma físico-financeiro, \n\tprorrogação injustificada do prazo contratual com custos adicionais para a \n\tAdministração ou reajuste irregular de preços; \n \n \n LVIII - reajustamento em sentido estrito: forma de manutenção do equilíbrio \n\teconômico-financeiro de contrato consistente na aplicação do índice de \n\tcorreção monetária previsto no contrato, que deve retratar a variação \n\tefetiva do custo de produção, admitida a adoção de índices específicos ou \n\tsetoriais; \n \n \n LIX \n\t- repactuação: forma de manutenção do equilíbrio econômico-financeiro de \n\tcontrato utilizada para serviços contínuos com regime de dedicação exclusiva \n\tde mão de obra ou predominância de mão de obra, por meio da análise da \n\tvariação dos custos contratuais, devendo estar prevista no edital com data \n\tvinculada à apresentação das propostas, para os custos decorrentes do \n\tmercado, e com data vinculada ao acordo, à convenção coletiva ou ao dissídio \n\tcoletivo ao qual o orçamento esteja vinculado, para os custos decorrentes da \n\tmão de obra; \n \n \n LX - \n\tagente de contratação: pessoa designada pela autoridade competente, entre \n\tservidores efetivos ou empregados públicos dos quadros permanentes da \n\tAdministração Pública, para tomar decisões, acompanhar o trâmite da \n\tlicitação, dar impulso ao procedimento licitatório e executar quaisquer \n\toutras atividades necessárias ao bom andamento do certame até a homologação. \n \n \n CAPÍTULO IV \n \n DOS \n\tAGENTES PÚBLICOS",
+          "fonte": "lei_14133_2021.html",
+          "tipo_documento": "lei",
+          "base": "base_normativa",
+          "natureza": "normativa",
+          "score_rrf": 0.015385,
+          "métodos": [
+            "bm25"
+          ]
+        }
+      ],
+      "fontes": [
+        "data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json",
+        "lei_14133_2021.html"
+      ],
+      "fontes_recuperadas": [
+        "lei_14133_2021.html"
+      ],
+      "fontes_citadas": [
+        "lei_14133_2021.html"
+      ],
+      "is_refusal": false,
+      "refusal_reason": null,
+      "generation_available": true,
+      "latency_ms": 35358.78,
+      "confidence_level": "media",
+      "tokens": {
+        "prompt": 2050,
+        "completion": 679,
+        "total": 2729
+      },
+      "modelo": "qcwind/qwen3-8b-instruct-Q4-K-M",
+      "retrieval_summary": {
+        "dense_candidates": 50,
+        "bm25_candidates": 5,
+        "rrf_candidates": 53,
+        "returned": 5
+      },
+      "fetch_k": 50,
+      "top_k": 5,
+      "operacao": "contar",
+      "total": 1234,
+      "total_base": 1358,
+      "registros": [],
+      "campos": [],
+      "referencias": [],
+      "pagina": null,
+      "tamanho_pagina": null,
+      "total_paginas": 0,
+      "filtros_aplicados": {
+        "ano_compra": 2026
+      },
+      "campo_valor": null,
+      "minimo_inclusivo": true,
+      "maximo_inclusivo": true,
+      "criterio_objeto": null,
+      "fonte_data_publicacao": null,
+      "observacao": "Resultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação.",
+      "criterio_tecnologia": null,
+      "resumo_tecnologia": null,
+      "classificacoes_tecnologia": [],
+      "estruturada": {
+        "estrategia": "consulta_estruturada",
+        "operacao": "contar",
+        "filtros_aplicados": {
+          "ano_compra": 2026
+        },
+        "campo_valor": null,
+        "minimo_inclusivo": true,
+        "maximo_inclusivo": true,
+        "criterio_objeto": null,
+        "criterio_tecnologia": null,
+        "resumo_tecnologia": null,
+        "classificacoes_tecnologia": [],
+        "registros_sem_publicacao": 0,
+        "fonte_data_publicacao": null,
+        "total_base": 1358,
+        "total": 1234,
+        "campos": [],
+        "registros": [],
+        "referencias": [],
+        "fontes": [
+          "data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+        ],
+        "pagina": null,
+        "tamanho_pagina": null,
+        "total_paginas": 0,
+        "observacao": "Resultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação.",
+        "query": "Quantas contratações têm ano da compra 2026 e o que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+        "query_id": "q_e40d7824",
+        "run_id": "a07e2247",
+        "routes": [
+          "estruturada"
+        ],
+        "latencia_ms": 119.04
+      },
+      "fontes_estruturadas": [
+        "data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json"
+      ],
+      "resposta_documental": "Trechos das evidências recuperadas:\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+      "documental_query_id": "q_e40d7824",
+      "documental_run_id": "a07e2247"
+    },
+    "avaliacao": {
+      "situacao": "aprovado",
+      "escopo": "Resposta produzida pelo adaptador; interface visual pendente.",
+      "criterios": "Definição, aplicação e exceções citadas; sem art. 194. Na combinada, cálculo de 1.234 separado da parte documental."
+    }
+  }
+]

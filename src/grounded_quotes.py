@@ -4,6 +4,8 @@ import json
 import re
 
 
+from src.normative_query import reconhecer_pedido_normativo
+
 def _normalizar_espacos(texto):
     return re.sub(r"\s+", " ", texto).strip()
 
@@ -136,12 +138,7 @@ def _recortar_definicao_normativa(pergunta, evidencia):
     if re.search(r"\b(?:artigo|art\.|arts\.)\s*\d+", consulta):
         return original
 
-    pedido = re.fullmatch(
-        r"o que .+ estabelece sobre "
-        r"(?:(?:o|a|os|as)\s+)?"
-        r"([a-z]+(?:\s+[a-z]+){0,4})[?. ]*",
-        consulta,
-    )
+    pedido = reconhecer_pedido_normativo(consulta)
     if not pedido:
         return original
 
@@ -174,8 +171,11 @@ def _recortar_objeto_fornecedor(pergunta, trechos, por_id):
 
     consulta = normalizar(pergunta or "")
     if not re.fullmatch(
+        r"(?:"
         r"o que a ata .+? informa sobre o objeto"
-        r"(?: adquirido)? e o fornecedor[?. ]*",
+        r"(?: adquirido)? e o fornecedor"
+        r"|na ata .+?, qual e o objeto e qual empresa e a contratada"
+        r")[?. ]*",
         consulta,
     ):
         return trechos
