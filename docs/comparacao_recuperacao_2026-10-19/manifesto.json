@@ -1,0 +1,51 @@
+{
+  "commit_executor": "fef6d7a26ea24175af8c9e593425d2b7af980aa0",
+  "commit_rankings": "5499cafaf213cfbcf1fd493858679778d1dcc8a6",
+  "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+  "protocolo": "Reutilização de rankings capturados, já sujeitos ao escopo e aos filtros daquela recuperação. Não compara buscas globais novas. Rerank dos primeiros 20 candidatos RRF, preservando a cauda.",
+  "rotulos": {
+    "P03": {
+      "objeto": [
+        "ata_00191.pdf_chunk_2"
+      ],
+      "numero_pncp": [
+        "contratacoes_publicacao.json_chunk_400"
+      ]
+    },
+    "P04": {
+      "definicao": [
+        "lei_14133_2021.html_chunk_6"
+      ],
+      "aplicacao": [
+        "lei_14133_2021.html_chunk_29"
+      ],
+      "excecoes": [
+        "lei_14133_2021.html_chunk_29"
+      ]
+    },
+    "P08": {
+      "objeto": [
+        "ata_00137.pdf_chunk_1"
+      ],
+      "contratada": [
+        "ata_00137.pdf_chunk_14"
+      ]
+    }
+  },
+  "modelo_sha256": {
+    "sentence_bert_config.json": "d43017ebfb955afe9b83122ef46e15db65d0353a42884c8ad40fb442226e5363",
+    "config.json": "40995959da0c4151cb8f521cc5e2bd69b4be6507241f576adaf8f36630d1d558",
+    "tokenizer_config.json": "5d84c938d902dbd684af806ccc920e4c99812d897b0f271eebf856361a4337f6",
+    "tokenizer.json": "883b037111086fd4dfebbbc9b7cee11e1517b5e0c0514879478661440f137085",
+    "config_sentence_transformers.json": "ed92482dad13434af033c661828baff38f5c044bba72381edbf24ee2409c7258",
+    "modules.json": "ec085e5249603c4bbf035028f530b68d78a7387110828d554d3193f41e1b67b9",
+    "README.md": "0794a75f0c6780a7df46c3bc8e516c4b0fa0872ad9d0c11d81a54ea386cd0837",
+    "model.safetensors": "2deaec6d3e25e35ad8081736342fbeb3bfbacc856d07ec45fb63fa184c372530"
+  },
+  "limites": [
+    "A primeira execução inclui carregamento do modelo.",
+    "Não mede novamente a latência de BM25, vetorial ou RRF.",
+    "Cobertura avaliada por chunks de referência; outros trechos pertinentes podem exigir revisão manual.",
+    "Não avalia novas respostas geradas."
+  ]
+}

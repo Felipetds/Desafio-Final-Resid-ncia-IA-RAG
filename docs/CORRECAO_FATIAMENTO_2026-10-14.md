@@ -1,5 +1,8 @@
 # Correção do fatiamento — 14/10/2026
 
+> Relato histórico de 14/10. O estado dos índices abaixo é daquela data. Para o pacote posterior alinhado, consulte [o guia atual](GUIA_RESTAURACAO_2172.md).
+
+
 ## Problema e correção
 
 A função fatiar_texto encerrava após o primeiro bloco de cada página:

@@ -1,5 +1,31 @@
 # Corpus Inventory
 
+## Pacote de execução conferido em 19/10/2026
+
+O corpus bruto v3 possui oito arquivos. O pacote posterior à correção do
+fatiamento possui 2.172 chunks e índices alinhados.
+
+Distribuição e metadados medidos:
+[Auditoria do pacote](docs/AUDITORIA_PACOTE_2172_2026-10-19.json).
+
+Os cálculos usam os CSV completos, não apenas os 519 chunks agregados.
+O PCA disponibilizado contém 36.994 linhas; o recorte de ano e UF está
+associado à origem da exportação recebida da equipe.
+
+O controle PNCP da contratação EBSERH é
+`15126437000305-1-000676/2026`. O identificador com sufixo `-000001`
+documentado abaixo identifica a ata, não o campo de controle da contratação.
+
+UF identifica a unidade administrativa, não necessariamente a execução.
+Ano da compra, publicação e vigência são distintos. Campos previstos
+no manifesto não comprovam preenchimento nos chunks.
+
+Metadados vazios não demonstram ausência da informação no texto original.
+A auditoria registra campos vazios sem preencher valores por suposição.
+
+Restauração e limitações: [guia atual](docs/GUIA_RESTAURACAO_2172.md).
+
+
 ## Estado atual do corpus
 
 - **Cenário:** Contratações Públicas do Estado do Rio de Janeiro

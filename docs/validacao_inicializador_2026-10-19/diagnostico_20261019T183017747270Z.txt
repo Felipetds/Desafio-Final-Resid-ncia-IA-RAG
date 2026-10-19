@@ -1,0 +1,5 @@
+Frontend local selecionado para esta execução.
+Commit carregado: fef6d7a26ea24175af8c9e593425d2b7af980aa0
+Frontend local conferido.
+Configuração de lançamento conferida.
+Inicializador executado sem abrir servidor ou consultar modelos.
