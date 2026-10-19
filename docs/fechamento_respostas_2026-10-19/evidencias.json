@@ -1,0 +1,52 @@
+{
+  "commit_base": "a448c82719c1cfd5f0855a750ffb095b3da55012",
+  "codigo_com_alteracoes_locais": true,
+  "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+  "testes_locais": {
+    "aprovados": 539,
+    "deselecionados": 7
+  },
+  "casos": [
+    {
+      "caso": "COMBINADA",
+      "situacao": "aprovado",
+      "escopo": "Conteúdo e fluxo do adaptador; conferência visual pendente.",
+      "run_id": "5849cfca",
+      "query_id": "q_cace15f2",
+      "resposta": "**Resultado calculado sobre a base estruturada**\n\n**Total de correspondências: 1.234**\n\n**Recorte:** 1358 registros disponíveis na base carregada.\n\n**Filtros aplicados:** `{\"ano_compra\": 2026}`\n\n**Fontes correspondentes:** data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json\n\nResultado restrito aos registros fornecidos. Ano da compra não representa ano de publicação.\n\n**Resposta baseada nos documentos recuperados**\n\nTrechos das evidências recuperadas:\n\n> Art. 28. São modalidades de licitação: I - pregão; II - concorrência; III - concurso; IV - leilão; V - diálogo competitivo. § 1º Além das modalidades referidas no caput deste artigo, a Administração pode servir-se dos procedimentos auxiliares previstos no art. 78 desta Lei . § 2º É vedada a criação de outras modalidades de licitação ou, ainda, a combinação daquelas referidas no caput deste artigo.\n\n[Fonte: lei_14133_2021.html_chunk_28]\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+      "estrategia": "combinada",
+      "tempo_total_s": 35.01,
+      "evidencias_ids": [
+        "lei_14133_2021.html_chunk_29",
+        "lei_14133_2021.html_chunk_28",
+        "lei_14133_2021.html_chunk_6"
+      ],
+      "sha256_codigo": {
+        "src/router.py": "04b0ba6cfe2bd7b3c7f5c62cb9541858e80b478c354fbf7cb271d0d834ecab91",
+        "testes/test_combined_missing_structured_route.py": "65f335a592435fb7cd770ace4947bd6756a6e755cc936050e4015de0621a25fb"
+      },
+      "registro_original": "/content/drive/MyDrive/rag_grande_desafio/validacao_combinada_corrigida_20261019T155331903034Z"
+    },
+    {
+      "caso": "P05",
+      "situacao": "aprovado",
+      "escopo": "Conteúdo e fluxo do adaptador; conferência visual pendente.",
+      "run_id": "92506a2e",
+      "query_id": "q_81cbfbdd",
+      "resposta": "O prazo de entrega informado nas comunicações do processo fictício SIM-RJ-001 foi de 10 dias para as 200 resmas de papel A4 e 15 dias para as 100 caixas de canetas, conforme confirmado pelo Fornecedor Fictício A [Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1].\n\nMarco inicial citado na fonte:\n\n> após a emissão do pedido\n\n[Fonte: troca_mensagens_material_escritorio_001.txt_chunk_1]",
+      "estrategia": "recuperacao_hibrida",
+      "tempo_total_s": 31.459,
+      "evidencias_ids": [
+        "troca_mensagens_material_escritorio_001.txt_chunk_1"
+      ],
+      "sha256_codigo": {
+        "src/router.py": "04b0ba6cfe2bd7b3c7f5c62cb9541858e80b478c354fbf7cb271d0d834ecab91",
+        "src/generate.py": "523da564f3aa48800feeebcf9c00f47c3398dde7d7cf3da9f9559e71aa4a0f3f",
+        "src/deadline_coverage.py": "da0e5836adfe5b417ffeb2cfa925efd0032b6c9dd3d6d98f965cf61a302c51b0",
+        "testes/test_combined_missing_structured_route.py": "65f335a592435fb7cd770ace4947bd6756a6e755cc936050e4015de0621a25fb",
+        "testes/test_deadline_coverage.py": "a165f024a312b347e8794fbd0196ddf3545409e8a2d78aafbe3d7e252460a797"
+      },
+      "registro_original": "/content/drive/MyDrive/rag_grande_desafio/validacao_P05_marco_20261019T160021884011Z"
+    }
+  ]
+}

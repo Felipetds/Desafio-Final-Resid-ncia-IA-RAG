@@ -1246,6 +1246,30 @@ def planejar_consulta(
     menciona_contratacao, contar, listar = _identificar_intencao_estruturada(
         texto
     )
+    # Pedidos explícitos sobre registros não dependem de o LLM
+    # ter incluído a rota estruturada. Preserva as rotas documentais.
+    pede_registros = bool(re.search(
+        r"\b(?:quantos|quantas|(?:total|numero|quantidade)\s+de)"
+        r"\s+(?:contratos|contratacoes)\b"
+        r"|\b(?:liste|listar|relacione)\s+(?:(?:os|as)\s+)?"
+        r"(?:contratos|contratacoes)\b"
+        r"|\bquais\s+(?:(?:os|as)\s+)?(?:contratos|contratacoes)\b",
+        texto,
+    ))
+    tem_recorte_de_dados = bool(re.search(
+        r"\bano da compra\b"
+        r"|\b(?:na|da|sobre a)\s+base\b"
+        r"|\bpublicad[oa]s?\b",
+        texto,
+    ))
+    if (
+        pede_registros
+        and tem_recorte_de_dados
+        and "estruturada" not in rotas
+    ):
+        rotas = [*rotas, "estruturada"]
+        plano["bases"] = list(rotas)
+
     rotas_recuperacao = _rotas_de_recuperacao(rotas)
     tem_rota_estruturada = "estruturada" in rotas
     # PCA segue o fluxo já existente; não entra na combinação nesta etapa.
