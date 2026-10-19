@@ -536,6 +536,19 @@ def recuperar_evidencias(
         else None
     )
 
+    rotas_antes_escopo = list(rotas)
+    if (
+        escopo_ata is not None
+        and re.search(r"\bpncp\b", pergunta, flags=re.IGNORECASE)
+        and "estruturada" not in rotas
+        and any(
+            identificar_natureza(chunks_por_id.get(chunk_id, {}))
+            == "estruturada"
+            for chunk_id in escopo_ata["ids"]
+        )
+    ):
+        rotas = [*rotas, "estruturada"]
+
     usar_busca_contextual = (
         escopo_ata is not None
         or (
@@ -573,6 +586,11 @@ def recuperar_evidencias(
                 "fontes": escopo_ata["fontes"],
                 "processos": escopo_ata["processos"],
                 "motivo": escopo_ata["motivo"],
+                "rotas_antes_escopo": rotas_antes_escopo,
+                "rotas_apos_escopo": list(rotas),
+                "rota_estruturada_complementada": (
+                    rotas_antes_escopo != rotas
+                ),
                 "candidatos_elegiveis": len(candidatos_contextuais),
                 "chunk_ids": [
                     item["chunk_id"] for item in candidatos_contextuais

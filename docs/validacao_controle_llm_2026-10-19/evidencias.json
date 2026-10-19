@@ -1,0 +1,95 @@
+{
+  "commit_base": "32516f01bf23deaf4ccceb869bc3e1d18eafa27a",
+  "codigo_com_alteracoes_locais": true,
+  "sha256_codigo": {
+    "src/router.py": "920880fead1c69c3bc8129019b4022e08f91c6b927ee4a31943744ec8e264734",
+    "src/generate.py": "f29d5503a33060d5d5db5b6c8e60e221deaa3c8cc18bdc659d497664983a4484",
+    "src/retrieve.py": "c937cc5a77de760155ad566c290640733778544a3a703d27821a7c07f660f5b9"
+  },
+  "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404",
+  "quantidade_chunks": 2172,
+  "configuracao": {
+    "LLM_REASONING_EFFORT": "none",
+    "ROUTER_MAX_TOKENS": 512,
+    "RERANK_ENABLED": false
+  },
+  "testes_locais": {
+    "aprovados": 516,
+    "deselecionados": 7,
+    "observacao": "Testes locais com rede bloqueada; não representam aprovação dos testes LLM deselecionados."
+  },
+  "casos": [
+    {
+      "caso": "P03_R",
+      "pergunta": "Informe o objeto da ata nº 191/2026 da EBSERH e o número PNCP da contratação correspondente.",
+      "situacao": "aprovado",
+      "escopo_aprovacao": "Conteúdo apresentado e fluxo completo desta execução.",
+      "run_id": "5ab52cbd",
+      "query_id": "q_f575b460",
+      "rotas": [
+        "conversacional",
+        "estruturada"
+      ],
+      "tempo_total_s": 12.796,
+      "resposta": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual aquisição de o registro de preços para a eventual de Aquisição de Produtos para Saúde - peças mamógrafas (chassis), a fim de atender ao Complexo Hospitalar da Universidade Federal do Rio de Janeiro\n\n[Fonte: ata_00191.pdf_chunk_2]\n\n> \"numeroControlePNCP\": \"15126437000305-1-000676/2026\"\n\n[Fonte: contratacoes_publicacao.json_chunk_400]",
+      "fontes_citadas": [
+        "ata_00191.pdf",
+        "contratacoes_publicacao.json"
+      ],
+      "evidencias_ids": [
+        "ata_00191.pdf_chunk_2",
+        "contratacoes_publicacao.json_chunk_400",
+        "ata_00191.pdf_chunk_12"
+      ],
+      "erros_registrados": [],
+      "registro_original": "/content/drive/MyDrive/rag_grande_desafio/reformulacoes_20261019T124427965417Z/fluxo_P03_controle_llm_20261019T150208495436Z/P03_R.json"
+    },
+    {
+      "caso": "P04_R",
+      "pergunta": "Explique as regras sobre pregão na Lei nº 14.133/2021.",
+      "situacao": "aprovado",
+      "escopo_aprovacao": "Conteúdo apresentado e fluxo completo desta execução.",
+      "run_id": "6b39db30",
+      "query_id": "q_1e5d5224",
+      "rotas": [
+        "normativa"
+      ],
+      "tempo_total_s": 17.167,
+      "resposta": "Trechos das evidências recuperadas:\n\n> Art. 29. A concorrência e o pregão seguem o rito procedimental comum a que se refere o art. 17 desta Lei , adotando-se o pregão sempre que o objeto possuir padrões de desempenho e qualidade que possam ser objetivamente definidos pelo edital, por meio de especificações usuais de mercado. Parágrafo único. O pregão não se aplica às contratações de serviços técnicos especializados de natureza predominantemente intelectual e de obras e serviços de engenharia, exceto os serviços de engenharia de que trata a alínea a do inciso XXI do caput do art. 6º desta Lei .\n\n[Fonte: lei_14133_2021.html_chunk_29]\n\n> XLI - pregão: modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto;\n\n[Fonte: lei_14133_2021.html_chunk_6]",
+      "fontes_citadas": [
+        "lei_14133_2021.html"
+      ],
+      "evidencias_ids": [
+        "lei_14133_2021.html_chunk_29",
+        "lei_14133_2021.html_chunk_207",
+        "lei_14133_2021.html_chunk_6"
+      ],
+      "erros_registrados": [],
+      "registro_original": "/content/drive/MyDrive/rag_grande_desafio/reformulacoes_20261019T124427965417Z/fluxo_P04_P08_controle_llm_20261019T150306913549Z/P04_R/P04_R.json"
+    },
+    {
+      "caso": "P08_R",
+      "pergunta": "Na ata nº 137/2026 do INCA, qual é o objeto e qual empresa é a contratada?",
+      "situacao": "aprovado",
+      "escopo_aprovacao": "Conteúdo apresentado e fluxo completo desta execução.",
+      "run_id": "e4d3ba8e",
+      "query_id": "q_40386453",
+      "rotas": [
+        "conversacional",
+        "estruturada"
+      ],
+      "tempo_total_s": 15.277,
+      "resposta": "Trechos das evidências recuperadas:\n\n> tem por objeto o registro de preços para a eventual AQUISIÇÃO DE RODÍZIOS PARA CAMAS ELÉTRICAS\n\n[Fonte: ata_00137.pdf_chunk_1]\n\n> e de outro lado a AGIMED COMERCIO DE EQUIPAMENTOS LTDA, inscrita no CNPJ/MF sob o nº 03.852.519/0001-96, estabelecida à RUA T 36, N° 3182, SALA 13 - ED. AQUARIUS CENTER - GOIÂNIA/GO, doravante denominada CONTRATADA\n\n[Fonte: ata_00137.pdf_chunk_14]",
+      "fontes_citadas": [
+        "ata_00137.pdf"
+      ],
+      "evidencias_ids": [
+        "ata_00137.pdf_chunk_14",
+        "ata_00137.pdf_chunk_1",
+        "ata_00137.pdf_chunk_3"
+      ],
+      "erros_registrados": [],
+      "registro_original": "/content/drive/MyDrive/rag_grande_desafio/reformulacoes_20261019T124427965417Z/fluxo_P04_P08_controle_llm_20261019T150306913549Z/P08_R/P08_R.json"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import time
 import uuid
@@ -804,6 +805,12 @@ def analisar_consulta(
             resposta = client.chat.completions.create(
                 model=GENERATION_MODEL,
                 temperature=0,
+                max_tokens=int(os.getenv("ROUTER_MAX_TOKENS", "512")),
+                extra_body={
+                    "reasoning_effort": os.getenv(
+                        "LLM_REASONING_EFFORT", "none"
+                    ),
+                },
                 messages=[
                     {
                         "role": "system",
