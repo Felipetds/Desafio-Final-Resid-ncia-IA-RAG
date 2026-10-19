@@ -16,6 +16,7 @@ Responsabilidades:
 """
 
 import json
+import os
 import re
 import time
 from typing import List
@@ -469,7 +470,13 @@ def chamar_llm(
             "Produza a resposta final utilizando somente o contexto acima."
         )
 
-    opcoes = {}
+    opcoes = {
+        "extra_body": {
+            "reasoning_effort": os.getenv(
+                "LLM_REASONING_EFFORT", "none"
+            ),
+        },
+    }
     if modo_extrativo:
         # A saída extrativa contém somente até cinco identificadores.
         opcoes["max_tokens"] = 2048
