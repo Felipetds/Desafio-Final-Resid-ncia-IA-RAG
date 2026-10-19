@@ -1,0 +1,14 @@
+{
+  "origem": "Pacote RAG_V3_EQUIPE.zip compartilhado pela Janice.",
+  "sha256_zip": "a8342a4c170f9fef992154a61bdb6706fbaa5d21362a53773664a003da7c798e",
+  "commit_base_da_publicacao": "a0fab70a071fa057a0edd033e62c41cc8d28271d",
+  "commit_da_execucao_do_benchmark": null,
+  "hashes_do_corpus_avaliado": null,
+  "arquivos": {
+    "docs/RELATORIO_TECNICO_AVALIACAO_V3.md": "0139c758028bd64feaf033d430c89e62fd938ba23151902593b6411244a94445",
+    "logs/auditoria_quatro_bases_v3.json": "289214e32da7132833d881ce069e128cc6be9097ceeeb18920dcb09cb5b26387",
+    "logs/auditoria_quatro_bases_v3.md": "062a3a9377d1c55ba60fb62eced0044a94f618663af8682cb5521496e5dae8de",
+    "logs/benchmark_personas_v3_FINAL_20261019_201119.json": "55d12556f84f249bbfbb51922bdf1333712becc134bafcab5b0edb265df69849",
+    "logs/benchmark_personas_v3_FINAL_20261019_201119.md": "b19ba06c04a5b27a02ea003988ac264d67c2be69ab90d6d3db96a931535c6dd7"
+  }
+}
