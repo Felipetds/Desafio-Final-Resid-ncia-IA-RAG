@@ -1275,12 +1275,22 @@ def planejar_consulta(
     # PCA segue o fluxo já existente; não entra na combinação nesta etapa.
     if _eh_consulta_pca(texto):
         return plano
-    consulta_combinada = bool(
+    from src.query_decomposition import extrair_pedido_documental
+
+    pedido_documental = extrair_pedido_documental(pergunta)
+    tarefa_estruturada = (
         tem_rota_estruturada
-        and rotas_recuperacao
         and menciona_contratacao
         and (contar or listar)
     )
+    consulta_combinada = bool(
+        tarefa_estruturada
+        and rotas_recuperacao
+        and pedido_documental
+    )
+    if tarefa_estruturada and not pedido_documental:
+        # Uma rota sugerida pelo LLM não cria outra tarefa para o usuário.
+        rotas_recuperacao = []
     # Consultas documentais abertas continuam no RAG híbrido.
     if rotas_recuperacao and not consulta_combinada:
         return plano
