@@ -1,0 +1,56 @@
+{
+  "vetorial": {
+    "top_3": {
+      "media_cobertura_por_pergunta": 0.5277777777777778,
+      "perguntas_com_cobertura_completa": 1,
+      "perguntas": 6
+    },
+    "top_5": {
+      "media_cobertura_por_pergunta": 0.5277777777777778,
+      "perguntas_com_cobertura_completa": 1,
+      "perguntas": 6
+    }
+  },
+  "bm25": {
+    "top_3": {
+      "media_cobertura_por_pergunta": 0.6388888888888888,
+      "perguntas_com_cobertura_completa": 2,
+      "perguntas": 6
+    },
+    "top_5": {
+      "media_cobertura_por_pergunta": 0.7777777777777778,
+      "perguntas_com_cobertura_completa": 4,
+      "perguntas": 6
+    }
+  },
+  "rrf": {
+    "top_3": {
+      "media_cobertura_por_pergunta": 0.6388888888888888,
+      "perguntas_com_cobertura_completa": 2,
+      "perguntas": 6
+    },
+    "top_5": {
+      "media_cobertura_por_pergunta": 0.8055555555555556,
+      "perguntas_com_cobertura_completa": 3,
+      "perguntas": 6
+    }
+  },
+  "rrf_rerank": {
+    "top_3": {
+      "media_cobertura_por_pergunta": 0.6111111111111112,
+      "perguntas_com_cobertura_completa": 2,
+      "perguntas": 6
+    },
+    "top_5": {
+      "media_cobertura_por_pergunta": 0.8888888888888888,
+      "perguntas_com_cobertura_completa": 4,
+      "perguntas": 6
+    }
+  },
+  "tempo_rerank_s": {
+    "primeira_execucao_com_carregamento": 61.9534,
+    "mediana_das_cinco_seguintes": 12.9076,
+    "minimo_das_cinco_seguintes": 5.2115100000000005,
+    "maximo_das_cinco_seguintes": 12.994729999999999
+  }
+}

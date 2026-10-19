@@ -1,0 +1,639 @@
+{
+  "commit_aplicacao": "fef6d7a26ea24175af8c9e593425d2b7af980aa0",
+  "pasta_registros": "/content/drive/MyDrive/rag_grande_desafio/interface_fef6d7a_20261019T170255053413Z",
+  "casos": {
+    "P02": {
+      "run_id": "70f6052a",
+      "resultado": {
+        "estrategia": "consulta_agregada",
+        "operacao": "resumir_itens",
+        "filtros_aplicados": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026"
+        },
+        "total_base": 19,
+        "itens_total": 19,
+        "homologados": 8,
+        "fracassados": 9,
+        "desertos": 2,
+        "valor_total_homologado": "141002.08",
+        "homologados_sem_valor": 0,
+        "soma_completa": true,
+        "fontes": [
+          "/content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+        ],
+        "referencias": [
+          "https://pncp.gov.br/editais/42498600000171/2026/757"
+        ],
+        "observacao": "Soma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado.",
+        "query": "No PE 038/26/2026, quantos itens foram homologados, fracassados e desertos e qual foi a soma dos valores homologados?",
+        "query_id": "q_8e32e4e2",
+        "run_id": "70f6052a",
+        "routes": [
+          "agregada"
+        ],
+        "latencia_ms": 6.06,
+        "plano": {
+          "bases": [
+            "agregada"
+          ],
+          "estrategia": "consulta_agregada",
+          "operacao": "resumir_itens",
+          "filtros": {
+            "id_contratacao_pncp": "42498600000171-1-000757/2026"
+          },
+          "campos": null,
+          "pagina": 1,
+          "tamanho_pagina": 20,
+          "query_id": "q_8e32e4e2",
+          "is_refusal": false,
+          "refusal_reason": null,
+          "necessita_esclarecimento": false,
+          "pergunta_esclarecimento": null,
+          "processo_informado": "PE 038/26/2026",
+          "referencia_mapeamento": "data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+        },
+        "executado": true,
+        "filters": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026"
+        },
+        "fontes_agregadas": [
+          "/content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+        ],
+        "evidences": [],
+        "tokens": {},
+        "latency_ms": 6063.27,
+        "campos": [
+          "indicador",
+          "resultado"
+        ],
+        "registros": [
+          {
+            "indicador": "Total de itens",
+            "resultado": 19
+          },
+          {
+            "indicador": "Homologados",
+            "resultado": 8
+          },
+          {
+            "indicador": "Fracassados",
+            "resultado": 9
+          },
+          {
+            "indicador": "Desertos",
+            "resultado": 2
+          },
+          {
+            "indicador": "Soma dos valores homologados informados (R$)",
+            "resultado": "141.002,08"
+          }
+        ],
+        "answer": "**Resultado calculado sobre o arquivo agregado**\n\n**Total de itens:** 19\n\n**Homologados:** 8\n\n**Fracassados:** 9\n\n**Desertos:** 2\n\n**Soma dos valores homologados informados:** R$ 141.002,08\n\n**Filtros aplicados:** `{\"id_contratacao_pncp\": \"42498600000171-1-000757/2026\"}`\n\n**Processo informado:** PE 038/26/2026\n\n**Homologados sem valor:** 0\n\n**Fontes do cálculo:** /content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv\n\n**Referências:** https://pncp.gov.br/editais/42498600000171/2026/757\n\nSoma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado."
+      },
+      "etapas": {
+        "query_analysis": 1,
+        "roteamento": 1,
+        "consulta_agregada": 1
+      },
+      "erros": []
+    },
+    "P07": {
+      "run_id": "2ef8eac2",
+      "resultado": {
+        "estrategia": "consulta_agregada",
+        "operacao": "resumir_pca",
+        "filtros_aplicados": {},
+        "total_itens": 36994,
+        "valor_total_estimado": "55968524178.3319",
+        "itens_sem_valor": 0,
+        "soma_completa": true,
+        "fontes": [
+          "/content/repositorio1/data/raw/v3/agregada/pca_2026_estado_rj.csv"
+        ],
+        "observacao": "Contagem de linhas de dados e soma do campo 'Valor Total Estimado (R$)' de todo o arquivo carregado. O recorte de ano e UF deve ser confirmado pela origem do arquivo.",
+        "query": "Quantos itens constam no Plano de Contratações Anual do Estado do Rio de Janeiro para 2026 e qual é o valor total estimado informado?",
+        "query_id": "q_d535d346",
+        "run_id": "2ef8eac2",
+        "routes": [
+          "agregada"
+        ],
+        "latencia_ms": 1385.26,
+        "plano": {
+          "bases": [
+            "agregada"
+          ],
+          "estrategia": "consulta_agregada",
+          "operacao": "resumir_pca",
+          "filtros": {},
+          "campos": null,
+          "pagina": 1,
+          "tamanho_pagina": 20,
+          "query_id": "q_d535d346",
+          "is_refusal": false,
+          "refusal_reason": null,
+          "necessita_esclarecimento": false,
+          "pergunta_esclarecimento": null,
+          "recorte_fonte": {
+            "documento": "PCA",
+            "uf": "RJ",
+            "ano": 2026,
+            "observacao": "Recorte associado ao arquivo PCA disponibilizado; o cálculo utiliza todas as suas linhas."
+          }
+        },
+        "executado": true,
+        "filters": {},
+        "fontes_agregadas": [
+          "/content/repositorio1/data/raw/v3/agregada/pca_2026_estado_rj.csv"
+        ],
+        "evidences": [],
+        "tokens": {},
+        "latency_ms": 5310.75,
+        "campos": [
+          "indicador",
+          "resultado"
+        ],
+        "registros": [
+          {
+            "indicador": "Itens no arquivo",
+            "resultado": 36994
+          },
+          {
+            "indicador": "Valor total estimado informado (R$)",
+            "resultado": "55.968.524.178,3319"
+          }
+        ],
+        "answer": "**Resultado calculado sobre o arquivo agregado**\n\n**Itens no arquivo:** 36.994\n\n**Valor total estimado informado:** R$ 55.968.524.178,3319\n\n**Filtros aplicados:** `{}`\n\n**Recorte associado à fonte:** `{\"documento\": \"PCA\", \"uf\": \"RJ\", \"ano\": 2026, \"observacao\": \"Recorte associado ao arquivo PCA disponibilizado; o cálculo utiliza todas as suas linhas.\"}`\n\n**Itens sem valor:** 0\n\n**Fontes do cálculo:** /content/repositorio1/data/raw/v3/agregada/pca_2026_estado_rj.csv\n\nContagem de linhas de dados e soma do campo 'Valor Total Estimado (R$)' de todo o arquivo carregado. O recorte de ano e UF deve ser confirmado pela origem do arquivo."
+      },
+      "etapas": {
+        "query_analysis": 1,
+        "roteamento": 1,
+        "consulta_agregada": 1
+      },
+      "erros": []
+    },
+    "M01": {
+      "run_id": "7d06ea83",
+      "resultado": {
+        "estrategia": "consulta_agregada",
+        "operacao": "resumir_itens_vinculos",
+        "filtros_aplicados": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026"
+        },
+        "total_base": 19,
+        "itens_total": 19,
+        "homologados": 8,
+        "fracassados": 9,
+        "desertos": 2,
+        "valor_total_homologado": "141002.08",
+        "homologados_sem_valor": 0,
+        "soma_completa": true,
+        "fontes": [
+          "/content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+        ],
+        "referencias": [
+          "https://pncp.gov.br/editais/42498600000171/2026/757"
+        ],
+        "observacao": "Soma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado.",
+        "verificacao_vinculos": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026",
+          "metodo": "ID PNCP completo ou URL específica do edital",
+          "total_chunks_verificados": 2172,
+          "cobertura_por_natureza": {
+            "estruturada": 1358,
+            "agregada": 519,
+            "conversacional": 78,
+            "normativa": 217
+          },
+          "chunks_com_natureza_desconhecida": 0,
+          "correspondencias": {
+            "estruturada": [],
+            "agregada": [
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_1",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 1 | situacao_item: Homologado | quantidade_homologada: 2 | valor_unitario_homologado: 22250.00 | valor_total_homologado: 44500.00 | fornecedor: ANDES COMERCIAL LTDA | data_homologacao: 2026-09-18 | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_2",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 2 | situacao_item: Fracassado | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_3",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 3 | situacao_item: Homologado | quantidade_homologada: 2 | valor_unitario_homologado: 10323.00 | valor_total_homologado: 20646.00 | fornecedor: GIGANTE PRODUTOS MEDICOS EIRELI | data_homologacao: 2026-09-18 | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_4",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 4 | situacao_item: Homologado | quantidade_homologada: 2 | valor_unitario_homologado: 8560.00 | valor_total_homologado: 17120.00 | fornecedor: GIGANTE PRODUTOS MEDICOS EIRELI | data_homologacao: 2026-09-18 | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_5",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 5 | situacao_item: Homologado | quantidade_homologada: 2 | valor_unitario_homologado: 7705.71 | valor_total_homologado: 15411.42 | fornecedor: HOSPLIFE COMÉRCIO DE EQUIPAMENTOS HOSPITALARES LTDA EPP | data_homologacao: 2026-09-18 | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_6",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 6 | situacao_item: Fracassado | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_7",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 7 | situacao_item: Homologado | quantidade_homologada: 2 | valor_unitario_homologado: 3746.80 | valor_total_homologado: 7493.60 | fornecedor: HOSPLIFE COMÉRCIO DE EQUIPAMENTOS HOSPITALARES LTDA EPP | data_homologacao: 2026-09-18 | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_8",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 8 | situacao_item: Homologado | quantidade_homologada: 2 | valor_unitario_homologado: 4605.94 | valor_total_homologado: 9211.88 | fornecedor: HOSPLIFE COMÉRCIO DE EQUIPAMENTOS HOSPITALARES LTDA EPP | data_homologacao: 2026-09-18 | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_9",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 9 | situacao_item: Deserto | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_10",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 10 | situacao_item: Deserto | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_11",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 11 | situacao_item: Homologado | quantidade_homologada: 2 | valor_unitario_homologado: 6472.59 | valor_total_homologado: 12945.18 | fornecedor: HOSPLIFE COMÉRCIO DE EQUIPAMENTOS HOSPITALARES LTDA EPP | data_homologacao: 2026-09-18 | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_12",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 12 | situacao_item: Fracassado | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_13",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 13 | situacao_item: Fracassado | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_14",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 14 | situacao_item: Homologado | quantidade_homologada: 2 | valor_unitario_homologado: 6837.00 | valor_total_homologado: 13674.00 | fornecedor: HOSPLIFE COMÉRCIO DE EQUIPAMENTOS HOSPITALARES LTDA EPP | data_homologacao: 2026-09-18 | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_15",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 15 | situacao_item: Fracassado | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_16",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 16 | situacao_item: Fracassado | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_17",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 17 | situacao_item: Fracassado | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_18",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 18 | situacao_item: Fracassado | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              },
+              {
+                "chunk_id": "itens_pe_038_26_2026.csv_chunk_19",
+                "natureza": "agregada",
+                "fonte": "itens_pe_038_26_2026.csv",
+                "vinculo": {
+                  "tipo": "id_pncp_exato",
+                  "evidencia": "42498600000171-1-000757/2026"
+                },
+                "trecho": "id_contratacao_pncp: 42498600000171-1-000757/2026 | numero_item: 19 | situacao_item: Fracassado | url_fonte: https://pncp.gov.br/editais/42498600000171/2026/757"
+              }
+            ],
+            "conversacional": [],
+            "normativa": []
+          },
+          "total_correspondencias": 19,
+          "observacao": "Ausência de correspondências significa ausência de vínculo pelos identificadores pesquisados nos chunks carregados. Não comprova inexistência de documentos relacionados. Este método não verifica vínculos exclusivamente por conteúdo ou por outros números de processo."
+        },
+        "total_chunks_verificados": 2172,
+        "total_vinculos_complementares": 0,
+        "fonte_corpus_verificado": "/content/repositorio1/data/processed/chunks_teste.json",
+        "query": "Resuma o PE 038/26/2026 e verifique os vínculos nas demais naturezas do corpus.",
+        "query_id": "q_93a85cf7",
+        "run_id": "7d06ea83",
+        "routes": [
+          "agregada"
+        ],
+        "latencia_ms": 297.18,
+        "plano": {
+          "bases": [
+            "agregada"
+          ],
+          "estrategia": "consulta_agregada",
+          "operacao": "resumir_itens_vinculos",
+          "filtros": {
+            "id_contratacao_pncp": "42498600000171-1-000757/2026"
+          },
+          "campos": null,
+          "pagina": 1,
+          "tamanho_pagina": 20,
+          "query_id": "q_93a85cf7",
+          "is_refusal": false,
+          "refusal_reason": null,
+          "necessita_esclarecimento": false,
+          "pergunta_esclarecimento": null,
+          "processo_informado": "PE 038/26/2026",
+          "rotas_complementares_a_verificar": [
+            "estruturada",
+            "conversacional",
+            "normativa"
+          ],
+          "metodo_vinculo": "ID PNCP completo ou URL específica do edital"
+        },
+        "executado": true,
+        "filters": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026"
+        },
+        "fontes_agregadas": [
+          "/content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+        ],
+        "evidences": [],
+        "tokens": {},
+        "latency_ms": 43148.19,
+        "campos": [
+          "indicador",
+          "resultado"
+        ],
+        "registros": [
+          {
+            "indicador": "Total de itens",
+            "resultado": 19
+          },
+          {
+            "indicador": "Homologados",
+            "resultado": 8
+          },
+          {
+            "indicador": "Fracassados",
+            "resultado": 9
+          },
+          {
+            "indicador": "Desertos",
+            "resultado": 2
+          },
+          {
+            "indicador": "Soma dos valores homologados informados (R$)",
+            "resultado": "141.002,08"
+          },
+          {
+            "indicador": "Vínculos por identificador — estruturada",
+            "resultado": 0
+          },
+          {
+            "indicador": "Vínculos por identificador — agregada",
+            "resultado": 19
+          },
+          {
+            "indicador": "Vínculos por identificador — conversacional",
+            "resultado": 0
+          },
+          {
+            "indicador": "Vínculos por identificador — normativa",
+            "resultado": 0
+          }
+        ],
+        "answer": "**Resultado calculado sobre o arquivo agregado**\n\n**Total de itens:** 19\n\n**Homologados:** 8\n\n**Fracassados:** 9\n\n**Desertos:** 2\n\n**Soma dos valores homologados informados:** R$ 141.002,08\n\n**Filtros aplicados:** `{\"id_contratacao_pncp\": \"42498600000171-1-000757/2026\"}`\n\n**Processo informado:** PE 038/26/2026\n\n**Homologados sem valor:** 0\n\n**Verificação de vínculos no corpus carregado**\n\n**Chunks verificados:** 2172\n\n**estruturada:** 0 correspondências por identificador.\n\n**agregada:** 19 correspondências por identificador.\n\n**conversacional:** 0 correspondências por identificador.\n\n**normativa:** 0 correspondências por identificador.\n\nAusência de correspondências significa ausência de vínculo pelos identificadores pesquisados nos chunks carregados. Não comprova inexistência de documentos relacionados. Este método não verifica vínculos exclusivamente por conteúdo ou por outros números de processo.\n\n**Fontes do cálculo:** /content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv\n\n**Referências:** https://pncp.gov.br/editais/42498600000171/2026/757\n\nSoma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado."
+      },
+      "etapas": {
+        "query_analysis": 1,
+        "roteamento": 1,
+        "consulta_agregada": 1
+      },
+      "erros": []
+    },
+    "P02_TOP_K_1": {
+      "run_id": "f40f100c",
+      "resultado": {
+        "estrategia": "consulta_agregada",
+        "operacao": "resumir_itens",
+        "filtros_aplicados": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026"
+        },
+        "total_base": 19,
+        "itens_total": 19,
+        "homologados": 8,
+        "fracassados": 9,
+        "desertos": 2,
+        "valor_total_homologado": "141002.08",
+        "homologados_sem_valor": 0,
+        "soma_completa": true,
+        "fontes": [
+          "/content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+        ],
+        "referencias": [
+          "https://pncp.gov.br/editais/42498600000171/2026/757"
+        ],
+        "observacao": "Soma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado.",
+        "query": "No PE 038/26/2026, quantos itens foram homologados, fracassados e desertos e qual foi a soma dos valores homologados?",
+        "query_id": "q_8ae0ec4f",
+        "run_id": "f40f100c",
+        "routes": [
+          "agregada"
+        ],
+        "latencia_ms": 6.83,
+        "plano": {
+          "bases": [
+            "agregada"
+          ],
+          "estrategia": "consulta_agregada",
+          "operacao": "resumir_itens",
+          "filtros": {
+            "id_contratacao_pncp": "42498600000171-1-000757/2026"
+          },
+          "campos": null,
+          "pagina": 1,
+          "tamanho_pagina": 20,
+          "query_id": "q_8ae0ec4f",
+          "is_refusal": false,
+          "refusal_reason": null,
+          "necessita_esclarecimento": false,
+          "pergunta_esclarecimento": null,
+          "processo_informado": "PE 038/26/2026",
+          "referencia_mapeamento": "data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+        },
+        "executado": true,
+        "filters": {
+          "id_contratacao_pncp": "42498600000171-1-000757/2026"
+        },
+        "fontes_agregadas": [
+          "/content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv"
+        ],
+        "evidences": [],
+        "tokens": {},
+        "latency_ms": 120384.35,
+        "campos": [
+          "indicador",
+          "resultado"
+        ],
+        "registros": [
+          {
+            "indicador": "Total de itens",
+            "resultado": 19
+          },
+          {
+            "indicador": "Homologados",
+            "resultado": 8
+          },
+          {
+            "indicador": "Fracassados",
+            "resultado": 9
+          },
+          {
+            "indicador": "Desertos",
+            "resultado": 2
+          },
+          {
+            "indicador": "Soma dos valores homologados informados (R$)",
+            "resultado": "141.002,08"
+          }
+        ],
+        "answer": "**Resultado calculado sobre o arquivo agregado**\n\n**Total de itens:** 19\n\n**Homologados:** 8\n\n**Fracassados:** 9\n\n**Desertos:** 2\n\n**Soma dos valores homologados informados:** R$ 141.002,08\n\n**Filtros aplicados:** `{\"id_contratacao_pncp\": \"42498600000171-1-000757/2026\"}`\n\n**Processo informado:** PE 038/26/2026\n\n**Homologados sem valor:** 0\n\n**Fontes do cálculo:** /content/repositorio1/data/raw/v3/agregada/itens_pe_038_26_2026.csv\n\n**Referências:** https://pncp.gov.br/editais/42498600000171/2026/757\n\nSoma dos valores informados dos itens homologados da contratação selecionada no arquivo carregado."
+      },
+      "etapas": {
+        "query_analysis": 1,
+        "roteamento": 1,
+        "consulta_agregada": 1
+      },
+      "erros": [
+        {
+          "stage": "roteamento",
+          "output": {
+            "erro": "APITimeoutError",
+            "mensagem": "Request timed out."
+          }
+        }
+      ]
+    }
+  },
+  "navegacao": {
+    "488e06a0": {
+      "consulta_estruturada": 1
+    },
+    "92be4ae8": {
+      "consulta_estruturada": 1
+    },
+    "0fa33e38": {
+      "consulta_estruturada": 1
+    },
+    "d1843128": {
+      "consulta_estruturada": 1
+    }
+  },
+  "persistencia_apos_reinicio": {
+    "run_id": "f40f100c",
+    "query_id": "q_8ae0ec4f",
+    "conferencias": {
+      "resultado_original_preservado": true,
+      "feedback_preservado": true,
+      "logs_permaneceram_identicos": true
+    }
+  },
+  "observacoes": [
+    "Conferência visual relatada pela usuária.",
+    "P02 apresentou os mesmos cálculos com top_k=3 e top_k=1.",
+    "A execução f40f100c teve timeout no roteamento; o cálculo agregado foi concluído corretamente.",
+    "O prefixo '1. ' na pergunta levou a esclarecimento; limitação de reconhecimento registrada.",
+    "O navegador apresentou timeout no JavaScript externo da Gradio. Foi testado um ajuste de template apenas no processo.",
+    "Resta confirmar visualmente a restauração da pergunta na caixa de entrada; resultado e feedback persistidos foram verificados."
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "commit_base": "fef6d7a26ea24175af8c9e593425d2b7af980aa0",
+  "backup_verificado": "/content/drive/MyDrive/rag_grande_desafio/preservacao_artefatos_git/20261019T182004139777Z/copias_historicas.zip",
+  "manifesto_backup": "/content/drive/MyDrive/rag_grande_desafio/preservacao_artefatos_git/20261019T182004139777Z/manifesto.json",
+  "arquivos_preservados": {
+    "backup_artefatos_20261014/indices/bm25_index.pkl": {
+      "bytes": 4636700,
+      "sha256": "a14b39ae8c3f750200d23224b4b021aee8894d49e18c5cf564f77b67ccb8ff0b"
+    },
+    "backup_artefatos_20261014/indices/cache_embeddings.json": {
+      "bytes": 57063079,
+      "sha256": "db13ea68f97e6751a3a0df7f5416f55430c785ef3f09bdf0a2e5e6df4fc27489"
+    },
+    "backup_artefatos_20261014/indices/chunk_ids.json": {
+      "bytes": 87987,
+      "sha256": "eab741c9f44a29ce91f5e72b68acdf8d13939afce4f73674a0b4197582f02df6"
+    },
+    "backup_artefatos_20261014/indices/embedding_provenance.json": {
+      "bytes": 660241,
+      "sha256": "220c01881100408dabf44d6287216d675932df753c79fafa7371c28cfe9d6f42"
+    },
+    "backup_artefatos_20261014/indices/faiss_index.bin": {
+      "bytes": 8704045,
+      "sha256": "77205342d54d35dd6eac3fa0f504358df91acfd145c344e16900891add88547d"
+    },
+    "backup_artefatos_20261014/indices/indices/bm25_index.pkl": {
+      "bytes": 4636700,
+      "sha256": "a14b39ae8c3f750200d23224b4b021aee8894d49e18c5cf564f77b67ccb8ff0b"
+    },
+    "backup_artefatos_20261014/indices/indices/cache_embeddings.json": {
+      "bytes": 57063079,
+      "sha256": "db13ea68f97e6751a3a0df7f5416f55430c785ef3f09bdf0a2e5e6df4fc27489"
+    },
+    "backup_artefatos_20261014/indices/indices/chunk_ids.json": {
+      "bytes": 87987,
+      "sha256": "eab741c9f44a29ce91f5e72b68acdf8d13939afce4f73674a0b4197582f02df6"
+    },
+    "backup_artefatos_20261014/indices/indices/embedding_provenance.json": {
+      "bytes": 660241,
+      "sha256": "220c01881100408dabf44d6287216d675932df753c79fafa7371c28cfe9d6f42"
+    },
+    "backup_artefatos_20261014/indices/indices/faiss_index.bin": {
+      "bytes": 8704045,
+      "sha256": "77205342d54d35dd6eac3fa0f504358df91acfd145c344e16900891add88547d"
+    },
+    "backup_artefatos_20261014/processed/base_estruturada_normalizada.json": {
+      "bytes": 4310204,
+      "sha256": "6196442ca8f0d192dcdc67efcd2f9ec763dfda365ab4396f294d7dd193cfe9ca"
+    },
+    "backup_artefatos_20261014/processed/chunks_teste.json": {
+      "bytes": 5865103,
+      "sha256": "7df4f41001aada8aab5cba8bae0dab4b06f0bf742f754e53bd45c5eced48b0cc"
+    },
+    "backup_artefatos_20261014/processed/processed/base_estruturada_normalizada.json": {
+      "bytes": 4310204,
+      "sha256": "6196442ca8f0d192dcdc67efcd2f9ec763dfda365ab4396f294d7dd193cfe9ca"
+    },
+    "backup_artefatos_20261014/processed/processed/chunks_teste.json": {
+      "bytes": 5865103,
+      "sha256": "7df4f41001aada8aab5cba8bae0dab4b06f0bf742f754e53bd45c5eced48b0cc"
+    },
+    "corpus_v3_revisado_2026-10-13/HASHES_ARQUIVOS.json": {
+      "bytes": 2614,
+      "sha256": "48db22f904c9204517fda19df1f51374cadaacf5862dff6e747e1bb64bdcb710"
+    },
+    "corpus_v3_revisado_2026-10-13/LEIA_ME.md": {
+      "bytes": 982,
+      "sha256": "f8c7fcb193c87044de4e8c30316d41ecaa4afa3468201ba8579b2815076e602c"
+    },
+    "corpus_v3_revisado_2026-10-13/RELATORIO_DO_PACOTE.json": {
+      "bytes": 1102,
+      "sha256": "2c25879993b97eef6f61dc84afdeeddfbcfad1b6663e0d872e937e8e11ba6a9e"
+    },
+    "corpus_v3_revisado_2026-10-13/data/indices/bm25_index.pkl": {
+      "bytes": 4636700,
+      "sha256": "a14b39ae8c3f750200d23224b4b021aee8894d49e18c5cf564f77b67ccb8ff0b"
+    },
+    "corpus_v3_revisado_2026-10-13/data/indices/cache_embeddings.json": {
+      "bytes": 1182673,
+      "sha256": "35256086e2d42b6e528b60de17d82ae92764e0264a8e504486dd0e7585539842"
+    },
+    "corpus_v3_revisado_2026-10-13/data/indices/cache_embeddings_historico_por_id.json": {
+      "bytes": 57063079,
+      "sha256": "a3415c913116bb5e8bdef444d81d6e533d249e7b02c7c40082ad789f7baf7062"
+    },
+    "corpus_v3_revisado_2026-10-13/data/indices/chunk_ids.json": {
+      "bytes": 87987,
+      "sha256": "dc568511d5d1ff5b584dea72be0342dfdfb981d13c7be54f956d5991089ed5e7"
+    },
+    "corpus_v3_revisado_2026-10-13/data/indices/embedding_provenance.json": {
+      "bytes": 937351,
+      "sha256": "29054c0d837bfce5186757569a41e5e359496a279708c747d968238864666f5a"
+    },
+    "corpus_v3_revisado_2026-10-13/data/indices/faiss_index.bin": {
+      "bytes": 8704045,
+      "sha256": "77205342d54d35dd6eac3fa0f504358df91acfd145c344e16900891add88547d"
+    },
+    "corpus_v3_revisado_2026-10-13/data/processed/base_estruturada_normalizada.json": {
+      "bytes": 4310204,
+      "sha256": "8afc0b2d8aa1b692d76c180d10cf93d1e5472d8687edd967ca394bad5c62d91b"
+    },
+    "corpus_v3_revisado_2026-10-13/data/processed/chunks_teste.json": {
+      "bytes": 5865103,
+      "sha256": "7a8d9b22b8e3d4ac79aabc0ef2f72fff5753a376354e0b8fcdb543809e3f0a1b"
+    },
+    "corpus_v3_revisado_2026-10-13/data/processed/inconsistencias_pncp_report.json": {
+      "bytes": 99,
+      "sha256": "9bec732bb86d1197d102846b4e1af9e832d5d29fccba1903678e4cd43aaed437"
+    },
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/agregada/itens_pe_038_26_2026.csv": {
+      "bytes": 2613,
+      "sha256": "213c2dfbc1b63bc5c5842a40c1ecfa2d338952424cb0c29c47c72bc46a01ba43"
+    },
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/agregada/pca_2026_estado_rj.csv": {
+      "bytes": 14469918,
+      "sha256": "2a8e6b3bb939fb0b281fce69b8b2f077f36d77ee319f16dd632b64dca27ab75e"
+    },
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/conversacional/atas/ebserh/2026/ata_00191.pdf": {
+      "bytes": 146112,
+      "sha256": "53c2ead7aa1f9d72b0845f773dab8ea6c2d7bf546ca4dbdd9e9c1612c834762a"
+    },
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/conversacional/atas/fiocruz/2026/ata_00001.pdf": {
+      "bytes": 117978,
+      "sha256": "3372ad5388cb87cc0fdd0d604fdc82f343b0c55d3f97b1d295ec56c3004dfb2a"
+    },
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/conversacional/atas/ministerio_saude/2026/ata_00137.pdf": {
+      "bytes": 264232,
+      "sha256": "ca206d7d30d9dff83c22e272e34f2884046c589a78c5dbf40e94f6e9e96029d7"
+    },
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt": {
+      "bytes": 977,
+      "sha256": "23cd93d88c48397746b1aa0558b18dab0c54687c66be73034d1925e5abd92c65"
+    },
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json": {
+      "bytes": 3145581,
+      "sha256": "681a935887201bf87073c0bc80979a388929adcc45f9de86e332e2e23cab565e"
+    },
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/normativa/federal/lei_14133_2021/lei_14133_2021.html": {
+      "bytes": 639702,
+      "sha256": "6f0e143137d4c5307c7efd8fd9acba5ff87bdfa6d73ab3dfd1370c954d0436ee"
+    },
+    "corpus_v3_revisado_2026-10-13/documentacao/AUDITORIA_CORRECAO_V3_2026-10-13.md": {
+      "bytes": 2446,
+      "sha256": "c9be3cb48394c47bd2fcc35436c9c7c97b70a9cc83ecb23dbe53beb0358b678b"
+    },
+    "corpus_v3_revisado_2026-10-13/documentacao/INSTRUCOES_ARTEFATOS.md": {
+      "bytes": 3061,
+      "sha256": "8acf1a1a357058ab920f02806275c090ebfab55adeb85fc60a1a5fe8ae562cbf"
+    },
+    "corpus_v3_revisado_2026-10-13/documentacao/v3.json": {
+      "bytes": 4834,
+      "sha256": "3fc69d971b12e271b46870d10d32d04d7b54b2f8055e53167b1103bf8c301144"
+    }
+  },
+  "retirados_do_rastreamento": [
+    "backup_artefatos_20261014/indices/bm25_index.pkl",
+    "backup_artefatos_20261014/indices/cache_embeddings.json",
+    "backup_artefatos_20261014/indices/chunk_ids.json",
+    "backup_artefatos_20261014/indices/embedding_provenance.json",
+    "backup_artefatos_20261014/indices/faiss_index.bin",
+    "backup_artefatos_20261014/indices/indices/bm25_index.pkl",
+    "backup_artefatos_20261014/indices/indices/cache_embeddings.json",
+    "backup_artefatos_20261014/indices/indices/chunk_ids.json",
+    "backup_artefatos_20261014/indices/indices/embedding_provenance.json",
+    "backup_artefatos_20261014/indices/indices/faiss_index.bin",
+    "backup_artefatos_20261014/processed/base_estruturada_normalizada.json",
+    "backup_artefatos_20261014/processed/chunks_teste.json",
+    "backup_artefatos_20261014/processed/processed/base_estruturada_normalizada.json",
+    "backup_artefatos_20261014/processed/processed/chunks_teste.json",
+    "corpus_v3_revisado_2026-10-13/data/indices/bm25_index.pkl",
+    "corpus_v3_revisado_2026-10-13/data/indices/cache_embeddings.json",
+    "corpus_v3_revisado_2026-10-13/data/indices/cache_embeddings_historico_por_id.json",
+    "corpus_v3_revisado_2026-10-13/data/indices/chunk_ids.json",
+    "corpus_v3_revisado_2026-10-13/data/indices/embedding_provenance.json",
+    "corpus_v3_revisado_2026-10-13/data/indices/faiss_index.bin",
+    "corpus_v3_revisado_2026-10-13/data/processed/base_estruturada_normalizada.json",
+    "corpus_v3_revisado_2026-10-13/data/processed/chunks_teste.json",
+    "corpus_v3_revisado_2026-10-13/data/processed/inconsistencias_pncp_report.json",
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/agregada/itens_pe_038_26_2026.csv",
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/agregada/pca_2026_estado_rj.csv",
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/conversacional/atas/ebserh/2026/ata_00191.pdf",
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/conversacional/atas/fiocruz/2026/ata_00001.pdf",
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/conversacional/atas/ministerio_saude/2026/ata_00137.pdf",
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/conversacional/comunicacoes_sinteticas/troca_mensagens_material_escritorio_001.txt",
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/estruturada/pncp/rj/pregao_eletronico/2026-03/contratacoes_publicacao.json",
+    "corpus_v3_revisado_2026-10-13/data/raw/v3/normativa/federal/lei_14133_2021/lei_14133_2021.html"
+  ],
+  "arquivos_locais_preservados": true,
+  "historico_git_reescrito": false
+}

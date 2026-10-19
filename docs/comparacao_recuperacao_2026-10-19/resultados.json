@@ -1,0 +1,2358 @@
+[
+  {
+    "caso": "P03",
+    "pergunta": "O que a ata nº 00191/2026 da EBSERH registra sobre o objeto da aquisição e qual é o número de controle PNCP associado?",
+    "primeira_execucao_modelo": true,
+    "evento_rerank": {
+      "event": "rerank",
+      "status": "applied_local_cross_encoder",
+      "applied": true,
+      "latency_ms": 61953.4,
+      "model": "/content/reranker_mmarco_exportado",
+      "revision": null,
+      "candidates_scored": 20,
+      "candidates_preserved_unscored": 15,
+      "device": "cpu",
+      "max_length": 512
+    },
+    "metodos": {
+      "vetorial": {
+        "ids": [
+          "contratacoes_publicacao.json_chunk_400",
+          "ata_00191.pdf_chunk_31",
+          "ata_00191.pdf_chunk_2",
+          "ata_00191.pdf_chunk_33",
+          "ata_00191.pdf_chunk_34",
+          "ata_00191.pdf_chunk_12",
+          "ata_00191.pdf_chunk_28",
+          "ata_00191.pdf_chunk_1",
+          "ata_00191.pdf_chunk_16",
+          "ata_00191.pdf_chunk_29",
+          "ata_00191.pdf_chunk_7",
+          "ata_00191.pdf_chunk_6",
+          "ata_00191.pdf_chunk_32",
+          "ata_00191.pdf_chunk_8",
+          "ata_00191.pdf_chunk_13",
+          "ata_00191.pdf_chunk_3",
+          "ata_00191.pdf_chunk_9",
+          "ata_00191.pdf_chunk_24",
+          "ata_00191.pdf_chunk_27",
+          "ata_00191.pdf_chunk_18",
+          "ata_00191.pdf_chunk_5",
+          "ata_00191.pdf_chunk_19",
+          "ata_00191.pdf_chunk_4",
+          "ata_00191.pdf_chunk_11",
+          "ata_00191.pdf_chunk_10",
+          "ata_00191.pdf_chunk_14",
+          "ata_00191.pdf_chunk_17",
+          "ata_00191.pdf_chunk_26",
+          "ata_00191.pdf_chunk_25",
+          "ata_00191.pdf_chunk_30",
+          "ata_00191.pdf_chunk_23",
+          "ata_00191.pdf_chunk_15",
+          "ata_00191.pdf_chunk_20",
+          "ata_00191.pdf_chunk_22",
+          "ata_00191.pdf_chunk_21"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "objeto",
+            "numero_pncp"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "numero_pncp"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      },
+      "bm25": {
+        "ids": [
+          "ata_00191.pdf_chunk_2",
+          "ata_00191.pdf_chunk_4",
+          "ata_00191.pdf_chunk_13",
+          "contratacoes_publicacao.json_chunk_400",
+          "ata_00191.pdf_chunk_14",
+          "ata_00191.pdf_chunk_12",
+          "ata_00191.pdf_chunk_17",
+          "ata_00191.pdf_chunk_8",
+          "ata_00191.pdf_chunk_27",
+          "ata_00191.pdf_chunk_9",
+          "ata_00191.pdf_chunk_31",
+          "ata_00191.pdf_chunk_18",
+          "ata_00191.pdf_chunk_1",
+          "ata_00191.pdf_chunk_26",
+          "ata_00191.pdf_chunk_10",
+          "ata_00191.pdf_chunk_23",
+          "ata_00191.pdf_chunk_15",
+          "ata_00191.pdf_chunk_3",
+          "ata_00191.pdf_chunk_11",
+          "ata_00191.pdf_chunk_32",
+          "ata_00191.pdf_chunk_30",
+          "ata_00191.pdf_chunk_7",
+          "ata_00191.pdf_chunk_16",
+          "ata_00191.pdf_chunk_29",
+          "ata_00191.pdf_chunk_34",
+          "ata_00191.pdf_chunk_5",
+          "ata_00191.pdf_chunk_24",
+          "ata_00191.pdf_chunk_19",
+          "ata_00191.pdf_chunk_33",
+          "ata_00191.pdf_chunk_28",
+          "ata_00191.pdf_chunk_6",
+          "ata_00191.pdf_chunk_25",
+          "ata_00191.pdf_chunk_20",
+          "ata_00191.pdf_chunk_21"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "objeto"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "numero_pncp"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      },
+      "rrf": {
+        "ids": [
+          "ata_00191.pdf_chunk_2",
+          "contratacoes_publicacao.json_chunk_400",
+          "ata_00191.pdf_chunk_12",
+          "ata_00191.pdf_chunk_31",
+          "ata_00191.pdf_chunk_13",
+          "ata_00191.pdf_chunk_1",
+          "ata_00191.pdf_chunk_8",
+          "ata_00191.pdf_chunk_4",
+          "ata_00191.pdf_chunk_9",
+          "ata_00191.pdf_chunk_27",
+          "ata_00191.pdf_chunk_34",
+          "ata_00191.pdf_chunk_14",
+          "ata_00191.pdf_chunk_33",
+          "ata_00191.pdf_chunk_16",
+          "ata_00191.pdf_chunk_17",
+          "ata_00191.pdf_chunk_18",
+          "ata_00191.pdf_chunk_7",
+          "ata_00191.pdf_chunk_32",
+          "ata_00191.pdf_chunk_29",
+          "ata_00191.pdf_chunk_28",
+          "ata_00191.pdf_chunk_3",
+          "ata_00191.pdf_chunk_10",
+          "ata_00191.pdf_chunk_6",
+          "ata_00191.pdf_chunk_26",
+          "ata_00191.pdf_chunk_11",
+          "ata_00191.pdf_chunk_24",
+          "ata_00191.pdf_chunk_23",
+          "ata_00191.pdf_chunk_5",
+          "ata_00191.pdf_chunk_15",
+          "ata_00191.pdf_chunk_19",
+          "ata_00191.pdf_chunk_30",
+          "ata_00191.pdf_chunk_25",
+          "ata_00191.pdf_chunk_20",
+          "ata_00191.pdf_chunk_21",
+          "ata_00191.pdf_chunk_22"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "objeto",
+            "numero_pncp"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "numero_pncp"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      },
+      "rrf_rerank": {
+        "ids": [
+          "ata_00191.pdf_chunk_1",
+          "ata_00191.pdf_chunk_2",
+          "ata_00191.pdf_chunk_8",
+          "contratacoes_publicacao.json_chunk_400",
+          "ata_00191.pdf_chunk_12",
+          "ata_00191.pdf_chunk_9",
+          "ata_00191.pdf_chunk_33",
+          "ata_00191.pdf_chunk_34",
+          "ata_00191.pdf_chunk_27",
+          "ata_00191.pdf_chunk_31",
+          "ata_00191.pdf_chunk_16",
+          "ata_00191.pdf_chunk_18",
+          "ata_00191.pdf_chunk_32",
+          "ata_00191.pdf_chunk_4",
+          "ata_00191.pdf_chunk_14",
+          "ata_00191.pdf_chunk_17",
+          "ata_00191.pdf_chunk_7",
+          "ata_00191.pdf_chunk_13",
+          "ata_00191.pdf_chunk_29",
+          "ata_00191.pdf_chunk_28",
+          "ata_00191.pdf_chunk_3",
+          "ata_00191.pdf_chunk_10",
+          "ata_00191.pdf_chunk_6",
+          "ata_00191.pdf_chunk_26",
+          "ata_00191.pdf_chunk_11",
+          "ata_00191.pdf_chunk_24",
+          "ata_00191.pdf_chunk_23",
+          "ata_00191.pdf_chunk_5",
+          "ata_00191.pdf_chunk_15",
+          "ata_00191.pdf_chunk_19",
+          "ata_00191.pdf_chunk_30",
+          "ata_00191.pdf_chunk_25",
+          "ata_00191.pdf_chunk_20",
+          "ata_00191.pdf_chunk_21",
+          "ata_00191.pdf_chunk_22"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "objeto"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "numero_pncp"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      }
+    },
+    "scores_rerank": [
+      {
+        "chunk_id": "ata_00191.pdf_chunk_1",
+        "score": 3.7523248195648193
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_2",
+        "score": 3.3525278568267822
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_8",
+        "score": -0.2862092852592468
+      },
+      {
+        "chunk_id": "contratacoes_publicacao.json_chunk_400",
+        "score": -0.6028379797935486
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_12",
+        "score": -1.141418695449829
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_9",
+        "score": -1.7051820755004883
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_33",
+        "score": -2.1703388690948486
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_34",
+        "score": -2.2127127647399902
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_27",
+        "score": -2.466322183609009
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_31",
+        "score": -2.7036969661712646
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_16",
+        "score": -3.3970296382904053
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_18",
+        "score": -3.673084020614624
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_32",
+        "score": -4.048112392425537
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_4",
+        "score": -4.495134353637695
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_14",
+        "score": -4.499348163604736
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_17",
+        "score": -4.6360182762146
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_7",
+        "score": -4.847560882568359
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_13",
+        "score": -5.03912353515625
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_29",
+        "score": -5.232428073883057
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_28",
+        "score": -5.310824394226074
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_3",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_10",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_6",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_26",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_11",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_24",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_23",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_5",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_15",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_19",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_30",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_25",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_20",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_21",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_22",
+        "score": null
+      }
+    ]
+  },
+  {
+    "caso": "P04",
+    "pergunta": "O que a Lei nº 14.133/2021 estabelece sobre o pregão?",
+    "primeira_execucao_modelo": false,
+    "evento_rerank": {
+      "event": "rerank",
+      "status": "applied_local_cross_encoder",
+      "applied": true,
+      "latency_ms": 5211.51,
+      "model": "/content/reranker_mmarco_exportado",
+      "revision": null,
+      "candidates_scored": 20,
+      "candidates_preserved_unscored": 33,
+      "device": "cpu",
+      "max_length": 512
+    },
+    "metodos": {
+      "vetorial": {
+        "ids": [
+          "lei_14133_2021.html_chunk_213",
+          "lei_14133_2021.html_chunk_29",
+          "lei_14133_2021.html_chunk_206",
+          "lei_14133_2021.html_chunk_212",
+          "lei_14133_2021.html_chunk_202",
+          "lei_14133_2021.html_chunk_179",
+          "lei_14133_2021.html_chunk_79",
+          "lei_14133_2021.html_chunk_208",
+          "lei_14133_2021.html_chunk_128",
+          "lei_14133_2021.html_chunk_210",
+          "lei_14133_2021.html_chunk_209",
+          "lei_14133_2021.html_chunk_193",
+          "lei_14133_2021.html_chunk_144",
+          "lei_14133_2021.html_chunk_203",
+          "lei_14133_2021.html_chunk_154",
+          "lei_14133_2021.html_chunk_217",
+          "lei_14133_2021.html_chunk_114",
+          "lei_14133_2021.html_chunk_215",
+          "lei_14133_2021.html_chunk_13",
+          "lei_14133_2021.html_chunk_180",
+          "lei_14133_2021.html_chunk_195",
+          "lei_14133_2021.html_chunk_84",
+          "lei_14133_2021.html_chunk_5",
+          "lei_14133_2021.html_chunk_161",
+          "lei_14133_2021.html_chunk_148",
+          "lei_14133_2021.html_chunk_21",
+          "lei_14133_2021.html_chunk_67",
+          "lei_14133_2021.html_chunk_176",
+          "lei_14133_2021.html_chunk_166",
+          "lei_14133_2021.html_chunk_177",
+          "lei_14133_2021.html_chunk_178",
+          "lei_14133_2021.html_chunk_89",
+          "lei_14133_2021.html_chunk_80",
+          "lei_14133_2021.html_chunk_147",
+          "lei_14133_2021.html_chunk_88",
+          "lei_14133_2021.html_chunk_199",
+          "lei_14133_2021.html_chunk_54",
+          "lei_14133_2021.html_chunk_24",
+          "lei_14133_2021.html_chunk_18",
+          "lei_14133_2021.html_chunk_152",
+          "lei_14133_2021.html_chunk_4",
+          "lei_14133_2021.html_chunk_40",
+          "lei_14133_2021.html_chunk_205",
+          "lei_14133_2021.html_chunk_207",
+          "lei_14133_2021.html_chunk_55",
+          "lei_14133_2021.html_chunk_76",
+          "lei_14133_2021.html_chunk_28",
+          "lei_14133_2021.html_chunk_159",
+          "lei_14133_2021.html_chunk_190",
+          "lei_14133_2021.html_chunk_64"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        }
+      },
+      "bm25": {
+        "ids": [
+          "lei_14133_2021.html_chunk_29",
+          "lei_14133_2021.html_chunk_28",
+          "lei_14133_2021.html_chunk_8",
+          "lei_14133_2021.html_chunk_31",
+          "lei_14133_2021.html_chunk_6"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "definicao",
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      },
+      "rrf": {
+        "ids": [
+          "lei_14133_2021.html_chunk_29",
+          "lei_14133_2021.html_chunk_28",
+          "lei_14133_2021.html_chunk_213",
+          "lei_14133_2021.html_chunk_206",
+          "lei_14133_2021.html_chunk_8",
+          "lei_14133_2021.html_chunk_212",
+          "lei_14133_2021.html_chunk_31",
+          "lei_14133_2021.html_chunk_202",
+          "lei_14133_2021.html_chunk_6",
+          "lei_14133_2021.html_chunk_179",
+          "lei_14133_2021.html_chunk_79",
+          "lei_14133_2021.html_chunk_208",
+          "lei_14133_2021.html_chunk_128",
+          "lei_14133_2021.html_chunk_210",
+          "lei_14133_2021.html_chunk_209",
+          "lei_14133_2021.html_chunk_193",
+          "lei_14133_2021.html_chunk_144",
+          "lei_14133_2021.html_chunk_203",
+          "lei_14133_2021.html_chunk_154",
+          "lei_14133_2021.html_chunk_217",
+          "lei_14133_2021.html_chunk_114",
+          "lei_14133_2021.html_chunk_215",
+          "lei_14133_2021.html_chunk_13",
+          "lei_14133_2021.html_chunk_180",
+          "lei_14133_2021.html_chunk_195",
+          "lei_14133_2021.html_chunk_84",
+          "lei_14133_2021.html_chunk_5",
+          "lei_14133_2021.html_chunk_161",
+          "lei_14133_2021.html_chunk_148",
+          "lei_14133_2021.html_chunk_21",
+          "lei_14133_2021.html_chunk_67",
+          "lei_14133_2021.html_chunk_176",
+          "lei_14133_2021.html_chunk_166",
+          "lei_14133_2021.html_chunk_177",
+          "lei_14133_2021.html_chunk_178",
+          "lei_14133_2021.html_chunk_89",
+          "lei_14133_2021.html_chunk_80",
+          "lei_14133_2021.html_chunk_147",
+          "lei_14133_2021.html_chunk_88",
+          "lei_14133_2021.html_chunk_199",
+          "lei_14133_2021.html_chunk_54",
+          "lei_14133_2021.html_chunk_24",
+          "lei_14133_2021.html_chunk_18",
+          "lei_14133_2021.html_chunk_152",
+          "lei_14133_2021.html_chunk_4",
+          "lei_14133_2021.html_chunk_40",
+          "lei_14133_2021.html_chunk_205",
+          "lei_14133_2021.html_chunk_207",
+          "lei_14133_2021.html_chunk_55",
+          "lei_14133_2021.html_chunk_76",
+          "lei_14133_2021.html_chunk_159",
+          "lei_14133_2021.html_chunk_190",
+          "lei_14133_2021.html_chunk_64"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        }
+      },
+      "rrf_rerank": {
+        "ids": [
+          "lei_14133_2021.html_chunk_213",
+          "lei_14133_2021.html_chunk_8",
+          "lei_14133_2021.html_chunk_29",
+          "lei_14133_2021.html_chunk_31",
+          "lei_14133_2021.html_chunk_217",
+          "lei_14133_2021.html_chunk_6",
+          "lei_14133_2021.html_chunk_154",
+          "lei_14133_2021.html_chunk_28",
+          "lei_14133_2021.html_chunk_144",
+          "lei_14133_2021.html_chunk_79",
+          "lei_14133_2021.html_chunk_212",
+          "lei_14133_2021.html_chunk_202",
+          "lei_14133_2021.html_chunk_209",
+          "lei_14133_2021.html_chunk_208",
+          "lei_14133_2021.html_chunk_128",
+          "lei_14133_2021.html_chunk_210",
+          "lei_14133_2021.html_chunk_179",
+          "lei_14133_2021.html_chunk_193",
+          "lei_14133_2021.html_chunk_203",
+          "lei_14133_2021.html_chunk_206",
+          "lei_14133_2021.html_chunk_114",
+          "lei_14133_2021.html_chunk_215",
+          "lei_14133_2021.html_chunk_13",
+          "lei_14133_2021.html_chunk_180",
+          "lei_14133_2021.html_chunk_195",
+          "lei_14133_2021.html_chunk_84",
+          "lei_14133_2021.html_chunk_5",
+          "lei_14133_2021.html_chunk_161",
+          "lei_14133_2021.html_chunk_148",
+          "lei_14133_2021.html_chunk_21",
+          "lei_14133_2021.html_chunk_67",
+          "lei_14133_2021.html_chunk_176",
+          "lei_14133_2021.html_chunk_166",
+          "lei_14133_2021.html_chunk_177",
+          "lei_14133_2021.html_chunk_178",
+          "lei_14133_2021.html_chunk_89",
+          "lei_14133_2021.html_chunk_80",
+          "lei_14133_2021.html_chunk_147",
+          "lei_14133_2021.html_chunk_88",
+          "lei_14133_2021.html_chunk_199",
+          "lei_14133_2021.html_chunk_54",
+          "lei_14133_2021.html_chunk_24",
+          "lei_14133_2021.html_chunk_18",
+          "lei_14133_2021.html_chunk_152",
+          "lei_14133_2021.html_chunk_4",
+          "lei_14133_2021.html_chunk_40",
+          "lei_14133_2021.html_chunk_205",
+          "lei_14133_2021.html_chunk_207",
+          "lei_14133_2021.html_chunk_55",
+          "lei_14133_2021.html_chunk_76",
+          "lei_14133_2021.html_chunk_159",
+          "lei_14133_2021.html_chunk_190",
+          "lei_14133_2021.html_chunk_64"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        }
+      }
+    },
+    "scores_rerank": [
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_213",
+        "score": 3.4041013717651367
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_8",
+        "score": -1.8214166164398193
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_29",
+        "score": -2.027211904525757
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_31",
+        "score": -2.4230499267578125
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_217",
+        "score": -2.629844903945923
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_6",
+        "score": -3.2326977252960205
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_154",
+        "score": -3.343730926513672
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_28",
+        "score": -3.826246500015259
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_144",
+        "score": -3.9074294567108154
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_79",
+        "score": -4.978203296661377
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_212",
+        "score": -5.344833850860596
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_202",
+        "score": -5.7383503913879395
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_209",
+        "score": -5.762609481811523
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_208",
+        "score": -5.955284595489502
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_128",
+        "score": -6.063727855682373
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_210",
+        "score": -6.064029216766357
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_179",
+        "score": -6.237402439117432
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_193",
+        "score": -6.288983345031738
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_203",
+        "score": -6.473220348358154
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_206",
+        "score": -6.672351360321045
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_114",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_215",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_13",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_180",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_195",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_84",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_5",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_161",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_148",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_21",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_67",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_176",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_166",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_177",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_178",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_89",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_80",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_147",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_88",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_199",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_54",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_24",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_18",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_152",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_4",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_40",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_205",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_207",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_55",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_76",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_159",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_190",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_64",
+        "score": null
+      }
+    ]
+  },
+  {
+    "caso": "P08",
+    "pergunta": "O que a ata nº 00137/2026 do INCA informa sobre o objeto adquirido e o fornecedor?",
+    "primeira_execucao_modelo": false,
+    "evento_rerank": {
+      "event": "rerank",
+      "status": "applied_local_cross_encoder",
+      "applied": true,
+      "latency_ms": 12994.73,
+      "model": "/content/reranker_mmarco_exportado",
+      "revision": null,
+      "candidates_scored": 20,
+      "candidates_preserved_unscored": 4,
+      "device": "cpu",
+      "max_length": 512
+    },
+    "metodos": {
+      "vetorial": {
+        "ids": [
+          "ata_00137.pdf_chunk_3",
+          "ata_00137.pdf_chunk_24",
+          "ata_00137.pdf_chunk_14",
+          "ata_00137.pdf_chunk_4",
+          "ata_00137.pdf_chunk_2",
+          "ata_00137.pdf_chunk_1",
+          "ata_00137.pdf_chunk_23",
+          "ata_00137.pdf_chunk_12",
+          "ata_00137.pdf_chunk_5",
+          "ata_00137.pdf_chunk_9",
+          "ata_00137.pdf_chunk_13",
+          "ata_00137.pdf_chunk_17",
+          "ata_00137.pdf_chunk_7",
+          "ata_00137.pdf_chunk_6",
+          "ata_00137.pdf_chunk_11",
+          "ata_00137.pdf_chunk_22",
+          "ata_00137.pdf_chunk_15",
+          "ata_00137.pdf_chunk_16",
+          "ata_00137.pdf_chunk_18",
+          "ata_00137.pdf_chunk_10",
+          "ata_00137.pdf_chunk_19",
+          "ata_00137.pdf_chunk_8",
+          "ata_00137.pdf_chunk_21",
+          "ata_00137.pdf_chunk_20"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "contratada"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "contratada"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        }
+      },
+      "bm25": {
+        "ids": [
+          "ata_00137.pdf_chunk_1",
+          "ata_00137.pdf_chunk_14",
+          "ata_00137.pdf_chunk_3",
+          "ata_00137.pdf_chunk_23",
+          "ata_00137.pdf_chunk_24",
+          "ata_00137.pdf_chunk_12",
+          "ata_00137.pdf_chunk_5",
+          "ata_00137.pdf_chunk_9",
+          "ata_00137.pdf_chunk_2",
+          "ata_00137.pdf_chunk_17",
+          "ata_00137.pdf_chunk_8",
+          "ata_00137.pdf_chunk_4",
+          "ata_00137.pdf_chunk_16",
+          "ata_00137.pdf_chunk_13",
+          "ata_00137.pdf_chunk_11",
+          "ata_00137.pdf_chunk_20",
+          "ata_00137.pdf_chunk_19",
+          "ata_00137.pdf_chunk_7",
+          "ata_00137.pdf_chunk_10",
+          "ata_00137.pdf_chunk_6",
+          "ata_00137.pdf_chunk_15"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      },
+      "rrf": {
+        "ids": [
+          "ata_00137.pdf_chunk_3",
+          "ata_00137.pdf_chunk_14",
+          "ata_00137.pdf_chunk_1",
+          "ata_00137.pdf_chunk_24",
+          "ata_00137.pdf_chunk_23",
+          "ata_00137.pdf_chunk_2",
+          "ata_00137.pdf_chunk_12",
+          "ata_00137.pdf_chunk_4",
+          "ata_00137.pdf_chunk_5",
+          "ata_00137.pdf_chunk_9",
+          "ata_00137.pdf_chunk_17",
+          "ata_00137.pdf_chunk_13",
+          "ata_00137.pdf_chunk_11",
+          "ata_00137.pdf_chunk_7",
+          "ata_00137.pdf_chunk_16",
+          "ata_00137.pdf_chunk_8",
+          "ata_00137.pdf_chunk_6",
+          "ata_00137.pdf_chunk_15",
+          "ata_00137.pdf_chunk_19",
+          "ata_00137.pdf_chunk_10",
+          "ata_00137.pdf_chunk_20",
+          "ata_00137.pdf_chunk_22",
+          "ata_00137.pdf_chunk_18",
+          "ata_00137.pdf_chunk_21"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      },
+      "rrf_rerank": {
+        "ids": [
+          "ata_00137.pdf_chunk_1",
+          "ata_00137.pdf_chunk_14",
+          "ata_00137.pdf_chunk_24",
+          "ata_00137.pdf_chunk_23",
+          "ata_00137.pdf_chunk_3",
+          "ata_00137.pdf_chunk_5",
+          "ata_00137.pdf_chunk_11",
+          "ata_00137.pdf_chunk_12",
+          "ata_00137.pdf_chunk_4",
+          "ata_00137.pdf_chunk_9",
+          "ata_00137.pdf_chunk_16",
+          "ata_00137.pdf_chunk_17",
+          "ata_00137.pdf_chunk_6",
+          "ata_00137.pdf_chunk_8",
+          "ata_00137.pdf_chunk_15",
+          "ata_00137.pdf_chunk_19",
+          "ata_00137.pdf_chunk_13",
+          "ata_00137.pdf_chunk_7",
+          "ata_00137.pdf_chunk_2",
+          "ata_00137.pdf_chunk_10",
+          "ata_00137.pdf_chunk_20",
+          "ata_00137.pdf_chunk_22",
+          "ata_00137.pdf_chunk_18",
+          "ata_00137.pdf_chunk_21"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      }
+    },
+    "scores_rerank": [
+      {
+        "chunk_id": "ata_00137.pdf_chunk_1",
+        "score": 5.339176654815674
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_14",
+        "score": 5.255431652069092
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_24",
+        "score": 0.2055683732032776
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_23",
+        "score": 0.0873444452881813
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_3",
+        "score": -1.7862935066223145
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_5",
+        "score": -2.83036208152771
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_11",
+        "score": -2.8839962482452393
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_12",
+        "score": -2.9112889766693115
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_4",
+        "score": -2.945063591003418
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_9",
+        "score": -2.9581525325775146
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_16",
+        "score": -3.016162633895874
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_17",
+        "score": -3.0915701389312744
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_6",
+        "score": -3.9703147411346436
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_8",
+        "score": -4.4654011726379395
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_15",
+        "score": -4.682434558868408
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_19",
+        "score": -4.8969407081604
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_13",
+        "score": -5.397767543792725
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_7",
+        "score": -5.621301174163818
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_2",
+        "score": -5.881287574768066
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_10",
+        "score": -6.212523460388184
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_20",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_22",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_18",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_21",
+        "score": null
+      }
+    ]
+  },
+  {
+    "caso": "P03_R",
+    "pergunta": "Informe o objeto da ata nº 191/2026 da EBSERH e o número PNCP da contratação correspondente.",
+    "primeira_execucao_modelo": false,
+    "evento_rerank": {
+      "event": "rerank",
+      "status": "applied_local_cross_encoder",
+      "applied": true,
+      "latency_ms": 12907.6,
+      "model": "/content/reranker_mmarco_exportado",
+      "revision": null,
+      "candidates_scored": 20,
+      "candidates_preserved_unscored": 15,
+      "device": "cpu",
+      "max_length": 512
+    },
+    "metodos": {
+      "vetorial": {
+        "ids": [
+          "contratacoes_publicacao.json_chunk_400",
+          "ata_00191.pdf_chunk_33",
+          "ata_00191.pdf_chunk_31",
+          "ata_00191.pdf_chunk_34",
+          "ata_00191.pdf_chunk_7",
+          "ata_00191.pdf_chunk_2",
+          "ata_00191.pdf_chunk_12",
+          "ata_00191.pdf_chunk_6",
+          "ata_00191.pdf_chunk_28",
+          "ata_00191.pdf_chunk_8",
+          "ata_00191.pdf_chunk_1",
+          "ata_00191.pdf_chunk_9",
+          "ata_00191.pdf_chunk_29",
+          "ata_00191.pdf_chunk_5",
+          "ata_00191.pdf_chunk_32",
+          "ata_00191.pdf_chunk_27",
+          "ata_00191.pdf_chunk_24",
+          "ata_00191.pdf_chunk_13",
+          "ata_00191.pdf_chunk_16",
+          "ata_00191.pdf_chunk_11",
+          "ata_00191.pdf_chunk_10",
+          "ata_00191.pdf_chunk_4",
+          "ata_00191.pdf_chunk_15",
+          "ata_00191.pdf_chunk_3",
+          "ata_00191.pdf_chunk_26",
+          "ata_00191.pdf_chunk_17",
+          "ata_00191.pdf_chunk_14",
+          "ata_00191.pdf_chunk_19",
+          "ata_00191.pdf_chunk_23",
+          "ata_00191.pdf_chunk_30",
+          "ata_00191.pdf_chunk_25",
+          "ata_00191.pdf_chunk_18",
+          "ata_00191.pdf_chunk_21",
+          "ata_00191.pdf_chunk_22",
+          "ata_00191.pdf_chunk_20"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "numero_pncp"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "numero_pncp"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        }
+      },
+      "bm25": {
+        "ids": [
+          "ata_00191.pdf_chunk_8",
+          "ata_00191.pdf_chunk_10",
+          "ata_00191.pdf_chunk_12",
+          "ata_00191.pdf_chunk_4",
+          "ata_00191.pdf_chunk_27",
+          "ata_00191.pdf_chunk_2",
+          "ata_00191.pdf_chunk_9",
+          "ata_00191.pdf_chunk_31",
+          "ata_00191.pdf_chunk_1",
+          "ata_00191.pdf_chunk_26",
+          "ata_00191.pdf_chunk_23",
+          "ata_00191.pdf_chunk_13",
+          "ata_00191.pdf_chunk_15",
+          "ata_00191.pdf_chunk_3",
+          "ata_00191.pdf_chunk_11",
+          "ata_00191.pdf_chunk_32",
+          "ata_00191.pdf_chunk_30",
+          "ata_00191.pdf_chunk_7",
+          "ata_00191.pdf_chunk_16",
+          "ata_00191.pdf_chunk_29",
+          "ata_00191.pdf_chunk_34",
+          "ata_00191.pdf_chunk_5",
+          "contratacoes_publicacao.json_chunk_400",
+          "ata_00191.pdf_chunk_17",
+          "ata_00191.pdf_chunk_24",
+          "ata_00191.pdf_chunk_19",
+          "ata_00191.pdf_chunk_33",
+          "ata_00191.pdf_chunk_28",
+          "ata_00191.pdf_chunk_14",
+          "ata_00191.pdf_chunk_6",
+          "ata_00191.pdf_chunk_25",
+          "ata_00191.pdf_chunk_20",
+          "ata_00191.pdf_chunk_21"
+        ],
+        "top_3": {
+          "campos_cobertos": [],
+          "cobertura": 0.0,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [],
+          "cobertura": 0.0,
+          "cobertura_completa": false
+        }
+      },
+      "rrf": {
+        "ids": [
+          "ata_00191.pdf_chunk_12",
+          "ata_00191.pdf_chunk_8",
+          "ata_00191.pdf_chunk_31",
+          "ata_00191.pdf_chunk_2",
+          "ata_00191.pdf_chunk_9",
+          "ata_00191.pdf_chunk_1",
+          "ata_00191.pdf_chunk_27",
+          "ata_00191.pdf_chunk_10",
+          "contratacoes_publicacao.json_chunk_400",
+          "ata_00191.pdf_chunk_7",
+          "ata_00191.pdf_chunk_34",
+          "ata_00191.pdf_chunk_4",
+          "ata_00191.pdf_chunk_33",
+          "ata_00191.pdf_chunk_13",
+          "ata_00191.pdf_chunk_32",
+          "ata_00191.pdf_chunk_29",
+          "ata_00191.pdf_chunk_26",
+          "ata_00191.pdf_chunk_28",
+          "ata_00191.pdf_chunk_11",
+          "ata_00191.pdf_chunk_6",
+          "ata_00191.pdf_chunk_15",
+          "ata_00191.pdf_chunk_5",
+          "ata_00191.pdf_chunk_3",
+          "ata_00191.pdf_chunk_23",
+          "ata_00191.pdf_chunk_16",
+          "ata_00191.pdf_chunk_24",
+          "ata_00191.pdf_chunk_30",
+          "ata_00191.pdf_chunk_17",
+          "ata_00191.pdf_chunk_19",
+          "ata_00191.pdf_chunk_14",
+          "ata_00191.pdf_chunk_25",
+          "ata_00191.pdf_chunk_21",
+          "ata_00191.pdf_chunk_20",
+          "ata_00191.pdf_chunk_18",
+          "ata_00191.pdf_chunk_22"
+        ],
+        "top_3": {
+          "campos_cobertos": [],
+          "cobertura": 0.0,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        }
+      },
+      "rrf_rerank": {
+        "ids": [
+          "ata_00191.pdf_chunk_1",
+          "ata_00191.pdf_chunk_2",
+          "ata_00191.pdf_chunk_8",
+          "ata_00191.pdf_chunk_33",
+          "contratacoes_publicacao.json_chunk_400",
+          "ata_00191.pdf_chunk_27",
+          "ata_00191.pdf_chunk_34",
+          "ata_00191.pdf_chunk_9",
+          "ata_00191.pdf_chunk_11",
+          "ata_00191.pdf_chunk_12",
+          "ata_00191.pdf_chunk_6",
+          "ata_00191.pdf_chunk_32",
+          "ata_00191.pdf_chunk_31",
+          "ata_00191.pdf_chunk_28",
+          "ata_00191.pdf_chunk_4",
+          "ata_00191.pdf_chunk_7",
+          "ata_00191.pdf_chunk_29",
+          "ata_00191.pdf_chunk_26",
+          "ata_00191.pdf_chunk_10",
+          "ata_00191.pdf_chunk_13",
+          "ata_00191.pdf_chunk_15",
+          "ata_00191.pdf_chunk_5",
+          "ata_00191.pdf_chunk_3",
+          "ata_00191.pdf_chunk_23",
+          "ata_00191.pdf_chunk_16",
+          "ata_00191.pdf_chunk_24",
+          "ata_00191.pdf_chunk_30",
+          "ata_00191.pdf_chunk_17",
+          "ata_00191.pdf_chunk_19",
+          "ata_00191.pdf_chunk_14",
+          "ata_00191.pdf_chunk_25",
+          "ata_00191.pdf_chunk_21",
+          "ata_00191.pdf_chunk_20",
+          "ata_00191.pdf_chunk_18",
+          "ata_00191.pdf_chunk_22"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "objeto"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "numero_pncp"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      }
+    },
+    "scores_rerank": [
+      {
+        "chunk_id": "ata_00191.pdf_chunk_1",
+        "score": 5.758768558502197
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_2",
+        "score": 3.86885666847229
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_8",
+        "score": 3.3494341373443604
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_33",
+        "score": 2.0200045108795166
+      },
+      {
+        "chunk_id": "contratacoes_publicacao.json_chunk_400",
+        "score": 1.3640756607055664
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_27",
+        "score": 0.8379507064819336
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_34",
+        "score": 0.7021612524986267
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_9",
+        "score": 0.18730765581130981
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_11",
+        "score": -0.026169609278440475
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_12",
+        "score": -0.7572757601737976
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_6",
+        "score": -1.546610713005066
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_32",
+        "score": -1.6819782257080078
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_31",
+        "score": -1.832615613937378
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_28",
+        "score": -2.3742563724517822
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_4",
+        "score": -2.669407606124878
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_7",
+        "score": -3.3265950679779053
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_29",
+        "score": -3.589884042739868
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_26",
+        "score": -3.810866117477417
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_10",
+        "score": -4.10417366027832
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_13",
+        "score": -4.5509867668151855
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_15",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_5",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_3",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_23",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_16",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_24",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_30",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_17",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_19",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_14",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_25",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_21",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_20",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_18",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00191.pdf_chunk_22",
+        "score": null
+      }
+    ]
+  },
+  {
+    "caso": "P04_R",
+    "pergunta": "Explique as regras sobre pregão na Lei nº 14.133/2021.",
+    "primeira_execucao_modelo": false,
+    "evento_rerank": {
+      "event": "rerank",
+      "status": "applied_local_cross_encoder",
+      "applied": true,
+      "latency_ms": 6318.13,
+      "model": "/content/reranker_mmarco_exportado",
+      "revision": null,
+      "candidates_scored": 20,
+      "candidates_preserved_unscored": 46,
+      "device": "cpu",
+      "max_length": 512
+    },
+    "metodos": {
+      "vetorial": {
+        "ids": [
+          "lei_14133_2021.html_chunk_213",
+          "lei_14133_2021.html_chunk_212",
+          "lei_14133_2021.html_chunk_206",
+          "lei_14133_2021.html_chunk_202",
+          "lei_14133_2021.html_chunk_179",
+          "lei_14133_2021.html_chunk_29",
+          "lei_14133_2021.html_chunk_203",
+          "lei_14133_2021.html_chunk_193",
+          "lei_14133_2021.html_chunk_79",
+          "lei_14133_2021.html_chunk_114",
+          "lei_14133_2021.html_chunk_207",
+          "lei_14133_2021.html_chunk_144",
+          "lei_14133_2021.html_chunk_5",
+          "lei_14133_2021.html_chunk_195",
+          "lei_14133_2021.html_chunk_154",
+          "lei_14133_2021.html_chunk_161",
+          "lei_14133_2021.html_chunk_128",
+          "lei_14133_2021.html_chunk_204",
+          "lei_14133_2021.html_chunk_208",
+          "lei_14133_2021.html_chunk_13",
+          "lei_14133_2021.html_chunk_3",
+          "lei_14133_2021.html_chunk_148",
+          "lei_14133_2021.html_chunk_217",
+          "lei_14133_2021.html_chunk_180",
+          "lei_14133_2021.html_chunk_40",
+          "lei_14133_2021.html_chunk_4",
+          "lei_14133_2021.html_chunk_215",
+          "lei_14133_2021.html_chunk_80",
+          "lei_14133_2021.html_chunk_190",
+          "lei_14133_2021.html_chunk_209",
+          "lei_14133_2021.html_chunk_192",
+          "lei_14133_2021.html_chunk_76",
+          "lei_14133_2021.html_chunk_199",
+          "lei_14133_2021.html_chunk_210",
+          "lei_14133_2021.html_chunk_145",
+          "lei_14133_2021.html_chunk_201",
+          "lei_14133_2021.html_chunk_24",
+          "lei_14133_2021.html_chunk_178",
+          "lei_14133_2021.html_chunk_159",
+          "lei_14133_2021.html_chunk_94",
+          "lei_14133_2021.html_chunk_205",
+          "lei_14133_2021.html_chunk_136",
+          "lei_14133_2021.html_chunk_169",
+          "lei_14133_2021.html_chunk_147",
+          "lei_14133_2021.html_chunk_163",
+          "lei_14133_2021.html_chunk_43",
+          "lei_14133_2021.html_chunk_166",
+          "lei_14133_2021.html_chunk_152",
+          "lei_14133_2021.html_chunk_84",
+          "lei_14133_2021.html_chunk_168"
+        ],
+        "top_3": {
+          "campos_cobertos": [],
+          "cobertura": 0.0,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [],
+          "cobertura": 0.0,
+          "cobertura_completa": false
+        }
+      },
+      "bm25": {
+        "ids": [
+          "lei_14133_2021.html_chunk_29",
+          "lei_14133_2021.html_chunk_28",
+          "lei_14133_2021.html_chunk_8",
+          "lei_14133_2021.html_chunk_207",
+          "lei_14133_2021.html_chunk_78",
+          "lei_14133_2021.html_chunk_80",
+          "lei_14133_2021.html_chunk_30",
+          "lei_14133_2021.html_chunk_31",
+          "lei_14133_2021.html_chunk_210",
+          "lei_14133_2021.html_chunk_16",
+          "lei_14133_2021.html_chunk_208",
+          "lei_14133_2021.html_chunk_99",
+          "lei_14133_2021.html_chunk_178",
+          "lei_14133_2021.html_chunk_209",
+          "lei_14133_2021.html_chunk_53",
+          "lei_14133_2021.html_chunk_119",
+          "lei_14133_2021.html_chunk_61",
+          "lei_14133_2021.html_chunk_90",
+          "lei_14133_2021.html_chunk_40",
+          "lei_14133_2021.html_chunk_25",
+          "lei_14133_2021.html_chunk_83",
+          "lei_14133_2021.html_chunk_6",
+          "lei_14133_2021.html_chunk_158",
+          "lei_14133_2021.html_chunk_18"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        }
+      },
+      "rrf": {
+        "ids": [
+          "lei_14133_2021.html_chunk_29",
+          "lei_14133_2021.html_chunk_207",
+          "lei_14133_2021.html_chunk_208",
+          "lei_14133_2021.html_chunk_80",
+          "lei_14133_2021.html_chunk_210",
+          "lei_14133_2021.html_chunk_209",
+          "lei_14133_2021.html_chunk_40",
+          "lei_14133_2021.html_chunk_178",
+          "lei_14133_2021.html_chunk_213",
+          "lei_14133_2021.html_chunk_212",
+          "lei_14133_2021.html_chunk_28",
+          "lei_14133_2021.html_chunk_206",
+          "lei_14133_2021.html_chunk_8",
+          "lei_14133_2021.html_chunk_202",
+          "lei_14133_2021.html_chunk_179",
+          "lei_14133_2021.html_chunk_78",
+          "lei_14133_2021.html_chunk_203",
+          "lei_14133_2021.html_chunk_30",
+          "lei_14133_2021.html_chunk_193",
+          "lei_14133_2021.html_chunk_31",
+          "lei_14133_2021.html_chunk_79",
+          "lei_14133_2021.html_chunk_114",
+          "lei_14133_2021.html_chunk_16",
+          "lei_14133_2021.html_chunk_144",
+          "lei_14133_2021.html_chunk_99",
+          "lei_14133_2021.html_chunk_5",
+          "lei_14133_2021.html_chunk_195",
+          "lei_14133_2021.html_chunk_154",
+          "lei_14133_2021.html_chunk_53",
+          "lei_14133_2021.html_chunk_161",
+          "lei_14133_2021.html_chunk_119",
+          "lei_14133_2021.html_chunk_128",
+          "lei_14133_2021.html_chunk_61",
+          "lei_14133_2021.html_chunk_204",
+          "lei_14133_2021.html_chunk_90",
+          "lei_14133_2021.html_chunk_13",
+          "lei_14133_2021.html_chunk_25",
+          "lei_14133_2021.html_chunk_3",
+          "lei_14133_2021.html_chunk_83",
+          "lei_14133_2021.html_chunk_148",
+          "lei_14133_2021.html_chunk_6",
+          "lei_14133_2021.html_chunk_217",
+          "lei_14133_2021.html_chunk_158",
+          "lei_14133_2021.html_chunk_180",
+          "lei_14133_2021.html_chunk_18",
+          "lei_14133_2021.html_chunk_4",
+          "lei_14133_2021.html_chunk_215",
+          "lei_14133_2021.html_chunk_190",
+          "lei_14133_2021.html_chunk_192",
+          "lei_14133_2021.html_chunk_76",
+          "lei_14133_2021.html_chunk_199",
+          "lei_14133_2021.html_chunk_145",
+          "lei_14133_2021.html_chunk_201",
+          "lei_14133_2021.html_chunk_24",
+          "lei_14133_2021.html_chunk_159",
+          "lei_14133_2021.html_chunk_94",
+          "lei_14133_2021.html_chunk_205",
+          "lei_14133_2021.html_chunk_136",
+          "lei_14133_2021.html_chunk_169",
+          "lei_14133_2021.html_chunk_147",
+          "lei_14133_2021.html_chunk_163",
+          "lei_14133_2021.html_chunk_43",
+          "lei_14133_2021.html_chunk_166",
+          "lei_14133_2021.html_chunk_152",
+          "lei_14133_2021.html_chunk_84",
+          "lei_14133_2021.html_chunk_168"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        }
+      },
+      "rrf_rerank": {
+        "ids": [
+          "lei_14133_2021.html_chunk_213",
+          "lei_14133_2021.html_chunk_8",
+          "lei_14133_2021.html_chunk_80",
+          "lei_14133_2021.html_chunk_31",
+          "lei_14133_2021.html_chunk_29",
+          "lei_14133_2021.html_chunk_40",
+          "lei_14133_2021.html_chunk_212",
+          "lei_14133_2021.html_chunk_28",
+          "lei_14133_2021.html_chunk_178",
+          "lei_14133_2021.html_chunk_30",
+          "lei_14133_2021.html_chunk_209",
+          "lei_14133_2021.html_chunk_208",
+          "lei_14133_2021.html_chunk_207",
+          "lei_14133_2021.html_chunk_78",
+          "lei_14133_2021.html_chunk_179",
+          "lei_14133_2021.html_chunk_210",
+          "lei_14133_2021.html_chunk_202",
+          "lei_14133_2021.html_chunk_193",
+          "lei_14133_2021.html_chunk_203",
+          "lei_14133_2021.html_chunk_206",
+          "lei_14133_2021.html_chunk_79",
+          "lei_14133_2021.html_chunk_114",
+          "lei_14133_2021.html_chunk_16",
+          "lei_14133_2021.html_chunk_144",
+          "lei_14133_2021.html_chunk_99",
+          "lei_14133_2021.html_chunk_5",
+          "lei_14133_2021.html_chunk_195",
+          "lei_14133_2021.html_chunk_154",
+          "lei_14133_2021.html_chunk_53",
+          "lei_14133_2021.html_chunk_161",
+          "lei_14133_2021.html_chunk_119",
+          "lei_14133_2021.html_chunk_128",
+          "lei_14133_2021.html_chunk_61",
+          "lei_14133_2021.html_chunk_204",
+          "lei_14133_2021.html_chunk_90",
+          "lei_14133_2021.html_chunk_13",
+          "lei_14133_2021.html_chunk_25",
+          "lei_14133_2021.html_chunk_3",
+          "lei_14133_2021.html_chunk_83",
+          "lei_14133_2021.html_chunk_148",
+          "lei_14133_2021.html_chunk_6",
+          "lei_14133_2021.html_chunk_217",
+          "lei_14133_2021.html_chunk_158",
+          "lei_14133_2021.html_chunk_180",
+          "lei_14133_2021.html_chunk_18",
+          "lei_14133_2021.html_chunk_4",
+          "lei_14133_2021.html_chunk_215",
+          "lei_14133_2021.html_chunk_190",
+          "lei_14133_2021.html_chunk_192",
+          "lei_14133_2021.html_chunk_76",
+          "lei_14133_2021.html_chunk_199",
+          "lei_14133_2021.html_chunk_145",
+          "lei_14133_2021.html_chunk_201",
+          "lei_14133_2021.html_chunk_24",
+          "lei_14133_2021.html_chunk_159",
+          "lei_14133_2021.html_chunk_94",
+          "lei_14133_2021.html_chunk_205",
+          "lei_14133_2021.html_chunk_136",
+          "lei_14133_2021.html_chunk_169",
+          "lei_14133_2021.html_chunk_147",
+          "lei_14133_2021.html_chunk_163",
+          "lei_14133_2021.html_chunk_43",
+          "lei_14133_2021.html_chunk_166",
+          "lei_14133_2021.html_chunk_152",
+          "lei_14133_2021.html_chunk_84",
+          "lei_14133_2021.html_chunk_168"
+        ],
+        "top_3": {
+          "campos_cobertos": [],
+          "cobertura": 0.0,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "aplicacao",
+            "excecoes"
+          ],
+          "cobertura": 0.6666666666666666,
+          "cobertura_completa": false
+        }
+      }
+    },
+    "scores_rerank": [
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_213",
+        "score": 3.106379747390747
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_8",
+        "score": -0.8539063930511475
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_80",
+        "score": -1.1118767261505127
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_31",
+        "score": -1.9050774574279785
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_29",
+        "score": -2.0062055587768555
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_40",
+        "score": -2.6153814792633057
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_212",
+        "score": -3.2925541400909424
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_28",
+        "score": -3.6496076583862305
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_178",
+        "score": -4.359058856964111
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_30",
+        "score": -4.465554237365723
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_209",
+        "score": -5.139529705047607
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_208",
+        "score": -5.573598384857178
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_207",
+        "score": -5.671372413635254
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_78",
+        "score": -5.68393611907959
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_179",
+        "score": -5.7803955078125
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_210",
+        "score": -6.085190296173096
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_202",
+        "score": -6.206173419952393
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_193",
+        "score": -6.561929225921631
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_203",
+        "score": -6.572787284851074
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_206",
+        "score": -6.917047023773193
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_79",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_114",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_16",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_144",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_99",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_5",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_195",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_154",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_53",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_161",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_119",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_128",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_61",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_204",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_90",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_13",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_25",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_3",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_83",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_148",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_6",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_217",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_158",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_180",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_18",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_4",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_215",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_190",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_192",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_76",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_199",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_145",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_201",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_24",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_159",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_94",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_205",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_136",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_169",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_147",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_163",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_43",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_166",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_152",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_84",
+        "score": null
+      },
+      {
+        "chunk_id": "lei_14133_2021.html_chunk_168",
+        "score": null
+      }
+    ]
+  },
+  {
+    "caso": "P08_R",
+    "pergunta": "Na ata nº 137/2026 do INCA, qual é o objeto e qual empresa é a contratada?",
+    "primeira_execucao_modelo": false,
+    "evento_rerank": {
+      "event": "rerank",
+      "status": "applied_local_cross_encoder",
+      "applied": true,
+      "latency_ms": 12992.75,
+      "model": "/content/reranker_mmarco_exportado",
+      "revision": null,
+      "candidates_scored": 20,
+      "candidates_preserved_unscored": 4,
+      "device": "cpu",
+      "max_length": 512
+    },
+    "metodos": {
+      "vetorial": {
+        "ids": [
+          "ata_00137.pdf_chunk_14",
+          "ata_00137.pdf_chunk_3",
+          "ata_00137.pdf_chunk_23",
+          "ata_00137.pdf_chunk_24",
+          "ata_00137.pdf_chunk_4",
+          "ata_00137.pdf_chunk_17",
+          "ata_00137.pdf_chunk_22",
+          "ata_00137.pdf_chunk_1",
+          "ata_00137.pdf_chunk_2",
+          "ata_00137.pdf_chunk_19",
+          "ata_00137.pdf_chunk_15",
+          "ata_00137.pdf_chunk_7",
+          "ata_00137.pdf_chunk_13",
+          "ata_00137.pdf_chunk_16",
+          "ata_00137.pdf_chunk_5",
+          "ata_00137.pdf_chunk_18",
+          "ata_00137.pdf_chunk_20",
+          "ata_00137.pdf_chunk_12",
+          "ata_00137.pdf_chunk_11",
+          "ata_00137.pdf_chunk_9",
+          "ata_00137.pdf_chunk_6",
+          "ata_00137.pdf_chunk_10",
+          "ata_00137.pdf_chunk_8",
+          "ata_00137.pdf_chunk_21"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "contratada"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "contratada"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        }
+      },
+      "bm25": {
+        "ids": [
+          "ata_00137.pdf_chunk_1",
+          "ata_00137.pdf_chunk_20",
+          "ata_00137.pdf_chunk_14",
+          "ata_00137.pdf_chunk_3",
+          "ata_00137.pdf_chunk_23",
+          "ata_00137.pdf_chunk_24",
+          "ata_00137.pdf_chunk_17",
+          "ata_00137.pdf_chunk_4",
+          "ata_00137.pdf_chunk_5",
+          "ata_00137.pdf_chunk_16",
+          "ata_00137.pdf_chunk_12",
+          "ata_00137.pdf_chunk_9",
+          "ata_00137.pdf_chunk_2",
+          "ata_00137.pdf_chunk_8",
+          "ata_00137.pdf_chunk_19",
+          "ata_00137.pdf_chunk_7",
+          "ata_00137.pdf_chunk_10",
+          "ata_00137.pdf_chunk_13",
+          "ata_00137.pdf_chunk_6",
+          "ata_00137.pdf_chunk_11",
+          "ata_00137.pdf_chunk_15"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      },
+      "rrf": {
+        "ids": [
+          "ata_00137.pdf_chunk_14",
+          "ata_00137.pdf_chunk_3",
+          "ata_00137.pdf_chunk_23",
+          "ata_00137.pdf_chunk_1",
+          "ata_00137.pdf_chunk_24",
+          "ata_00137.pdf_chunk_4",
+          "ata_00137.pdf_chunk_17",
+          "ata_00137.pdf_chunk_20",
+          "ata_00137.pdf_chunk_2",
+          "ata_00137.pdf_chunk_5",
+          "ata_00137.pdf_chunk_16",
+          "ata_00137.pdf_chunk_19",
+          "ata_00137.pdf_chunk_7",
+          "ata_00137.pdf_chunk_12",
+          "ata_00137.pdf_chunk_13",
+          "ata_00137.pdf_chunk_15",
+          "ata_00137.pdf_chunk_9",
+          "ata_00137.pdf_chunk_8",
+          "ata_00137.pdf_chunk_10",
+          "ata_00137.pdf_chunk_11",
+          "ata_00137.pdf_chunk_6",
+          "ata_00137.pdf_chunk_22",
+          "ata_00137.pdf_chunk_18",
+          "ata_00137.pdf_chunk_21"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "contratada"
+          ],
+          "cobertura": 0.5,
+          "cobertura_completa": false
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      },
+      "rrf_rerank": {
+        "ids": [
+          "ata_00137.pdf_chunk_1",
+          "ata_00137.pdf_chunk_14",
+          "ata_00137.pdf_chunk_23",
+          "ata_00137.pdf_chunk_17",
+          "ata_00137.pdf_chunk_3",
+          "ata_00137.pdf_chunk_16",
+          "ata_00137.pdf_chunk_15",
+          "ata_00137.pdf_chunk_20",
+          "ata_00137.pdf_chunk_11",
+          "ata_00137.pdf_chunk_19",
+          "ata_00137.pdf_chunk_24",
+          "ata_00137.pdf_chunk_9",
+          "ata_00137.pdf_chunk_12",
+          "ata_00137.pdf_chunk_4",
+          "ata_00137.pdf_chunk_5",
+          "ata_00137.pdf_chunk_8",
+          "ata_00137.pdf_chunk_13",
+          "ata_00137.pdf_chunk_7",
+          "ata_00137.pdf_chunk_10",
+          "ata_00137.pdf_chunk_2",
+          "ata_00137.pdf_chunk_6",
+          "ata_00137.pdf_chunk_22",
+          "ata_00137.pdf_chunk_18",
+          "ata_00137.pdf_chunk_21"
+        ],
+        "top_3": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        },
+        "top_5": {
+          "campos_cobertos": [
+            "objeto",
+            "contratada"
+          ],
+          "cobertura": 1.0,
+          "cobertura_completa": true
+        }
+      }
+    },
+    "scores_rerank": [
+      {
+        "chunk_id": "ata_00137.pdf_chunk_1",
+        "score": 6.555778980255127
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_14",
+        "score": 4.416116237640381
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_23",
+        "score": -0.9829480051994324
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_17",
+        "score": -1.3820619583129883
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_3",
+        "score": -2.054992914199829
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_16",
+        "score": -2.1844213008880615
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_15",
+        "score": -3.1070306301116943
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_20",
+        "score": -3.316600799560547
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_11",
+        "score": -3.575627088546753
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_19",
+        "score": -3.74511456489563
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_24",
+        "score": -4.164226055145264
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_9",
+        "score": -4.242572784423828
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_12",
+        "score": -4.441395282745361
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_4",
+        "score": -4.557925701141357
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_5",
+        "score": -4.678179740905762
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_8",
+        "score": -4.8232197761535645
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_13",
+        "score": -6.819525718688965
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_7",
+        "score": -6.982125759124756
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_10",
+        "score": -7.636626243591309
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_2",
+        "score": -8.032803535461426
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_6",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_22",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_18",
+        "score": null
+      },
+      {
+        "chunk_id": "ata_00137.pdf_chunk_21",
+        "score": null
+      }
+    ]
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "python": "3.13.16",
+  "base": {
+    "openai": "2.54.0",
+    "faiss-cpu": "1.15.1",
+    "numpy": "2.1.3",
+    "rank-bm25": "0.2.2",
+    "PyYAML": "6.0.3",
+    "requests": "2.32.4",
+    "python-dotenv": "1.2.3",
+    "pydantic": "2.13.5",
+    "pytest": "8.4.2",
+    "gradio": "6.29.0",
+    "gradio-client": "2.7.1",
+    "pypdf": "6.21.1",
+    "beautifulsoup4": "4.15.0",
+    "fastapi": "0.141.1",
+    "httpx": "0.28.1"
+  },
+  "rerank_opcional": {
+    "sentence-transformers": "5.7.0",
+    "torch": "2.11.0+cpu",
+    "transformers": "5.18.0",
+    "tokenizers": "0.23.2",
+    "safetensors": "0.8.0"
+  },
+  "observacao": "Versões instaladas no ambiente observado; não é um lockfile completo de dependências transitivas."
+}

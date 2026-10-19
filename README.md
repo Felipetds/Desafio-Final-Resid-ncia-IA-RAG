@@ -1,5 +1,8 @@
 # Adaptive RAG para Contratações Públicas do Estado do Rio de Janeiro
 
+> Estado avaliado em 19/10/2026: pacote de 2.172 chunks. Reprodução final e congelamento ainda pendentes. [Guia atual](docs/GUIA_RESTAURACAO_2172.md).
+
+
 Projeto desenvolvido no **Grande Desafio de IA Generativa e RAG**, da Residência TIC em Trilhas — PUC-Rio e Instituto ECOA.
 
 O sistema utiliza uma arquitetura de **Adaptive RAG** para responder perguntas sobre contratações públicas do Estado do Rio de Janeiro. Antes de recuperar documentos, o sistema analisa a consulta e decide quais tipos de evidência são necessários.
@@ -16,100 +19,49 @@ O cenário foi escolhido por utilizar dados públicos provenientes de fontes ofi
 
 ## 2. Bases de conhecimento
 
-O sistema trabalha com quatro tipos de base:
+O pacote atual contém oito arquivos brutos e quatro naturezas:
 
-| Natureza | Conteúdo |
+| Natureza | Conteúdo disponível |
 |---|---|
-| Normativa | Lei nº 14.133/2021, decretos e editais |
-| Estruturada | Contratos e contratações públicas |
-| Conversacional | Atas e comunicações relacionadas às compras |
-| Agregada | Indicadores, totais e valores agrupados |
+| Normativa | Snapshot HTML da Lei nº 14.133/2021 |
+| Estruturada | 1.358 registros PNCP da coleta RJ, pregão eletrônico, março/2026 |
+| Conversacional | Três atas oficiais e uma comunicação sintética identificada |
+| Agregada | CSV completo do PCA disponibilizado e itens do PE 038/26/2026 |
 
-Uma consulta pode utilizar somente uma base ou combinar múltiplas bases.
-
----
+Origem, hashes e limitações constam no inventário e no guia do pacote.
 
 ## 3. Funcionamento do sistema
 
-Fluxo resumido:
+O planejamento distingue consultas estruturadas, agregadas, documentais
+e combinadas. Contagens, listagens e resumos suportados são calculados
+nos arquivos completos. Pedidos documentais usam recuperação híbrida,
+seleção de evidências e validação de citações.
 
-```text
-Pergunta do usuário
-        |
-        v
-Análise da consulta
-        |
-        v
-Roteamento
-        |
-        v
-Recuperação densa + BM25
-        |
-        v
-Fusão RRF
-        |
-        v
-Geração e guardrails
-        |
-        v
-Validação
-        |
-        v
-Resposta e evidências
-```
+A combinação exige pedido documental explícito. Recusas e esclarecimentos
+podem encerrar a consulta antes de acessar as bases.
 
-Principais etapas:
+A recuperação documental utiliza busca vetorial, recuperação lexical e RRF.
+O rerank local é opcional. Mecanismos de cobertura procuram preservar os
+campos solicitados antes da apresentação dos trechos.
 
-1. análise da pergunta;
-2. seleção de uma ou mais bases;
-3. extração de filtros;
-4. recuperação densa e lexical;
-5. fusão dos resultados com RRF;
-6. geração da resposta;
-7. aplicação de guardrails;
-8. exibição da resposta e das evidências;
-9. registro das etapas em logs estruturados.
+## 4. Implementação e validação
 
-Para uma descrição mais detalhada, consulte:
+Estão implementados: planejamento de consultas, operações estruturadas
+e agregadas suportadas, recuperação híbrida, seleção documental, citações,
+guardrails, logs, interface, histórico persistente e feedback.
 
-- [`ARQUITETURA.md`](ARQUITETURA.md);
-- [`PERSONAS.md`](PERSONAS.md);
-- [`docs/GUIA_DO_PIPELINE.md`](docs/GUIA_DO_PIPELINE.md).
+A documentação registra separadamente:
 
----
+- 21 casos de personas avaliados no commit 5499caf;
+- oito suplementares, incluindo revalidação de S05 e S06 após correções;
+- cálculos, paginação, feedback e histórico na aplicação fef6d7a;
+- comparação de seis rankings com rerank local.
 
-## 4. Atualmente, o repositório possui implementações para:
-- coleta e versionamento do corpus;
-- corpus v3 com inventário e hashes SHA-256;
-- ingestão e preparação de documentos;
-- geração de embeddings;
-- índice vetorial FAISS;
-- índice lexical BM25;
-- persistência dos índices;
-- roteamento adaptativo;
-- extração de filtros;
-- regras de recusa;
-- recuperação híbrida;
-- fusão RRF;
-- geração de respostas e guardrails;
-- schemas compartilhados;
-- logging estruturado e observabilidade;
-- interface desenvolvida com Gradio;
-- testes unitários, de contrato e de integração;
-- documentação da arquitetura e do pipeline.
+Esses registros pertencem às versões e condições descritas em cada relatório.
+Não constituem uma rodada única de toda a entrega final.
 
-Ainda estão em consolidação e validação:
-
-- reranqueamento por cross-encoder;
-- integração ponta a ponta das quatro naturezas de evidência;
-- execução da suíte completa de testes no ambiente com todas as dependências e artefatos;
-- avaliação sistemática do pipeline e ablações;
-- validação final da geração, guardrails e comportamento cross-source.
-
-A existência de um módulo no repositório não significa, isoladamente, que sua integração ponta a ponta já tenha sido validada. O projeto diferencia implementação, integração e validação experimental.
-
-
----
+Permanecem pendentes: avaliação de respostas com rerank, reprodução final,
+consolidação das verificações na versão congelada e preparação da entrega.
 
 ## 5. Estrutura do repositório
 ```text
@@ -155,14 +107,13 @@ Alguns módulos podem ainda estar em desenvolvimento.
 
 ## 7. Pré-requisitos
 
-Recomenda-se utilizar:
+É necessário Git, Python, dependências instaladas e acesso autorizado ao
+pacote de artefatos. As consultas reais dependem do serviço de modelos
+disponibilizado à equipe.
 
-- Python 3.10 ou superior;
-- Git;
-- ambiente virtual Python;
-- acesso ao endpoint de modelos disponibilizado pela residência.
-
----
+O ambiente observado nas validações usa Python 3.13.16 e Gradio 6.29.0.
+requirements.txt define versões mínimas; não é um lockfile nem comprova
+compatibilidade de todas as combinações permitidas.
 
 ## 8. Instalação
 
@@ -213,7 +164,7 @@ Preencha somente as configurações necessárias. Não envie o arquivo `.env` ao
 
 ---
 
-## 9. Coleta do corpus
+## 9. Coleta do corpus — reconstrução opcional
 
 A coleta é controlada pelo arquivo `corpus_manifest.yaml`.
 
@@ -241,156 +192,48 @@ A pasta `data/raw/` não é versionada no Git.
 
 ---
 
-## 10. Ingestão e indexação
+## 10. Restaurar os artefatos atuais
 
-Execute a ingestão a partir da raiz do repositório:
+Para executar a aplicação avaliada, restaure o pacote completo de
+**2.172 chunks**, com seus índices correspondentes.
 
-```bash
-python -m src.ingest
-```
+Siga o [guia de restauração](docs/GUIA_RESTAURACAO_2172.md).
+Não é necessário gerar embeddings novamente.
 
-Depois, gere os índices:
-
-```bash
-python -m src.index
-```
-
-A indexação pode gerar:
-
-```text
-data/processed/chunks_teste.json
-data/indices/faiss_index.bin
-data/indices/bm25_index.pkl
-data/indices/chunk_ids.json
-```
-
-Os nomes poderão ser ajustados conforme a integração das bases reais.
-
-Como o endpoint de embeddings é compartilhado, os índices devem ser persistidos e reutilizados. A indexação não deve ser executada novamente sem necessidade.
-
----
+Ingestão e indexação são procedimentos de reconstrução. Uma nova coleta ou
+reconstrução deve gerar outra versão identificada. Os artefatos de 2.125
+chunks e os relatórios anteriores permanecem históricos.
 
 ## 11. Executar a interface
 
-Antes de iniciar a interface, confirme que as dependências foram instaladas e que os chunks e índices necessários existem.
+Restaure e confira os artefatos antes de iniciar a aplicação.
+Em ambiente local, execute da raiz: `python -m app.app`.
 
-### Google Colab
+No Colab, configure explicitamente logs, histórico e feedback antes de
+importar a aplicação. Use `criar_interface()` e inicie a fila da interface
+com compartilhamento quando necessário.
 
-Entre na pasta do repositório:
+Consulte o [guia](docs/GUIA_RESTAURACAO_2172.md) para configuração e ocorrências
+do frontend. O link público da Gradio é temporário e depende do processo ativo.
+O histórico é compartilhado entre quem acessa a instância.
 
-```python
-%cd /content/repositorio1
-```
+## 12. Consultas avaliadas e limites
 
-Instale as dependências:
+| Pergunta ou recorte | Comportamento esperado |
+|---|---|
+| Pregões eletrônicos publicados no RJ em março/2026 | Listagem de 1.358 registros, paginada |
+| Resumo completo do PE 038/26/2026 | 19 itens; 8 homologados, 9 fracassados, 2 desertos; R$ 141.002,08 |
+| Regras sobre pregão na Lei nº 14.133/2021 | Evidências normativas citadas |
+| Contagem por ano da compra 2026 e explicação normativa | 1.234 registros no recorte e parte documental separada |
+| Prazo no processo fictício SIM-RJ-001 | 10/15 dias após emissão do pedido; simulação identificada |
+| Exposição de CPF e telefone pessoal | Recusa |
 
-```python
-!pip install -q -r requirements.txt
-```
+Médias monetárias, preço por quilo e filtros de assinatura não estão
+implementados. Pedidos ambíguos ou intervalos de publicação não suportados
+exigem esclarecimento.
 
-Inicie a interface:
-
-```python
-from app.app import criar_interface
-
-demo = criar_interface()
-demo.launch(share=True, debug=True)
-```
-
-O Gradio fornecerá um endereço público temporário.
-
-### VS Code
-
-No terminal aberto na raiz do repositório, execute:
-
-```bash
-python -m app.app
-```
-
-Abra o endereço mostrado no terminal, normalmente:
-
-```text
-http://127.0.0.1:7860
-```
-
----
-
-## 12. Perguntas para testar a interface
-
-### Consulta estruturada
-
-```text
-Quais contratações de serviços de tecnologia foram encontradas?
-```
-
-Rota esperada:
-
-```python
-["estruturada"]
-```
-
-### Consulta normativa
-
-```text
-O que a Lei nº 14.133/2021 estabelece sobre o pregão eletrônico?
-```
-
-Rota esperada:
-
-```python
-["normativa"]
-```
-
-### Consulta agregada e estruturada
-
-```text
-Quantos contratos foram assinados por modalidade em 2025?
-```
-
-Rotas esperadas:
-
-```python
-["agregada", "estruturada"]
-```
-
-### Consulta conversacional
-
-```text
-O que foi discutido nas atas sobre a compra de equipamentos?
-```
-
-Rota esperada:
-
-```python
-["conversacional"]
-```
-
-### Consulta cross-source
-
-```text
-Sou MEI, posso participar de pregão eletrônico e existe algum aberto para material de escritório?
-```
-
-Rotas esperadas:
-
-```python
-["estruturada", "normativa"]
-```
-
-### Consulta que deve ser recusada
-
-```text
-Esse contrato foi uma fraude?
-```
-
-Resultado esperado:
-
-- nenhuma rota selecionada;
-- nenhuma evidência utilizada;
-- indicação de recusa;
-- apresentação do motivo.
-
----
+As perguntas exatas, fontes, resultados e versões constam nas matrizes
+de avaliação em docs. Consultas livres podem exigir esclarecimento.
 
 ## 13. Limitação temporária das evidências
 
@@ -408,70 +251,23 @@ Por exemplo, uma pergunta normativa pode ser roteada corretamente e ainda retorn
 
 ---
 
-## 14. Testes
+## 14. Testes e evidências
 
-Os testes são organizados em três camadas:
-
-| Camada | Objetivo | Utiliza LLM |
-|---|---|---|
-| Unitária | Funções determinísticas e isoladas | Não |
-| Contrato | Formatos, schemas e regras obrigatórias | Não |
-| Integração | Pipeline completo com perguntas conhecidas | Sim |
-
-Executar os testes offline:
+O pytest.ini exclui testes llm por padrão. Execute separadamente os testes
+sem LLM, a compatibilidade dos artefatos e a integração real:
 
 ```bash
-pytest -m "not llm" -v
+python -m pytest -q -m "not llm" --ignore=testes/test_compatibilidade_artefatos.py
+python -m pytest -q -m "not llm" testes/test_compatibilidade_artefatos.py
+python -m pytest -v -m llm testes/teste_integracao.py
 ```
 
-## Execução dos testes
+A compatibilidade exige o pacote restaurado. A integração exige o serviço
+de modelos. Registre commit, pacote, comando, resultados e logs.
 
-Os comandos devem ser executados na raiz do repositório.
-
-### Testes offline
-
-Os testes offline validam os módulos sem exigir a execução completa do
-pipeline, o acesso ao modelo ou os artefatos de indexação.
-
-```bash
-export PYTHONPATH=.
-python -m pytest -q --ignore=testes/teste_integracao.py
-```
-
-### Testes de integração
-
-```bash
-export PYTHONPATH=.
-python -m pytest -q testes/teste_integracao.py
-```
-
-A execução completa pode depender destes artefatos:
-
-- `data/processed/chunks_teste.json`;
-- `data/indices/faiss_index.bin`;
-- `data/indices/bm25_index.pkl`;
-- `data/indices/chunk_ids.json`;
-- acesso ao endpoint dos modelos.
-
-Se esses recursos não estiverem disponíveis, os testes offline podem ser
-executados separadamente.
-
-
-Executar testes que utilizam o endpoint do LLM:
-
-```bash
-pytest -m llm -v
-```
-
-Executar todos os testes:
-
-```bash
-pytest -v
-```
-
-Os testes de integração devem ser marcados com `@pytest.mark.llm`.
-
----
+A bateria anterior registrou 587 aprovações com 7 testes llm desmarcados,
+com artefatos disponíveis. Isso não equivale a 587 testes unitários isolados.
+Os resultados da versão final devem ser registrados na reprodução.
 
 ## 15. Política de sensibilidade
 
