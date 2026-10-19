@@ -1,0 +1,40 @@
+........................................................................ [ 14%]
+....................................................................FFF. [ 29%]
+........................F............................................... [ 44%]
+........................................................................ [ 58%]
+........................................................................ [ 73%]
+........................................................................ [ 88%]
+.........................................................                [100%]
+=================================== FAILURES ===================================
+_________________ test_adaptador_agregado_nao_chama_geracao[1] _________________
+testes/test_interface_aggregate.py:135: in test_adaptador_agregado_nao_chama_geracao
+    assert resultado["estrategia"] == "consulta_agregada"
+E   AssertionError: assert 'esclarecimento' == 'consulta_agregada'
+E
+E     - consulta_agregada
+E     + esclarecimento
+_________________ test_adaptador_agregado_nao_chama_geracao[3] _________________
+testes/test_interface_aggregate.py:135: in test_adaptador_agregado_nao_chama_geracao
+    assert resultado["estrategia"] == "consulta_agregada"
+E   AssertionError: assert 'esclarecimento' == 'consulta_agregada'
+E
+E     - consulta_agregada
+E     + esclarecimento
+_________________ test_adaptador_agregado_nao_chama_geracao[5] _________________
+testes/test_interface_aggregate.py:135: in test_adaptador_agregado_nao_chama_geracao
+    assert resultado["estrategia"] == "consulta_agregada"
+E   AssertionError: assert 'esclarecimento' == 'consulta_agregada'
+E
+E     - consulta_agregada
+E     + esclarecimento
+__________________ test_adaptador_fornece_criterio_contextual __________________
+testes/test_interface_technology.py:91: in test_adaptador_fornece_criterio_contextual
+    criterio = chamadas[0]["criterio_tecnologia"]
+               ^^^^^^^^^^^
+E   IndexError: list index out of range
+=========================== short test summary info ============================
+FAILED testes/test_interface_aggregate.py::test_adaptador_agregado_nao_chama_geracao[1]
+FAILED testes/test_interface_aggregate.py::test_adaptador_agregado_nao_chama_geracao[3]
+FAILED testes/test_interface_aggregate.py::test_adaptador_agregado_nao_chama_geracao[5]
+FAILED testes/test_interface_technology.py::test_adaptador_fornece_criterio_contextual
+4 failed, 485 passed, 7 deselected in 15.67s

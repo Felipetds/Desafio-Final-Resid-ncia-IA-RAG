@@ -92,6 +92,7 @@ class SourceEvidence(BaseModel):
     text: str
 
     rrf_score: float = 0.0
+    rerank_score: Optional[float] = None
 
     retrieval_sources: List[str] = Field(
         default_factory=list
