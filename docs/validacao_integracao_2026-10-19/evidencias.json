@@ -1,0 +1,66 @@
+{
+  "identidade": {
+    "commit_base": "315a503bf4165963d99b3b52b8f2e9caab0cfbc0",
+    "teste_com_alteracoes_locais": true,
+    "sha256_teste": "57dcaf6d25d45397586f503a39778e9a8f313d4b0ea9667c3766e2a8f2f1be1c",
+    "sha256_chunks": "dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404"
+  },
+  "integracao": [
+    {
+      "teste": "testes/teste_integracao.py::test_integracao_marina_arroz",
+      "fase": "call",
+      "situacao": "passed",
+      "duracao_s": 10.974,
+      "erro": null
+    },
+    {
+      "teste": "testes/teste_integracao.py::test_integracao_rodrigo_software",
+      "fase": "call",
+      "situacao": "passed",
+      "duracao_s": 4.72,
+      "erro": null
+    },
+    {
+      "teste": "testes/teste_integracao.py::test_integracao_consulta_normativa",
+      "fase": "call",
+      "situacao": "passed",
+      "duracao_s": 21.92,
+      "erro": null
+    },
+    {
+      "teste": "testes/teste_integracao.py::test_integracao_fontes_correspondem_ao_retrieval",
+      "fase": "call",
+      "situacao": "passed",
+      "duracao_s": 0.001,
+      "erro": null
+    },
+    {
+      "teste": "testes/teste_integracao.py::test_integracao_respeita_top_k",
+      "fase": "call",
+      "situacao": "passed",
+      "duracao_s": 4.763,
+      "erro": null
+    },
+    {
+      "teste": "testes/teste_integracao.py::test_integracao_resposta_nao_expoe_dados_pessoais",
+      "fase": "call",
+      "situacao": "passed",
+      "duracao_s": 0.162,
+      "erro": null
+    },
+    {
+      "teste": "testes/teste_integracao.py::test_integracao_consulta_sensivel",
+      "fase": "call",
+      "situacao": "passed",
+      "duracao_s": 3.311,
+      "erro": null
+    }
+  ],
+  "registro_original": "/content/drive/MyDrive/rag_grande_desafio/integracao_revisada_20261019T153504282795Z",
+  "testes_locais": {
+    "codigo_saida": 0,
+    "comando": "pytest -o addopts= testes -m 'not llm' -q --tb=short",
+    "rede": "bloqueada"
+  },
+  "observacao": "Fontes e privacidade verificam propriedades da mesma execução real compartilhada de P03."
+}

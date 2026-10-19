@@ -145,36 +145,14 @@ def validar_contrato_final(
 # ============================================================
 
 @pytest.mark.llm
-def test_integracao_marina_arroz(client):
-    pergunta = (
+def test_integracao_marina_arroz():
+    from app.pipeline_adapter import executar_pipeline
+
+    resultado = executar_pipeline(
         "Qual foi o valor médio por quilo de arroz contratado "
         "por municípios do RJ em 2025, e em quais modalidades?"
     )
-
-    recuperacao, resposta = executar_pipeline(
-        pergunta,
-        client,
-    )
-
-    validar_contrato_final(
-        pergunta,
-        recuperacao,
-        resposta,
-    )
-
-    assert recuperacao["is_refusal"] is False
-
-    rotas = set(recuperacao["routes"])
-
-    assert rotas.intersection(
-        {
-            "agregada",
-            "estruturada",
-        }
-    )
-
-    assert recuperacao["filters"].get("uf") == "RJ"
-    assert recuperacao["filters"].get("ano") == 2025
+    _validar_esclarecimento_interface(resultado, "médias monetárias")
 
 
 # ============================================================
@@ -183,39 +161,15 @@ def test_integracao_marina_arroz(client):
 # ============================================================
 
 @pytest.mark.llm
-def test_integracao_rodrigo_software(client):
-    pergunta = (
+def test_integracao_rodrigo_software():
+    from app.pipeline_adapter import executar_pipeline
+
+    resultado = executar_pipeline(
         "Quais contratos de licenciamento de software foram "
         "assinados por órgãos estaduais do RJ acima de "
         "R$ 500 mil em 2025, e quais foram os fornecedores?"
     )
-
-    recuperacao, resposta = executar_pipeline(
-        pergunta,
-        client,
-    )
-
-    validar_contrato_final(
-        pergunta,
-        recuperacao,
-        resposta,
-    )
-
-    assert recuperacao["is_refusal"] is False
-
-    rotas = set(recuperacao["routes"])
-
-    assert "estruturada" in rotas
-
-    assert recuperacao["filters"].get("uf") == "RJ"
-    assert recuperacao["filters"].get("ano") == 2025
-
-    valor_minimo = recuperacao["filters"].get(
-        "valor_minimo"
-    )
-
-    if valor_minimo is not None:
-        assert float(valor_minimo) >= 500000
+    _validar_esclarecimento_interface(resultado, "assinatura")
 
 
 # ============================================================
@@ -250,34 +204,31 @@ def test_integracao_consulta_normativa(client):
 # ============================================================
 
 @pytest.mark.llm
-def test_integracao_fontes_correspondem_ao_retrieval(client):
-    pergunta = (
-        "Quais contratos de tecnologia foram publicados "
-        "no RJ em 2025?"
-    )
+def test_integracao_fontes_correspondem_ao_retrieval(p03_interface_real):
+    import re
 
-    recuperacao, resposta = executar_pipeline(
-        pergunta,
-        client,
-    )
+    resultado = p03_interface_real
+    assert resultado["executado"] is True
+    assert resultado["estrategia"] == "recuperacao_hibrida"
+    assert resultado["run_id"]
+    assert resultado["query_id"]
 
-    validar_contrato_final(
-        pergunta,
-        recuperacao,
-        resposta,
-    )
-
-    ids_recuperados = {
-        evidencia["chunk_id"]
-        for evidencia in recuperacao["evidences"]
+    ids = {e["chunk_id"] for e in resultado["evidences"]}
+    citacoes = {
+        c.strip() for c in re.findall(
+            r"\[Fonte:\s*([^\]]+)\]",
+            resultado["answer"],
+            flags=re.IGNORECASE,
+        )
     }
-
-    ids_resposta = {
-        evidencia.chunk_id
-        for evidencia in resposta.sources_used
-    }
-
-    assert ids_resposta.issubset(ids_recuperados)
+    assert citacoes
+    assert citacoes <= ids
+    assert len(resultado["evidences"]) <= 3
+    assert "15126437000305-1-000676/2026" in resultado["answer"]
+    assert "chassis" in resultado["answer"].lower()
+    assert {
+        "ata_00191.pdf", "contratacoes_publicacao.json"
+    } <= set(resultado["fontes_citadas"])
 
 
 # ============================================================
@@ -313,37 +264,27 @@ def test_integracao_respeita_top_k(client):
 # ============================================================
 
 @pytest.mark.llm
-def test_integracao_resposta_nao_expoe_dados_pessoais(client):
-    pergunta = (
-        "Quais contratos de tecnologia foram publicados "
-        "no RJ em 2025?"
-    )
-
-    recuperacao, resposta = executar_pipeline(
-        pergunta,
-        client,
-    )
-
-    validar_contrato_final(
-        pergunta,
-        recuperacao,
-        resposta,
-    )
-
-    texto = resposta.answer
-
-    # O teste não procura CNPJ, pois CNPJ é permitido pelo projeto.
-    # Verifica apenas padrões explícitos que o guardrail deve mascarar.
+def test_integracao_resposta_nao_expoe_dados_pessoais(p03_interface_real):
     import re
 
-    padrao_cpf = (
-        r"\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b"
+    resultado = p03_interface_real
+    padrao_cpf = r"\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b"
+    por_id = retrieve.carregar_artefatos()[1]
+
+    # Comprova que há CPF no texto bruto de uma evidência selecionada.
+    assert any(
+        re.search(padrao_cpf, por_id[e["chunk_id"]]["text"])
+        for e in resultado["evidences"]
     )
 
-    assert re.search(
-        padrao_cpf,
-        texto,
-    ) is None
+    # Confere proteção tanto na resposta quanto nas evidências da interface.
+    assert re.search(padrao_cpf, resultado["answer"]) is None
+    assert all(
+        re.search(padrao_cpf, e.get("trecho", "")) is None
+        for e in resultado["evidences"]
+    )
+    assert resultado["fontes_citadas"]
+    assert "[Fonte:" in resultado["answer"]
 
 
 # ============================================================
@@ -375,3 +316,46 @@ def test_integracao_consulta_sensivel(client):
     assert resposta.is_refusal is True
     assert resposta.sources_used == []
     assert resposta.refusal_reason
+
+
+def _validar_esclarecimento_interface(resultado, motivo):
+    import json
+
+    assert resultado["executado"] is False
+    assert resultado["estrategia"] == "esclarecimento"
+    assert resultado["necessita_esclarecimento"] is True
+    assert resultado["is_refusal"] is False
+    assert motivo in resultado["answer"].lower()
+    assert resultado["evidences"] == []
+
+    eventos = [
+        json.loads(linha)
+        for arquivo in Path(obs.PASTA_LOGS).glob("*.jsonl")
+        for linha in arquivo.read_text(encoding="utf-8").splitlines()
+        if linha.strip()
+    ]
+    eventos = [
+        e for e in eventos if e.get("run_id") == resultado["run_id"]
+    ]
+    assert eventos, "Execução sem registros de observabilidade."
+    assert not any(e.get("status") == "erro" for e in eventos)
+    assert not {e["stage"] for e in eventos} & {
+        "retrieval_denso", "retrieval_bm25", "fusao_rrf",
+        "geracao", "consulta_estruturada", "consulta_agregada",
+    }
+
+
+@pytest.fixture(scope="module")
+def p03_interface_real():
+    """Uma execução real compartilhada pelas verificações de fontes e privacidade.
+
+    O compartilhamento é intencional: duas propriedades da mesma resposta,
+    sem contabilizá-las como duas execuções independentes do pipeline.
+    """
+    from app.pipeline_adapter import executar_pipeline
+
+    return executar_pipeline(
+        "Informe o objeto da ata nº 191/2026 da EBSERH "
+        "e o número PNCP da contratação correspondente.",
+        top_k=3,
+    )
