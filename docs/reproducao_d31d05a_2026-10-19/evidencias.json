@@ -1,0 +1,133 @@
+{
+  "commit_validado": "d31d05a23bda19d611cfbfce799567ad42483946",
+  "origem_registros": "/content/drive/MyDrive/rag_grande_desafio/reproducao_d31d05a_20261019T183730270236Z",
+  "ambiente": "Clone local independente e venv isolado, no mesmo host Colab.",
+  "testes": {
+    "locais_sem_llm": {
+      "testes": 585,
+      "falhas": 0,
+      "erros": 0,
+      "ignorados": 0,
+      "sha256": "1fcb83f5bdd71e113c3617fea1ead6648ac5e864f35e36d18a8183416762ff7c"
+    },
+    "compatibilidade": {
+      "testes": 2,
+      "falhas": 0,
+      "erros": 0,
+      "ignorados": 0,
+      "sha256": "4c11208f137834fa44dcf18c43ae31262481d8e3d2151058121de8d12fa52e01"
+    },
+    "integracao_real": {
+      "testes": 7,
+      "falhas": 0,
+      "erros": 0,
+      "ignorados": 0,
+      "sha256": "d6417914714d9bf2c00826cb29a6d9aa6915dc9842ed114d3c281604d364d093"
+    }
+  },
+  "interface": [
+    {
+      "caso": "P01",
+      "run_id": "598860d4",
+      "query_id": "q_dfbf9d78",
+      "resultado": "1.358 registros; filtros corretos; tabela e paginação disponível.",
+      "latencia_ms": 45972.29,
+      "etapas": [
+        {
+          "stage": "query_analysis",
+          "status": "ok"
+        },
+        {
+          "stage": "roteamento",
+          "status": "ok"
+        },
+        {
+          "stage": "consulta_estruturada",
+          "status": "ok"
+        }
+      ],
+      "erros_registrados": [],
+      "avaliacao_conteudo": "aprovado"
+    },
+    {
+      "caso": "P02",
+      "run_id": "c30c9fa6",
+      "query_id": "q_ac00176b",
+      "resultado": "19 itens; 8 homologados; 9 fracassados; 2 desertos; R$ 141.002,08.",
+      "latencia_ms": 9050.53,
+      "etapas": [
+        {
+          "stage": "query_analysis",
+          "status": "ok"
+        },
+        {
+          "stage": "roteamento",
+          "status": "ok"
+        },
+        {
+          "stage": "consulta_agregada",
+          "status": "ok"
+        }
+      ],
+      "erros_registrados": [],
+      "avaliacao_conteudo": "aprovado"
+    },
+    {
+      "caso": "P04",
+      "run_id": "1ded9042",
+      "query_id": "q_929a8797",
+      "resultado": "Definição, aplicação e exceções; citações aos chunks 28, 29 e 6.",
+      "latencia_ms": 11106.56,
+      "etapas": [
+        {
+          "stage": "query_analysis",
+          "status": "ok"
+        },
+        {
+          "stage": "roteamento",
+          "status": "ok"
+        },
+        {
+          "stage": "retrieval_denso",
+          "status": "ok"
+        },
+        {
+          "stage": "retrieval_bm25",
+          "status": "ok"
+        },
+        {
+          "stage": "fusao_rrf",
+          "status": "ok"
+        },
+        {
+          "stage": "geracao",
+          "status": "ok"
+        },
+        {
+          "stage": "validacao",
+          "status": "ok"
+        },
+        {
+          "stage": "validacao",
+          "status": "ok"
+        },
+        {
+          "stage": "geracao",
+          "status": "ok"
+        },
+        {
+          "stage": "validacao",
+          "status": "ok"
+        }
+      ],
+      "erros_registrados": [],
+      "avaliacao_conteudo": "aprovado"
+    }
+  ],
+  "limites": [
+    "Clone remoto autenticado e reprodução por outro integrante ainda pendentes.",
+    "Estas três consultas não constituem nova rodada completa das personas.",
+    "Rerank desativado nesta reprodução.",
+    "Avaliação das respostas geradas com rerank permanece pendente."
+  ]
+}
