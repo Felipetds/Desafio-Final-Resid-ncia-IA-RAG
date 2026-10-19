@@ -117,6 +117,15 @@ def cobrir_selecao_definicao(pergunta, conteudo, evidencias, rotas):
             + r"\s*:"
         )
 
+        ajustados = _cobrir_artigos_do_assunto(
+            pedido.group(1).strip(), selecionados, evidencias
+        )
+        if ajustados != selecionados:
+            selecionados = ajustados
+            conteudo = json.dumps(
+                {"chunk_ids": selecionados}, ensure_ascii=False
+            )
+
         # Mantém a escolha quando a definição já foi selecionada.
         if any(
             identificador in por_id
@@ -377,3 +386,39 @@ def cobrir_selecao_definicao(pergunta, conteudo, evidencias, rotas):
     # Reserva a última vaga quando o limite de cinco já foi atingido.
     ids = selecionados[:4] + [definicao.chunk_id]
     return json.dumps({"chunk_ids": ids}, ensure_ascii=False)
+
+
+def _cobrir_artigos_do_assunto(assunto, selecionados, evidencias):
+    """Cobre artigos recuperados que mencionam explicitamente o assunto."""
+    padrao = re.compile(
+        r"(?<!\w)" + re.escape(assunto) + r"(?!\w)"
+    )
+    por_id = {e.chunk_id: e for e in evidencias}
+
+    def artigo(e):
+        return bool(re.match(
+            r"^\s*art\.?\s*\d+", normalizar(e.text)
+        ))
+
+    def menciona(e):
+        return bool(padrao.search(normalizar(e.text)))
+
+    pertinentes = [
+        e.chunk_id for e in evidencias
+        if artigo(e) and menciona(e)
+    ]
+    if not pertinentes:
+        return selecionados
+
+    # Não descarta evidências sem estrutura de artigo reconhecida.
+    mantidos = [
+        identificador for identificador in selecionados
+        if not artigo(por_id[identificador])
+        or menciona(por_id[identificador])
+    ]
+    faltantes = [
+        identificador for identificador in pertinentes
+        if identificador not in mantidos
+    ]
+    vagas = max(0, 5 - len(faltantes))
+    return list(dict.fromkeys(mantidos[:vagas] + faltantes))[:5]
