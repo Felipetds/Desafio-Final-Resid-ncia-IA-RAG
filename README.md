@@ -1,260 +1,225 @@
-# Adaptive RAG para Contratações Públicas do Estado do Rio de Janeiro
+# Adaptive RAG — Contratações Públicas do Rio de Janeiro
 
-> Estado avaliado em 19/10/2026: pacote de 2.172 chunks. Reprodução final e congelamento ainda pendentes. [Guia atual](docs/GUIA_RESTAURACAO_2172.md).
+Projeto do **Grande Desafio de IA Generativa e RAG**, da Residência TIC em Trilhas — PUC-Rio e Instituto ECOA.
 
+O sistema identifica o tipo de evidência necessário para responder à pergunta e seleciona consultas estruturadas, cálculos sobre arquivos completos, recuperação documental ou uma combinação dessas estratégias.
 
-Projeto desenvolvido no **Grande Desafio de IA Generativa e RAG**, da Residência TIC em Trilhas — PUC-Rio e Instituto ECOA.
+> **Versão de entrega registrada:** [`entrega-2026-10-19`](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/tree/entrega-2026-10-19).
+>
+> **Commit:** `f1efc55c81f5ee5ffa54d3d87a584e22e12484bb`.
+>
+> Esta revisão documental, de 21/10/2026, consolida as validações conhecidas e as pendências da auditoria do enunciado. A marca identifica uma versão preservada; não certifica atendimento integral dos requisitos.
 
-O sistema utiliza uma arquitetura de **Adaptive RAG** para responder perguntas sobre contratações públicas do Estado do Rio de Janeiro. Antes de recuperar documentos, o sistema analisa a consulta e decide quais tipos de evidência são necessários.
+## 1. Cenário e objetivo
 
----
+**Cenário 1 — Contratações Públicas do Estado do Rio de Janeiro.**
 
-## 1. Cenário escolhido
+A solução permite consultar o corpus fornecido sem exigir que o usuário programe ou manipule diretamente arquivos e APIs. As respostas apresentam os filtros, fontes, recortes e evidências correspondentes à estratégia executada.
 
-**Cenário 1 — Contratações Públicas do Estado do Rio de Janeiro**
+O sistema não representa uma consulta em tempo real a todas as contratações do PNCP. Seu escopo é o conjunto de arquivos identificado no manifesto e no inventário.
 
-O cenário foi escolhido por utilizar dados públicos provenientes de fontes oficiais e permitir a integração de bases com naturezas diferentes. As consultas podem exigir busca semântica, correspondência lexical, filtros estruturados, análise normativa e informações agregadas.
+## 2. Corpus da entrega
 
----
+O pacote preservado contém **oito arquivos brutos e 2.172 chunks**, distribuídos em quatro naturezas.
 
-## 2. Bases de conhecimento
+| Natureza | Conteúdo | Chunks |
+|---|---|---:|
+| Estruturada | 1.358 registros PNCP do recorte RJ, pregão eletrônico, março de 2026 | 1.358 |
+| Normativa | Snapshot HTML da Lei nº 14.133/2021 | 217 |
+| Conversacional | Três atas oficiais e uma comunicação sintética identificada | 78 |
+| Agregada | PCA disponibilizado e resultados dos itens do PE 038/26/2026 | 519 |
+| **Total** | | **2.172** |
 
-O pacote atual contém oito arquivos brutos e quatro naturezas:
+A quantidade de chunks agregados indexados não corresponde à quantidade total de linhas dos arquivos. Os cálculos suportados consultam os CSVs completos.
 
-| Natureza | Conteúdo disponível |
-|---|---|
-| Normativa | Snapshot HTML da Lei nº 14.133/2021 |
-| Estruturada | 1.358 registros PNCP da coleta RJ, pregão eletrônico, março/2026 |
-| Conversacional | Três atas oficiais e uma comunicação sintética identificada |
-| Agregada | CSV completo do PCA disponibilizado e itens do PE 038/26/2026 |
+**Pacote compartilhado:**
 
-Origem, hashes e limitações constam no inventário e no guia do pacote.
-
-## 3. Funcionamento do sistema
-
-O planejamento distingue consultas estruturadas, agregadas, documentais
-e combinadas. Contagens, listagens e resumos suportados são calculados
-nos arquivos completos. Pedidos documentais usam recuperação híbrida,
-seleção de evidências e validação de citações.
-
-A combinação exige pedido documental explícito. Recusas e esclarecimentos
-podem encerrar a consulta antes de acessar as bases.
-
-A recuperação documental utiliza busca vetorial, recuperação lexical e RRF.
-O rerank local é opcional. Mecanismos de cobertura procuram preservar os
-campos solicitados antes da apresentação dos trechos.
-
-## 4. Implementação e validação
-
-Estão implementados: planejamento de consultas, operações estruturadas
-e agregadas suportadas, recuperação híbrida, seleção documental, citações,
-guardrails, logs, interface, histórico persistente e feedback.
-
-A documentação registra separadamente:
-
-- 21 casos de personas avaliados no commit 5499caf;
-- oito suplementares, incluindo revalidação de S05 e S06 após correções;
-- cálculos, paginação, feedback e histórico na aplicação fef6d7a;
-- comparação de seis rankings com rerank local.
-
-Esses registros pertencem às versões e condições descritas em cada relatório.
-Não constituem uma rodada única de toda a entrega final.
-
-Permanecem pendentes: avaliação de respostas com rerank, reprodução final,
-consolidação das verificações na versão congelada e preparação da entrega.
-
-## 5. Estrutura do repositório
 ```text
-├── testes/                  # Testes e fixtures
-├── acompanhamento/          # Relatos individuais dos integrantes
-├── app/                     # Interface e adaptador do pipeline
-├── data/
-│   ├── inventory/           # Inventários versionados
-│   ├── processed/           # Chunks processados, ignorados pelo Git
-│   └── indices/             # Índices persistidos, ignorados pelo Git
-├── docs/                    # Guias complementares
-├── eval/                    # Resultados de avaliação
-├── logs/                    # Logs locais, ignorados pelo Git
-├── src/                     # Módulos do pipeline
-├── ARQUITETURA.md
-├── CORPUS_INVENTORY.md
-├── PERSONAS.md
-├── corpus_manifest.yaml
-├── requirements.txt
-└── README.md
+ENTREGA_EQUIPE_2026-10-16/pacote_v3_2172
 ```
 
----
+**SHA-256 de `data/processed/chunks_teste.json`:**
 
-## 6. Módulos principais
+```text
+dcdcc7a0f8e34da1d0824b5322b6e37306c34e2d53d107c1ca067bc2771c8404
+```
 
-| Módulo | Responsabilidade |
+Consulte:
+
+- [Manifesto do corpus](corpus_manifest.yaml).
+- [Inventário](CORPUS_INVENTORY.md).
+- [Guia de restauração e integridade](docs/GUIA_RESTAURACAO_2172.md).
+
+Não misture esse pacote com artefatos históricos de 2.125 chunks.
+
+## 3. Funcionamento
+
+| Estratégia | Execução |
 |---|---|
-| `src/fetch_corpus.py` | Coleta, atualização, versionamento e inventário |
-| `src/ingest.py` | Extração, chunking e metadados |
-| `src/index.py` | Embeddings, FAISS, BM25 e persistência |
-| `src/router.py` | Análise da consulta, filtros e roteamento |
-| `src/retrieve.py` | Recuperação híbrida, filtros e fusão RRF |
-| `src/generate.py` | Geração das respostas e guardrails |
-| `src/schema.py` | Modelos e contratos compartilhados |
-| `src/obs.py` | Logging estruturado e tokens |
-| `app/pipeline_adapter.py` | Integração da interface com o pipeline |
-| `app/app.py` | Interface Gradio |
+| Consulta estruturada | Filtros, contagem e listagem sobre a base normalizada, com paginação |
+| Consulta agregada | Resumos e cálculos suportados sobre os arquivos completos |
+| Recuperação documental | Busca vetorial e BM25, fusão RRF, seleção de cobertura e resposta com citações |
+| Consulta combinada | Resultado estruturado e resposta documental apresentados separadamente |
+| Esclarecimento | Interrompe pedidos ambíguos ou operações ainda não suportadas |
+| Recusa | Interrompe solicitações protegidas ou fora do escopo definido |
 
-Alguns módulos podem ainda estar em desenvolvimento.
+O planejamento ocorre antes da execução. Uma consulta combinada exige pedido documental explícito.
 
----
+Nas consultas documentais, o `top_k` controla a quantidade de evidências apresentadas ao gerador. Ele não limita a quantidade de registros usados nas contagens e somas determinísticas.
 
-## 7. Pré-requisitos
+O rerank local por cross-encoder está disponível como opção e permanece **desativado por padrão**, conforme a avaliação registrada.
 
-É necessário Git, Python, dependências instaladas e acesso autorizado ao
-pacote de artefatos. As consultas reais dependem do serviço de modelos
-disponibilizado à equipe.
+## 4. Instalação
 
-O ambiente observado nas validações usa Python 3.13.16 e Gradio 6.29.0.
-requirements.txt define versões mínimas; não é um lockfile nem comprova
-compatibilidade de todas as combinações permitidas.
-
-## 8. Instalação
-
-Clone o repositório:
+O repositório é privado e exige acesso autorizado. Não coloque tokens na URL do clone nem versione credenciais.
 
 ```bash
 git clone https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
 cd repositorio1
+git checkout entrega-2026-10-19
 ```
 
-Crie um ambiente virtual.
+Crie e ative um ambiente virtual.
 
-### Windows
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-```
-
-### Linux ou macOS
+**Linux ou macOS:**
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Instale as dependências:
+**Windows — Prompt de Comando:**
 
-```bash
-pip install -r requirements.txt
+```bat
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
-Copie o arquivo de exemplo das variáveis de ambiente:
-
-### Windows
+Instale as versões diretas utilizadas na validação:
 
 ```bash
-copy .env.example .env
+python -m pip install -r docs/ambiente_validacao_2026-10-19/requirements-base.txt
+python -m pip check
 ```
 
-### Linux ou macOS
+O ambiente observado utilizou Python 3.13.16 e Gradio 6.29.0.
+
+O arquivo de versões diretas não é um lockfile completo. As dependências efetivamente instaladas na reprodução estão em [requirements-ambiente-reproduzido.txt](docs/reproducao_d31d05a_2026-10-19/requirements-ambiente-reproduzido.txt).
+
+O `requirements.txt` da raiz mantém versões mínimas; isso não garante compatibilidade de todas as combinações permitidas.
+
+### Configuração do serviço
+
+As execuções registradas utilizaram:
+
+- Geração: `qcwind/qwen3-8b-instruct-Q4-K-M`.
+- Embeddings: `xagi/qwen3-embedding:0.6b-q4_k_m`.
+- Endpoint compatível com OpenAI disponibilizado pela residência.
+
+A versão auditada ainda contém endpoint e modelos definidos diretamente nos módulos. A centralização em `config.py` e a leitura consistente das opções do `.env.example` são pendências técnicas.
+
+Não envie `.env`, tokens ou credenciais ao GitHub.
+
+## 5. Restaurar dados e índices
+
+Siga o [guia de restauração](docs/GUIA_RESTAURACAO_2172.md), utilizando o pacote completo e conferindo os hashes do manifesto.
+
+A restauração deve recuperar os arquivos brutos, os dados processados e os índices correspondentes.
+
+**Não é necessário gerar embeddings novamente para executar a versão validada.**
+
+Ingestão e indexação são procedimentos de reconstrução. Não os execute apenas para iniciar a interface. Caso uma reconstrução seja necessária, identifique a nova versão e preserve os artefatos anteriores.
+
+## 6. Executar a interface
+
+Execute da raiz do repositório, após restaurar e conferir o pacote:
 
 ```bash
-cp .env.example .env
+python scripts/iniciar_interface_colab.py
 ```
 
-Preencha somente as configurações necessárias. Não envie o arquivo `.env` ao GitHub.
+Antes da execução, configure conforme o guia:
 
----
+- `PIPELINE_LOG_DIR`: pasta dos logs.
+- `HISTORY_PATH`: arquivo do histórico SQLite.
+- `FEEDBACK_PATH`: arquivo de feedback JSONL.
+- `GRADIO_SERVER_PORT`: porta da interface.
 
-## 9. Coleta do corpus — reconstrução opcional
+No Colab, use caminhos de persistência no Drive montado. Arquivos apenas em `/content` podem desaparecer quando o ambiente é encerrado.
 
-A coleta é controlada pelo arquivo `corpus_manifest.yaml`.
+O inicializador configura a pasta de logs antes da importação da aplicação e seleciona o frontend local. Consulte o guia para os controles de raciocínio, limite de tokens do roteador e configuração opcional de rerank.
 
-Coleta inicial:
+O link público do Gradio é temporário e depende do Colab e do processo ativos. A referência permanente da entrega é a versão do código acompanhada do pacote e das evidências.
 
-```bash
-python -m src.fetch_corpus fetch --manifest corpus_manifest.yaml
-```
+O histórico é compartilhado entre quem acessa a mesma instância. Abrir uma consulta salva reapresenta o resultado original; não representa uma nova chamada ao modelo.
 
+## 7. Consultas avaliadas
 
-Criação de uma nova versão:
-
-```bash
-python -m src.fetch_corpus update --manifest corpus_manifest.yaml --sources /caminho/para/fontes_locais
-```
-
-
-Geração ou atualização do inventário:
-
-```bash
-python -m src.fetch_corpus inventory --version v3
-```
-
-A pasta `data/raw/` não é versionada no Git.
-
----
-
-## 10. Restaurar os artefatos atuais
-
-Para executar a aplicação avaliada, restaure o pacote completo de
-**2.172 chunks**, com seus índices correspondentes.
-
-Siga o [guia de restauração](docs/GUIA_RESTAURACAO_2172.md).
-Não é necessário gerar embeddings novamente.
-
-Ingestão e indexação são procedimentos de reconstrução. Uma nova coleta ou
-reconstrução deve gerar outra versão identificada. Os artefatos de 2.125
-chunks e os relatórios anteriores permanecem históricos.
-
-## 11. Executar a interface
-
-Restaure e confira os artefatos antes de iniciar a aplicação.
-Em ambiente local, execute da raiz: `python -m app.app`.
-
-No Colab, configure explicitamente logs, histórico e feedback antes de
-importar a aplicação. Use `criar_interface()` e inicie a fila da interface
-com compartilhamento quando necessário.
-
-Consulte o [guia](docs/GUIA_RESTAURACAO_2172.md) para configuração e ocorrências
-do frontend. O link público da Gradio é temporário e depende do processo ativo.
-O histórico é compartilhado entre quem acessa a instância.
-
-## 12. Consultas avaliadas e limites
-
-| Pergunta ou recorte | Comportamento esperado |
+| Consulta | Resultado observado |
 |---|---|
-| Pregões eletrônicos publicados no RJ em março/2026 | Listagem de 1.358 registros, paginada |
-| Resumo completo do PE 038/26/2026 | 19 itens; 8 homologados, 9 fracassados, 2 desertos; R$ 141.002,08 |
-| Regras sobre pregão na Lei nº 14.133/2021 | Evidências normativas citadas |
-| Contagem por ano da compra 2026 e explicação normativa | 1.234 registros no recorte e parte documental separada |
-| Prazo no processo fictício SIM-RJ-001 | 10/15 dias após emissão do pedido; simulação identificada |
-| Exposição de CPF e telefone pessoal | Recusa |
+| Pregões eletrônicos publicados no RJ em março de 2026 | 1.358 registros, com paginação |
+| PE 038/26/2026 | 19 itens: 8 homologados, 9 fracassados e 2 desertos; soma homologada de R$ 141.002,08 |
+| Ata nº 191/2026 da EBSERH | Objeto: peças mamógrafas (chassis); PNCP 15126437000305-1-000676/2026 |
+| Pregão na Lei nº 14.133/2021 | Definição, aplicação e exceções em evidências normativas citadas |
+| Processo fictício SIM-RJ-001 | Papel A4 em 10 dias e canetas em 15 dias após a emissão do pedido; simulação identificada |
+| PCA RJ 2026 disponibilizado | 36.994 linhas; soma estimada de R$ 55.968.524.178,3319 no arquivo integral |
+| Ata nº 137/2026 do INCA | Rodízios para camas elétricas; contratada AGIMED COMERCIO DE EQUIPAMENTOS LTDA |
+| Contagem por ano da compra 2026 e explicação normativa | 1.234 registros no recorte, com parte documental separada |
+| Resumo do PE com verificação de vínculos | Cálculo sobre o CSV e verificação por identificadores no corpus carregado |
 
-Médias monetárias, preço por quilo e filtros de assinatura não estão
-implementados. Pedidos ambíguos ou intervalos de publicação não suportados
-exigem esclarecimento.
+As perguntas, fontes, identificadores de execução e versões estão nos relatórios. Consultas livres podem exigir esclarecimento.
 
-As perguntas exatas, fontes, resultados e versões constam nas matrizes
-de avaliação em docs. Consultas livres podem exigir esclarecimento.
+### Operações não suportadas
 
-## 13. Limitação temporária das evidências
+- Médias monetárias, preço por quilo e média ponderada.
+- Filtros de assinatura.
+- Previsão de valores futuros sem modelo preditivo validado.
+- Filtros e cruzamentos além dos explicitamente suportados.
 
-A ausência de evidências não significa necessariamente erro da interface.
+Pedidos ambíguos ou intervalos de publicação não suportados recebem esclarecimento.
 
-Isso pode ocorrer quando:
+## 8. Validações registradas
 
-- a base correspondente ainda não foi coletada;
-- a base ainda não passou pela ingestão;
-- a base ainda não foi indexada;
-- a fixture disponível contém somente dados de outra natureza;
-- os filtros eliminam os resultados existentes.
+| Avaliação | Evidência |
+|---|---|
+| Reprodução em clone local independente e venv isolado, no mesmo Colab | [Relatório de reprodução](docs/reproducao_d31d05a_2026-10-19/RELATORIO.md) |
+| 585 testes locais, 2 de compatibilidade e 7 de integração real aprovados em execuções separadas | [Evidências da reprodução](docs/reproducao_d31d05a_2026-10-19/evidencias.json) |
+| 21 casos de personas no commit `5499caf` | [Matriz das personas](docs/avaliacao_personas_5499caf_2026-10-19/RELATORIO.md) |
+| Oito casos suplementares, com correções e revalidações identificadas | [Avaliação suplementar](docs/validacao_suplementares_2026-10-19/RELATORIO.md) |
+| Cálculos, paginação, histórico e feedback na aplicação `fef6d7a` | [Validação da interface](docs/validacao_interface_fef6d7a_2026-10-19/RELATORIO.md) |
+| Comparação de quatro métodos, em seis perguntas | [Comparação dos rankings](docs/comparacao_recuperacao_2026-10-19/RELATORIO.md) |
+| 24 respostas extrativas, seis perguntas e quatro métodos, top-3 | [Avaliação das respostas](docs/avaliacao_respostas_recuperacao_2026-10-19/RELATORIO.md) |
 
-Por exemplo, uma pergunta normativa pode ser roteada corretamente e ainda retornar zero evidências se os documentos normativos não estiverem indexados.
+Esses resultados pertencem aos commits e às condições descritos em cada relatório. Não constituem uma única rodada integral no commit documental da entrega.
 
----
+A reprodução foi executada no commit `d31d05a`. O código da tag de entrega foi comparado ao código validado, sem diferenças nos caminhos de código, testes, inicializador e dependências conferidos.
 
-## 14. Testes e evidências
+O benchmark recebido da Janice está [preservado como avaliação complementar](docs/avaliacao_complementar_janice_2026-10-19/README.md). A identificação do commit e dos hashes utilizados nessa execução permanece pendente.
 
-O pytest.ini exclui testes llm por padrão. Execute separadamente os testes
-sem LLM, a compatibilidade dos artefatos e a integração real:
+### Decisão sobre rerank
+
+O rerank permanece desativado por padrão.
+
+No experimento de respostas top-3:
+
+| Método | Cobertura média dos campos na resposta | Respostas completas |
+|---|---:|---:|
+| Vetorial | 44,4% | 0/6 |
+| BM25 | 63,9% | 2/6 |
+| RRF | 63,9% | 2/6 |
+| RRF com rerank | 61,1% | 2/6 |
+
+O rerank apresentou dois ganhos, duas perdas e dois empates em relação ao RRF, sem ganho consistente nesse recorte.
+
+A comparação reutilizou rankings preservados e não aplicou o resgate de cobertura anterior à geração utilizado na interface. Não equivale à avaliação do pipeline completo.
+
+A comparação dos rankings top-5 apresentou ganho de cobertura com rerank, mas não foram geradas respostas top-5.
+
+A avaliação das respostas foi assistida por IA, com rubrica explícita, e não representa avaliação humana independente.
+
+## 9. Testes
+
+O `pytest.ini` exclui testes marcados `llm` por padrão.
 
 ```bash
 python -m pytest -q -m "not llm" --ignore=testes/test_compatibilidade_artefatos.py
@@ -262,89 +227,113 @@ python -m pytest -q -m "not llm" testes/test_compatibilidade_artefatos.py
 python -m pytest -v -m llm testes/teste_integracao.py
 ```
 
-A compatibilidade exige o pacote restaurado. A integração exige o serviço
-de modelos. Registre commit, pacote, comando, resultados e logs.
+A compatibilidade exige o pacote restaurado. A integração real exige acesso ao serviço de modelos. Parte da suíte local também verifica arquivos do corpus disponíveis no ambiente.
 
-A bateria anterior registrou 587 aprovações com 7 testes llm desmarcados,
-com artefatos disponíveis. Isso não equivale a 587 testes unitários isolados.
-Os resultados da versão final devem ser registrados na reprodução.
+Na reprodução, os sete testes de integração foram desmarcados na execução local e executados separadamente com o serviço real. Houve um aviso do pytest sobre importação prévia do `anyio` no harness, registrado no relatório.
 
-## 15. Política de sensibilidade
+As quantidades informadas são históricas, vinculadas à versão e aos comandos executados. Não são uma promessa do total de testes de qualquer revisão posterior.
 
-A classificação de sensibilidade deve ocorrer durante a ingestão.
+**Ressalva da auditoria:** na tag `entrega-2026-10-19`, `testes/test_metadata.py` imprime falhas sem lançar uma asserção. Esse teste isolado não comprova o contrato de metadados. A correção e a ampliação das fixtures estavam em preparação e sua publicação posterior à tag ainda precisa ser confirmada.
 
-### Informações permitidas
+## 10. Coleta e versionamento
 
-O sistema pode responder com:
+O manifesto registra os arquivos, hashes e recortes do snapshot.
 
-- valores de contratos;
-- objetos contratados;
-- nomes de empresas fornecedoras;
-- CNPJ de pessoas jurídicas;
-- modalidades e órgãos públicos.
+Na versão auditada, o `fetch` padrão coleta somente a base estruturada do PNCP:
 
-### Informações que devem ser mascaradas
+```bash
+python -m src.fetch_corpus fetch --manifest corpus_manifest.yaml
+```
 
-O sistema deve mascarar:
+Há checkpoints e retomada explícita com `--retomar`. O destino final existente é protegido contra sobrescrita, mas não é tratado como coleta concluída com retorno de sucesso.
 
-- CPF de pessoa física;
-- telefone pessoal;
-- e-mail pessoal;
-- outros dados pessoais encontrados em atas ou comunicações.
+O fluxo de importação e atualização das demais fontes depende de arquivos locais previamente obtidos, com os caminhos e hashes esperados:
 
-### Solicitações que devem ser recusadas
+```bash
+python -m src.fetch_corpus update --manifest corpus_manifest.yaml --sources /caminho/para/fontes_locais
+python -m src.fetch_corpus inventory --manifest corpus_manifest.yaml --version v3
+```
 
-O sistema deve recusar:
+O fluxo local gera versões, inventário e diff. Isso não equivale à reconstrução automática das oito fontes a partir das URLs oficiais.
 
-- dados bancários;
-- credenciais;
-- informações restritas;
-- acusações de fraude;
-- julgamentos sobre a legalidade de contratos específicos.
+A coleta ainda precisa completar os contratos de limitação de taxa entre páginas bem-sucedidas e tratamento de falhas por fonte.
 
-O sistema apresenta evidências públicas, mas não substitui investigação ou análise jurídica.
+`data/raw/` é ignorado pelo Git. Manifesto, inventários e diffs são versionados. Para executar a aplicação validada, prefira a restauração do pacote.
 
----
+## 11. Segurança e sensibilidade
 
-## 16. Observabilidade
+**Informações permitidas:** valores, objetos, nomes de fornecedores e CNPJs de pessoas jurídicas.
 
-O pipeline utiliza logs estruturados no formato JSONL:
+**Informações a mascarar:** CPF de pessoa física, telefone pessoal, e-mail pessoal e outros dados pessoais presentes nas fontes.
+
+**Solicitações a recusar:** dados bancários, credenciais e pedidos de acusação de fraude ou conclusão sobre a legalidade de uma contratação específica.
+
+O sistema apresenta dados e evidências; não substitui investigação ou análise jurídica.
+
+A sensibilidade é atribuída na ingestão. O alinhamento entre categorias do manifesto e valores efetivamente utilizados pelos módulos permanece entre as pendências da auditoria.
+
+## 12. Observabilidade e persistência
+
+O pipeline de consultas utiliza logs JSONL diários, com `run_id` e `query_id`.
 
 ```text
 logs/pipeline-AAAA-MM-DD.jsonl
 ```
 
-Os eventos podem registrar:
+Os eventos registram estágio, status, latência, entrada, saída, tokens, modelo e informações adicionais. O uso de tokens é preenchido nas chamadas ao LLM quando informado pelo serviço.
 
-- `ts`;
-- `run_id`;
-- `query_id`;
-- `stage`;
-- `status`;
-- `latencia_ms`;
-- `input`;
-- `output`;
-- `tokens`;
-- `modelo`;
-- `extra`.
-
-Estágios padronizados:
+Os estágios de consulta incluem:
 
 - `query_analysis`;
 - `roteamento`;
 - `retrieval_denso`;
 - `retrieval_bm25`;
 - `fusao_rrf`;
-- `rerank`;
 - `geracao`;
 - `validacao`;
+- `consulta_estruturada`;
+- `consulta_agregada`;
 - `feedback`.
 
----
+O schema admite `rerank`; na versão auditada, seus detalhes são registrados na fusão e no logger do módulo, sem comprovação de evento JSONL próprio por consulta.
 
-## 17. Responsabilidades
+Coleta, ingestão e indexação ainda utilizam principalmente `print`. Sua instrumentação estruturada não atende integralmente ao contrato de logging do enunciado.
 
-| Área | Responsável |
+Um resultado correto após fallback não elimina o timeout anterior registrado nos logs.
+
+Logs, histórico SQLite e feedback JSONL são mecanismos distintos. O histórico e o feedback possuem evidências de persistência após reinício. A conferência visual da restauração da pergunta no campo de entrada permanece registrada como pendência.
+
+## 13. Limitações do recorte
+
+- O sistema responde sobre os arquivos fornecidos, não sobre todo o PNCP.
+- Ano da compra não equivale a ano de publicação.
+- A UF da unidade administrativa não garante o local de execução do objeto.
+- O cálculo do PCA utiliza o CSV integral; o recorte de ano e UF está associado à origem do arquivo.
+- As agregações não são calculadas apenas sobre os resultados top-k.
+- Consultas determinísticas podem apresentar proveniência por arquivo, filtros e recorte, sem citações no formato de chunk.
+- Vínculos são pesquisados por identificadores; ausência de correspondência não comprova inexistência de documentos relacionados.
+- Publicação, homologação, data desejada e vigência têm significados diferentes.
+- A representação de vigência nos metadados precisa de adequação; não foi demonstrada comparação de versões normativas vigentes e revogadas.
+- O serviço externo pode apresentar demora ou timeout.
+- Histórico e interface pública dependem das condições de acesso e persistência da instância.
+
+## 14. Estrutura e responsabilidades
+
+```text
+app/                    Interface, histórico, feedback e adaptador
+src/                    Planejamento, execução, recuperação e geração
+testes/                 Testes e fixtures
+eval/                   Avaliações históricas
+docs/                   Guias, relatórios e evidências versionadas
+acompanhamento/          Relatos individuais
+data/inventory/         Inventários e diffs
+data/raw/               Dados brutos — ignorados pelo Git
+data/processed/         Dados processados — ignorados pelo Git
+data/indices/           Índices e cache — ignorados pelo Git
+logs/                   Logs locais — ignorados pelo Git
+```
+
+| Área | Responsável principal |
 |---|---|
 | Coordenação | Maria Eduarda |
 | Coleta e versionamento | Janice |
@@ -354,24 +343,38 @@ Estágios padronizados:
 | Observabilidade, interface e integração | Maria Eduarda |
 | Documentação | Maria Eduarda, com contribuição da equipe |
 
-A responsabilidade principal por um módulo não impede a colaboração dos demais integrantes.
+A divisão por módulo não impede colaboração. Os acompanhamentos individuais devem registrar o trabalho efetivamente realizado e o uso de IA, conforme o enunciado.
 
----
+## 15. Documentação da entrega
 
-## 18. Documentação complementar
+- [Fechamento da entrega](docs/FECHAMENTO_ENTREGA_2026-10-19.md).
+- [Guia de restauração](docs/GUIA_RESTAURACAO_2172.md).
+- [Reprodução e testes](docs/reproducao_d31d05a_2026-10-19/RELATORIO.md).
+- [Comparação dos rankings](docs/comparacao_recuperacao_2026-10-19/RELATORIO.md).
+- [Comparação das respostas](docs/avaliacao_respostas_recuperacao_2026-10-19/RELATORIO.md).
+- [Avaliação complementar da Janice](docs/avaliacao_complementar_janice_2026-10-19/README.md).
+- [Personas](PERSONAS.md).
+- [Inventário](CORPUS_INVENTORY.md).
+- [Manifesto](corpus_manifest.yaml).
+- [Arquitetura inicial e responsáveis](ARQUITETURA.md).
 
-- [`ARQUITETURA.md`](ARQUITETURA.md): arquitetura e divisão de responsabilidades;
-- [`PERSONAS.md`](PERSONAS.md): personas e perguntas de referência;
-- [`CORPUS_INVENTORY.md`](CORPUS_INVENTORY.md): inventário do corpus;
-- [`corpus_manifest.yaml`](corpus_manifest.yaml): definição declarativa das bases;
-- [`docs/GUIA_DO_PIPELINE.md`](docs/GUIA_DO_PIPELINE.md): explicação do fluxo e dos testes.
+Relatórios históricos preservam os resultados de suas datas. Consulte o commit e o escopo de cada evidência antes de compará-los.
 
----
+## 16. Pendências para atendimento integral ao enunciado
 
-## 19. Equipe
+A versão funcional marcada ainda possui os seguintes pontos de adequação:
 
-Projeto desenvolvido pelo Grupo 1 no cenário de Contratações Públicas do Estado do Rio de Janeiro.
+1. Confirmar execução e publicação da correção do teste de metadados e das vinte fixtures preparadas.
+2. Completar coleta integral, idempotência operacional, limitação de taxa e registro de falhas por fonte.
+3. Alinhar manifesto e ingestão quanto a sensibilidade e vigência.
+4. Centralizar endpoint, modelos e configuração.
+5. Instrumentar coleta, ingestão e indexação com logs estruturados.
+6. Atualizar a arquitetura executada e a rota de P03 para conversacional + estruturada.
+7. Conferir visualmente a restauração da pergunta no histórico.
+8. Registrar reprodução por outro integrante a partir do repositório remoto.
+9. Identificar a versão e os artefatos utilizados no benchmark complementar da Janice.
+10. Conferir acessos dos integrantes e do mentor, acompanhamentos individuais e ensaio da apresentação.
 
-## Status do desenvolvimento
+Esses itens devem ser encerrados com evidências, sem remover ressalvas apenas por decisão editorial.
 
-Consulte o [Status atual do projeto](docs/STATUS_DO_PROJETO.md) para visualizar a arquitetura, os módulos implementados, os dados processados, os testes realizados, as limitações conhecidas e as próximas atividades.
+Novas correções devem preservar a tag existente e gerar outra revisão identificada. A atualização deste README não altera o corpus nem exige regeneração de embeddings.
