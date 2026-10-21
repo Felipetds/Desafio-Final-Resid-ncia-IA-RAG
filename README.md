@@ -198,24 +198,21 @@ O benchmark recebido da Janice está [preservado como avaliação complementar](
 
 ### Decisão sobre rerank
 
-O rerank permanece desativado por padrão.
+O rerank local foi avaliado e permanece desativado por padrão.
+No recorte de seis perguntas com três evidências por resposta, houve ganhos
+e perdas, sem melhoria consistente em relação ao RRF.
 
-No experimento de respostas top-3:
+Esse experimento reutilizou rankings preservados, sem a seleção de cobertura
+anterior à geração aplicada pela interface. Seus resultados não representam
+a taxa de acerto do sistema completo.
 
-| Método | Cobertura média dos campos na resposta | Respostas completas |
-|---|---:|---:|
-| Vetorial | 44,4% | 0/6 |
-| BM25 | 63,9% | 2/6 |
-| RRF | 63,9% | 2/6 |
-| RRF com rerank | 61,1% | 2/6 |
+A comparação dos rankings top-5 apresentou ganho de cobertura com rerank;
+não foram geradas respostas top-5 nesta rodada.
 
-O rerank apresentou dois ganhos, duas perdas e dois empates em relação ao RRF, sem ganho consistente nesse recorte.
-
-A comparação reutilizou rankings preservados e não aplicou o resgate de cobertura anterior à geração utilizado na interface. Não equivale à avaliação do pipeline completo.
-
-A comparação dos rankings top-5 apresentou ganho de cobertura com rerank, mas não foram geradas respostas top-5.
-
-A avaliação das respostas foi assistida por IA, com rubrica explícita, e não representa avaliação humana independente.
+Os resultados completos, critérios, falhas e limitações estão na
+[avaliação das respostas](docs/avaliacao_respostas_recuperacao_2026-10-19/RELATORIO.md)
+e na [comparação dos rankings](docs/comparacao_recuperacao_2026-10-19/RELATORIO.md).
+A revisão das respostas foi assistida por IA, sem avaliação humana independente.
 
 ## 9. Testes
 

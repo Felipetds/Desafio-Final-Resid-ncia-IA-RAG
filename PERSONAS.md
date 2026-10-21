@@ -42,7 +42,7 @@ Durante uma auditoria, Eduardo pode precisar analisar várias contratações sim
 
 > "O que a ata nº 00191/2026 da EBSERH registra sobre o objeto da aquisição e qual é o número de controle PNCP associado?"
 
-**Rota esperada:** conversacional.
+**Rota esperada:** conversacional + estruturada.
 
 **Tipo:** factual/documental.
 
