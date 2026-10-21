@@ -1,5 +1,33 @@
 # Arquitetura do Sistema
 
+
+## Estado da implementação para a entrega
+
+A versão funcional de referência é `entrega-2026-10-19`,
+commit `f1efc55c81f5ee5ffa54d3d87a584e22e12484bb`.
+
+O executor distingue consultas estruturadas, agregadas, documentais,
+combinadas, esclarecimentos e recusas. Contagens e somas suportadas
+consultam arquivos completos. A recuperação documental utiliza busca
+vetorial, BM25, RRF e seleção de cobertura, com citações verificadas.
+O rerank local é opcional e permanece desativado por padrão.
+
+A interface inclui paginação, histórico persistido e feedback.
+O histórico reapresenta resultados salvos sem nova geração.
+
+As seções seguintes preservam o planejamento inicial e a divisão de
+responsabilidades. As funcionalidades previstas não devem ser interpretadas
+automaticamente como implementadas.
+
+A coleta integral pelo manifesto, configuração centralizada, semântica
+de vigência e instrumentação dos módulos de preparação do corpus possuem
+pendências de adequação registradas no README.
+
+As evidências e limitações estão no
+[README](README.md) e no
+[fechamento da entrega](docs/FECHAMENTO_ENTREGA_2026-10-19.md).
+
+
 ## 1. Cenário escolhido
 
 **Cenário 1 — Contratações Públicas do Estado do Rio de Janeiro**
