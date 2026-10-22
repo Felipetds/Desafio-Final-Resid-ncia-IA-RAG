@@ -6,7 +6,15 @@ from src import generate
 def cliente_simulado(chamadas):
     def criar(**kwargs):
         chamadas.append(kwargs)
-        return "resposta_simulada"
+        if kwargs["response_format"]["json_schema"]["name"] == "selecao_evidencias":
+            return "resposta_simulada"
+        return SimpleNamespace(choices=[SimpleNamespace(
+            finish_reason="stop",
+            message=SimpleNamespace(content=(
+                '{"blocos":[{"texto":"Prazos informados.",'
+                '"chunk_ids":["documento_a"]}]}'
+            )),
+        )])
 
     return SimpleNamespace(
         chat=SimpleNamespace(
@@ -41,11 +49,11 @@ def test_resposta_livre_preserva_prompt_e_contexto():
     chamadas = []
     generate.chamar_llm(
         pergunta="Quais são os prazos?",
-        contexto="Papel em dez dias; canetas em quinze dias.",
+        contexto="Chunk ID: documento_a\nConteúdo: Papel em dez dias; canetas em quinze dias.",
         client=cliente_simulado(chamadas),
     )
 
     mensagens = chamadas[0]["messages"]
-    assert mensagens[0]["content"] == generate.PROMPT_GERADOR
+    assert mensagens[0]["content"].startswith(generate.PROMPT_GERADOR)
     assert "Papel em dez dias" in mensagens[1]["content"]
     assert chamadas[0]["temperature"] == 0

@@ -1,32 +1,77 @@
 # Arquitetura do Sistema
 
+## Implementação em revisão — 21/10/2026
 
-## Estado da implementação para a entrega
+A revisão adiciona planejamento analítico, cálculo nos arquivos completos,
+síntese explicativa citada e combinação de resultados e documentos.
+Sua publicação remota ainda precisa ser confirmada.
+A tag `entrega-2026-10-19` preserva a versão anterior.
 
-A versão funcional de referência é `entrega-2026-10-19`,
-commit `f1efc55c81f5ee5ffa54d3d87a584e22e12484bb`.
+```mermaid
+flowchart TD
+    A["Pergunta e análise"] --> B{"Caminho"}
+    B --> C["Consulta estruturada"]
+    B --> D["Plano analítico validado"]
+    B --> E["Recuperação documental"]
+    D --> F["Cálculo nos CSVs"]
+    C --> G["Resultado e proveniência"]
+    F --> G
+    E --> H["Contexto e síntese citada"]
+    G --> I["Interface e histórico"]
+    H --> I
+```
 
-O executor distingue consultas estruturadas, agregadas, documentais,
-combinadas, esclarecimentos e recusas. Contagens e somas suportadas
-consultam arquivos completos. A recuperação documental utiliza busca
-vetorial, BM25, RRF e seleção de cobertura, com citações verificadas.
-O rerank local é opcional e permanece desativado por padrão.
+A consulta combinada apresenta cálculo e explicação documental em partes
+identificadas, com suas fontes. Esclarecimentos e recusas podem encerrar
+o caminho antes da execução correspondente.
 
-A interface inclui paginação, histórico persistido e feedback.
-O histórico reapresenta resultados salvos sem nova geração.
+### Componentes atuais
 
-As seções seguintes preservam o planejamento inicial e a divisão de
-responsabilidades. As funcionalidades previstas não devem ser interpretadas
-automaticamente como implementadas.
+| Componente | Papel |
+|---|---|
+| `app/pipeline_adapter.py` | Integra os caminhos existentes e o despacho analítico |
+| `app/analytical_dispatch.py` | Seleciona o caminho analítico habilitado e aplicável |
+| `src/analytical_interpreter.py` e `analytical_transport.py` | Interpretam a pergunta e validam a proposta |
+| `src/analytical_plan.py` | Define fontes, campos, operações e consistência |
+| `src/analytical_sources.py` e `analytical_executor.py` | Leem CSVs autorizados e calculam com Decimal |
+| `src/analytical_capabilities.py` | Protege condições conhecidas ausentes |
+| `src/query_decomposition.py` | Separa pedidos analíticos e documentais reconhecidos |
+| `app/analytical_adapter.py` e `analytical_combined.py` | Preparam e combinam resultados |
+| `src/analytical_presentation.py` | Apresenta agrupamentos sem recalcular valores |
+| `src/context_focus.py`, `context_budget.py` e `document_context.py` | Preparam contexto sem alterar os artefatos |
+| `src/grounded_synthesis.py` e `generate.py` | Produzem síntese e validam o contrato das citações |
+| `app/history_store.py` e `feedback_store.py` | Persistem consultas e feedback |
 
-A coleta integral pelo manifesto, configuração centralizada, semântica
-de vigência e instrumentação dos módulos de preparação do corpus possuem
-pendências de adequação registradas no README.
+O caminho analítico exige `RAG_ANALYTICAL_ENABLED=true` e utiliza os CSVs
+do PE e do PCA. A base estruturada PNCP mantém seu executor.
+A integração atual executa o caminho anterior antes do despacho analítico,
+podendo produzir etapas adicionais e aumentar a latência.
 
-As evidências e limitações estão no
-[README](README.md) e no
-[fechamento da entrega](docs/FECHAMENTO_ENTREGA_2026-10-19.md).
+A recuperação documental combina busca vetorial, BM25 e RRF.
+O rerank é opcional e permanece desativado nas validações atuais.
+A síntese explicativa é o padrão; o modo extrativo exige ativação explícita.
 
+### Logs e validação
+
+O planejamento analítico utiliza `roteamento` com tipo de evento específico.
+Os cálculos são registrados em `consulta_agregada`.
+Consultas combinadas referenciam os identificadores próprios da execução
+documental no resultado principal.
+
+A validação verifica contratos, consistência e referências.
+Não garante automaticamente a interpretação de toda condição da pergunta
+nem o suporte semântico de cada afirmação.
+
+O histórico reapresenta o resultado original sem executar novamente o pipeline.
+Histórico e feedback possuem persistência separada.
+
+Consulte o [relatório atual](docs/CORRECOES_RESPOSTAS_2026-10-21.md)
+e o [README](README.md) para configuração, evidências e limitações.
+
+## Planejamento inicial preservado
+
+**As seções abaixo são históricas.** Fontes previstas, verbos no futuro,
+diagrama e estágios descrevem o planejamento inicial. O estado atual está acima.
 
 ## 1. Cenário escolhido
 

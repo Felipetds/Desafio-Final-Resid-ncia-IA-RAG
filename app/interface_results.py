@@ -108,6 +108,19 @@ def status_consulta(resultado):
         modo = "Consulta recusada"
     elif resultado.get("necessita_esclarecimento"):
         modo = "Esclarecimento necessário"
+    elif resultado.get("estrategia") == "combinada_analitica":
+        modo = "Consulta combinada: cálculo analítico e documentos"
+        if not resultado.get("resposta_completa"):
+            pendentes = []
+            if resultado.get("analitico_status") == "nao_concluida":
+                pendentes.append("parte analítica não concluída")
+            if resultado.get("documental_status") != "respondida":
+                pendentes.append("parte documental não concluída")
+            modo += " — " + (
+                "; ".join(pendentes) or "resposta parcial"
+            )
+    elif resultado.get("estrategia") == "consulta_analitica":
+        modo = "Consulta analítica: cálculo no arquivo e apresentação da resposta"
     elif resultado.get("estrategia") == "consulta_agregada":
         modo = "Consulta agregada calculada sobre o arquivo"
     elif resultado.get("estrategia") == "combinada":
