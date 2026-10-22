@@ -1,39 +1,25 @@
-# Status do projeto — revisão de 21/10/2026
+# Status do projeto — correções publicadas
 
-## Versão em preparação
+## Versão confirmada
 
-- Branch: `fix/respostas-explicativas-20261021T192459760154Z`.
-- Base: `746c4941171ef5b25193a259d36951bf23a8c047`.
-- Publicação remota das correções ainda não confirmada.
+- PR: [#52](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/pull/52).
+- Commit das correções: `f3e25d01a8a6fe0c5aac33a86c338346696830cb`.
+- Integração na main: `2365d6bb01e937bc02a3e55a2c034eca362a9fe6`.
 - Tag anterior preservada: `entrega-2026-10-19`.
 - Corpus e índices preservados: 2.172 chunks.
 
-## Implementado e conferido nos casos registrados
+## Validações concluídas
 
-- Síntese explicativa citada como padrão, com modo extrativo explícito preservado.
-- Planejamento validado e cálculo nos CSVs autorizados do PE e PCA.
-- Contagem, comparação, agrupamento, listagem e média em casos reais.
-- Esclarecimento para condições conhecidas ausentes no arquivo de itens.
-- Separação de pedidos numéricos e documentais nos casos combinados avaliados.
-- Preparação de contexto normativo e PDF sem regenerar índices.
-- Histórico e feedback preservados em processos separados.
-- Reabertura visual da pergunta e resposta no histórico.
-- Uma única tabela na consulta conferida.
+- 754 testes locais aprovados; sete `llm` desmarcados nessa rodada.
+- Sete testes de integração real aprovados em execução separada.
+- Casos reais de contagem, comparação, tabela, listagem, média, esclarecimento e síntese documental registrados.
+- Consultas combinadas com cálculo e documentos separados.
+- Persistência de histórico e feedback conferida em processos separados.
+- Pergunta e resposta reabertas no histórico, sem tabela duplicada.
+- Consulta simples `8474c27d` respondida diretamente com oito itens e conferida no histórico pelo procedimento solicitado.
+- Código da main comparado ao commit validado, sem diferenças nos caminhos conferidos.
 
-## Testes
-
-- Última suíte local completa informada: 754 aprovados e sete `llm` desmarcados.
-- Ajuste posterior do histórico: 18 testes relacionados aprovados.
-- Casos reais identificados no relatório das correções.
-- Os 585 testes locais, dois de compatibilidade e sete de integração
-  da reprodução anterior não substituem a validação da revisão atual.
-
-## Falta para publicar
-
-1. Histórico conferido com a consulta `8474c27d`.
-2. Revisar alterações e arquivos novos de código e testes.
-3. Concluir as verificações necessárias da versão a publicar.
-4. Fazer commit, push e integração; registrar a versão publicada.
+Os testes e os exemplos comprovam os cenários avaliados. Não garantem resposta correta a qualquer pergunta nem atendimento integral ao enunciado.
 
 ## Pendências de engenharia preservadas
 
@@ -53,16 +39,6 @@ nem atendimento integral ao enunciado.
 
 - [README](../README.md).
 - [Arquitetura](../ARQUITETURA.md).
-- [Correções de 21/10](CORRECOES_RESPOSTAS_2026-10-21.md).
+- [Correções](CORRECOES_RESPOSTAS_2026-10-21.md).
+- [Evidências](validacao_respostas_2026-10-21/evidencias.json).
 - [Restauração](GUIA_RESTAURACAO_2172.md).
-- [Fechamento histórico](FECHAMENTO_ENTREGA_2026-10-19.md).
-
-## Consolidação da validação — 21/10/2026
-
-Após o ajuste do indicador de conclusão das consultas combinadas, a suíte local completa teve **754 testes aprovados e sete `llm` desmarcados**. Em uma execução separada, os **sete testes de integração real foram aprovados**.
-
-A interface respondeu à pergunta simples sobre homologações com oito itens, sem exigir instrução de tamanho da resposta. A consulta `8474c27d`, `query_id=q_10d777d6`, apareceu no histórico na conferência solicitada. A reabertura e a apresentação sem tabela duplicada já haviam sido conferidas na consulta `4c11bd77`.
-
-A rodada parcial anterior de 18 testes foi seguida pela suíte completa de 754 testes. Os sete testes reais são uma rodada separada; não constituem avaliação universal das perguntas ou nova avaliação completa das personas.
-
-Registros: [evidências](validacao_respostas_2026-10-21/evidencias.json). A publicação e a integração remotas ainda precisam ser confirmadas.

@@ -4,7 +4,9 @@
 
 - Branch: `fix/respostas-explicativas-20261021T192459760154Z`.
 - Base: `746c4941171ef5b25193a259d36951bf23a8c047`.
-- Publicação e integração: pendentes de confirmação.
+- Publicação: [PR #52](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/pull/52).
+- Commit das correções: `f3e25d01a8a6fe0c5aac33a86c338346696830cb`.
+- Commit de integração: `2365d6bb01e937bc02a3e55a2c034eca362a9fe6`.
 - Modelo observado: `qcwind/qwen3-8b-instruct-Q4-K-M`.
 - Corpus preservado: 2.172 chunks; nenhum índice regenerado.
 - SHA-256 de `chunks_teste.json`:
@@ -89,9 +91,9 @@ nem arquivos automaticamente incluídos no Git.
 ## Limitações e fechamento
 
 - Conferência do histórico realizada com a consulta `8474c27d`.
-- Revisar o diff completo, incluindo módulos e testes novos.
-- Concluir verificações e identificar o commit a publicar.
-- Publicar e integrar sem substituir a tag de 19/10.
+- Revisão dos módulos de integração, cálculos e contexto realizada.
+- Verificações locais e reais concluídas nos registros identificados.
+- Correções publicadas e integradas pelo PR #52; tag de 19/10 preservada.
 - Preservar pendências anteriores sem evidência de conclusão.
 - A interpretação de linguagem natural permanece sujeita a erros.
 - A proteção de condições ausentes cobre conceitos conhecidos.
@@ -107,4 +109,4 @@ A interface respondeu à pergunta simples sobre homologações com oito itens, s
 
 A rodada parcial anterior de 18 testes foi seguida pela suíte completa de 754 testes. Os sete testes reais são uma rodada separada; não constituem avaliação universal das perguntas ou nova avaliação completa das personas.
 
-Registros: [evidências](validacao_respostas_2026-10-21/evidencias.json). A publicação e a integração remotas ainda precisam ser confirmadas.
+Registros: [evidências](validacao_respostas_2026-10-21/evidencias.json). Publicação confirmada pelo [PR #52](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/pull/52), integrado à `main` no commit `2365d6bb01e937bc02a3e55a2c034eca362a9fe6`. O commit das correções é `f3e25d01a8a6fe0c5aac33a86c338346696830cb`.
