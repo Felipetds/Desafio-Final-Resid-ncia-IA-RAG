@@ -51,7 +51,9 @@ def _tabela_listagem(resultado):
     if resultado.get("truncado"):
         partes.append(
             "\nExibidos "
-            f"{len(linhas)} de {resultado['total_registros']} registros "
+            f"{len(linhas)} de "
+            f"{resultado.get('total_resultados', resultado['total_registros'])} "
+            "registros "
             "que atendem aos filtros."
         )
     if not linhas:
@@ -120,8 +122,18 @@ def executar_analitica_interface(
         progresso(1.0, "Consulta encerrada.")
         return saida
 
+    # A interpretação pode decidir que a pergunta exige documentos.
+    # None devolve o controle ao caminho documental existente.
+    if interpretacao["tipo"] == "documental":
+        return None
+
     if interpretacao["tipo"] != "plano":
-        saida["answer"] = interpretacao["mensagem"]
+        saida["answer"] = (
+            "Não foi possível definir uma operação verificável com os "
+            "campos disponíveis. Informe qual dado ou critério deseja consultar."
+            if interpretacao.get("tentativas", 0) > 0
+            else interpretacao["mensagem"]
+        )
         saida["necessita_esclarecimento"] = True
         return concluir()
 

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 """Escopo de recuperação para atas explicitamente identificadas."""
 
 import json
@@ -183,6 +185,64 @@ def escopar_documento(pergunta, chunks_por_id, identificar_natureza):
     ata = escopar_ata(pergunta, chunks_por_id, identificar_natureza)
     if ata is not None:
         return ata
-    return escopar_processo_alfanumerico(
+    processo = escopar_processo_alfanumerico(
         pergunta, chunks_por_id, identificar_natureza,
     )
+    if processo is not None:
+        return processo
+    return escopar_pregao(
+        pergunta, chunks_por_id, identificar_natureza,
+    )
+
+
+_PADRAO_PREGAO = re.compile(
+    r"\b(?:pe|pregao(?:\s+eletronico)?)\s*"
+    r"(?:n[.\sº°o]*\s*)?"
+    r"(\d+(?:\.\d+)*)\s*/\s*(\d+)"
+    r"(?:\s*/\s*(\d+))?(?![\d/])"
+)
+
+
+def _identidades_pregao(texto):
+    return {
+        tuple(int(v.replace(".", "")) for v in achado.groups() if v is not None)
+        for achado in _PADRAO_PREGAO.finditer(normalizar(texto))
+    }
+
+
+def escopar_pregao(pergunta, chunks_por_id, identificar_natureza):
+    """Preserva normas gerais e exige referência exata nas demais fontes."""
+    pedidos = _identidades_pregao(pergunta)
+    if not pedidos:
+        return None
+    documentos = {}
+    ids = set()
+    for identificador, chunk in chunks_por_id.items():
+        if identificar_natureza(chunk) == "normativa":
+            ids.add(identificador)
+            continue
+        fonte = (chunk.get("metadata") or {}).get("source_file")
+        if fonte:
+            documentos.setdefault(fonte, []).append((identificador, chunk))
+    fontes = []
+    for fonte, partes in documentos.items():
+        identidades = set()
+        for _, chunk in partes:
+            identidades.update(_identidades_pregao(chunk.get("text", "")))
+        referencia_nome = re.search(
+            r"(?:^|_)pe_(\d+)_(\d+)_(20\d{2})(?:[_.]|$)",
+            normalizar(Path(fonte).name),
+        )
+        if referencia_nome:
+            identidades.add(tuple(int(v) for v in referencia_nome.groups()))
+        if len(pedidos) == 1 and identidades == pedidos:
+            fontes.append(fonte)
+            ids.update(identificador for identificador, _ in partes)
+    return {
+        "ids": ids, "fontes": sorted(fontes), "processos": [],
+        "motivo": (
+            "Referência exata de pregão nas fontes vinculadas; "
+            "normas preservadas apenas como fundamento geral. "
+            "Similaridade textual não comprova vínculo."
+        ),
+    }

@@ -36,6 +36,7 @@ class Listar(Contrato):
     operacao: Literal["listar"]
     filtros: list[Filtro] = Field(default_factory=list)
     campos: list[str] = Field(min_length=1)
+    distintos: bool
     limite: int = Field(default=20, ge=1, le=100)
     ordenar_por: str | None = None
     ordem: Literal["crescente", "decrescente"] = "crescente"
@@ -58,7 +59,7 @@ class InterpretacaoModelo(Contrato):
     tipo: Literal["plano", "esclarecimento", "documental"]
     mensagem: str
     plano: PlanoModelo | None
-    pedido_documental: str | None
+    pedido_documental: str | None = None
 
 
 def decodificar_interpretacao(conteudo):

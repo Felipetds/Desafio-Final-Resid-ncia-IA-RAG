@@ -336,3 +336,20 @@ Cada integrante também deverá atualizar seu arquivo individual em `acompanhame
 **Usuário → `query_analysis` → `roteamento` → `retrieval_denso` + `retrieval_bm25` → `fusao_rrf` → `rerank` → `geracao` → `validacao` → `feedback` → Resposta**
 
 Esta arquitetura representa o planejamento inicial do sistema e poderá ser refinada ao longo das próximas sprints conforme o corpus for consolidado, os módulos forem implementados e os testes evidenciarem necessidades de ajuste.
+
+## Atualização do encaminhamento e da recuperação — 22/10/2026
+
+O caminho analítico exige uma fonte reconhecida do catálogo; a presença
+da rota agregada não basta para autorizar um arquivo específico.
+A operação e a unidade do resultado são interpretadas separadamente
+dos filtros. A listagem distinta remove combinações repetidas antes
+do limite, preservando os cálculos independentes sobre o universo filtrado.
+
+Referências explícitas de pregão limitam a associação documental.
+Normas gerais permanecem elegíveis como fundamento. A busca contextual
+usa stemming em português antes de remover os acentos.
+
+Sem rerank aplicado, a cobertura dos métodos pode preservar candidatos
+lexicais e densos quando o escopo documental resulta somente em normas.
+Os scores originais são preservados. O orçamento normativo padrão passa
+a 6.000 caracteres; a preparação de PDFs permanece independente.

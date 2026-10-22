@@ -121,8 +121,13 @@ class PlanoAnalitico(Contrato):
                 + ([tarefa.campo] if tarefa.campo else [])
                 + ([tarefa.ordenar_por] if tarefa.ordenar_por else [])
             )
-            if any(campo not in campos for campo in utilizados):
-                raise ValueError("Campo não disponível na fonte.")
+            indisponiveis = sorted(set(utilizados) - set(campos))
+            if indisponiveis:
+                raise ValueError(
+                    f"Tarefa {tarefa.id}: campos indisponíveis na fonte "
+                    f"{self.fonte}: {', '.join(indisponiveis)}. "
+                    f"Campos permitidos: {', '.join(campos)}."
+                )
 
             if tarefa.operacao in {"somar", "media", "minimo", "maximo"}:
                 if campos.get(tarefa.campo) != "numero":
@@ -131,12 +136,19 @@ class PlanoAnalitico(Contrato):
             if tarefa.operacao == "listar":
                 if not tarefa.campos or tarefa.agrupar_por:
                     raise ValueError("Listagem exige campos e não aceita agrupamento.")
-                if tarefa.campo or tarefa.distintos:
+                if tarefa.campo:
                     raise ValueError("Parâmetros incompatíveis com listagem.")
+                if (
+                    tarefa.distintos and tarefa.ordenar_por
+                    and tarefa.ordenar_por not in tarefa.campos
+                ):
+                    raise ValueError(
+                        "Listagem distinta exige ordenar por campo exibido."
+                    )
             elif tarefa.campos or tarefa.ordenar_por:
                 raise ValueError("Campos de exibição e ordenação exigem listagem.")
 
-            if tarefa.distintos and (
+            if tarefa.distintos and tarefa.operacao != "listar" and (
                 tarefa.operacao != "contar" or not tarefa.campo
             ):
                 raise ValueError("Contagem distinta exige campo.")

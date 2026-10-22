@@ -4,19 +4,6 @@ Projeto do **Grande Desafio de IA Generativa e RAG**, da Residência TIC em Tril
 
 O sistema identifica o tipo de evidência necessário para responder à pergunta e seleciona consultas estruturadas, cálculos sobre arquivos completos, recuperação documental ou uma combinação dessas estratégias.
 
-> **Revisão funcional de 21/10/2026:** respostas explicativas com citações,
-> planejamento analítico, cálculos sobre CSVs completos e consultas combinadas.
-> Correções publicadas pelo [PR #52](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/pull/52) e integradas à `main`.
-> **Commit de integração:** `2365d6bb01e937bc02a3e55a2c034eca362a9fe6`.
-> **Commit das correções:** `f3e25d01a8a6fe0c5aac33a86c338346696830cb`.
->
-> **Versão anterior preservada:** [`entrega-2026-10-19`](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/tree/entrega-2026-10-19),
-> commit `f1efc55c81f5ee5ffa54d3d87a584e22e12484bb`.
-> Essa tag não inclui as correções de 21/10.
->
-> Consulte o [relatório das correções](docs/CORRECOES_RESPOSTAS_2026-10-21.md)
-> para distinguir resultados atuais, avaliações históricas e pendências.
-
 ## 1. Cenário e objetivo
 
 **Cenário 1 — Contratações Públicas do Estado do Rio de Janeiro.**
