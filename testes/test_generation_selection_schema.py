@@ -6,7 +6,13 @@ from src import generate
 def cliente(chamadas):
     def criar(**kwargs):
         chamadas.append(kwargs)
-        return "resposta"
+        return SimpleNamespace(choices=[SimpleNamespace(
+            finish_reason="stop",
+            message=SimpleNamespace(content=(
+                '{"blocos":[{"texto":"Prazo informado.",'
+                '"chunk_ids":["documento_a"]}]}'
+            )),
+        )])
     return SimpleNamespace(
         chat=SimpleNamespace(
             completions=SimpleNamespace(create=criar)
@@ -36,11 +42,12 @@ def test_extrativo_restringe_formato_e_ids_do_contexto():
     assert esquema["properties"]["chunk_ids"]["minItems"] == 0
 
 
-def test_geracao_livre_nao_recebe_schema_de_selecao():
+def test_sintese_recebe_schema_distinto_da_selecao():
     chamadas = []
     generate.chamar_llm(
         pergunta="Quais são os prazos?",
-        contexto="Papel em dez dias.",
+        contexto="Chunk ID: documento_a\nConteúdo: Papel em dez dias.",
         client=cliente(chamadas),
     )
-    assert "response_format" not in chamadas[0]
+    formato = chamadas[0]["response_format"]
+    assert formato["json_schema"]["name"] == "sintese_com_evidencias"

@@ -4,11 +4,18 @@ Projeto do **Grande Desafio de IA Generativa e RAG**, da Residência TIC em Tril
 
 O sistema identifica o tipo de evidência necessário para responder à pergunta e seleciona consultas estruturadas, cálculos sobre arquivos completos, recuperação documental ou uma combinação dessas estratégias.
 
-> **Versão de entrega registrada:** [`entrega-2026-10-19`](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/tree/entrega-2026-10-19).
+> **Revisão funcional de 21/10/2026:** respostas explicativas com citações,
+> planejamento analítico, cálculos sobre CSVs completos e consultas combinadas.
+> As correções estão em preparação na branch
+> `fix/respostas-explicativas-20261021T192459760154Z`.
+> A publicação e a integração remotas ainda não foram confirmadas.
 >
-> **Commit:** `f1efc55c81f5ee5ffa54d3d87a584e22e12484bb`.
+> **Versão anterior preservada:** [`entrega-2026-10-19`](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/tree/entrega-2026-10-19),
+> commit `f1efc55c81f5ee5ffa54d3d87a584e22e12484bb`.
+> Essa tag não inclui as correções de 21/10.
 >
-> Esta revisão documental, de 21/10/2026, consolida as validações conhecidas e as pendências da auditoria do enunciado. A marca identifica uma versão preservada; não certifica atendimento integral dos requisitos.
+> Consulte o [relatório das correções](docs/CORRECOES_RESPOSTAS_2026-10-21.md)
+> para distinguir resultados atuais, avaliações históricas e pendências.
 
 ## 1. Cenário e objetivo
 
@@ -57,13 +64,27 @@ Não misture esse pacote com artefatos históricos de 2.125 chunks.
 | Estratégia | Execução |
 |---|---|
 | Consulta estruturada | Filtros, contagem e listagem sobre a base normalizada, com paginação |
-| Consulta agregada | Resumos e cálculos suportados sobre os arquivos completos |
-| Recuperação documental | Busca vetorial e BM25, fusão RRF, seleção de cobertura e resposta com citações |
-| Consulta combinada | Resultado estruturado e resposta documental apresentados separadamente |
+| Consulta agregada | Resumos suportados sobre os arquivos completos |
+| Consulta analítica | Plano validado, contagens, medidas, agrupamentos, listagens e comparações nos CSVs PE/PCA |
+| Recuperação documental | Busca vetorial e BM25, fusão RRF, preparação do contexto e síntese explicativa com citações |
+| Consulta combinada | Resultado estruturado ou analítico e explicação documental apresentados separadamente, com suas fontes |
 | Esclarecimento | Interrompe pedidos ambíguos ou operações ainda não suportadas |
 | Recusa | Interrompe solicitações protegidas ou fora do escopo definido |
 
-O planejamento ocorre antes da execução. Uma consulta combinada exige pedido documental explícito.
+Cada caminho valida seu plano antes de executar as operações correspondentes.
+O caminho analítico exige `RAG_ANALYTICAL_ENABLED=true` e utiliza somente
+fontes, campos e operações autorizados. O executor realiza os cálculos;
+o modelo interpreta a pergunta e pode redigir a resposta a partir dos
+resultados calculados.
+
+Pedidos documentais adicionais reconhecidos são separados do pedido
+numérico. Um resultado calculado não serve como evidência sobre a lei.
+Essa separação é conservadora e não garante a interpretação correta
+de toda reformulação.
+
+A síntese explicativa é o padrão do gerador. O modo extrativo permanece
+disponível quando solicitado explicitamente. Referências reconhecidas
+pelo validador não comprovam, por si só, suporte semântico.
 
 Nas consultas documentais, o `top_k` controla a quantidade de evidências apresentadas ao gerador. Ele não limita a quantidade de registros usados nas contagens e somas determinísticas.
 
@@ -76,8 +97,9 @@ O repositório é privado e exige acesso autorizado. Não coloque tokens na URL 
 ```bash
 git clone https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1.git
 cd repositorio1
-git checkout entrega-2026-10-19
 ```
+
+O clone utiliza a branch padrão do remoto. Confira o commit: enquanto as correções de 21/10 não forem integradas, o remoto pode conter a versão anterior. Para reproduzir a entrega antiga, use `git checkout entrega-2026-10-19`.
 
 Crie e ative um ambiente virtual.
 
@@ -144,6 +166,15 @@ Antes da execução, configure conforme o guia:
 - `HISTORY_PATH`: arquivo do histórico SQLite.
 - `FEEDBACK_PATH`: arquivo de feedback JSONL.
 - `GRADIO_SERVER_PORT`: porta da interface.
+- `RAG_ANALYTICAL_ENABLED=true`: habilita o caminho analítico; desativado por padrão.
+- `RAG_DEMO_OFFLINE=false`: utiliza o fluxo conectado ao serviço.
+- `RERANK_ENABLED=false`: configuração das validações atuais.
+- `NORMATIVE_CONTEXT_MAX_CHARS=2500`: orçamento de contexto normativo.
+- `DOCUMENT_CONTEXT_MAX_CHARS=2500`: orçamento de contexto de PDFs conversacionais.
+
+Os orçamentos são medidos em caracteres, não em tokens. A preparação
+não altera índices ou arquivos originais, mas pode excluir evidências
+necessárias à resposta.
 
 No Colab, use caminhos de persistência no Drive montado. Arquivos apenas em `/content` podem desaparecer quando o ambiente é encerrado.
 
@@ -169,16 +200,49 @@ O histórico é compartilhado entre quem acessa a mesma instância. Abrir uma co
 
 As perguntas, fontes, identificadores de execução e versões estão nos relatórios. Consultas livres podem exigir esclarecimento.
 
-### Operações não suportadas
+### Consultas analíticas verificadas em 21/10
 
-- Médias monetárias, preço por quilo e média ponderada.
-- Filtros de assinatura.
-- Previsão de valores futuros sem modelo preditivo validado.
-- Filtros e cruzamentos além dos explicitamente suportados.
+| Pedido | Resultado observado |
+|---|---|
+| Quantos itens foram homologados? Resposta em uma frase | 8 itens |
+| Comparar homologados e fracassados | 8 e 9; diferença = -1 |
+| Tabela de quantidade por situação | 8 homologados, 9 fracassados e 2 desertos |
+| Três itens homologados de maior valor total | Itens 1, 3 e 4; valores 44.500,00, 20.646,00 e 17.120,00 |
+| Valor total estimado médio por registro do PCA | Aproximadamente R$ 1.512.908,15; 36.994 valores presentes |
+| Contagem ou tabela do PE e explicação normativa | Cálculo e explicação documental separados |
+| Homologações anteriores à assinatura do contrato | Esclarecimento: assinatura ausente no arquivo de itens |
 
-Pedidos ambíguos ou intervalos de publicação não suportados recebem esclarecimento.
+Consulte os identificadores e condições no
+[relatório das correções](docs/CORRECOES_RESPOSTAS_2026-10-21.md).
+Os casos não constituem uma taxa geral de acerto.
+
+### Limites das operações
+
+- O caminho analítico novo utiliza os CSVs autorizados do PE e do PCA.
+  A base estruturada do PNCP mantém seu executor próprio.
+- Médias simples estão disponíveis; preço por quilo, média ponderada,
+  previsões e cruzamentos arbitrários não foram demonstrados.
+- A proteção para condições conhecidas ausentes impede responder sobre
+  assinatura, pagamento ou entrega usando somente o arquivo de itens.
+  Ela não cobre automaticamente todo critério possível.
+- Um plano estruturalmente válido pode interpretar incorretamente a pergunta.
+  Cálculos e referências válidos não substituem a conferência da resposta.
+- Homologação e registro de preços não comprovam pagamento ou entrega.
 
 ## 8. Validações registradas
+
+**Revisão de 21/10:** a última suíte local completa informada teve
+**754 testes aprovados e 7 testes de integração real desmarcados**.
+Após conectar a atualização automática do histórico, os
+**18 testes relacionados** passaram. Essa rodada parcial não equivale
+a uma nova execução da suíte completa.
+
+Casos reais de cálculo, esclarecimento, síntese documental e consulta
+combinada estão no [relatório atual](docs/CORRECOES_RESPOSTAS_2026-10-21.md).
+
+**As avaliações abaixo são históricas** e pertencem às versões e
+condições identificadas nos respectivos relatórios.
+
 
 | Avaliação | Evidência |
 |---|---|
@@ -298,7 +362,18 @@ Coleta, ingestão e indexação ainda utilizam principalmente `print`. Sua instr
 
 Um resultado correto após fallback não elimina o timeout anterior registrado nos logs.
 
-Logs, histórico SQLite e feedback JSONL são mecanismos distintos. O histórico e o feedback possuem evidências de persistência após reinício. A conferência visual da restauração da pergunta no campo de entrada permanece registrada como pendência.
+Logs, histórico SQLite e feedback JSONL são mecanismos distintos.
+A persistência foi conferida em processos separados, preservando
+resultado integral, tabelas, fontes, identificadores e vínculo do feedback.
+A reabertura da consulta `4c11bd77` foi confirmada na interface,
+com pergunta preenchida e sem duplicação da tabela.
+
+A atualização automática da lista foi conectada ao botão Consultar
+e à tecla Enter. Os testes relacionados passaram; a consulta `8474c27d` foi conferida na lista do histórico pelo procedimento solicitado.
+
+Nas consultas combinadas analíticas, a execução documental possui
+`documental_run_id` e `documental_query_id` próprios, referenciados no
+resultado principal. Consulte também esses identificadores nos logs.
 
 ## 13. Limitações do recorte
 
@@ -344,7 +419,8 @@ A divisão por módulo não impede colaboração. Os acompanhamentos individuais
 
 ## 15. Documentação da entrega
 
-- [Fechamento da entrega](docs/FECHAMENTO_ENTREGA_2026-10-19.md).
+- [Correções de 21/10](docs/CORRECOES_RESPOSTAS_2026-10-21.md).
+- [Fechamento histórico de 19/10](docs/FECHAMENTO_ENTREGA_2026-10-19.md).
 - [Guia de restauração](docs/GUIA_RESTAURACAO_2172.md).
 - [Reprodução e testes](docs/reproducao_d31d05a_2026-10-19/RELATORIO.md).
 - [Comparação dos rankings](docs/comparacao_recuperacao_2026-10-19/RELATORIO.md).
@@ -353,7 +429,7 @@ A divisão por módulo não impede colaboração. Os acompanhamentos individuais
 - [Personas](PERSONAS.md).
 - [Inventário](CORPUS_INVENTORY.md).
 - [Manifesto](corpus_manifest.yaml).
-- [Arquitetura inicial e responsáveis](ARQUITETURA.md).
+- [Arquitetura atual e planejamento inicial](ARQUITETURA.md).
 
 Relatórios históricos preservam os resultados de suas datas. Consulte o commit e o escopo de cada evidência antes de compará-los.
 
@@ -366,12 +442,22 @@ A versão funcional marcada ainda possui os seguintes pontos de adequação:
 3. Alinhar manifesto e ingestão quanto a sensibilidade e vigência.
 4. Centralizar endpoint, modelos e configuração.
 5. Instrumentar coleta, ingestão e indexação com logs estruturados.
-6. Atualizar a arquitetura executada e a rota de P03 para conversacional + estruturada.
-7. Conferir visualmente a restauração da pergunta no histórico.
+6. Reavaliar as perguntas das personas na revisão corrigida, incluindo a rota e as evidências de P03.
+7. Conferir a atualização automática da lista após nova consulta; a restauração da pergunta pelo histórico já foi confirmada.
 8. Registrar reprodução por outro integrante a partir do repositório remoto.
 9. Identificar a versão e os artefatos utilizados no benchmark complementar da Janice.
-10. Conferir acessos dos integrantes e do mentor, acompanhamentos individuais e ensaio da apresentação.
+10. Conferir acessos dos integrantes e do mentor, acompanhamentos individuais e preparação da demonstração.
 
 Esses itens devem ser encerrados com evidências, sem remover ressalvas apenas por decisão editorial.
 
 Novas correções devem preservar a tag existente e gerar outra revisão identificada. A atualização deste README não altera o corpus nem exige regeneração de embeddings.
+
+## Consolidação da validação — 21/10/2026
+
+Após o ajuste do indicador de conclusão das consultas combinadas, a suíte local completa teve **754 testes aprovados e sete `llm` desmarcados**. Em uma execução separada, os **sete testes de integração real foram aprovados**.
+
+A interface respondeu à pergunta simples sobre homologações com oito itens, sem exigir instrução de tamanho da resposta. A consulta `8474c27d`, `query_id=q_10d777d6`, apareceu no histórico na conferência solicitada. A reabertura e a apresentação sem tabela duplicada já haviam sido conferidas na consulta `4c11bd77`.
+
+A rodada parcial anterior de 18 testes foi seguida pela suíte completa de 754 testes. Os sete testes reais são uma rodada separada; não constituem avaliação universal das perguntas ou nova avaliação completa das personas.
+
+Registros: [evidências](docs/validacao_respostas_2026-10-21/evidencias.json). A publicação e a integração remotas ainda precisam ser confirmadas.

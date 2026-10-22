@@ -64,6 +64,7 @@ def executar_simulado(monkeypatch, tmp_path, conteudo):
         recuperacao,
         client=object(),
         run_id="run_extrativo_offline",
+        modo_extrativo=True,
     )
 
     eventos = [

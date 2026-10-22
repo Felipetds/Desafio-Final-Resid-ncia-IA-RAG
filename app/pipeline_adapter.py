@@ -151,6 +151,22 @@ def executar_pipeline(
         run_id=run_id,
     )
 
+    # Mantém recusas e caminhos especiais antes da seleção analítica.
+    from app.analytical_dispatch import tentar_analitica
+
+    resultado_analitico = tentar_analitica(
+        pergunta,
+        consulta,
+        run_id=run_id,
+        on_progress=on_progress,
+        top_k=top_k,
+    )
+    if resultado_analitico is not None:
+        resultado_analitico["latency_ms"] = round(
+            (time.perf_counter() - inicio) * 1000, 2
+        )
+        return resultado_analitico
+
     plano = consulta.get("plano", {})
     query_id = consulta.get("query_id") or plano.get("query_id")
 
@@ -221,22 +237,7 @@ def executar_pipeline(
     combinada = consulta.get("estrategia") == "combinada"
     recuperacao = consulta["hibrida"] if combinada else consulta
 
-    rotas_documentais = recuperacao.get("routes") or []
-    evidencias_documentais = recuperacao.get("evidences") or []
-
-    # Ativa somente quando a recuperação é exclusivamente normativa
-    # e todas as evidências possuem essa natureza explicitamente.
-    extrativa_normativa = (
-        set(rotas_documentais) == {"normativa"}
-        and bool(evidencias_documentais)
-        and all(
-            evidencia.get("natureza") == "normativa"
-            for evidencia in evidencias_documentais
-        )
-    )
-    opcoes_normativas = (
-        {"modo_extrativo": True} if extrativa_normativa else {}
-    )
+    # A interface utiliza a síntese explicativa padrão do gerador.
 
     entrada_geracao = _preparar_entrada_geracao(
         recuperacao,
@@ -270,7 +271,6 @@ def executar_pipeline(
             gerar_resposta(
                 resultado_recuperacao=entrada_geracao,
                 run_id=run_id,
-                **opcoes_normativas,
             )
         )
 

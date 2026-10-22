@@ -1,0 +1,25 @@
+{
+  "branch": "fix/respostas-explicativas-20261021T192459760154Z",
+  "commit_base": "746c4941171ef5b25193a259d36951bf23a8c047",
+  "codigo_ainda_sem_commit": true,
+  "testes_locais": {
+    "aprovados": 754,
+    "llm_desmarcados": 7,
+    "arquivo": "testes_locais.txt",
+    "sha256": "bcfe5cc5841a41714500403ace8cfbe98650ca2c283fabd76b2bf630630aca48"
+  },
+  "integracao_real": {
+    "aprovados": 7,
+    "arquivo": "integracao_real.txt",
+    "sha256": "4113737168e0c1ca31bf810b5ad6246b5cef68bd79058334338e70489bb1d6d8"
+  },
+  "interface": {
+    "run_id": "8474c27d",
+    "query_id": "q_10d777d6",
+    "pergunta": "No PE 038/26/2026, quantos itens foram homologados?",
+    "resposta_observada": "No PE 038/26/2026, foram homologados 8 itens.",
+    "formato_curto_sem_instrucao_adicional": true,
+    "consulta_visivel_no_historico": true,
+    "conferencia": "Relato e saída da interface enviados na sessão."
+  }
+}

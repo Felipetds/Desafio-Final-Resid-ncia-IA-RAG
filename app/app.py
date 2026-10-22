@@ -39,10 +39,28 @@ def apresentar(resultado):
         estrategia == "consulta_agregada"
         and executado
     )
-    mostrar_tabela = lista or agregada
+    analitica = estrategia in {
+        "consulta_analitica", "combinada_analitica"
+    }
+    tabelas_analiticas = resultado.get("tabelas_analiticas") or []
+    resposta_exibida = resultado.get("answer", "")
+    tabelas_embutidas = bool(tabelas_analiticas) and all(
+        isinstance(tabela, dict)
+        and isinstance(tabela.get("markdown"), str)
+        and bool(tabela["markdown"].strip())
+        and tabela["markdown"] in resposta_exibida
+        for tabela in tabelas_analiticas
+    )
+    mostrar_tabela = lista or agregada or (
+        analitica
+        and executado
+        and bool(resultado.get("campos"))
+        and not tabelas_embutidas
+    )
 
     deterministica = estrategia in {
-        "consulta_estruturada", "consulta_agregada"
+        "consulta_estruturada", "consulta_agregada",
+        "consulta_analitica", "combinada_analitica"
     }
 
     pagina = resultado.get("pagina") or 1
@@ -54,6 +72,10 @@ def apresentar(resultado):
         "commit_demonstracao": resultado.get("commit_demonstracao"),
         "versao_artefatos": resultado.get("versao_artefatos"),
         "plano": resultado.get("plano", {}),
+        "interpretacao_analitica": resultado.get("interpretacao_analitica"),
+        "calculo_analitico": resultado.get("calculo_analitico"),
+        "proveniencia_calculo": resultado.get("proveniencia_calculo"),
+        "tabelas_analiticas": resultado.get("tabelas_analiticas", []),
         "fontes": resultado.get("fontes", []),
         "fontes_estruturadas": resultado.get("fontes_estruturadas", []),
         "fontes_agregadas": resultado.get("fontes_agregadas", []),
@@ -333,10 +355,24 @@ def criar_interface():
             **opcoes,
         )
 
+        # Atualiza a lista após a consulta e seu salvamento.
+        clique.success(
+            fn=atualizar_historico,
+            outputs=[consulta_salva],
+            **opcoes,
+        )
+
         enter = pergunta.submit(
             fn=executar,
             inputs=[pergunta, top_k],
             outputs=saidas,
+            **opcoes,
+        )
+
+        # Atualiza a lista após a consulta e seu salvamento.
+        enter.success(
+            fn=atualizar_historico,
+            outputs=[consulta_salva],
             **opcoes,
         )
 
