@@ -6,9 +6,9 @@ O sistema identifica o tipo de evidência necessário para responder à pergunta
 
 > **Revisão funcional de 21/10/2026:** respostas explicativas com citações,
 > planejamento analítico, cálculos sobre CSVs completos e consultas combinadas.
-> As correções estão em preparação na branch
-> `fix/respostas-explicativas-20261021T192459760154Z`.
-> A publicação e a integração remotas ainda não foram confirmadas.
+> Correções publicadas pelo [PR #52](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/pull/52) e integradas à `main`.
+> **Commit de integração:** `2365d6bb01e937bc02a3e55a2c034eca362a9fe6`.
+> **Commit das correções:** `f3e25d01a8a6fe0c5aac33a86c338346696830cb`.
 >
 > **Versão anterior preservada:** [`entrega-2026-10-19`](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/tree/entrega-2026-10-19),
 > commit `f1efc55c81f5ee5ffa54d3d87a584e22e12484bb`.
@@ -231,14 +231,9 @@ Os casos não constituem uma taxa geral de acerto.
 
 ## 8. Validações registradas
 
-**Revisão de 21/10:** a última suíte local completa informada teve
-**754 testes aprovados e 7 testes de integração real desmarcados**.
-Após conectar a atualização automática do histórico, os
-**18 testes relacionados** passaram. Essa rodada parcial não equivale
-a uma nova execução da suíte completa.
+**Revisão de 21/10:** **754 testes locais aprovados**, com sete `llm` desmarcados nessa rodada. Em execução separada, os **sete testes de integração real foram aprovados**. A rodada parcial anterior de 18 testes foi seguida pela suíte completa.
 
-Casos reais de cálculo, esclarecimento, síntese documental e consulta
-combinada estão no [relatório atual](docs/CORRECOES_RESPOSTAS_2026-10-21.md).
+Casos reais, configuração e limitações estão no [relatório atual](docs/CORRECOES_RESPOSTAS_2026-10-21.md), com [registros dos testes](docs/validacao_respostas_2026-10-21/evidencias.json).
 
 **As avaliações abaixo são históricas** e pertencem às versões e
 condições identificadas nos respectivos relatórios.
@@ -460,4 +455,4 @@ A interface respondeu à pergunta simples sobre homologações com oito itens, s
 
 A rodada parcial anterior de 18 testes foi seguida pela suíte completa de 754 testes. Os sete testes reais são uma rodada separada; não constituem avaliação universal das perguntas ou nova avaliação completa das personas.
 
-Registros: [evidências](docs/validacao_respostas_2026-10-21/evidencias.json). A publicação e a integração remotas ainda precisam ser confirmadas.
+Registros: [evidências](docs/validacao_respostas_2026-10-21/evidencias.json). Publicação confirmada pelo [PR #52](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/pull/52), integrado à `main` no commit `2365d6bb01e937bc02a3e55a2c034eca362a9fe6`. O commit das correções é `f3e25d01a8a6fe0c5aac33a86c338346696830cb`.

@@ -1,10 +1,10 @@
 # Arquitetura do Sistema
 
-## Implementação em revisão — 21/10/2026
+## Implementação publicada — revisão de 21/10/2026
 
 A revisão adiciona planejamento analítico, cálculo nos arquivos completos,
 síntese explicativa citada e combinação de resultados e documentos.
-Sua publicação remota ainda precisa ser confirmada.
+Publicação confirmada pelo [PR #52](https://github.com/rag-grande-desafio-grupo1-cenario-1/repositorio1/pull/52), integrado à `main` no commit `2365d6bb01e937bc02a3e55a2c034eca362a9fe6`. O commit das correções é `f3e25d01a8a6fe0c5aac33a86c338346696830cb`.
 A tag `entrega-2026-10-19` preserva a versão anterior.
 
 ```mermaid
