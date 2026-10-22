@@ -208,6 +208,18 @@ def executar_analitico(plano, registros):
                     )
                     linhas = presentes + ausentes
 
+                if tarefa.distintos:
+                    vistos = set()
+                    unicos = []
+                    for registro in linhas:
+                        chave = tuple(registro.get(c) for c in tarefa.campos)
+                        if chave not in vistos:
+                            vistos.add(chave)
+                            unicos.append(registro)
+                    linhas = unicos
+                    resultado["distintos"] = True
+                    resultado["total_resultados"] = len(linhas)
+
                 resultado.update({
                     "registros": [
                         {campo: _serializar(r.get(campo)) for campo in tarefa.campos}

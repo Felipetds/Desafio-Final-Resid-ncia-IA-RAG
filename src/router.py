@@ -377,12 +377,23 @@ def _extrair_filtros_monetarios(
     }
 
 
+def _remover_referencias_pregao(texto: str) -> str:
+    """Separa identificadores de pregão dos critérios geográficos e temporais."""
+    return re.sub(
+        r"\bpe\s*(?:(?:numero|n[.º°o]*)\s*)?"
+        r"\d+(?:\s*/\s*\d+){1,2}\b",
+        " ",
+        texto,
+        flags=re.IGNORECASE,
+    )
+
+
 def _extrair_ufs_explicitas(pergunta: str) -> set[str]:
     """Reconhece siglas de UF em contexto de localização, fora de IDs."""
     from src.document_scope import PADRAO_PROCESSO_ALFANUMERICO, normalizar
 
     texto = PADRAO_PROCESSO_ALFANUMERICO.sub(
-        " ", normalizar(pergunta)
+        " ", normalizar(_remover_referencias_pregao(pergunta))
     )
     texto = _normalizar_texto_para_comparacao(texto)
     validas = set(
@@ -425,7 +436,9 @@ def _validar_filtros_contra_pergunta(
     if not isinstance(filtros, dict):
         filtros = {}
     filtros = dict(filtros)
-    texto = _normalizar_texto_para_comparacao(pergunta)
+    texto = _normalizar_texto_para_comparacao(
+        _remover_referencias_pregao(pergunta)
+    )
     for campo in CAMPOS_FILTRO_VALIDADOS_NO_TEXTO:
         valor = filtros.get(campo)
         if (
@@ -448,6 +461,11 @@ def _validar_filtros_contra_pergunta(
         == filtros["uf"]
     ):
         filtros["municipio"] = None
+    ano = filtros.get("ano")
+    if ano is not None and not re.search(
+        r"\b" + re.escape(str(ano)) + r"\b", texto
+    ):
+        filtros["ano"] = None
     filtros.setdefault("ano", None)
     filtros.setdefault("modalidade", None)
     filtros.setdefault("municipio", None)

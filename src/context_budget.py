@@ -15,7 +15,7 @@ def limitar_contexto_normativo(
         return evidencias, []
 
     if limite is None:
-        limite = int(os.getenv("NORMATIVE_CONTEXT_MAX_CHARS", "2500"))
+        limite = int(os.getenv("NORMATIVE_CONTEXT_MAX_CHARS", "6000"))
     if isinstance(limite, bool) or not isinstance(limite, int):
         raise ValueError("Orçamento de contexto deve ser inteiro.")
     if not 500 <= limite <= 12000:

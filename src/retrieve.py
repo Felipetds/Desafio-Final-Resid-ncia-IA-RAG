@@ -726,6 +726,32 @@ def recuperar_evidencias(
             ranking_final = ranking_rrf
         # ----------------------------------------
 
+
+        from src.retrieval_method_coverage import cobrir_metodos
+
+        ids_antes_metodos = [
+            item["chunk_id"] for item in ranking_final[:top_k]
+        ]
+        cobertura_metodos_habilitada = bool(
+            escopo_ata is not None
+            and not resultado_rerank.get("applied", False)
+            and ranking_final
+            and all(
+                identificar_natureza(
+                    chunks_por_id.get(item["chunk_id"], {})
+                ) == "normativa"
+                for item in ranking_final
+            )
+        )
+        if cobertura_metodos_habilitada:
+            ranking_final = cobrir_metodos(
+                ranking_final, resultados_densos,
+                resultados_bm25, top_k,
+            )
+        ids_apos_metodos = [
+            item["chunk_id"] for item in ranking_final[:top_k]
+        ]
+
         from src.normative_selection import cobrir_definicao
 
         ids_antes_cobertura = [
@@ -785,6 +811,13 @@ def recuperar_evidencias(
             "bm25_candidates": len(resultados_bm25),
             "rrf_candidates": len(ranking_rrf),
             "politica_selecao": "cobertura_definicao_normativa_v1",
+            "politica_cobertura_metodos": "escopo_normativo_sem_rerank_v1",
+            "cobertura_metodos_habilitada": cobertura_metodos_habilitada,
+            "cobertura_metodos_aplicada": (
+                ids_antes_metodos != ids_apos_metodos
+            ),
+            "top_ids_antes_metodos": ids_antes_metodos,
+            "top_ids_apos_metodos": ids_apos_metodos,
             "cobertura_definicao_aplicada": (
                 ids_antes_cobertura != ids_apos_cobertura
             ),

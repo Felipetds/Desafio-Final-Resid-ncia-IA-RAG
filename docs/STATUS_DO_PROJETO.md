@@ -42,3 +42,12 @@ nem atendimento integral ao enunciado.
 - [Correções](CORRECOES_RESPOSTAS_2026-10-21.md).
 - [Evidências](validacao_respostas_2026-10-21/evidencias.json).
 - [Restauração](GUIA_RESTAURACAO_2172.md).
+
+## Reformulações — atualização de 22/10/2026
+
+A rodada final das correções passou com 803 testes locais e sete testes
+com o serviço real. O código foi recuperado e os artefatos foram conferidos.
+Publicação da branch e inicialização da interface ainda estão pendentes.
+
+Detalhes, limites e evidências:
+[Correções das reformulações](CORRECOES_REFORMULACOES_2026-10-22.md).

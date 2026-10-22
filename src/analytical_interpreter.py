@@ -76,7 +76,21 @@ CATALOGO["itens_pe"]["semantica"] = {
     "situacao_item": "Situação do item: homologado, fracassado ou deserto.",
 }
 
-PROMPT = '\nConverta o pedido em um plano. Não calcule nem responda à pergunta.\nUse somente o catálogo. Retorne JSON, sem Markdown.\n\nEstrutura:\n{"tipo":"plano","mensagem":"","pedido_documental":null,\n "plano":{"fonte":"nome_da_fonte","tarefas":[],\n "comparacoes":[],"formato":"automatico","pendencias":[]}}\n\nTarefas permitidas:\n- Contar registros: {"id":"x","operacao":"contar",\n  "filtros":[],"agrupar_por":[]}\n- Contar campo preenchido ou valores distintos:\n  operacao contar_preenchidos ou contar_distintos, com id, campo,\n  filtros e agrupar_por.\n- Soma: {"id":"x","operacao":"somar","campo":"campo_numerico",\n  "filtros":[],"agrupar_por":[]}\n- Média aritmética: {"id":"x","operacao":"media","campo":"campo_numerico",\n  "filtros":[],"agrupar_por":[]}\n- Mínimo: {"id":"x","operacao":"minimo","campo":"campo_numerico",\n  "filtros":[],"agrupar_por":[]}\n- Máximo: {"id":"x","operacao":"maximo","campo":"campo_numerico",\n  "filtros":[],"agrupar_por":[]}\n- Listar: id, operacao listar, filtros, campos, limite,\n  ordenar_por e ordem crescente ou decrescente.\n\nFiltro: {"campo":"nome","operador":"igual","valor":"valor"}.\nOperadores: igual, diferente, contem, em, maior, maior_igual,\nmenor, menor_igual. em usa lista de strings.\nTodos os filtros ficam nas tarefas e são combinados por E.\nUma comparação de grupos usa tarefas separadas.\nComparação: {"id":"c","operacao":"diferenca",\n"esquerda":"id_da_tarefa","direita":"id_da_tarefa"}.\ndiferenca subtrai os resultados; razao divide; percentual divide e multiplica por cem.\nIDs curtos. Número de itens significa contar registros.\nQuantidade física de produto não significa número de itens.\nCrie somente as tarefas pedidas. Comparar não exige listar registros.\nNão coloque campos de listagem em contagens.\nFormato: automatico, texto ou tabela.\nSe faltar informação essencial, use tipo esclarecimento,\nmensagem explicativa e plano null.\n\n\nAGRUPAMENTO NÃO É CONTAGEM DE VALORES DISTINTOS\n- Para uma medida por grupo, categoria ou outro campo, use agrupar_por.\n  O resultado deve apresentar a medida separadamente para cada grupo.\n- Contar registros por um campo: operacao contar, agrupar_por com esse campo.\n- Somar valores por um campo: operacao somar, campo numérico da soma,\n  agrupar_por com o campo que define os grupos.\n- contar_distintos retorna um único número de valores diferentes.\n  Não responde quantos registros existem em cada valor.\n- Uma tabela de quantidades por grupo exige as quantidades de cada grupo,\n  não somente o número de grupos.\n- O formato tabela determina a apresentação, não substitui o agrupamento.\nAntes de retornar, confira se o plano produz as informações solicitadas,\ne não apenas uma operação relacionada às mesmas palavras.\n\n\nA operação deve usar exatamente um dos nomes válidos; medir não é operação.\nMédia aritmética é a soma dos valores disponíveis dividida pela quantidade\nde registros com valor disponível.\nUma média por item ou por registro, sem pedido de separação em grupos,\nusa operacao media com agrupar_por vazio.\nNão agrupe por identificador apenas porque o item é a unidade da média.\nAgrupamento é necessário quando o usuário pede uma medida separada\npara cada categoria, fornecedor ou outro grupo.\nNão substitua média ponderada ou preço por unidade por média aritmética.\n'
+
+CATALOGO["itens_pe"]["unidades_de_resultado"] = {
+    "item": {"campos_identificadores": ["numero_item"]},
+    "fornecedor": {"campos_identificadores": ["fornecedor"]},
+}
+CATALOGO["itens_pe"]["campos_ausentes"] = ["descricao"]
+CATALOGO["pca"]["unidades_de_resultado"] = {
+    "item": {"campos_identificadores": ["id_item"]},
+    "categoria": {"campos_identificadores": ["categoria"]},
+    "unidade_responsavel": {
+        "campos_identificadores": ["unidade_responsavel"]
+    },
+}
+
+PROMPT = '\nConverta o pedido em um plano. Não calcule nem responda à pergunta.\nUse somente o catálogo. Retorne JSON, sem Markdown.\n\nEstrutura:\n{"tipo":"plano","mensagem":"","pedido_documental":null,\n "plano":{"fonte":"nome_da_fonte","tarefas":[],\n "comparacoes":[],"formato":"automatico","pendencias":[]}}\n\nTarefas permitidas:\n- Contar registros: {"id":"x","operacao":"contar",\n  "filtros":[],"agrupar_por":[]}\n- Contar campo preenchido ou valores distintos:\n  operacao contar_preenchidos ou contar_distintos, com id, campo,\n  filtros e agrupar_por.\n- Soma: {"id":"x","operacao":"somar","campo":"campo_numerico",\n  "filtros":[],"agrupar_por":[]}\n- Média aritmética: {"id":"x","operacao":"media","campo":"campo_numerico",\n  "filtros":[],"agrupar_por":[]}\n- Mínimo: {"id":"x","operacao":"minimo","campo":"campo_numerico",\n  "filtros":[],"agrupar_por":[]}\n- Máximo: {"id":"x","operacao":"maximo","campo":"campo_numerico",\n  "filtros":[],"agrupar_por":[]}\n- Listar: id, operacao listar, filtros, campos, distintos,\n  limite de 1 a 100, ordenar_por e ordem crescente ou decrescente.\n  distintos é booleano obrigatório: true ou false; não omita o campo.\n  Para identificar entidades sem repetição, use distintos true e somente\n  os campos da entidade. Para listar registros, preserve seu identificador.\n\n\nUNIDADE DO RESULTADO\nAntes de escolher a operação e as colunas, identifique o que o usuário\nquer obter: registros, entidades, medidas ou resultados por grupo.\nUse as unidades_de_resultado do catálogo como referência.\nOs campos usados nos filtros não precisam aparecer na resposta.\nIdentificar entidades exige somente seus campos identificadores e\ndistintos true. Acrescentar o identificador de cada registro muda a\nunidade do resultado e impede remover repetições da entidade.\nInclua os registros associados somente se essa associação for pedida.\nIdentificar registros exige preservar o identificador do registro.\nExemplo: identificar as unidades responsáveis com itens da categoria\nMaterial exige listar unidade_responsavel com distintos true e filtrar\ncategoria igual Material. Não exige listar id_item.\nUma contagem, soma ou outra medida deve conservar a unidade pedida.\n\nFiltro: {"campo":"nome","operador":"igual","valor":"valor"}.\nOperadores: igual, diferente, contem, em, maior, maior_igual,\nmenor, menor_igual. em usa lista de strings.\nTodos os filtros ficam nas tarefas e são combinados por E.\nUma comparação de grupos usa tarefas separadas.\nComparação: {"id":"c","operacao":"diferenca",\n"esquerda":"id_da_tarefa","direita":"id_da_tarefa"}.\ndiferenca subtrai os resultados; razao divide; percentual divide e multiplica por cem.\nIDs curtos. Número de itens significa contar registros.\nQuantidade física de produto não significa número de itens.\nCrie somente as tarefas pedidas. Comparar não exige listar registros.\nNão coloque campos de listagem em contagens.\nFormato: automatico, texto ou tabela.\nSe faltar informação essencial, use tipo esclarecimento,\nmensagem explicativa e plano null.\n\n\nAGRUPAMENTO NÃO É CONTAGEM DE VALORES DISTINTOS\n- Para uma medida por grupo, categoria ou outro campo, use agrupar_por.\n  O resultado deve apresentar a medida separadamente para cada grupo.\n- Contar registros por um campo: operacao contar, agrupar_por com esse campo.\n- Somar valores por um campo: operacao somar, campo numérico da soma,\n  agrupar_por com o campo que define os grupos.\n- contar_distintos retorna um único número de valores diferentes.\n  Não responde quantos registros existem em cada valor.\n- Uma tabela de quantidades por grupo exige as quantidades de cada grupo,\n  não somente o número de grupos.\n- O formato tabela determina a apresentação, não substitui o agrupamento.\nAntes de retornar, confira se o plano produz as informações solicitadas,\ne não apenas uma operação relacionada às mesmas palavras.\n\n\nA operação deve usar exatamente um dos nomes válidos; medir não é operação.\nMédia aritmética é a soma dos valores disponíveis dividida pela quantidade\nde registros com valor disponível.\nUma média por item ou por registro, sem pedido de separação em grupos,\nusa operacao media com agrupar_por vazio.\nNão agrupe por identificador apenas porque o item é a unidade da média.\nAgrupamento é necessário quando o usuário pede uma medida separada\npara cada categoria, fornecedor ou outro grupo.\nNão substitua média ponderada ou preço por unidade por média aritmética.\n'
 
 
 PROMPT += """
@@ -102,6 +116,41 @@ deve contar os valores preenchidos do mesmo campo, com os mesmos filtros.
 Não inclua valores ausentes no denominador da média.
 Uma razão pode ter unidade derivada, como reais por registro.
 Não apresente uma razão com unidade como se fosse uma porcentagem.
+"""
+
+
+
+PROMPT += """
+ESCOLHA PELA INTENÇÃO
+A mesma fonte permite contar, identificar registros, listar, agrupar
+ou medir. Interprete o pedido completo, independentemente do verbo usado.
+Identificar quais registros atendem ao critério exige listar, não contar.
+Escolha campos disponíveis que identifiquem esses registros.
+Não substitua a identificação por uma contagem.
+Se houver vários pedidos, represente todos em tarefas ou no pedido documental.
+Uma explicação de conceito ou regra exige documentos, não cálculo no CSV:
+use tipo documental, mensagem explicativa, plano null e
+pedido_documental null quando não houver tarefa analítica.
+Informação ausente ou critério impossível exige esclarecimento.
+Não escolha outro processo nem descarte condições para produzir um plano.
+"""
+
+
+
+PROMPT += """
+LIMITES DE APRESENTAÇÃO DOS REGISTROS
+Uma tarefa listar aceita limite inteiro de 1 a 100; o padrão é 20.
+Não proponha 1000 nem outro limite fora desse intervalo.
+O limite controla a exibição, não altera filtros nem o universo do cálculo.
+Não apresente uma amostra ou listagem truncada como se estivesse completa.
+Identificar entidades, como fornecedores, exige mostrar seus nomes.
+Para identificar entidades sem repetição, use listar com distintos true
+e somente os campos que identificam as entidades solicitadas.
+distintos remove repetições da combinação dos campos antes do limite.
+Para listar itens, preserve seu identificador: itens diferentes não
+devem desaparecer porque possuem o mesmo fornecedor.
+Agrupe e conte por entidade quando também for pedida sua quantidade.
+Contar entidades distintas, sozinho, não identifica quais são.
 """
 
 

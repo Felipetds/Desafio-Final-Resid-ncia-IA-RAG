@@ -4,7 +4,10 @@ import json
 import re
 import unicodedata
 
+from nltk.stem.snowball import PortugueseStemmer
 from rank_bm25 import BM25Okapi
+
+_STEMMER_PORTUGUES = PortugueseStemmer()
 
 
 PALAVRAS_GERAIS = set("""
@@ -16,22 +19,26 @@ lei estabelece numero segundo informe
 
 
 def tokenizar_contexto(texto):
-    texto = unicodedata.normalize("NFKD", str(texto).lower())
-    texto = "".join(
-        caractere for caractere in texto
-        if not unicodedata.combining(caractere)
-    )
-
+    """Preserva acentos durante o stemming em português."""
+    texto = unicodedata.normalize("NFC", str(texto).casefold())
     saida = []
-    for token in re.findall(r"[a-z]+", texto):
-        if token in PALAVRAS_GERAIS:
+    for token in re.findall(r"[a-zà-öø-ÿ]+", texto):
+        simples = "".join(
+            c for c in unicodedata.normalize("NFD", token)
+            if not unicodedata.combining(c)
+        )
+        if simples in PALAVRAS_GERAIS:
             continue
-        if token.startswith("vidrac"):
-            token = "vidrac"
-        elif token.startswith("elevador"):
-            token = "elevador"
-        saida.append(token)
-
+        if simples.startswith("vidrac"):
+            raiz = "vidrac"
+        elif simples.startswith("elevador"):
+            raiz = "elevador"
+        else:
+            raiz = _STEMMER_PORTUGUES.stem(token)
+        saida.append("".join(
+            c for c in unicodedata.normalize("NFD", raiz)
+            if not unicodedata.combining(c)
+        ))
     return saida
 
 
