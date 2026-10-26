@@ -14,6 +14,7 @@ logs/
 .gradio/
 data/indices/
 data/processed/
+data/
 
 # Feedback gerado pela interface
 data/feedback/*.jsonl
